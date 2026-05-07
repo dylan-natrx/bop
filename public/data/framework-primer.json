@@ -1,0 +1,626 @@
+[
+  {
+    "id": "27",
+    "Site": "Arthur Kill",
+    "sal_score": 0.79,
+    "chla_score": 0.95,
+    "do_score": 1,
+    "composite": 0.87
+  },
+  {
+    "id": "36",
+    "Site": "Living Breakwaters",
+    "sal_score": 0.79,
+    "chla_score": 0.79,
+    "do_score": 1,
+    "composite": 0.79
+  },
+  {
+    "id": "37",
+    "Site": "Living Breakwaters",
+    "sal_score": 0.79,
+    "chla_score": 0.78,
+    "do_score": 1,
+    "composite": 0.79
+  },
+  {
+    "id": "38",
+    "Site": "Living Breakwaters",
+    "sal_score": 0.79,
+    "chla_score": 0.76,
+    "do_score": 1,
+    "composite": 0.78
+  },
+  {
+    "id": "40",
+    "Site": "Living Breakwaters",
+    "sal_score": 0.79,
+    "chla_score": 0.74,
+    "do_score": 1,
+    "composite": 0.77
+  },
+  {
+    "id": "41",
+    "Site": "Living Breakwaters",
+    "sal_score": 0.79,
+    "chla_score": 0.72,
+    "do_score": 1,
+    "composite": 0.76
+  },
+  {
+    "id": "42",
+    "Site": "Living Breakwaters",
+    "sal_score": 0.79,
+    "chla_score": 0.7,
+    "do_score": 1,
+    "composite": 0.75
+  },
+  {
+    "id": "30",
+    "Site": "Wolfe's Pond",
+    "sal_score": 0.71,
+    "chla_score": 0.58,
+    "do_score": 1,
+    "composite": 0.65
+  },
+  {
+    "id": "25",
+    "Site": "Arthur Kill",
+    "sal_score": 0.95,
+    "chla_score": 0.3,
+    "do_score": 1,
+    "composite": 0.63
+  },
+  {
+    "id": "26",
+    "Site": "Arthur Kill",
+    "sal_score": 0.95,
+    "chla_score": 0.3,
+    "do_score": 1,
+    "composite": 0.63
+  },
+  {
+    "id": "28",
+    "Site": "Arthur Kill - Pralls River",
+    "sal_score": 0.95,
+    "chla_score": 0.3,
+    "do_score": 1,
+    "composite": 0.63
+  },
+  {
+    "id": "24",
+    "Site": "Conch Basin",
+    "sal_score": 0.65,
+    "chla_score": 0.58,
+    "do_score": 1,
+    "composite": 0.62
+  },
+  {
+    "id": "52",
+    "Site": "Dubos Point Wildlife Sanctuary",
+    "sal_score": 0.61,
+    "chla_score": 0.58,
+    "do_score": 1,
+    "composite": 0.6
+  },
+  {
+    "id": "29",
+    "Site": "Arthur Kill - Pralls River",
+    "sal_score": 0.95,
+    "chla_score": 0.23,
+    "do_score": 1,
+    "composite": 0.59
+  },
+  {
+    "id": "21",
+    "Site": "Barbadoes Basin",
+    "sal_score": 0.61,
+    "chla_score": 0.54,
+    "do_score": 1,
+    "composite": 0.57
+  },
+  {
+    "id": "58",
+    "Site": "Yonkers - South",
+    "sal_score": 1,
+    "chla_score": 0.13,
+    "do_score": 1,
+    "composite": 0.56
+  },
+  {
+    "id": "59",
+    "Site": "Yonkers - North",
+    "sal_score": 1,
+    "chla_score": 0.13,
+    "do_score": 1,
+    "composite": 0.56
+  },
+  {
+    "id": "60",
+    "Site": "Hastings-on-Hudson",
+    "sal_score": 1,
+    "chla_score": 0.13,
+    "do_score": 1,
+    "composite": 0.56
+  },
+  {
+    "id": "7",
+    "Site": "Little Neck Bay",
+    "sal_score": 0.74,
+    "chla_score": 0.7,
+    "do_score": 0.75,
+    "composite": 0.54
+  },
+  {
+    "id": "31",
+    "Site": "​​Save the Sound Big Rock",
+    "sal_score": 0.74,
+    "chla_score": 0.65,
+    "do_score": 0.75,
+    "composite": 0.52
+  },
+  {
+    "id": "8",
+    "Site": "Joe Michael Mile",
+    "sal_score": 0.73,
+    "chla_score": 0.62,
+    "do_score": 0.75,
+    "composite": 0.51
+  },
+  {
+    "id": "16",
+    "Site": "Brooklyn Marine Park",
+    "sal_score": 0.52,
+    "chla_score": 0.47,
+    "do_score": 1,
+    "composite": 0.5
+  },
+  {
+    "id": "6",
+    "Site": "Alley Creek",
+    "sal_score": 0.75,
+    "chla_score": 0.57,
+    "do_score": 0.75,
+    "composite": 0.49
+  },
+  {
+    "id": "17",
+    "Site": "Brooklyn Marine Park",
+    "sal_score": 0.52,
+    "chla_score": 0.46,
+    "do_score": 1,
+    "composite": 0.49
+  },
+  {
+    "id": "10",
+    "Site": "Orchard Beach",
+    "sal_score": 0.7,
+    "chla_score": 0.25,
+    "do_score": 1,
+    "composite": 0.48
+  },
+  {
+    "id": "11",
+    "Site": "Orchard Beach",
+    "sal_score": 0.7,
+    "chla_score": 0.25,
+    "do_score": 1,
+    "composite": 0.48
+  },
+  {
+    "id": "12",
+    "Site": "Orchard Beach",
+    "sal_score": 0.7,
+    "chla_score": 0.25,
+    "do_score": 1,
+    "composite": 0.48
+  },
+  {
+    "id": "9",
+    "Site": "Hart Island",
+    "sal_score": 0.7,
+    "chla_score": 0.24,
+    "do_score": 1,
+    "composite": 0.47
+  },
+  {
+    "id": "22",
+    "Site": "Bayswater Park - HPD",
+    "sal_score": 0.65,
+    "chla_score": 0.59,
+    "do_score": 0.75,
+    "composite": 0.47
+  },
+  {
+    "id": "23",
+    "Site": "Bayswater Park - NYC Parks",
+    "sal_score": 0.65,
+    "chla_score": 0.59,
+    "do_score": 0.75,
+    "composite": 0.47
+  },
+  {
+    "id": "13",
+    "Site": "Fort Totten",
+    "sal_score": 0.72,
+    "chla_score": 0.5,
+    "do_score": 0.75,
+    "composite": 0.46
+  },
+  {
+    "id": "4",
+    "Site": "Jamaica Bay Park 1",
+    "sal_score": 0.67,
+    "chla_score": 0.53,
+    "do_score": 0.75,
+    "composite": 0.45
+  },
+  {
+    "id": "5",
+    "Site": "Jamaica Bay Park 2",
+    "sal_score": 0.69,
+    "chla_score": 0.52,
+    "do_score": 0.75,
+    "composite": 0.45
+  },
+  {
+    "id": "46",
+    "Site": "Shirley Chisholm State Park",
+    "sal_score": 0.66,
+    "chla_score": 0.52,
+    "do_score": 0.75,
+    "composite": 0.44
+  },
+  {
+    "id": "51",
+    "Site": "Rockaway Community Park",
+    "sal_score": 0.63,
+    "chla_score": 0.54,
+    "do_score": 0.75,
+    "composite": 0.44
+  },
+  {
+    "id": "53",
+    "Site": "Brant Point Wildlife Sanctuary",
+    "sal_score": 0.61,
+    "chla_score": 0.56,
+    "do_score": 0.75,
+    "composite": 0.44
+  },
+  {
+    "id": "54",
+    "Site": "Vernam Barbadoes",
+    "sal_score": 0.61,
+    "chla_score": 0.56,
+    "do_score": 0.75,
+    "composite": 0.44
+  },
+  {
+    "id": "18",
+    "Site": "Brooklyn Marine Park",
+    "sal_score": 0.53,
+    "chla_score": 0.32,
+    "do_score": 1,
+    "composite": 0.43
+  },
+  {
+    "id": "76",
+    "Site": "Brooklyn Bride Park",
+    "sal_score": 0.81,
+    "chla_score": 0.05,
+    "do_score": 1,
+    "composite": 0.43
+  },
+  {
+    "id": "68",
+    "Site": "Paerdegat Basin",
+    "sal_score": 0.64,
+    "chla_score": 0.98,
+    "do_score": 0.5,
+    "composite": 0.41
+  },
+  {
+    "id": "69",
+    "Site": "Paerdegat Basin",
+    "sal_score": 0.64,
+    "chla_score": 1,
+    "do_score": 0.5,
+    "composite": 0.41
+  },
+  {
+    "id": "2",
+    "Site": "Williamsburg River Ring",
+    "sal_score": 0.8,
+    "chla_score": 0.68,
+    "do_score": 0.5,
+    "composite": 0.37
+  },
+  {
+    "id": "55",
+    "Site": "Bushwick Inlet",
+    "sal_score": 0.81,
+    "chla_score": 0.67,
+    "do_score": 0.5,
+    "composite": 0.37
+  },
+  {
+    "id": "56",
+    "Site": "Bushwick Inlet",
+    "sal_score": 0.81,
+    "chla_score": 0.68,
+    "do_score": 0.5,
+    "composite": 0.37
+  },
+  {
+    "id": "67",
+    "Site": "Paerdegat Basin",
+    "sal_score": 0.64,
+    "chla_score": 0.83,
+    "do_score": 0.5,
+    "composite": 0.37
+  },
+  {
+    "id": "66",
+    "Site": "Paerdegat Basin",
+    "sal_score": 0.64,
+    "chla_score": 0.81,
+    "do_score": 0.5,
+    "composite": 0.36
+  },
+  {
+    "id": "19",
+    "Site": "Lemon Creek",
+    "sal_score": 0.73,
+    "chla_score": 0.58,
+    "do_score": 0.5,
+    "composite": 0.33
+  },
+  {
+    "id": "50",
+    "Site": "Four Sparrow",
+    "sal_score": 0.61,
+    "chla_score": 0.72,
+    "do_score": 0.5,
+    "composite": 0.33
+  },
+  {
+    "id": "61",
+    "Site": "Dobbs Ferry",
+    "sal_score": 0.53,
+    "chla_score": 0.12,
+    "do_score": 1,
+    "composite": 0.33
+  },
+  {
+    "id": "84",
+    "Site": "Flushing Bay",
+    "sal_score": 0.85,
+    "chla_score": 0.45,
+    "do_score": 0.5,
+    "composite": 0.33
+  },
+  {
+    "id": "82",
+    "Site": "Flushing Bay",
+    "sal_score": 0.86,
+    "chla_score": 0.4,
+    "do_score": 0.5,
+    "composite": 0.32
+  },
+  {
+    "id": "3",
+    "Site": "Bergen Basin",
+    "sal_score": 0.7,
+    "chla_score": 0.55,
+    "do_score": 0.5,
+    "composite": 0.31
+  },
+  {
+    "id": "83",
+    "Site": "Flushing Bay",
+    "sal_score": 0.84,
+    "chla_score": 0.4,
+    "do_score": 0.5,
+    "composite": 0.31
+  },
+  {
+    "id": "44",
+    "Site": "Head of Bay - USACE",
+    "sal_score": 0.69,
+    "chla_score": 0.51,
+    "do_score": 0.5,
+    "composite": 0.3
+  },
+  {
+    "id": "87",
+    "Site": "Turtle Cove",
+    "sal_score": 0.73,
+    "chla_score": 0.45,
+    "do_score": 0.5,
+    "composite": 0.3
+  },
+  {
+    "id": "47",
+    "Site": "Shirley Chisholm State Park",
+    "sal_score": 0.66,
+    "chla_score": 0.49,
+    "do_score": 0.5,
+    "composite": 0.29
+  },
+  {
+    "id": "49",
+    "Site": "Fresh Creek Basin",
+    "sal_score": 0.65,
+    "chla_score": 0.52,
+    "do_score": 0.5,
+    "composite": 0.29
+  },
+  {
+    "id": "57",
+    "Site": "Little Brother Island South",
+    "sal_score": 0.79,
+    "chla_score": 0.37,
+    "do_score": 0.5,
+    "composite": 0.29
+  },
+  {
+    "id": "1",
+    "Site": "Piermont - South",
+    "sal_score": 0.43,
+    "chla_score": 0.12,
+    "do_score": 1,
+    "composite": 0.28
+  },
+  {
+    "id": "14",
+    "Site": "Fort Totten",
+    "sal_score": 0.73,
+    "chla_score": 0.38,
+    "do_score": 0.5,
+    "composite": 0.28
+  },
+  {
+    "id": "15",
+    "Site": "Fort Totten",
+    "sal_score": 0.73,
+    "chla_score": 0.39,
+    "do_score": 0.5,
+    "composite": 0.28
+  },
+  {
+    "id": "43",
+    "Site": "Little Bay Park",
+    "sal_score": 0.73,
+    "chla_score": 0.4,
+    "do_score": 0.5,
+    "composite": 0.28
+  },
+  {
+    "id": "48",
+    "Site": "Shirley Chisholm State Park",
+    "sal_score": 0.66,
+    "chla_score": 0.44,
+    "do_score": 0.5,
+    "composite": 0.28
+  },
+  {
+    "id": "62",
+    "Site": "Ivington - South",
+    "sal_score": 0.43,
+    "chla_score": 0.12,
+    "do_score": 1,
+    "composite": 0.28
+  },
+  {
+    "id": "88",
+    "Site": "City Island",
+    "sal_score": 0.72,
+    "chla_score": 0.39,
+    "do_score": 0.5,
+    "composite": 0.28
+  },
+  {
+    "id": "0",
+    "Site": "Piermont - North",
+    "sal_score": 0.39,
+    "chla_score": 0.12,
+    "do_score": 1,
+    "composite": 0.26
+  },
+  {
+    "id": "63",
+    "Site": "Irvington - North",
+    "sal_score": 0.39,
+    "chla_score": 0.12,
+    "do_score": 1,
+    "composite": 0.26
+  },
+  {
+    "id": "86",
+    "Site": "Pugsley Creek",
+    "sal_score": 0.75,
+    "chla_score": 0.27,
+    "do_score": 0.5,
+    "composite": 0.26
+  },
+  {
+    "id": "85",
+    "Site": "Powell's Cove",
+    "sal_score": 0.75,
+    "chla_score": 0.23,
+    "do_score": 0.5,
+    "composite": 0.25
+  },
+  {
+    "id": "89",
+    "Site": "City Island",
+    "sal_score": 0.71,
+    "chla_score": 0.27,
+    "do_score": 0.5,
+    "composite": 0.25
+  },
+  {
+    "id": "20",
+    "Site": "Malba",
+    "sal_score": 0.75,
+    "chla_score": 0.22,
+    "do_score": 0.5,
+    "composite": 0.24
+  },
+  {
+    "id": "32",
+    "Site": "Bush Terminal - USACE",
+    "sal_score": 0.8,
+    "chla_score": 0.1,
+    "do_score": 0.5,
+    "composite": 0.23
+  },
+  {
+    "id": "33",
+    "Site": "Bush Terminal - USACE",
+    "sal_score": 0.8,
+    "chla_score": 0.1,
+    "do_score": 0.5,
+    "composite": 0.23
+  },
+  {
+    "id": "34",
+    "Site": "Bush Terminal - USACE",
+    "sal_score": 0.8,
+    "chla_score": 0.1,
+    "do_score": 0.5,
+    "composite": 0.23
+  },
+  {
+    "id": "35",
+    "Site": "Bush Terminal - USACE",
+    "sal_score": 0.8,
+    "chla_score": 0.09,
+    "do_score": 0.5,
+    "composite": 0.22
+  },
+  {
+    "id": "72",
+    "Site": "Bush Terminal Park",
+    "sal_score": 0.8,
+    "chla_score": 0.09,
+    "do_score": 0.5,
+    "composite": 0.22
+  },
+  {
+    "id": "99",
+    "Site": "Ossining",
+    "sal_score": 0.29,
+    "chla_score": 0.12,
+    "do_score": 1,
+    "composite": 0.21
+  },
+  {
+    "id": "100",
+    "Site": "Earle",
+    "sal_score": 0.65,
+    "chla_score": 0.16,
+    "do_score": 0.5,
+    "composite": 0.2
+  }
+]

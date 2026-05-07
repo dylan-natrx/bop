@@ -1,0 +1,79 @@
+rank_position,site_id,site_name,status,waterbody,acres,wq_rank,wq_score,confidence,flag_wave_exposure,flag_erosion,flag_depth,flag_near_cso,flag_near_ms4,flag_near_park
+1,27,Arthur Kill,Proposed Future Site,Upper Harbor,15.16,1,0.87,low,Yes,Yes,Yes,No,Yes,No
+2,36,Living Breakwaters,Proposed Future Site,Raritan Bay/Lower Harbor,1.99,2,0.79,low,Yes,NA,Yes,No,No,Yes
+3,37,Living Breakwaters,Proposed Future Site,Raritan Bay/Lower Harbor,2.5,2,0.79,low,Yes,NA,Yes,No,No,Yes
+4,38,Living Breakwaters,Proposed Future Site,Raritan Bay/Lower Harbor,1.92,4,0.78,low,Yes,NA,Yes,No,No,Yes
+5,40,Living Breakwaters,Proposed Future Site,Raritan Bay/Lower Harbor,3.81,5,0.76,low,Yes,NA,Yes,No,No,Yes
+6,41,Living Breakwaters,Proposed Future Site,Raritan Bay/Lower Harbor,1.99,5,0.76,low,Yes,NA,Yes,No,No,Yes
+7,42,Living Breakwaters,Proposed Future Site,Raritan Bay/Lower Harbor,3.17,7,0.74,low,Yes,NA,Yes,No,No,Yes
+8,30,Wolfe's Pond,Proposed Future Site,Raritan Bay/Lower Harbor,8.59,8,0.65,low,Yes,No,Yes,No,No,Yes
+9,24,Conch Basin,Proposed Future Site,Jamaica Bay,24.25,9,0.62,moderate,Yes,No,No,No,No,Yes
+10,25,Arthur Kill,Proposed Future Site,Upper Harbor,2.51,10,0.62,moderate-,Yes,Yes,Yes,No,No,Yes
+11,26,Arthur Kill,Proposed Future Site,Upper Harbor,5.09,10,0.62,moderate-,Yes,No,Yes,No,No,Yes
+12,28,Arthur Kill - Pralls River,Proposed Future Site,Upper Harbor,6.05,10,0.62,moderate-,Yes,Yes,Yes,No,No,Yes
+13,29,Arthur Kill - Pralls River,Proposed Future Site,Upper Harbor,20.24,13,0.59,moderate-,Yes,Yes,Yes,No,No,Yes
+14,52,Dubos Point Wildlife Sanctuary,Proposed Future Site,Jamaica Bay,49.67,13,0.59,moderate-,Yes,No,No,No,No,Yes
+15,21,Barbadoes Basin,Proposed Future Site,Jamaica Bay,9.89,15,0.57,moderate,Yes,No,Yes,No,No,Yes
+16,58,Yonkers - South,Proposed Future Site,Hudson River,13.23,16,0.56,moderate-,NA,NA,Yes,No,No,No
+17,59,Yonkers - North,Proposed Future Site,Hudson River,79.76,17,0.56,low,NA,NA,No,No,No,No
+18,60,Hastings-on-Hudson,Proposed Future Site,Hudson River,14.87,17,0.56,low,NA,NA,Yes,No,No,No
+19,7,Little Neck Bay,Proposed Future Site,Western Long Island Sound,83.12,19,0.54,moderate,NA,NA,Yes,No,No,Yes
+20,31,Save the Sound Big Rock,Proposed Future Site,Jamaica Bay,2.11,20,0.52,moderate+,Yes,No,Yes,No,No,Yes
+21,8,Joe Michael Mile,Proposed Future Site,Western Long Island Sound,108.47,21,0.5,moderate+,NA,NA,Yes,No,No,Yes
+22,16,Brooklyn Marine Park,Proposed Future Site,Jamaica Bay,2.38,22,0.5,moderate,Yes,No,Yes,No,No,Yes
+23,17,Brooklyn Marine Park,Proposed Future Site,Jamaica Bay,12.04,23,0.49,moderate+,Yes,No,Yes,No,No,Yes
+24,6,Alley Creek,Proposed Future Site,Western Long Island Sound,11.25,24,0.49,moderate,Yes,Yes,Yes,No,No,Yes
+25,10,Orchard Beach,Proposed Future Site,Western Long Island Sound,21.74,25,0.47,moderate+,NA,Yes,Yes,No,No,Yes
+26,11,Orchard Beach,Proposed Future Site,Western Long Island Sound,9.55,25,0.47,moderate+,Yes,Yes,Yes,No,No,Yes
+27,12,Orchard Beach,Proposed Future Site,Western Long Island Sound,35.01,25,0.47,moderate+,Yes,Yes,Yes,No,No,Yes
+28,23,Bayswater Park - NYC Parks,Proposed Future Site,Jamaica Bay,9.64,25,0.47,moderate+,Yes,Yes,Yes,No,Yes,Yes
+29,9,Hart Island,Proposed Future Site,Western Long Island Sound,30.29,29,0.47,moderate,Yes,Yes,Yes,No,No,Yes
+30,5,Jamaica Bay Park 2,Proposed Future Site,Jamaica Bay,25.66,30,0.46,moderate+,Yes,Yes,Yes,No,No,Yes
+31,13,Fort Totten,Proposed Future Site,Western Long Island Sound,17.08,30,0.46,moderate+,NA,NA,Yes,No,Yes,Yes
+32,22,Bayswater Park - HPD,Proposed Future Site,Jamaica Bay,15.24,30,0.46,moderate+,Yes,Yes,Yes,No,No,Yes
+33,4,Jamaica Bay Park 1,Proposed Future Site,Jamaica Bay,7.29,33,0.45,moderate,Yes,No,Yes,No,Yes,Yes
+34,46,Shirley Chisholm State Park,Proposed Future Site,Jamaica Bay,20.42,33,0.45,moderate,Yes,No,Yes,No,No,No
+35,54,Vernam Barbadoes,Proposed Future Site,Jamaica Bay,10.85,35,0.44,moderate+,Yes,No,Yes,No,No,Yes
+36,53,Brant Point Wildlife Sanctuary,Proposed Future Site,Jamaica Bay,15.21,36,0.44,moderate,Yes,Yes,Yes,No,Yes,Yes
+37,51,Rockaway Community Park,Proposed Future Site,Jamaica Bay,53.54,37,0.44,moderate-,Yes,Yes,Yes,No,No,Yes
+38,76,Brooklyn Bridge Park,Design,Upper Harbor,1.23,38,0.43,moderate,NA,NA,No,No,No,Yes
+39,18,Brooklyn Marine Park,Proposed Future Site,Jamaica Bay,11.12,39,0.42,moderate,Yes,Yes,Yes,No,No,Yes
+40,69,Paerdegat Basin,Proposed Future Site,Jamaica Bay,27.21,40,0.41,high,NA,Yes,Yes,No,Yes,Yes
+41,68,Paerdegat Basin,Proposed Future Site,Jamaica Bay,24.85,41,0.4,high,NA,Yes,Yes,No,Yes,Yes
+42,67,Paerdegat Basin,Proposed Future Site,Jamaica Bay,27.76,42,0.37,high,NA,Yes,Yes,No,No,Yes
+43,2,Williamsburg River Ring,Proposed Future Site,Upper Harbor,15.25,43,0.37,moderate-,NA,NA,No,Yes,No,Yes
+44,55,Bushwick Inlet,Proposed Future Site,Upper Harbor,1.26,43,0.37,moderate-,NA,NA,Yes,Yes,No,Yes
+45,56,Bushwick Inlet,Proposed Future Site,Upper Harbor,2.2,45,0.37,low,NA,NA,Yes,No,No,Yes
+46,66,Paerdegat Basin,Design,Jamaica Bay,9.37,46,0.36,high,NA,Yes,Yes,No,No,Yes
+47,19,Lemon Creek,Proposed Future Site,Raritan Bay/Lower Harbor,3.52,47,0.33,moderate-,NA,Yes,Yes,No,No,Yes
+48,50,Four Sparrow,Proposed Future Site,Jamaica Bay,13.86,47,0.33,moderate-,Yes,Yes,Yes,No,No,Yes
+49,61,Dobbs Ferry,Proposed Future Site,Hudson River,52.66,49,0.33,low,NA,NA,Yes,No,No,No
+50,84,Flushing Bay,Design,Western Long Island Sound,52.34,50,0.32,high,NA,NA,Yes,No,No,Yes
+51,82,Flushing Bay,Design,Western Long Island Sound,51.99,51,0.31,high,NA,NA,Yes,No,No,Yes
+52,83,Flushing Bay,Design,Western Long Island Sound,51.84,51,0.31,high,NA,NA,Yes,No,No,Yes
+53,3,Bergen Basin,Proposed Future Site,Jamaica Bay,5.11,53,0.31,moderate,Yes,No,Yes,No,No,No
+54,44,Head of Bay - USACE,Proposed Future Site,Jamaica Bay,23.19,54,0.3,moderate,Yes,NA,No,No,No,Yes
+55,49,Fresh Creek Basin,Proposed Future Site,Jamaica Bay,8.5,55,0.29,high,NA,Yes,Yes,No,No,Yes
+56,47,Shirley Chisholm State Park,Proposed Future Site,Jamaica Bay,34.39,56,0.29,moderate+,Yes,NA,No,No,No,No
+57,87,Turtle Cove,Design,Western Long Island Sound,51.72,57,0.29,moderate,Yes,No,Yes,No,No,Yes
+58,57,Little Brother Island South,Proposed Future Site,Upper Harbor,11.63,58,0.29,moderate-,Yes,Yes,Yes,No,No,Yes
+59,14,Fort Totten,Proposed Future Site,Western Long Island Sound,3.03,59,0.28,moderate,NA,NA,Yes,No,No,Yes
+60,15,Fort Totten,Proposed Future Site,Western Long Island Sound,1.95,59,0.28,moderate,NA,NA,Yes,No,No,Yes
+61,43,Little Bay Park,Proposed Future Site,Western Long Island Sound,26.05,61,0.28,moderate-,NA,NA,Yes,No,No,Yes
+62,88,City Island,Design,Western Long Island Sound,2.5,61,0.28,moderate-,Yes,No,Yes,No,No,Yes
+63,62,Ivington - South,Proposed Future Site,Hudson River,105.92,63,0.28,low,NA,NA,Yes,No,No,No
+64,48,Shirley Chisholm State Park,Proposed Future Site,Jamaica Bay,43.22,64,0.27,moderate,Yes,NA,No,No,No,Yes
+65,1,Piermont - South,Proposed Future Site,Hudson River,143.38,65,0.27,low,NA,NA,Yes,No,No,No
+66,86,Pugsley Creek,Design,Western Long Island Sound,26.38,66,0.26,moderate,NA,NA,Yes,No,No,Yes
+67,0,Piermont - North,Proposed Future Site,Hudson River,260.38,67,0.25,low,NA,NA,Yes,No,No,No
+68,63,Irvington - North,Proposed Future Site,Hudson River,470.1,67,0.25,low,NA,NA,Yes,No,No,No
+69,20,Malba,Proposed Future Site,Western Long Island Sound,6.02,69,0.24,moderate,Yes,No,Yes,No,No,Yes
+70,85,Powell's Cove,Design,Western Long Island Sound,34.67,69,0.24,moderate,Yes,No,Yes,No,No,Yes
+71,89,City Island,Design,Western Long Island Sound,2.71,69,0.24,moderate,NA,NA,Yes,No,No,Yes
+72,32,Bush Terminal - USACE,Proposed Future Site,Upper Harbor,13.32,72,0.22,moderate+,NA,NA,No,No,No,No
+73,33,Bush Terminal - USACE,Proposed Future Site,Upper Harbor,12.13,72,0.22,moderate+,NA,NA,Yes,No,No,No
+74,34,Bush Terminal - USACE,Proposed Future Site,Upper Harbor,10.7,74,0.22,moderate,NA,NA,Yes,Yes,No,No
+75,35,Bush Terminal - USACE,Proposed Future Site,Upper Harbor,55.84,74,0.22,moderate,NA,NA,No,Yes,No,No
+76,72,Bush Terminal Park,Design,Upper Harbor,2.79,74,0.22,moderate,NA,NA,Yes,No,No,No
+77,99,Ossining,Proposed Future Site,Hudson River,146.21,77,0.2,low,NA,NA,Yes,No,No,No
+78,100,Earle,Proposed Future Site,Raritan Bay/Lower Harbor,,77,0.2,low,NA,NA,Yes,No,No,No

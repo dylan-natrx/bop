@@ -1,0 +1,55 @@
+import type { Metadata } from 'next'
+import { Fraunces, Inter, JetBrains_Mono } from 'next/font/google'
+import './globals.css'
+
+// Fraunces with optical sizing and italic support
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600'],
+  style: ['normal', 'italic'],
+  variable: '--font-fraunces',
+  display: 'swap',
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-jetbrains',
+  display: 'swap',
+})
+
+export const metadata: Metadata = {
+  title: "Restoring New York Harbor's Oyster Reefs — BOP × Natrx",
+  description:
+    'A site prioritization framework for Billion Oyster Project, developed in partnership with Natrx. 78 candidate sites across 2,604 acres of urban estuary.',
+  openGraph: {
+    title: "Restoring New York Harbor's Oyster Reefs",
+    description:
+      'Where should New York Harbor prioritize building oyster reefs? A data-driven framework for Billion Oyster Project.',
+    type: 'website',
+  },
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html
+      lang="en"
+      className={`${fraunces.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+    >
+      <body className="bg-bg-deep text-ivory font-sans font-light antialiased overflow-x-hidden">
+        {children}
+      </body>
+    </html>
+  )
+}
