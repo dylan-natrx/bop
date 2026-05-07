@@ -10,7 +10,7 @@ const config: Config = {
         'bg-deep': '#061321',
         'bg-mid': '#0E2236',
         'bg-soft': '#15314A',
-        land: '#0B1D2F',
+        land: '#04101C',
         'land-edge': 'rgba(70, 110, 145, 0.18)',
 
         // Teal spectrum
@@ -108,8 +108,8 @@ const config: Config = {
           to: { opacity: '1' },
         },
         pulseHalo: {
-          '0%, 100%': { transform: 'scale(1)', opacity: '0.6' },
-          '50%': { transform: 'scale(1.7)', opacity: '0' },
+          '0%, 100%': { transform: 'scale(1)', opacity: '0.85' },
+          '50%': { transform: 'scale(2.0)', opacity: '0' },
         },
         nudge: {
           '0%, 100%': { transform: 'translateX(0)' },

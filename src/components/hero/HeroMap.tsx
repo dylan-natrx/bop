@@ -5,7 +5,11 @@ import { motion } from 'framer-motion'
 import type { RankingSite } from '@/types/site'
 import type { RankingsFeatureCollection } from '@/types/geojson'
 import { Tooltip, SiteTooltipContent } from '@/components/ui/Tooltip'
-import { getSuitabilityColor, getSuitabilityOpacity } from '@/lib/colors'
+import {
+  getSuitabilityColor,
+  getSuitabilityOpacity,
+  getSuitabilityStroke,
+} from '@/lib/colors'
 import {
   calculateProjection,
   projectPoint,
@@ -13,6 +17,7 @@ import {
   DEFAULT_VIEW,
 } from '@/lib/projection'
 import { calculateCentroid } from '@/lib/data'
+import { COASTLINES } from '@/lib/land'
 
 // Place labels for geographic context
 const PLACE_LABELS = [
@@ -27,9 +32,11 @@ const PLACE_LABELS = [
 interface HeroMapProps {
   geojson: RankingsFeatureCollection
   sites: RankingSite[]
+  hoveredRanks: number[]
+  onHoverRanks: (ranks: number[]) => void
 }
 
-export function HeroMap({ geojson, sites }: HeroMapProps) {
+export function HeroMap({ geojson, sites, hoveredRanks, onHoverRanks }: HeroMapProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [hoveredSite, setHoveredSite] = useState<RankingSite | null>(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
@@ -93,6 +100,10 @@ export function HeroMap({ geojson, sites }: HeroMapProps) {
             <stop offset="60%" stopColor="#061321" stopOpacity="0.6" />
             <stop offset="100%" stopColor="#020A12" stopOpacity="1" />
           </radialGradient>
+          {/* Glow filter for top-ranked sites */}
+          <filter id="top-ranked-glow">
+            <feGaussianBlur stdDeviation="2" />
+          </filter>
         </defs>
 
         {/* Background */}
@@ -102,11 +113,24 @@ export function HeroMap({ geojson, sites }: HeroMapProps) {
           fill="url(#depthGrad)"
         />
 
-        {/* Grid lines */}
-        <g stroke="rgba(242,237,227,0.04)" strokeWidth="0.5">
-          <line x1="0" y1="225" x2="1100" y2="225" />
-          <line x1="0" y1="450" x2="1100" y2="450" />
-          <line x1="0" y1="675" x2="1100" y2="675" />
+        {/* Water layer - subtle teal tint */}
+        <rect
+          width={DEFAULT_VIEW.width}
+          height={DEFAULT_VIEW.height}
+          fill="rgba(19, 125, 118, 0.06)"
+        />
+
+        {/* Land masses */}
+        <g fill="#04101C" fillOpacity="0.85" stroke="rgba(70, 110, 145, 0.18)" strokeWidth="1">
+          {Object.entries(COASTLINES).map(([id, coords]) => {
+            const pathData = coords
+              .map((coord, i) => {
+                const { x, y } = projectPoint(coord[0], coord[1], projection)
+                return `${i === 0 ? 'M' : 'L'} ${x} ${y}`
+              })
+              .join(' ') + ' Z'
+            return <path key={id} d={pathData} />
+          })}
         </g>
 
         {/* Place labels */}
@@ -128,47 +152,99 @@ export function HeroMap({ geojson, sites }: HeroMapProps) {
         <g>
           {sitesWithCentroids.map((site) => {
             const { x, y } = projectPoint(site.lng, site.lat, projection)
-            const radius = calculateMarkerRadius(
+            const baseRadius = calculateMarkerRadius(
               site.Acres,
               acreageRange.min,
               acreageRange.max
             )
             const color = getSuitabilityColor(site.Score)
-            const opacity = getSuitabilityOpacity(site.Score)
-            const isDesign = site.Status === 'Design'
-            const isHovered = hoveredSite?.id === site.id
+            const baseOpacity = getSuitabilityOpacity(site.Score)
+            const strokeProps = getSuitabilityStroke(site.Score)
+            const isTopRanked = site.Rank <= 10
+            const isTooltipHovered = hoveredSite?.id === site.id
+            const isBelowThreshold = site.Score < 0.5
+
+            // Bidirectional hover state
+            const isRankHovered = hoveredRanks.includes(site.Rank)
+            const hasActiveHover = hoveredRanks.length > 0
+
+            // Top-ranked sites get 1.15× radius boost
+            const radius = isTopRanked ? baseRadius * 1.15 : baseRadius
+
+            // Determine opacity based on hover state
+            let opacity = baseOpacity
+            if (hasActiveHover && isTopRanked && !isRankHovered && !isBelowThreshold) {
+              // Dim non-hovered top-ranked sites
+              opacity = 0.5
+            }
+
+            // Scale up when hovered (either from panel or direct)
+            const isScaled = isRankHovered || isTooltipHovered
+            const displayRadius = isScaled ? radius * 1.3 : radius
 
             return (
               <g
                 key={site.id}
                 className="cursor-pointer"
                 onMouseMove={(e) => handleMouseMove(e, site)}
-                onMouseLeave={handleMouseLeave}
+                onMouseEnter={() => {
+                  if (isTopRanked) {
+                    onHoverRanks([site.Rank])
+                  }
+                }}
+                onMouseLeave={() => {
+                  handleMouseLeave()
+                  if (isTopRanked) {
+                    onHoverRanks([])
+                  }
+                }}
               >
-                {/* Pulsing halo for design sites */}
-                {isDesign && (
+                {/* Pulsing halo for top-ranked sites (rank 1-10) */}
+                {isTopRanked && (
                   <circle
                     cx={x}
                     cy={y}
-                    r={radius + 4}
+                    r={radius + 5}
                     fill="none"
                     stroke="#2BA8A0"
                     strokeWidth="1"
                     className="animate-pulse-halo"
-                    style={{ transformOrigin: `${x}px ${y}px` }}
+                    style={{
+                      transformOrigin: `${x}px ${y}px`,
+                      opacity: isRankHovered ? 1 : 0.85,
+                      transition: 'opacity 200ms ease',
+                    }}
                   />
                 )}
 
-                {/* Site marker */}
+                {/* Solid outer ring when hovered */}
+                {isTopRanked && isRankHovered && (
+                  <circle
+                    cx={x}
+                    cy={y}
+                    r={displayRadius + 3}
+                    fill="none"
+                    stroke={color}
+                    strokeWidth="2"
+                    style={{
+                      transition: 'all 200ms ease',
+                    }}
+                  />
+                )}
+
+                {/* Site marker with glow for top-ranked */}
                 <motion.circle
                   cx={x}
                   cy={y}
                   r={radius}
                   fill={color}
                   opacity={opacity}
+                  stroke={strokeProps.stroke}
+                  strokeWidth={strokeProps.strokeWidth}
+                  filter={isTopRanked ? 'url(#top-ranked-glow)' : undefined}
                   initial={{ r: 0 }}
-                  animate={{ r: isHovered ? radius * 1.3 : radius }}
-                  transition={{ duration: 0.28, ease: 'easeOut' }}
+                  animate={{ r: displayRadius }}
+                  transition={{ duration: 0.2, ease: 'easeOut' }}
                 />
               </g>
             )

@@ -18,16 +18,14 @@ export function Headline() {
           A single adult filters fifty gallons of water a day; their reefs build
           habitat for fish and crabs and dampen the wave energy that erodes
           shorelines. New York Harbor was once one of the most oyster-rich
-          estuaries on Earth. Bringing those reefs back is a multi-decade
-          project, and{' '}
-          <strong className="text-ivory font-normal">
-            the budgets to do it are finite
-          </strong>
-          . This framework gives Billion Oyster Project a defensible way to
-          prioritize which sites get funded first across{' '}
-          <strong className="text-ivory font-normal">78 candidate sites</strong>{' '}
-          and <strong className="text-ivory font-normal">2,604 acres</strong> of
-          urban estuary.
+          estuaries on Earth. Restoring those reefs is a multi-decade project,
+          and Billion Oyster Project has set a goal of{' '}
+          <strong className="text-ivory font-normal">one billion oysters by 2035</strong>.{' '}
+          <strong className="text-ivory font-normal">Budgets are finite</strong>.
+          This framework gives BOP a defensible way to prioritize which of{' '}
+          <strong className="text-ivory font-normal">78 candidate sites</strong> and{' '}
+          <strong className="text-ivory font-normal">2,604 acres</strong> of urban
+          estuary get funded first.
         </p>
       </AnimatedEntrance>
     </div>

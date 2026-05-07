@@ -44,7 +44,7 @@ export function Footer() {
             <span className="w-5 h-px bg-ivory relative animate-nudge after:content-[''] after:absolute after:right-0 after:-top-0.5 after:w-1 after:h-1 after:border-r after:border-b after:border-ivory after:rotate-[-45deg]" />
           </div>
           <div className="font-mono text-eyebrow uppercase text-ivory-faint">
-            § 02 — How the sites were scored
+            How the sites were scored
           </div>
         </div>
       </footer>

@@ -36,9 +36,24 @@ These have been worked through with the client (Natrx). Do not relitigate withou
 Set in Fraunces serif, the question "But where?" sits on its own line in italic, brand teal. The italicized question is the chromatic and intellectual punctuation of the headline. The headline does not use the words "at scale" anywhere; that framing was rejected as a generic ambition signal.
 
 ### Lede
-> Oysters are **ecological infrastructure**. A single adult filters fifty gallons of water a day; their reefs build habitat for fish and crabs and dampen the wave energy that erodes shorelines. New York Harbor was once one of the most oyster-rich estuaries on Earth. Bringing those reefs back is a multi-decade project, and **the budgets to do it are finite**. This framework gives Billion Oyster Project a defensible way to prioritize which sites get funded first across **78 candidate sites** and **2,604 acres** of urban estuary.
+> Oysters are **ecological infrastructure**. A single adult filters fifty gallons of water a day; their reefs build habitat for fish and crabs and dampen the wave energy that erodes shorelines. New York Harbor was once one of the most oyster-rich estuaries on Earth. Restoring those reefs is a multi-decade project, and Billion Oyster Project has set a goal of **one billion oysters by 2035**. **Budgets are finite**. This framework gives BOP a defensible way to prioritize which of **78 candidate sites** and **2,604 acres** of urban estuary get funded first.
 
 The phrase "ecological infrastructure" is intentional and rhymes with Natrx's tagline "Adaptive Infrastructure." Don't underline the connection. A savvy reader will catch it.
+
+### Section labeling
+
+Remove the § symbol from all reader-facing labels. Use named labels only:
+
+| Internal reference | Reader-facing label |
+|-------------------|---------------------|
+| § 01 | (no label, it's the hero) |
+| § 02 | "The Framework" or "How the sites were scored" |
+| § 03 | "Sites Already in Design" |
+| § 04 | "Explore Every Site" or "The Map" |
+| § 05 | "Site Detail" |
+| § 06 | "Methodology" |
+
+Keep numbered § references only in code comments, file names, and internal documentation (like this file). The reader never sees the § symbol.
 
 ### Tone Rules
 
@@ -51,13 +66,27 @@ The phrase "ecological infrastructure" is intentional and rhymes with Natrx's ta
 
 - **"Suitability score"** = the 0–1 water-quality composite (the rank-driving number). Do not call this "confidence."
 - **"Data support"** or **"monitoring coverage"** = the dimension Nick's pipeline calls "ConfidenceRule." Use this language in any public-facing context.
-- **"Active design pipeline"** = the 11 sites with `Status = "Design"`. Already moving toward construction.
+- **"Sites already in design"** = the 11 sites with `Status = "Design"`. Already moving toward construction. Avoid the word "pipeline."
 - **"Candidate sites"** = the full pool of 78.
 - **"Reef restoration"** = the work. Not "oyster farming," not "aquaculture." NYC's restored oysters are inedible by design (a century of urban runoff still leaves traces; the state prohibits harvest from restoration sites). The case for the work is ecological, not culinary.
 
-### "Confidence" handling — non-negotiable
+### Variable structure
 
-The framework's `ConfidenceRule` field describes how dense and recent the public monitoring data is near each site. It does NOT describe confidence in Natrx's framework or its outputs. Low data support means there are fewer monitoring stations near a site, which has nothing to do with Natrx's analytical capability.
+The framework distinguishes three analytical categories:
+
+1. **Water quality** (salinity, chlorophyll-a, dissolved oxygen) — drives the suitability score. These are the rank-driving variables, sourced from public monitoring stations.
+
+2. **Shoreline dynamics** (erosion, wave exposure, depth suitability) — come from Natrx Assess. Includes multi-year/historical satellite imagery and wind-driven wave modeling. Contextual layers, not score inputs.
+
+3. **Built environment** (CSO outfalls, MS4 outfalls, parkland proximity) — regulatory/infrastructure proximity flags. Also contextual layers.
+
+**The suitability score is built from water quality only.** The other six variables are contextual layers that inform site understanding but do not drive the ranking.
+
+### Data support and uncertainty — non-negotiable
+
+The framework surfaces uncertainty in the suitability score where the underlying monitoring data is sparse. The ranking honestly carries that uncertainty rather than hiding it. Frame this as **transparency about real-world data gaps, designed into the framework**.
+
+The `ConfidenceRule` field describes how dense and recent the public monitoring data is near each site. It does NOT describe confidence in Natrx's framework or its outputs. Low data support means there are fewer monitoring stations near a site, which has nothing to do with Natrx's analytical capability.
 
 **For the public tool**, rename the tiers:
 
@@ -67,9 +96,9 @@ The framework's `ConfidenceRule` field describes how dense and recent the public
 - Moderate- → **Limited**
 - Low → **Sparse**
 
-Internal scientific labels (Nick and Lise's High/Mod+/Mod/Mod-/Low) stay intact for any technical context. The press tool relabels the dimension as "Public-data support" or "Monitoring coverage" instead of "Confidence."
+Internal scientific labels (Nick and Lise's High/Mod+/Mod/Mod-/Low) stay intact for any technical context. The press tool relabels the dimension as "Data support" or "Monitoring coverage" instead of "Confidence."
 
-The narrative tension to surface (in a dedicated section, not the hero): top-ranked sites tend to fall in sparse-data areas because public monitoring is sparser there; design-pipeline sites tend to have robust data support. Frame this as a feature: BOP can target additional monitoring at high-priority candidates while moving forward at sites where data is dense. Two-track investment plan, not a flaw in the ranking. **Do not surface confidence/data support in the hero.** It belongs in a later section where there's room to teach it.
+The narrative tension to surface (in a dedicated section, not the hero): top-ranked sites tend to fall in sparse-data areas because public monitoring is sparser there; sites already in design tend to have robust data support. Frame this as a feature: BOP can target additional monitoring at high-priority candidates while moving forward at sites where data is dense. Two-track investment plan, not a flaw in the ranking. **Do not surface data support in the hero.** It belongs in a later section where there's room to teach it.
 
 ---
 
@@ -83,7 +112,7 @@ Use `hero_reference.html` as the canonical reference for the visual language. In
 --bg-deep:      #061321   /* page background, deepest navy */
 --bg-mid:       #0E2236
 --bg-soft:      #15314A
---land:         #0B1D2F   /* land mass fill on map */
+--land:         #04101C   /* land mass fill on map (darker than bg, recessive) */
 --land-edge:    rgba(70, 110, 145, 0.18)
 --teal:         #137D76   /* Natrx primary teal */
 --teal-bright:  #2BA8A0   /* accent, italic emphasis */
@@ -108,7 +137,7 @@ Suitability score color ramp: linear gradient from `#2A4A56` (0.20) through `#13
 - One choreographed entrance per section: text fades up first (~200–500ms delay, 1200ms duration), data/figure fades in next (~700–800ms delay), annotations draw last (~2200ms delay).
 - After entrance, the only sustained motion is the active-design pulse (2.6s ease-in-out, scale 1→1.7, opacity 0.6→0).
 - Hover states: 280ms ease, modest scale (~1.1×), no bounce, no rotation.
-- Scroll choreography for the layered reveal: scroll-tied camera moves on the map, layer fade-ins on the framework primer, focused/defocused state changes for the design pipeline narrative section. Use Framer Motion's `useScroll` + `useTransform` for tied motion, not raw scroll listeners.
+- Scroll choreography for the layered reveal: scroll-tied camera moves on the map, layer fade-ins on the framework primer, focused/defocused state changes for the design queue narrative section. Use Framer Motion's `useScroll` + `useTransform` for tied motion, not raw scroll listeners.
 
 ### Density and grid
 
@@ -127,12 +156,12 @@ Editorial dark mode, journalism-grade, scientifically serious. Pudding.cool, NYT
 
 Build all six sections as a single scrolling experience. Each section inherits the visual language above.
 
-### § 01 — Hero
-What `hero_reference.html` already shows. Topbar with partnership lockup. Headline + lede on the left, four-stat stack on the right. Two-column figure: left panel with Fig. 1 caption, top-ranked sites list, active-design summary, suitability legend; right panel with the SVG map (subtle NY Harbor coastline, place labels, 78 site centroids colored by suitability, design-pipeline halos pulsing). Footer with logo lockup and methodology line.
+### § 01 — Hero (no reader-facing label needed)
+What `hero_reference.html` already shows. Topbar with partnership lockup. Headline + lede on the left, four-stat stack on the right (78 sites, 2,604 ac, 1 billion goal, 9 variables). Two-column figure: left panel with Fig. 1 caption, top-ranked sites list, suitability legend; right panel with the SVG map (subtle NY Harbor coastline, place labels, 78 site centroids colored by suitability, top-ranked halos pulsing). Footer with logo lockup and methodology line.
 
 Port the SVG map from `hero_reference.html` directly. The hero is finalized. Don't redesign it.
 
-### § 02 — How the sites were scored (framework primer)
+### § 02 — The Framework (reader-facing: "How the sites were scored")
 Teach the reader how the framework works in 4–5 progressive panels, each with a small data visualization that demonstrates the variable being introduced. Suggested progression:
 
 1. **The question.** Restated: 78 sites, finite budget, no consistent way to compare across them before this work.
@@ -141,9 +170,15 @@ Teach the reader how the framework works in 4–5 progressive panels, each with 
 4. **Three physical/built-environment flags.** Wave exposure, depth suitability, shoreline erosion (physical) plus near-CSO, near-MS4, near-park (built environment). Frame these as constraints rather than scores.
 5. **The output.** A site's rank is the composite score plus the flags. Each site gets a one-line readout.
 
+**Required content for § 02:**
+- The three-category structure (water quality, shoreline dynamics, built environment) with explanation of how each variable was measured
+- The "10 years ago" callout: this analysis wasn't possible a decade ago because public monitoring expansion and satellite imagery resolution have only recently reached sufficient density
+- The 30+ sources detail with the rigor of excluding insufficient-data variables (turbidity, total suspended sediments were considered but dropped for data gaps)
+- The dual-aggregation cross-check for ranking consistency (two different aggregation methods produced similar rankings, validating the approach)
+
 Use Framer Motion for the cross-fades. Avoid layer toggles in this section; this is teaching, not exploration.
 
-### § 03 — The design pipeline narrative
+### § 03 — Sites Already in Design (reader-facing: "Sites Already in Design")
 The most important narrative section. Use a horizontally scrolling or scroll-pinned layout to walk through:
 
 - 11 sites are already in active design, totaling 288 acres
@@ -152,14 +187,14 @@ The most important narrative section. Use a horizontally scrolling or scroll-pin
 - Their data support is mostly Robust or Strong, where the top-ranked sites tend toward Sparse
 - This is the "two-track investment" insight: build first where the data is dense, monitor where you want to build big
 
-Use a side-by-side comparison treatment: top-ranked sites on one side (sparse data), design pipeline on the other (robust data). Make the inversion visible. Land on the synthesis: the framework gives BOP both a construction queue and a monitoring investment plan.
+Use a side-by-side comparison treatment: top-ranked sites on one side (sparse data), sites already in design on the other (robust data). Make the inversion visible. Land on the synthesis: the framework gives BOP both a construction queue and a monitoring investment plan.
 
-### § 04 — Deep-dive interactive map
+### § 04 — The Map (reader-facing: "Explore Every Site")
 The working tool. Mapbox GL JS with a custom Natrx-skinned dark style (start from a Mapbox Standard or Light dark base, restyle to match `hero_reference.html`'s palette). Render full site polygons (not just centroids) from `BOP_Feb2026_Pipeline_Rankings.geojson`.
 
 **Layer toggles** (left rail or floating control panel):
 - Suitability score (default on, choropleth fill)
-- Active design pipeline (pulsing accent on the 11 Design sites)
+- Sites already in design (pulsing accent on the 11 Design sites)
 - Data support / monitoring coverage (the renamed confidence tiers, choropleth)
 - Wave exposure (categorical: Yes/No/NA)
 - Erosion (Yes/No/NA)
@@ -170,7 +205,7 @@ The working tool. Mapbox GL JS with a custom Natrx-skinned dark style (start fro
 
 Pan, zoom, hover, click. Click a polygon → site detail panel slides in.
 
-### § 05 — Site detail panel
+### § 05 — Site Detail (reader-facing: "Site Detail")
 Triggered by click in § 04, also linkable via URL hash (`#/site/27` for Arthur Kill). Single-site spread:
 
 - Site name and waterbody
@@ -185,7 +220,7 @@ Triggered by click in § 04, also linkable via URL hash (`#/site/27` for Arthur 
 
 Per-site PDF is a high-value deliverable for journalists. Make it look print-quality, single page, Natrx-branded.
 
-### § 06 — Methodology drawer
+### § 06 — Methodology (reader-facing: "Methodology")
 A collapsible/scrollable section at the bottom for readers who want the full technical story. Source the content from `BOP_Master_Document_Final.pdf`. Cover:
 
 - The 26-week engagement scope
@@ -194,6 +229,13 @@ A collapsible/scrollable section at the bottom for readers who want the full tec
 - How data support tiers are computed (bootstrap CIs + nearest-station distance)
 - The wave-fetch model and 1m-resolution shoreline change analysis (highlight Natrx Assess-generated layers as the proprietary contribution)
 - Caveats and limitations the framework surfaces
+
+**Required content for § 06:**
+- The four-workshop co-creation story: framework was built collaboratively with BOP over multiple working sessions, not handed down
+- BOP's local expertise shaping variable selection: they brought decades of field knowledge that informed which variables mattered
+- The two aggregation methods cross-check: ranking consistency was validated by running two different aggregation approaches
+- The framework's adaptability to new data: BOP plans more monitoring this summer; the framework can re-run with updated inputs
+- The precision that the framework is repeatable for BOP but not directly portable to other harbors without recalibration to local conditions
 
 Footer with full credits, partnership lockup, and links to BOP and Natrx.
 
@@ -268,3 +310,31 @@ The user is a PR/comms strategist, not a developer. They have strong design and 
 - Keep deploy steps simple and interactive (so the user can see and approve each deploy)
 
 When in doubt, ask. The strategic decisions in this brief took dozens of iterations to lock. Don't relitigate them, but do flag if implementation reveals a real tension.
+
+---
+
+## Project Documentation
+
+For implementation details and session continuity, see:
+
+- **`docs/SPEC_NOTES.md`** - Technical specifications, architecture, implementation details
+- **`docs/ISSUES_AND_SOLUTIONS.md`** - Problems encountered and how they were solved
+- **`docs/PROJECT_STATUS.md`** - Current completion status, checklists, next steps
+- **`docs/SESSION_HANDOFF.md`** - Quick context for resuming work
+
+### Current State (§ 01 Hero)
+
+The hero section is complete with:
+- Custom SVG map using Mercator projection (not Mapbox)
+- Bidirectional hover state between FigurePanel and HeroMap
+- Top-ranked sites (1-10) with pulsing halos and glow effects
+- Suitability coloring with 0.5 threshold (gradient+stroke above, muted below)
+- Extended coastlines with natural-looking edges
+- Water layer with subtle teal tint, land darker than background
+
+Key implementation files:
+- `src/lib/colors.ts` - Suitability color functions, threshold logic
+- `src/lib/land.ts` - Coastline polygon coordinates
+- `src/lib/projection.ts` - Mercator projection parameters
+- `src/components/hero/HeroMap.tsx` - SVG map rendering
+- `src/components/hero/FigurePanel.tsx` - Left panel with rank mappings

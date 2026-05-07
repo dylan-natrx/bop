@@ -29,6 +29,9 @@ export const metadata: Metadata = {
   title: "Restoring New York Harbor's Oyster Reefs — BOP × Natrx",
   description:
     'A site prioritization framework for Billion Oyster Project, developed in partnership with Natrx. 78 candidate sites across 2,604 acres of urban estuary.',
+  icons: {
+    icon: '/images/favicon.png',
+  },
   openGraph: {
     title: "Restoring New York Harbor's Oyster Reefs",
     description:

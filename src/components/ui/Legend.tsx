@@ -29,16 +29,16 @@ export function SuitabilityLegend({ className = '' }: LegendProps) {
 }
 
 /**
- * Active design pulse indicator for legends
+ * Top-ranked pulse indicator for legends
  */
-export function DesignPulseLegend({ className = '' }: LegendProps) {
+export function TopRankedLegend({ className = '' }: LegendProps) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       <div className="relative w-2.5 h-2.5 flex-shrink-0">
         <div className="absolute inset-0 rounded-full bg-teal-bright" />
         <div className="absolute -inset-0.5 rounded-full border border-teal-bright animate-pulse-halo" />
       </div>
-      <span className="text-body-sm text-ivory-dim">Active design</span>
+      <span className="text-body-sm text-ivory-dim">Top-ranked (1-10)</span>
     </div>
   )
 }

@@ -25,8 +25,8 @@ export interface ViewDimensions {
 export const DEFAULT_VIEW: ViewDimensions = {
   width: 1100,
   height: 900,
-  padX: 0.04,
-  padY: 0.06,
+  padX: 0.02,
+  padY: 0.02,
 }
 
 /**

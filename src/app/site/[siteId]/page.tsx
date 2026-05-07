@@ -32,7 +32,7 @@ export default async function SitePage({ params }: SitePageProps) {
 }
 
 async function SiteDetailContent({ siteId }: { siteId: string }) {
-  // This will be implemented in § 05
+  // This will be fully implemented in Site Detail section (§ 05)
   // For now, just show a placeholder
   return (
     <div className="border border-rule rounded-card p-8">
@@ -40,7 +40,7 @@ async function SiteDetailContent({ siteId }: { siteId: string }) {
         Site Detail: {siteId}
       </h1>
       <p className="text-ivory-dim">
-        Full site detail panel will be implemented in § 05.
+        Full site detail panel coming soon.
       </p>
       <p className="text-ivory-faint mt-4 text-sm">
         This page loads data from /data/sites/{siteId}.json

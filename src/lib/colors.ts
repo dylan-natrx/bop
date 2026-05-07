@@ -13,8 +13,8 @@ const SUITABILITY_GRADIENT = {
   high: { score: 0.87, color: [111, 227, 208] as const }, // #6FE3D0 at 0.87
 }
 
-// Muted color for scores < 0.50
-const BELOW_THRESHOLD_COLOR = 'rgba(42, 74, 86, 0.45)'
+// Flat muted color for scores < 0.50 (no gradient, no stroke)
+const BELOW_THRESHOLD_COLOR = 'rgba(80, 105, 115, 0.32)'
 
 // Threshold for gradient vs muted treatment
 const THRESHOLD = 0.5
@@ -92,5 +92,26 @@ export const SUITABILITY_GRADIENT_CSS =
  * Sites below threshold render at reduced opacity
  */
 export function getSuitabilityOpacity(score: number): number {
-  return score >= THRESHOLD ? 1 : 0.6
+  return score >= THRESHOLD ? 1 : 1
+}
+
+/**
+ * Get stroke properties for a site marker
+ * Sites above threshold get a 1.5px stroke; below threshold get none
+ */
+export function getSuitabilityStroke(score: number): {
+  stroke: string | undefined
+  strokeWidth: number
+} {
+  if (score >= THRESHOLD) {
+    // Get the fill color and use a slightly brighter version for stroke
+    return {
+      stroke: 'rgba(111, 227, 208, 0.5)',
+      strokeWidth: 1.5,
+    }
+  }
+  return {
+    stroke: undefined,
+    strokeWidth: 0,
+  }
 }

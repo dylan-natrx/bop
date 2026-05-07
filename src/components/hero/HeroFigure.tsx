@@ -1,22 +1,20 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useState, useCallback } from 'react'
 import { AnimatedEntrance } from '@/components/ui/AnimatedEntrance'
 import { FigurePanel } from './FigurePanel'
 import { HeroMap } from './HeroMap'
 import { useRankingsData } from '@/hooks/useRankingsData'
-import { getDesignPipelineSites } from '@/lib/data'
 
 export function HeroFigure() {
   const { geojson, sites, isLoading, error } = useRankingsData()
 
-  // Calculate design pipeline stats
-  const designStats = useMemo(() => {
-    if (!sites.length) return { count: 0, acreage: 0 }
-    const designSites = getDesignPipelineSites(sites)
-    const acreage = designSites.reduce((sum, site) => sum + site.Acres, 0)
-    return { count: designSites.length, acreage }
-  }, [sites])
+  // Bidirectional hover state shared between panel and map
+  const [hoveredRanks, setHoveredRanks] = useState<number[]>([])
+
+  const handleHoverRanks = useCallback((ranks: number[]) => {
+    setHoveredRanks(ranks)
+  }, [])
 
   if (error) {
     return (
@@ -32,8 +30,8 @@ export function HeroFigure() {
         <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] min-h-[720px]">
           {/* Left panel */}
           <FigurePanel
-            designSiteCount={designStats.count}
-            designAcreage={designStats.acreage}
+            hoveredRanks={hoveredRanks}
+            onHoverRanks={handleHoverRanks}
           />
 
           {/* Right panel: Map */}
@@ -43,7 +41,12 @@ export function HeroFigure() {
                 <div className="animate-pulse">Loading map...</div>
               </div>
             ) : (
-              <HeroMap geojson={geojson} sites={sites} />
+              <HeroMap
+                geojson={geojson}
+                sites={sites}
+                hoveredRanks={hoveredRanks}
+                onHoverRanks={handleHoverRanks}
+              />
             )}
           </div>
         </div>

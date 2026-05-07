@@ -45,7 +45,7 @@ export const MAP_CONFIG = {
   ] as [[number, number], [number, number]],
 }
 
-// Hero stats (3 stats per CLAUDE.md refinement)
+// Hero stats (4 stats per Lise interview updates)
 export const HERO_STATS = [
   {
     value: 78,
@@ -55,14 +55,19 @@ export const HERO_STATS = [
   {
     value: 2604,
     unit: 'ac',
-    label: 'Total pipeline footprint',
+    label: 'Total candidate footprint',
     qualifier: 'Combined area if every candidate were built out',
   },
   {
-    value: 6,
-    label: 'Environmental variables',
+    displayValue: '1 billion',
+    label: 'Oyster goal by 2035',
+    qualifier: "Billion Oyster Project's stated target for New York Harbor",
+  },
+  {
+    value: 9,
+    label: 'Environmental variables synthesized',
     qualifier:
-      'Salinity, chlorophyll, oxygen, depth, wave exposure, shoreline change',
+      'Salinity, chlorophyll, oxygen, depth, wave exposure, shoreline change, plus three infrastructure flags',
   },
 ] as const
 
