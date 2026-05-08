@@ -1,33 +1,35 @@
 'use client'
 
-import { useRef, useState, useMemo, useCallback } from 'react'
-import { motion } from 'framer-motion'
+import { useEffect, useRef, useState, useMemo } from 'react'
+import mapboxgl, { type Map as MapboxMap, type Marker } from 'mapbox-gl'
+import 'mapbox-gl/dist/mapbox-gl.css'
+
 import type { RankingSite } from '@/types/site'
 import type { RankingsFeatureCollection } from '@/types/geojson'
 import { Tooltip, SiteTooltipContent } from '@/components/ui/Tooltip'
-import {
-  getSuitabilityColor,
-  getSuitabilityOpacity,
-  getSuitabilityStroke,
-} from '@/lib/colors'
-import {
-  calculateProjection,
-  projectPoint,
-  calculateMarkerRadius,
-  DEFAULT_VIEW,
-} from '@/lib/projection'
 import { calculateCentroid } from '@/lib/data'
-import { COASTLINES } from '@/lib/land'
+import { calculateMarkerRadius } from '@/lib/projection'
 
-// Place labels for geographic context
-const PLACE_LABELS = [
-  { name: 'MANHATTAN', x: 0.38, y: 0.35 },
-  { name: 'BROOKLYN', x: 0.52, y: 0.52 },
-  { name: 'STATEN ISLAND', x: 0.22, y: 0.68 },
-  { name: 'QUEENS', x: 0.62, y: 0.32 },
-  { name: 'BRONX', x: 0.52, y: 0.18 },
-  { name: 'NEW JERSEY', x: 0.12, y: 0.40 },
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN ?? ''
+
+const HARBOR_BOUNDS: [[number, number], [number, number]] = [
+  [-74.30, 40.42],
+  [-73.70, 41.05],
 ]
+
+const PLACE_LABELS: { name: string; lng: number; lat: number }[] = [
+  { name: 'MANHATTAN', lng: -73.97, lat: 40.78 },
+  { name: 'BROOKLYN', lng: -73.94, lat: 40.65 },
+  { name: 'QUEENS', lng: -73.81, lat: 40.73 },
+  { name: 'BRONX', lng: -73.87, lat: 40.85 },
+  { name: 'STATEN ISLAND', lng: -74.16, lat: 40.58 },
+  { name: 'NEW JERSEY', lng: -74.18, lat: 40.71 },
+]
+
+interface SiteCentroidProps extends RankingSite {
+  _radius: number
+  _isTop10: 0 | 1
+}
 
 interface HeroMapProps {
   geojson: RankingsFeatureCollection
@@ -36,223 +38,426 @@ interface HeroMapProps {
   onHoverRanks: (ranks: number[]) => void
 }
 
-export function HeroMap({ geojson, sites, hoveredRanks, onHoverRanks }: HeroMapProps) {
+export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const mapNodeRef = useRef<HTMLDivElement>(null)
+  const mapRef = useRef<MapboxMap | null>(null)
+  const haloMarkersRef = useRef<Marker[]>([])
+  const labelMarkersRef = useRef<Marker[]>([])
+  const hoveredFeatureIdRef = useRef<string | number | null>(null)
+
   const [hoveredSite, setHoveredSite] = useState<RankingSite | null>(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
 
-  // Calculate site centroids and projection
-  const sitesWithCentroids = useMemo(() => {
-    return geojson.features.map((feature) => {
+  // Build a centroid-based GeoJSON with computed properties
+  const sitesGeoJson = useMemo(() => {
+    const validSites = geojson.features.filter((f) => {
+      const acres = (f.properties as RankingSite).Acres
+      return typeof acres === 'number' && acres > 0
+    })
+    const acres = validSites.map((f) => (f.properties as RankingSite).Acres)
+    const minAcres = Math.min(...acres)
+    const maxAcres = Math.max(...acres)
+
+    const features = validSites.map((feature) => {
       const props = feature.properties as RankingSite
       const centroid = calculateCentroid(
         feature.geometry.coordinates as number[][][][] | number[][][]
       )
-      return {
+      const baseRadius = calculateMarkerRadius(
+        props.Acres,
+        minAcres,
+        maxAcres,
+        4,
+        9
+      )
+      const isTop10 = props.Rank <= 10
+      const data: SiteCentroidProps = {
         ...props,
-        lng: centroid[0],
-        lat: centroid[1],
+        _radius: isTop10 ? baseRadius * 1.15 : baseRadius,
+        _isTop10: isTop10 ? 1 : 0,
+      }
+      return {
+        type: 'Feature' as const,
+        id: Number(props.id),
+        geometry: { type: 'Point' as const, coordinates: centroid },
+        properties: data,
       }
     })
+
+    return {
+      type: 'FeatureCollection' as const,
+      features,
+    }
   }, [geojson])
 
-  // Calculate projection parameters
-  const projection = useMemo(() => {
-    return calculateProjection(sitesWithCentroids)
-  }, [sitesWithCentroids])
+  // Stable callback for hover propagation up to FigurePanel
+  const onHoverRanksRef = useRef(onHoverRanks)
+  useEffect(() => {
+    onHoverRanksRef.current = onHoverRanks
+  }, [onHoverRanks])
 
-  // Calculate marker radius range
-  const acreageRange = useMemo(() => {
-    const acres = sites.map((s) => s.Acres)
-    return { min: Math.min(...acres), max: Math.max(...acres) }
-  }, [sites])
+  // Initialize map once
+  useEffect(() => {
+    if (!mapNodeRef.current || mapRef.current) return
+    if (!MAPBOX_TOKEN) {
+      console.warn('Missing NEXT_PUBLIC_MAPBOX_TOKEN')
+      return
+    }
 
-  // Handle mouse events
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent, site: RankingSite) => {
-      const rect = containerRef.current?.getBoundingClientRect()
-      if (rect) {
-        setMousePos({
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top,
+    mapboxgl.accessToken = MAPBOX_TOKEN
+
+    const map = new mapboxgl.Map({
+      container: mapNodeRef.current,
+      style: {
+        version: 8,
+        name: 'BOP Hero Dark',
+        sources: {
+          'land-nyc': {
+            type: 'geojson',
+            data: '/data/nyc-boroughs.geojson',
+          },
+          'land-nj': {
+            type: 'geojson',
+            data: '/data/nj-shoreline.geojson',
+          },
+          'land-westchester': {
+            type: 'geojson',
+            data: '/data/westchester.geojson',
+          },
+          sites: {
+            type: 'geojson',
+            data: sitesGeoJson,
+            promoteId: 'id',
+          },
+        },
+        layers: [
+          {
+            id: 'background',
+            type: 'background',
+            paint: { 'background-color': '#061321' },
+          },
+          {
+            id: 'water-tint',
+            type: 'background',
+            paint: { 'background-color': 'rgba(19, 125, 118, 0.06)' },
+          },
+          {
+            id: 'land-westchester-fill',
+            type: 'fill',
+            source: 'land-westchester',
+            paint: {
+              'fill-color': '#04101C',
+              'fill-opacity': 0.92,
+            },
+          },
+          {
+            id: 'land-nj-fill',
+            type: 'fill',
+            source: 'land-nj',
+            paint: {
+              'fill-color': '#04101C',
+              'fill-opacity': 0.92,
+            },
+          },
+          {
+            id: 'land-nyc-fill',
+            type: 'fill',
+            source: 'land-nyc',
+            paint: {
+              'fill-color': '#04101C',
+              'fill-opacity': 0.92,
+            },
+          },
+          {
+            id: 'land-nyc-edge',
+            type: 'line',
+            source: 'land-nyc',
+            paint: {
+              'line-color': 'rgba(70, 110, 145, 0.18)',
+              'line-width': 1,
+            },
+          },
+          {
+            id: 'land-nj-edge',
+            type: 'line',
+            source: 'land-nj',
+            paint: {
+              'line-color': 'rgba(70, 110, 145, 0.18)',
+              'line-width': 1,
+            },
+          },
+          {
+            id: 'land-westchester-edge',
+            type: 'line',
+            source: 'land-westchester',
+            paint: {
+              'line-color': 'rgba(70, 110, 145, 0.18)',
+              'line-width': 1,
+            },
+          },
+          {
+            id: 'sites-circle',
+            type: 'circle',
+            source: 'sites',
+            paint: {
+              'circle-radius': [
+                'case',
+                ['boolean', ['feature-state', 'hover'], false],
+                ['*', ['get', '_radius'], 1.3],
+                ['get', '_radius'],
+              ],
+              'circle-color': [
+                'case',
+                ['<', ['get', 'Score'], 0.5],
+                'rgba(80, 105, 115, 0.85)',
+                [
+                  'interpolate',
+                  ['linear'],
+                  ['get', 'Score'],
+                  0.5,
+                  '#2A4A56',
+                  0.685,
+                  '#137D76',
+                  0.87,
+                  '#6FE3D0',
+                ],
+              ],
+              'circle-stroke-color': [
+                'case',
+                ['<', ['get', 'Score'], 0.5],
+                'rgba(0, 0, 0, 0)',
+                'rgba(111, 227, 208, 0.55)',
+              ],
+              'circle-stroke-width': [
+                'case',
+                ['<', ['get', 'Score'], 0.5],
+                0,
+                1.5,
+              ],
+              'circle-opacity': [
+                'case',
+                ['<', ['get', 'Score'], 0.5],
+                0.45,
+                1,
+              ],
+              'circle-blur': [
+                'case',
+                ['==', ['get', '_isTop10'], 1],
+                0.18,
+                0,
+              ],
+            },
+          },
+        ],
+      },
+      bounds: HARBOR_BOUNDS,
+      fitBoundsOptions: {
+        padding: { top: 20, right: 24, bottom: 36, left: 24 },
+      },
+      attributionControl: false,
+      interactive: false, // hero is for looking, not panning
+      doubleClickZoom: false,
+      dragPan: false,
+      dragRotate: false,
+      scrollZoom: false,
+      keyboard: false,
+      touchZoomRotate: false,
+      pitchWithRotate: false,
+      maxZoom: 13,
+    })
+
+    mapRef.current = map
+
+    map.on('load', () => {
+      // Place borough labels as DOM markers
+      labelMarkersRef.current = PLACE_LABELS.map((label) => {
+        const el = document.createElement('div')
+        el.textContent = label.name
+        el.style.cssText = `
+          font-family: var(--font-jetbrains), ui-monospace, monospace;
+          font-size: 9px;
+          letter-spacing: 0.22em;
+          color: rgba(110, 104, 89, 0.78);
+          text-transform: uppercase;
+          pointer-events: none;
+          white-space: nowrap;
+          user-select: none;
+        `
+        return new mapboxgl.Marker({ element: el, anchor: 'center' })
+          .setLngLat([label.lng, label.lat])
+          .addTo(map)
+      })
+
+      // Top-10 pulsing halos as DOM markers
+      const top10 = sitesGeoJson.features.filter(
+        (f) => f.properties._isTop10 === 1
+      )
+      haloMarkersRef.current = top10.map((feature) => {
+        const props = feature.properties
+        const haloDiameter = props._radius * 2 + 14
+
+        const halo = document.createElement('div')
+        halo.className = 'animate-pulse-halo'
+        halo.style.cssText = `
+          width: ${haloDiameter}px;
+          height: ${haloDiameter}px;
+          border-radius: 50%;
+          border: 1px solid #2BA8A0;
+          pointer-events: none;
+          will-change: transform, opacity;
+        `
+        halo.dataset.rank = String(props.Rank)
+
+        return new mapboxgl.Marker({
+          element: halo,
+          anchor: 'center',
         })
-      }
-      setHoveredSite(site)
-    },
-    []
-  )
+          .setLngLat(feature.geometry.coordinates as [number, number])
+          .addTo(map)
+      })
 
-  const handleMouseLeave = useCallback(() => {
-    setHoveredSite(null)
+      // Hover handling on the sites circle layer
+      map.on('mousemove', 'sites-circle', (e) => {
+        if (!e.features?.length) return
+        map.getCanvas().style.cursor = 'pointer'
+
+        const feature = e.features[0]
+        const props = feature.properties as unknown as SiteCentroidProps
+
+        // Update feature-state on the hovered point
+        const featureId = feature.id
+        if (
+          featureId !== undefined &&
+          hoveredFeatureIdRef.current !== featureId
+        ) {
+          if (hoveredFeatureIdRef.current !== null) {
+            map.setFeatureState(
+              { source: 'sites', id: hoveredFeatureIdRef.current },
+              { hover: false }
+            )
+          }
+          map.setFeatureState(
+            { source: 'sites', id: featureId },
+            { hover: true }
+          )
+          hoveredFeatureIdRef.current = featureId
+        }
+
+        // Update tooltip position
+        const containerRect = containerRef.current?.getBoundingClientRect()
+        if (containerRect) {
+          setMousePos({
+            x: e.originalEvent.clientX - containerRect.left,
+            y: e.originalEvent.clientY - containerRect.top,
+          })
+        }
+
+        setHoveredSite(props as unknown as RankingSite)
+
+        // Notify parent for bidirectional highlight when top-10
+        if (props._isTop10 === 1) {
+          onHoverRanksRef.current([Number(props.Rank)])
+        }
+      })
+
+      map.on('mouseleave', 'sites-circle', () => {
+        map.getCanvas().style.cursor = ''
+        if (hoveredFeatureIdRef.current !== null) {
+          map.setFeatureState(
+            { source: 'sites', id: hoveredFeatureIdRef.current },
+            { hover: false }
+          )
+          hoveredFeatureIdRef.current = null
+        }
+        setHoveredSite(null)
+        onHoverRanksRef.current([])
+      })
+    })
+
+    // Resize handling
+    const resizeObserver = new ResizeObserver(() => {
+      map.resize()
+    })
+    if (mapNodeRef.current) {
+      resizeObserver.observe(mapNodeRef.current)
+    }
+
+    return () => {
+      resizeObserver.disconnect()
+      haloMarkersRef.current.forEach((m) => m.remove())
+      haloMarkersRef.current = []
+      labelMarkersRef.current.forEach((m) => m.remove())
+      labelMarkersRef.current = []
+      map.remove()
+      mapRef.current = null
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // Push updated site data through the existing source when geojson changes
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map) return
+    const source = map.getSource('sites') as
+      | mapboxgl.GeoJSONSource
+      | undefined
+    if (source) {
+      source.setData(sitesGeoJson as unknown as GeoJSON.FeatureCollection)
+    }
+  }, [sitesGeoJson])
+
+  // Bidirectional hover: when FigurePanel lifts a rank, light up corresponding site
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !map.isStyleLoaded()) return
+
+    const targetRanks = new Set(hoveredRanks)
+    sitesGeoJson.features.forEach((feature) => {
+      const id = feature.id
+      const rank = feature.properties.Rank
+      if (id === undefined) return
+      const shouldHover = targetRanks.has(rank)
+      map.setFeatureState({ source: 'sites', id }, { hover: shouldHover })
+    })
+
+    // Dim non-hovered top-10 halos when something is hovered
+    haloMarkersRef.current.forEach((marker) => {
+      const el = marker.getElement()
+      const rank = Number(el.dataset.rank)
+      if (hoveredRanks.length === 0) {
+        el.style.opacity = ''
+      } else if (targetRanks.has(rank)) {
+        el.style.opacity = '1'
+      } else {
+        el.style.opacity = '0.32'
+      }
+    })
+
+    return () => {
+      // Clear synthesized hover state when ranks change
+      sitesGeoJson.features.forEach((feature) => {
+        const id = feature.id
+        if (id !== undefined) {
+          map.setFeatureState({ source: 'sites', id }, { hover: false })
+        }
+      })
+    }
+  }, [hoveredRanks, sitesGeoJson])
+
+  // Token guard
+  if (!MAPBOX_TOKEN) {
+    return (
+      <div className="flex items-center justify-center w-full h-full text-ivory-dim text-body-sm font-mono px-6 text-center">
+        Missing NEXT_PUBLIC_MAPBOX_TOKEN. Add it to .env.local and restart the dev server.
+      </div>
+    )
+  }
+
   return (
-    <div ref={containerRef} className="relative w-full h-full min-h-[720px]">
-      <svg
-        viewBox={`0 0 ${DEFAULT_VIEW.width} ${DEFAULT_VIEW.height}`}
-        preserveAspectRatio="xMidYMid meet"
-        className="w-full h-full"
-      >
-        <defs>
-          {/* Depth gradient for ocean background */}
-          <radialGradient id="depthGrad" cx="50%" cy="55%" r="65%">
-            <stop offset="0%" stopColor="#0d2640" stopOpacity="0.9" />
-            <stop offset="60%" stopColor="#061321" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#020A12" stopOpacity="1" />
-          </radialGradient>
-          {/* Glow filter for top-ranked sites */}
-          <filter id="top-ranked-glow">
-            <feGaussianBlur stdDeviation="2" />
-          </filter>
-        </defs>
+    <div ref={containerRef} className="relative w-full h-full min-h-[560px]">
+      <div ref={mapNodeRef} className="absolute inset-0" />
 
-        {/* Background */}
-        <rect
-          width={DEFAULT_VIEW.width}
-          height={DEFAULT_VIEW.height}
-          fill="url(#depthGrad)"
-        />
-
-        {/* Water layer - subtle teal tint */}
-        <rect
-          width={DEFAULT_VIEW.width}
-          height={DEFAULT_VIEW.height}
-          fill="rgba(19, 125, 118, 0.06)"
-        />
-
-        {/* Land masses */}
-        <g fill="#04101C" fillOpacity="0.85" stroke="rgba(70, 110, 145, 0.18)" strokeWidth="1">
-          {Object.entries(COASTLINES).map(([id, coords]) => {
-            const pathData = coords
-              .map((coord, i) => {
-                const { x, y } = projectPoint(coord[0], coord[1], projection)
-                return `${i === 0 ? 'M' : 'L'} ${x} ${y}`
-              })
-              .join(' ') + ' Z'
-            return <path key={id} d={pathData} />
-          })}
-        </g>
-
-        {/* Place labels */}
-        <g>
-          {PLACE_LABELS.map((label) => (
-            <text
-              key={label.name}
-              x={label.x * DEFAULT_VIEW.width}
-              y={label.y * DEFAULT_VIEW.height}
-              className="font-mono text-[9px] uppercase fill-ivory-faint opacity-65"
-              style={{ letterSpacing: '0.22em' }}
-            >
-              {label.name}
-            </text>
-          ))}
-        </g>
-
-        {/* Site markers */}
-        <g>
-          {sitesWithCentroids.map((site) => {
-            const { x, y } = projectPoint(site.lng, site.lat, projection)
-            const baseRadius = calculateMarkerRadius(
-              site.Acres,
-              acreageRange.min,
-              acreageRange.max
-            )
-            const color = getSuitabilityColor(site.Score)
-            const baseOpacity = getSuitabilityOpacity(site.Score)
-            const strokeProps = getSuitabilityStroke(site.Score)
-            const isTopRanked = site.Rank <= 10
-            const isTooltipHovered = hoveredSite?.id === site.id
-            const isBelowThreshold = site.Score < 0.5
-
-            // Bidirectional hover state
-            const isRankHovered = hoveredRanks.includes(site.Rank)
-            const hasActiveHover = hoveredRanks.length > 0
-
-            // Top-ranked sites get 1.15× radius boost
-            const radius = isTopRanked ? baseRadius * 1.15 : baseRadius
-
-            // Determine opacity based on hover state
-            let opacity = baseOpacity
-            if (hasActiveHover && isTopRanked && !isRankHovered && !isBelowThreshold) {
-              // Dim non-hovered top-ranked sites
-              opacity = 0.5
-            }
-
-            // Scale up when hovered (either from panel or direct)
-            const isScaled = isRankHovered || isTooltipHovered
-            const displayRadius = isScaled ? radius * 1.3 : radius
-
-            return (
-              <g
-                key={site.id}
-                className="cursor-pointer"
-                onMouseMove={(e) => handleMouseMove(e, site)}
-                onMouseEnter={() => {
-                  if (isTopRanked) {
-                    onHoverRanks([site.Rank])
-                  }
-                }}
-                onMouseLeave={() => {
-                  handleMouseLeave()
-                  if (isTopRanked) {
-                    onHoverRanks([])
-                  }
-                }}
-              >
-                {/* Pulsing halo for top-ranked sites (rank 1-10) */}
-                {isTopRanked && (
-                  <circle
-                    cx={x}
-                    cy={y}
-                    r={radius + 5}
-                    fill="none"
-                    stroke="#2BA8A0"
-                    strokeWidth="1"
-                    className="animate-pulse-halo"
-                    style={{
-                      transformOrigin: `${x}px ${y}px`,
-                      opacity: isRankHovered ? 1 : 0.85,
-                      transition: 'opacity 200ms ease',
-                    }}
-                  />
-                )}
-
-                {/* Solid outer ring when hovered */}
-                {isTopRanked && isRankHovered && (
-                  <circle
-                    cx={x}
-                    cy={y}
-                    r={displayRadius + 3}
-                    fill="none"
-                    stroke={color}
-                    strokeWidth="2"
-                    style={{
-                      transition: 'all 200ms ease',
-                    }}
-                  />
-                )}
-
-                {/* Site marker with glow for top-ranked */}
-                <motion.circle
-                  cx={x}
-                  cy={y}
-                  r={radius}
-                  fill={color}
-                  opacity={opacity}
-                  stroke={strokeProps.stroke}
-                  strokeWidth={strokeProps.strokeWidth}
-                  filter={isTopRanked ? 'url(#top-ranked-glow)' : undefined}
-                  initial={{ r: 0 }}
-                  animate={{ r: displayRadius }}
-                  transition={{ duration: 0.2, ease: 'easeOut' }}
-                />
-              </g>
-            )
-          })}
-        </g>
-      </svg>
-
-      {/* Tooltip */}
       <Tooltip
         x={mousePos.x}
         y={mousePos.y}
