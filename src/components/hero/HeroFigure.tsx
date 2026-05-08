@@ -26,16 +26,16 @@ export function HeroFigure() {
 
   return (
     <AnimatedEntrance delay={0.7} duration={1.5}>
-      <figure className="mt-20 w-full border border-rule rounded-card overflow-hidden bg-gradient-to-br from-[#082030] to-[#04101C]">
-        <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] min-h-[720px]">
+      <figure className="mt-20 w-[95vw] max-w-[1480px] mx-auto border border-rule rounded-card overflow-hidden bg-gradient-to-br from-[#082030] to-[#04101C]">
+        <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] min-h-[500px] lg:min-h-[600px] lg:h-[min(85vh,800px)]">
           {/* Left panel */}
           <FigurePanel
             hoveredRanks={hoveredRanks}
             onHoverRanks={handleHoverRanks}
           />
 
-          {/* Right panel: Map */}
-          <div className="relative">
+          {/* Right panel: Map - overflow hidden to crop vertical overflow */}
+          <div className="relative overflow-hidden">
             {isLoading || !geojson ? (
               <div className="absolute inset-0 flex items-center justify-center text-ivory-dim">
                 <div className="animate-pulse">Loading map...</div>

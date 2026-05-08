@@ -43,3 +43,4 @@ next-env.d.ts
 # Keep these in the repo for now since they're the source of truth
 # BOP_Feb2026_Pipeline_Rankings.geojson
 # BOP_Feb2026_Pipeline_statistics.geojson
+.env*.local

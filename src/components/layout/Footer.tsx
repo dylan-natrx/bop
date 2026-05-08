@@ -22,6 +22,7 @@ export function Footer() {
               width={88}
               height={44}
               className="h-11 w-auto opacity-92"
+              style={{ filter: 'brightness(0) invert(1)' }}
             />
           </div>
 
@@ -37,14 +38,18 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Section navigation cue */}
-        <div className="flex flex-col items-start lg:items-end gap-2.5">
-          <div className="flex items-center gap-3 font-mono text-eyebrow uppercase text-ivory">
+        {/* Scroll cue - downward indicator */}
+        <div className="flex flex-col items-start lg:items-end gap-1.5 opacity-45">
+          <div className="font-mono text-[9px] tracking-widest uppercase text-ivory-dim">
             The framework
-            <span className="w-5 h-px bg-ivory relative animate-nudge after:content-[''] after:absolute after:right-0 after:-top-0.5 after:w-1 after:h-1 after:border-r after:border-b after:border-ivory after:rotate-[-45deg]" />
           </div>
-          <div className="font-mono text-eyebrow uppercase text-ivory-faint">
+          <div className="font-mono text-[8px] tracking-widest uppercase text-ivory-faint">
             How the sites were scored
+          </div>
+          <div className="mt-1 text-ivory-dim animate-bounce">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M2 4L6 8L10 4" />
+            </svg>
           </div>
         </div>
       </footer>
