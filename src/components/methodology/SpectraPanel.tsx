@@ -99,7 +99,7 @@ const CURVE_DEFS: Record<SpectraCurve, CurveDef> = {
   wave: {
     key: 'wave',
     title: 'Wave exposure',
-    subtitle: 'Constructability, not a habitat score',
+    subtitle: 'How buildable the site is, given local wave energy',
     xLabel: 'feet',
     xTicks: [
       { x: 0, label: '0' },
@@ -175,7 +175,7 @@ export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
       render: (isActive) => (
         <AnnotationBlock
           eyebrow="Shoreline erosion"
-          body="Erosion is not a suitability variable. It is a flag for co-benefit. Sites adjacent to actively eroding shorelines are tagged, because oyster reefs function as natural breakwaters."
+          body="Where suitable sites sit next to actively retreating shorelines, oyster reefs deliver a second outcome. They dampen wave energy and slow the loss of marsh edge. The map flags these sites."
           isActive={isActive}
         />
       ),
@@ -189,7 +189,7 @@ export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
       render: (isActive) => (
         <AnnotationBlock
           eyebrow="Context filters"
-          body="Not suitability variables. Constraints on which suitable sites are also actionable: parkland proximity, combined sewer outfalls, separate stormwater outfalls."
+          body="Operational conditions that shape which suitable sites BOP can build on. Proximity to publicly accessible parkland, distance from combined sewer outfalls, distance from separate stormwater outfalls."
           isActive={isActive}
         />
       ),
