@@ -22,15 +22,11 @@ export function WhatAnalysisMadeVisible() {
             font-sans text-body text-ivory-dim font-light leading-[1.65]
           ">
           <p>
-            The brief was to rank the candidate sites. The work delivered more
-            than that. By the end of the engagement, the framework was
-            answering which sites, with what confidence in the data behind
-            each answer, and where additional monitoring would compound the
-            value of the analysis. The two beats below are the parts of that
-            answer worth pulling out. They are what{' '}
-            <em className="font-serif italic">Natrx Assess</em> is built to
-            produce, and they are why BOP returned for a second engagement
-            before the first had finished.
+            The brief was to identify the sites most suitable for building new
+            oyster reef infrastructure in New York Harbor. The work delivered
+            that. It also delivered two additional findings the engagement was
+            designed to produce, both of which BOP can carry forward into the
+            next phase of work.
           </p>
         </div>
       </div>
@@ -42,19 +38,17 @@ export function WhatAnalysisMadeVisible() {
           body={
             <p>
               Many of the highest-ranked sites sit adjacent to actively eroding
-              shorelines. The Natrx Assess shoreline change analysis, using the
-              Marsh Edge from Image Processing methodology applied to NAIP
-              satellite imagery from 2010 to present, identified erosion rates
-              of one foot per year or greater at eight candidate locations and
-              active retreat at fifteen more. Several of those sit in the top
-              tier of the suitability ranking. Oyster reefs function as natural
-              breakwaters, dampening wave energy and slowing the loss of marsh
-              edges. The overlap is the kind of pattern that reshapes a
-              restoration program. The same intervention restores habitat and
-              stabilizes coast. One project, two outcomes. Quantifying that
-              overlap across the full pipeline, at site-level resolution, is
-              the kind of multi-variable insight Natrx Assess is built to
-              produce.
+              shorelines. The{' '}
+              <em className="font-serif italic">Natrx Assess</em> shoreline
+              change analysis, using the Marsh Edge from Image Processing
+              methodology applied to NAIP satellite imagery from 2010 to
+              present, identified erosion rates of one foot per year or greater
+              at eight candidate locations and active retreat at fifteen more.
+              Several of those sit in the top tier of the suitability ranking.
+              Oyster reefs function as natural breakwaters, dampening wave
+              energy and slowing the loss of marsh edges. Where strong water
+              quality and active erosion overlap, the same project restores
+              habitat and stabilizes coast.
             </p>
           }
           visual={
@@ -76,7 +70,7 @@ export function WhatAnalysisMadeVisible() {
 
         <FindingBeat
           number={2}
-          subhead="Where the framework tells the truth about itself."
+          subhead="Where the data is strong, and where it is not."
           body={
             <p>
               The analysis surfaced where its own inputs are strong and where
@@ -84,14 +78,11 @@ export function WhatAnalysisMadeVisible() {
               carry robust observational data because they have been studied
               directly. Several of the top-ranked candidates from the new
               analysis carry less observational support, classified as
-              moderate or low confidence, because they have not been the
-              subject of prior fieldwork at the same depth. The methodology
-              names this rather than hiding it. The result is a deliverable
-              that tells BOP not only which sites rank highest, but exactly
-              where the next round of monitoring investment would compound the
-              value of the analysis already produced. Honesty about uncertainty,
-              made operational. The framework knows what it knows and where it
-              does not.
+              moderate or low confidence, because they have not been studied
+              at the same depth. The framework names this rather than hiding
+              it. The result tells BOP not only which sites rank highest, but
+              exactly where the next round of monitoring investment would
+              compound the value of the analysis already produced.
             </p>
           }
           visual={<ConfidenceDistributionChart />}
@@ -105,10 +96,10 @@ export function WhatAnalysisMadeVisible() {
           leading-[1.35]
           text-center
         ">
-        The brief was to rank the sites. The framework now answers which sites,
-        with what confidence behind each answer, and where the next investment
-        in observation should land. The engagement was scoped to twenty-six
-        weeks. The capability it leaves behind is durable.
+        The goal was to identify the sites most suitable for building new
+        oyster reef infrastructure in New York Harbor. The framework delivered
+        that ranking. It also delivered a method BOP can rerun next year, and
+        the year after, as new data lands and the pipeline evolves.
       </div>
     </SectionShell>
   )

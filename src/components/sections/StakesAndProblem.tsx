@@ -22,24 +22,23 @@ export function StakesAndProblem() {
           <p>
             New York Harbor was once one of the most productive estuaries on
             Earth. Three hundred and fifty square miles of oyster reef, water
-            clear enough to see fifteen feet down, a food web dense enough to
-            feed the eastern seaboard. Centuries of dredging, overharvest, and
+            clear enough to see fifteen feet down, a food web that fed the
+            eastern seaboard. Centuries of dredging, overharvest, and
             industrial discharge collapsed it. Billion Oyster Project is
-            rebuilding that foundation, one site at a time, toward a target of
-            one billion oyster spat deployed across the harbor by 2035. The
-            ecological case is settled. The operational case is harder.
+            rebuilding that foundation, one site at a time, with a target of
+            one billion oyster spat deployed across the harbor by 2035.
           </p>
           <p>
             BOP maintains a pipeline of 78 candidate restoration sites and a
             target of ten to fifteen funded, permitted projects ready to break
             ground by 2029 or 2030. Their established assessment method is
-            rigorous and expensive. Vessel time, scientific instrumentation,
+            rigorous and expensive: vessel time, scientific instrumentation,
             lab analysis, tens of thousands of dollars per location. The
             method produces high-quality data. It does not scale across 78
             sites at any budget the organization could realistically secure.
             Without a way to compare candidate sites against one another,
-            every site had to advance to thirty percent design before any go
-            or no-go decision could be made.
+            every site had to advance to thirty percent design before a go or
+            no-go decision could be made.
           </p>
         </div>
 

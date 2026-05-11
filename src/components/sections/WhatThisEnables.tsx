@@ -13,9 +13,9 @@ export function WhatThisEnables() {
             col-span-1 lg:col-span-12
             font-serif font-light text-ivory leading-[1.05]
             text-4xl sm:text-5xl lg:text-6xl
-            max-w-[24ch]
+            max-w-[18ch]
           ">
-          The methodology travels. The decision is everywhere now.
+          The methodology travels.
         </h2>
 
         <div className="
@@ -25,16 +25,12 @@ export function WhatThisEnables() {
           ">
           <p>
             The class of decision Billion Oyster Project faced is becoming the
-            central decision of restoration at scale. Coastal districts
-            evaluating breakwater placement, state agencies prioritizing
-            wetland reconnection across portfolios, port authorities planning
-            natural infrastructure to supplement engineered seawalls,
-            foundations allocating capital across grantee pipelines. All of
-            them face the same question BOP did: which sites earn the next
-            dollar, on what evidence, with what confidence. The framework
-            built for New York Harbor is portable. The water quality scoring
-            functions retune for local salinity regimes. The wave and
-            shoreline change products from{' '}
+            central decision of restoration at scale. Coastal districts, state
+            agencies, port authorities, and foundations all face the same
+            question. Which sites earn the next dollar, on what evidence, and
+            with what confidence. The framework built for New York Harbor is
+            portable. The water quality scoring functions retune for local
+            salinity regimes. The wave and shoreline change products from{' '}
             <em className="font-serif italic">Natrx Assess</em> run for any
             coastal geography with NAIP-equivalent imagery. The practical
             filters change with local regulatory and ecological context. San
@@ -44,13 +40,11 @@ export function WhatThisEnables() {
           <p>
             The framework BOP now operates is theirs to rerun. The team can
             update the analysis annually as new data lands, as additional
-            candidate sites come into the pipeline, as the regulatory
-            landscape shifts with the in-progress reforms at New York State
-            DEC. Natrx Assess and the broader Natrx capability set, the
-            platform paired with the field track record from ExoForm
-            deployments at scale, is the answer to the full question. From
-            where to act, through what to deploy, through how to know whether
-            it worked.
+            candidate sites come into the pipeline, and as the regulatory
+            landscape shifts with reforms in progress at New York State DEC.
+            Natrx Assess and the broader Natrx capability set, the analytical
+            platform paired with field experience from ExoForm deployments at
+            scale, is the answer to the full question.
           </p>
         </div>
       </div>
