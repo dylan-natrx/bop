@@ -4,6 +4,8 @@ import { MethodologyMadeVisible } from '@/components/sections/MethodologyMadeVis
 import { WhatAnalysisMadeVisible } from '@/components/sections/WhatAnalysisMadeVisible'
 import { WhatThisEnables } from '@/components/sections/WhatThisEnables'
 import { SiteChromeProvider } from '@/components/chrome/SiteChromeProvider'
+import { SectionNav } from '@/components/layout/SectionNav'
+import { Footer } from '@/components/layout/Footer'
 
 // Five-section structure, locked:
 //   § 1 Hero (Map 1)
@@ -12,12 +14,15 @@ import { SiteChromeProvider } from '@/components/chrome/SiteChromeProvider'
 //   § 4 What the analysis made visible (two beats + closing thread)
 //   § 5 What this enables (portability)
 //
-// Glossary and press contact live in the persistent right-edge drawer
-// (SiteChromeProvider), not in the page flow.
+// Page chrome:
+//   <SectionNav>            sticky top nav with scroll-spy
+//   <SiteChromeProvider>    persistent right-edge drawer (Glossary + Press)
+//   <Footer>                page-end credit line + partnership lockup
 
 export default function Home() {
   return (
     <SiteChromeProvider>
+      <SectionNav />
       <main>
         <HeroSection />
         <StakesAndProblem />
@@ -25,6 +30,7 @@ export default function Home() {
         <WhatAnalysisMadeVisible />
         <WhatThisEnables />
       </main>
+      <Footer />
     </SiteChromeProvider>
   )
 }
