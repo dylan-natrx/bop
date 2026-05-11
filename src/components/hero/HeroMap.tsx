@@ -342,7 +342,12 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
 
       labelMarkersRef.current = [...boroughMarkers, ...waterMarkers]
 
-      // Top-10 pulsing halos as DOM markers
+      // Top-10 pulsing halos as DOM markers.
+      // Important: Mapbox positions the marker element via `transform: translate(...)`.
+      // The pulse animation also uses `transform: scale(...)`. Browsers can only
+      // apply one `transform` declaration at a time, so the animation overwrites
+      // Mapbox's positioning. Wrap the animating halo in a positioning-only outer
+      // div so Mapbox owns the wrapper's transform and the inner div is free to scale.
       const top10 = sitesGeoJson.features.filter(
         (f) => f.properties._isTop10 === 1
       )
@@ -350,20 +355,28 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
         const props = feature.properties
         const haloDiameter = props._radius * 2 + 14
 
+        const wrapper = document.createElement('div')
+        wrapper.style.cssText = `
+          width: ${haloDiameter}px;
+          height: ${haloDiameter}px;
+          pointer-events: none;
+        `
+        wrapper.dataset.rank = String(props.Rank)
+
         const halo = document.createElement('div')
         halo.className = 'animate-pulse-halo'
         halo.style.cssText = `
-          width: ${haloDiameter}px;
-          height: ${haloDiameter}px;
+          width: 100%;
+          height: 100%;
           border-radius: 50%;
           border: 1px solid #2BA8A0;
           pointer-events: none;
           will-change: transform, opacity;
         `
-        halo.dataset.rank = String(props.Rank)
+        wrapper.appendChild(halo)
 
         return new mapboxgl.Marker({
-          element: halo,
+          element: wrapper,
           anchor: 'center',
         })
           .setLngLat(feature.geometry.coordinates as [number, number])
