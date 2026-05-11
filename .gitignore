@@ -44,3 +44,9 @@ next-env.d.ts
 # BOP_Feb2026_Pipeline_Rankings.geojson
 # BOP_Feb2026_Pipeline_statistics.geojson
 .env*.local
+
+# Vercel env pull diagnostic outputs
+.env.vercel-*
+
+# Claude Code harness state (worktrees, settings)
+.claude/
