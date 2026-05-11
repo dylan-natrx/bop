@@ -503,8 +503,11 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
   const tokenMissing = !MAPBOX_TOKEN
 
   return (
-    <div ref={containerRef} className="relative w-full h-full">
-      <div ref={mapNodeRef} className="absolute inset-0" />
+    <div ref={containerRef} className="relative w-full h-full min-h-[640px] lg:min-h-[720px]">
+      <div
+        ref={mapNodeRef}
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+      />
 
       {(tokenMissing || errorMsg) && (
         <div className="absolute inset-0 z-20 flex items-center justify-center p-8 pointer-events-none">
