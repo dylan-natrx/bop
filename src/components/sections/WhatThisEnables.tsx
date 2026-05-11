@@ -1,5 +1,9 @@
 import { SectionShell } from './SectionShell'
-import { PlaceholderBlock } from './PlaceholderBlock'
+
+// Note: the glossary lives in the persistent right-edge drawer
+// (SiteChromeProvider + SiteDrawer), not in this section. § 5 closes the
+// page with the portability story; the drawer carries definitions and the
+// press contact.
 
 export function WhatThisEnables() {
   return (
@@ -42,14 +46,6 @@ export function WhatThisEnables() {
             deploy. No CTA, no &quot;talk to us,&quot; no button.]
           </p>
         </div>
-      </div>
-
-      <div className="mt-20 lg:mt-28">
-        <PlaceholderBlock
-          componentName="Glossary"
-          description="Collapsed-by-default glossary at the bottom of the page. Around 18 plain-language definitions. Eastern oyster, salinity / PSU, chlorophyll-a, dissolved oxygen / hypoxia, Habitat Suitability Index, composite score and DO-modifier, confidence interval, fetch-limited wave modeling, shoreline change analysis (MEIP), NAIP imagery, CSO, MS4, subtidal vs intertidal, Allee effect, spat, keystone species, estuary, bathymetry. Definitions drawn from the Master Document and the Project Overview."
-          minHeight={240}
-        />
       </div>
     </SectionShell>
   )

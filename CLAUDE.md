@@ -216,14 +216,27 @@ Two beats, plus a closing thread:
 
 **Closing thread (single italic line, ~35 words):** Assess and the team's expertise didn't just answer *which sites.* They answered *which sites, with what confidence, and where additional investment should go next.*
 
-### § 5 — What this enables (portability + glossary)
+### § 5 — What this enables (portability)
 The portability story. Coastal districts, port authorities, state agencies, foundations, NGOs all face the same prioritization decision. The methodology charts a third path between site-by-site instrumentation that does not scale and habitat-suitability models that demand continuous data most environments cannot supply. Named comparable estuaries: San Francisco Bay, the Chesapeake. The methodology is the deliverable, not the New York Harbor result alone.
 
 Close with a short paragraph on the ongoing partnership: BOP plans more monitoring this summer; the framework can re-run with updated inputs without rebuilding the scoring system. Natrx's broader position (*Assess* for analytical capability, Address for fabrication, the field track record) as the answer to the full question from where to act through what to deploy. **No CTA. No "talk to us." No button-styled links.**
 
-**Glossary (collapsed by default at the bottom of § 5).** ~18 plain-language definitions: Eastern oyster, salinity / PSU, chlorophyll-a, dissolved oxygen / hypoxia, Habitat Suitability Index, composite score / DO-modifier, confidence interval, fetch-limited wave modeling, shoreline change analysis (MEIP), NAIP imagery, CSO, MS4, subtidal vs intertidal, Allee effect, spat, keystone species, estuary, bathymetry. Definitions drawn from `BOP_Master_Document_Final.pdf` and `_overview-documents/Natrx_x_Billion_Oyster_Project_Overview.docx`.
-
 Footer with full credits, partnership lockup, methodology line, and links to BOP and Natrx (text links, not buttons).
+
+### Page chrome — persistent right-edge drawer
+
+A single persistent affordance on the right edge of the viewport, visible across every section, opens a slide-out drawer with two panels:
+
+- **Glossary.** ~18 plain-language definitions: Eastern oyster, salinity / PSU, chlorophyll-a, dissolved oxygen / hypoxia, Habitat Suitability Index, composite score / DO-modifier, confidence interval, fetch-limited wave modeling, shoreline change analysis (MEIP), NAIP imagery, CSO, MS4, subtidal vs intertidal, Allee effect, spat, keystone species, estuary, bathymetry. Drawn from `BOP_Master_Document_Final.pdf` and `_overview-documents/Natrx_x_Billion_Oyster_Project_Overview.docx`.
+- **Press contact.** Dylan DiBona, press contact email, a one-line note that source materials (the BOP-Natrx Master Document, the Wave & Shoreline Change Analysis Report, per-site data) are available to reporters on request, and an invitation framed as editorial outreach not a commercial channel.
+
+**Inline glossary terms** in body copy use `<GlossaryTerm termId="...">term</GlossaryTerm>` (see [src/components/ui/GlossaryTerm.tsx](src/components/ui/GlossaryTerm.tsx)). Clicking opens the drawer scrolled to the matching entry. Term ids are defined in [src/components/chrome/glossary-data.ts](src/components/chrome/glossary-data.ts).
+
+**Interaction:** slide in from the right, 300ms ease-out, light backdrop dim. Close by clicking the backdrop, pressing Escape, or tapping the edge affordance again. Mobile collapses the edge affordance to a round button in the lower-right corner and the drawer covers most of the viewport.
+
+**No CTAs anywhere in the drawer.** The press contact is editorial, like a masthead handles letters to the editor. Not "talk to us about your project."
+
+The glossary lives in the drawer, not in § 5 page flow. Do not reintroduce it as a section.
 
 ---
 

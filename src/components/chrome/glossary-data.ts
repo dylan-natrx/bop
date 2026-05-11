@@ -1,0 +1,128 @@
+export interface GlossaryEntry {
+  /** Stable identifier used by <GlossaryTerm termId="..."/> to scroll the drawer to this entry. Lowercase, kebab-case. */
+  id: string
+  term: string
+  definition: string
+}
+
+/**
+ * The ~18 plain-language definitions called for in CLAUDE.md.
+ *
+ * Drawn from the BOP Master Document and the Natrx project overview. Phrasing
+ * intentionally lay; these are not the scientific definitions.
+ *
+ * Sort order is roughly the order a reader encounters the terms in the page;
+ * the drawer renders them as a definition list and they're also browsable
+ * alphabetically by readers. Inline <GlossaryTerm> usage from body copy opens
+ * the drawer scrolled to the specific term via the `id` below.
+ */
+export const GLOSSARY: GlossaryEntry[] = [
+  {
+    id: 'estuary',
+    term: 'Estuary',
+    definition:
+      'A coastal water body where freshwater rivers meet saltwater ocean. The mixing produces brackish water and exceptionally productive habitat. New York Harbor is one of the largest estuaries on the East Coast of the United States.',
+  },
+  {
+    id: 'eastern-oyster',
+    term: 'Eastern oyster (Crassostrea virginica)',
+    definition:
+      'The native oyster species of the East Coast of North America. Filters water as it feeds, builds reef structure with its shells, and supports a wide range of estuary species. The keystone species at the center of the Billion Oyster Project restoration work.',
+  },
+  {
+    id: 'keystone-species',
+    term: 'Keystone species',
+    definition:
+      'A species whose presence disproportionately shapes its ecosystem. Oysters are keystone in estuaries because they filter water, build reef habitat that supports other species, and stabilize shorelines against wave energy.',
+  },
+  {
+    id: 'allee-effect',
+    term: 'Allee effect',
+    definition:
+      "An ecological threshold below which a population cannot reproduce fast enough to sustain itself. Below a critical density, sparse spawning oysters cannot fertilize one another's gametes successfully and the population collapses. The Allee effect is why BOP's goal is set at one billion oysters: density matters as much as count.",
+  },
+  {
+    id: 'spat',
+    term: 'Spat',
+    definition:
+      'A young, newly-settled oyster. After a free-swimming larval phase, oysters settle onto hard substrate and become spat. Spat grow into the adult oysters that anchor a reef.',
+  },
+  {
+    id: 'subtidal-intertidal',
+    term: 'Subtidal vs. intertidal',
+    definition:
+      'Subtidal: always submerged. Intertidal: exposed at low tide and covered at high tide. Oyster restoration in New York Harbor focuses on subtidal sites where reefs stay continuously underwater.',
+  },
+  {
+    id: 'salinity',
+    term: 'Salinity (PSU)',
+    definition:
+      'The concentration of dissolved salts in water. Measured in practical salinity units (PSU); the open ocean averages around 35 PSU, fresh water is near 0. Eastern oysters thrive in brackish conditions, roughly 10 to 25 PSU.',
+  },
+  {
+    id: 'chlorophyll-a',
+    term: 'Chlorophyll-a',
+    definition:
+      'A pigment found in microscopic algae (phytoplankton), used as a proxy for how much food is in the water. Oysters filter and eat phytoplankton, so adequate chlorophyll-a indicates an adequate food supply. Too much is a sign of eutrophication.',
+  },
+  {
+    id: 'dissolved-oxygen',
+    term: 'Dissolved oxygen and hypoxia',
+    definition:
+      'The amount of oxygen dissolved in water. Oysters need oxygen to breathe; below about 3 mg/L (hypoxia) most marine animals struggle. Persistent hypoxia rules out a site for restoration.',
+  },
+  {
+    id: 'habitat-suitability-index',
+    term: 'Habitat Suitability Index',
+    definition:
+      'A traditional method for mapping habitat suitability that requires spatially continuous data for every input variable. Often impractical in urban estuaries, where public data has structural gaps. The Natrx framework uses a relative ranking approach instead.',
+  },
+  {
+    id: 'composite-score',
+    term: 'Composite score and DO-modifier',
+    definition:
+      "A site's overall suitability number. Built from salinity and chlorophyll-a averaged together, then multiplied by the dissolved oxygen score. The DO score acts as a multiplier because hypoxia is a hard ecological constraint, not just one factor among many.",
+  },
+  {
+    id: 'confidence-interval',
+    term: 'Confidence interval',
+    definition:
+      'A range that captures the likely true value of a measurement, given a limited sample. Wider intervals mean less confidence in the estimate. The framework reports confidence intervals for each water quality variable to make uncertainty legible.',
+  },
+  {
+    id: 'fetch-limited-wave-modeling',
+    term: 'Fetch-limited wave modeling',
+    definition:
+      'A method for predicting wave energy at a location based on wind speed, wind direction, and the unobstructed water distance (fetch) over which the wind blows. Source for the wave-exposure flag on each candidate site.',
+  },
+  {
+    id: 'meip',
+    term: 'Shoreline change analysis (MEIP)',
+    definition:
+      'Marsh Edge from Image Processing. A technique that traces the moving edge of marsh vegetation across multiple years of satellite imagery to measure erosion rates at roughly one-meter resolution.',
+  },
+  {
+    id: 'naip-imagery',
+    term: 'NAIP imagery',
+    definition:
+      'National Agriculture Imagery Program. A federal program that captures one-meter-resolution aerial photography of the continental United States roughly every two to three years. The base imagery for the MEIP shoreline analysis.',
+  },
+  {
+    id: 'cso',
+    term: 'CSO (Combined Sewer Overflow)',
+    definition:
+      'An outfall pipe where stormwater and sewage share a single drainage system and discharge together to a waterway during heavy rain. Proximity to a CSO can spike bacterial contamination at a restoration site after storms.',
+  },
+  {
+    id: 'ms4',
+    term: 'MS4 (Municipal Separate Storm Sewer System)',
+    definition:
+      'A stormwater drainage outfall that does not mix with sewage. Less acute than a CSO but still a contamination vector during storm events.',
+  },
+  {
+    id: 'bathymetry',
+    term: 'Bathymetry',
+    definition:
+      'The underwater topography of a water body: depths, slopes, channels. Bathymetric data tells you whether a site has the right depth profile for oyster reef construction.',
+  },
+]
