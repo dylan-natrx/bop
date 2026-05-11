@@ -26,7 +26,7 @@ export function HeroFigure() {
 
   return (
     <AnimatedEntrance delay={0.7} duration={1.5}>
-      <figure className="mt-20 w-[95vw] max-w-[1480px] mx-auto border border-rule rounded-card overflow-hidden bg-gradient-to-br from-[#082030] to-[#04101C]">
+      <figure className="mt-20 border border-rule rounded-card overflow-hidden bg-gradient-to-br from-[#082030] to-[#04101C]">
         <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] min-h-[640px] lg:min-h-[720px] lg:h-[min(90vh,860px)]">
           {/* Left panel */}
           <FigurePanel

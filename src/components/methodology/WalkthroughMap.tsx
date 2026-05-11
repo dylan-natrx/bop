@@ -183,9 +183,9 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
           },
           layers: [
             { id: 'background', type: 'background', paint: { 'background-color': '#061321' } },
-            { id: 'land-westchester-fill', type: 'fill', source: 'land-westchester', paint: { 'fill-color': '#0E2236', 'fill-opacity': 1 } },
-            { id: 'land-nj-fill', type: 'fill', source: 'land-nj', paint: { 'fill-color': '#0E2236', 'fill-opacity': 1 } },
-            { id: 'land-nyc-fill', type: 'fill', source: 'land-nyc', paint: { 'fill-color': '#0E2236', 'fill-opacity': 1 } },
+            { id: 'land-westchester-fill', type: 'fill', source: 'land-westchester', paint: { 'fill-color': '#15314A', 'fill-opacity': 1 } },
+            { id: 'land-nj-fill', type: 'fill', source: 'land-nj', paint: { 'fill-color': '#15314A', 'fill-opacity': 1 } },
+            { id: 'land-nyc-fill', type: 'fill', source: 'land-nyc', paint: { 'fill-color': '#15314A', 'fill-opacity': 1 } },
             { id: 'land-nyc-edge', type: 'line', source: 'land-nyc', paint: { 'line-color': 'rgba(120, 158, 184, 0.35)', 'line-width': 1.1 } },
             { id: 'land-nj-edge', type: 'line', source: 'land-nj', paint: { 'line-color': 'rgba(120, 158, 184, 0.35)', 'line-width': 1.1 } },
             { id: 'land-westchester-edge', type: 'line', source: 'land-westchester', paint: { 'line-color': 'rgba(120, 158, 184, 0.35)', 'line-width': 1.1 } },

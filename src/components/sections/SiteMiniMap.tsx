@@ -92,9 +92,9 @@ export function SiteMiniMap({
           },
           layers: [
             { id: 'background', type: 'background', paint: { 'background-color': '#061321' } },
-            { id: 'land-westchester-fill', type: 'fill', source: 'land-westchester', paint: { 'fill-color': '#0E2236', 'fill-opacity': 1 } },
-            { id: 'land-nj-fill', type: 'fill', source: 'land-nj', paint: { 'fill-color': '#0E2236', 'fill-opacity': 1 } },
-            { id: 'land-nyc-fill', type: 'fill', source: 'land-nyc', paint: { 'fill-color': '#0E2236', 'fill-opacity': 1 } },
+            { id: 'land-westchester-fill', type: 'fill', source: 'land-westchester', paint: { 'fill-color': '#15314A', 'fill-opacity': 1 } },
+            { id: 'land-nj-fill', type: 'fill', source: 'land-nj', paint: { 'fill-color': '#15314A', 'fill-opacity': 1 } },
+            { id: 'land-nyc-fill', type: 'fill', source: 'land-nyc', paint: { 'fill-color': '#15314A', 'fill-opacity': 1 } },
             {
               id: 'land-nyc-edge',
               type: 'line',

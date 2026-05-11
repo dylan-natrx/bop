@@ -156,7 +156,7 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
             type: 'fill',
             source: 'land-westchester',
             paint: {
-              'fill-color': '#0E2236',
+              'fill-color': '#15314A',
               'fill-opacity': 1,
             },
           },
@@ -165,7 +165,7 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
             type: 'fill',
             source: 'land-nj',
             paint: {
-              'fill-color': '#0E2236',
+              'fill-color': '#15314A',
               'fill-opacity': 1,
             },
           },
@@ -174,7 +174,7 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
             type: 'fill',
             source: 'land-nyc',
             paint: {
-              'fill-color': '#0E2236',
+              'fill-color': '#15314A',
               'fill-opacity': 1,
             },
           },
