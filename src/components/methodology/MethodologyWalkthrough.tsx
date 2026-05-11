@@ -108,41 +108,41 @@ export function MethodologyWalkthrough() {
         </AnimatePresence>
       </div>
 
-      {/* Panels: map on the left, spectra + step copy share the right column */}
+      {/* Panels: map on the left, spectra stack on the right */}
       <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr]">
         <div className="lg:border-r lg:border-rule-soft">
           <WalkthroughMap rankings={rankings} stats={stats} step={step} />
         </div>
-        <div className="flex flex-col lg:h-[440px]">
-          <div className="px-5 pt-5 pb-3 lg:px-6 lg:pt-5 lg:pb-3 overflow-y-auto flex-1 border-b border-rule-soft">
-            <SpectraPanel step={step} onJumpToStep={jumpTo} />
-          </div>
-          <div className="px-5 py-4 lg:px-6 lg:py-4">
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={step.id}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -4 }}
-                transition={{ duration: 0.3, ease: 'easeOut' }}
-                className="font-sans text-[12.5px] text-ivory-dim font-light leading-[1.55]"
-              >
-                {step.copy}
-              </motion.p>
-            </AnimatePresence>
-          </div>
+        <div className="px-5 py-5 lg:px-6 lg:py-5 lg:h-[440px] overflow-y-auto">
+          <SpectraPanel step={step} onJumpToStep={jumpTo} />
         </div>
       </div>
 
-      {/* Controls */}
-      <div className="px-5 lg:px-8 pb-5 lg:pb-6 pt-4 border-t border-rule-soft">
-        <WalkthroughControls
-          currentStep={currentStep}
-          onPrevious={goPrev}
-          onNext={goNext}
-          onJumpTo={jumpTo}
-          onContinueReading={continueReading}
-        />
+      {/* Bottom strip: step copy on the left, controls on the right */}
+      <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] border-t border-rule-soft">
+        <div className="px-5 lg:px-8 py-5 lg:py-6 lg:border-r lg:border-rule-soft">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={step.id}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              className="font-sans text-[13px] lg:text-[14px] text-ivory-dim font-light leading-[1.6]"
+            >
+              {step.copy}
+            </motion.p>
+          </AnimatePresence>
+        </div>
+        <div className="px-5 lg:px-6 py-5 lg:py-6 flex flex-col justify-center">
+          <WalkthroughControls
+            currentStep={currentStep}
+            onPrevious={goPrev}
+            onNext={goNext}
+            onJumpTo={jumpTo}
+            onContinueReading={continueReading}
+          />
+        </div>
       </div>
     </div>
   )
