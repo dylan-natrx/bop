@@ -66,6 +66,12 @@ export const GLOSSARY: GlossaryEntry[] = [
       'A pigment found in microscopic algae (phytoplankton), used as a proxy for how much food is in the water. Oysters filter and eat phytoplankton, so adequate chlorophyll-a indicates an adequate food supply. Too much is a sign of eutrophication.',
   },
   {
+    id: 'eutrophication',
+    term: 'Eutrophication',
+    definition:
+      'An overload of nutrients, usually from runoff or wastewater, that triggers excessive algae growth in a water body. As the resulting algae blooms die off and decompose, they pull oxygen out of the water and can suffocate the same animals (oysters included) the blooms initially fed. The danger zone at the high end of the chlorophyll-a curve.',
+  },
+  {
     id: 'dissolved-oxygen',
     term: 'Dissolved oxygen and hypoxia',
     definition:
