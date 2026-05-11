@@ -50,3 +50,10 @@ next-env.d.ts
 
 # Claude Code harness state (worktrees, settings)
 .claude/
+
+# Local reference docs (source material, not source code).
+# Large binaries (BOP master document PDF, wave report PDF, interactive
+# mapping HTML) and the working briefs that ship as Word documents.
+# Keep these on the local filesystem; do not commit.
+_master_docs/
+_overview-documents/

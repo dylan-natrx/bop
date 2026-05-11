@@ -1,101 +1,117 @@
 # Project Status
 
-**Last updated:** Session ending with land/water contrast fix
+Last meaningful update: 2026-05-11.
+
+## Section completion (new 5-section structure)
+
+| § | Section | Status | Notes |
+|---|---|---|---|
+| 1 | Hero | Functional, iterating | Mapbox GL JS, all 78 sites, top-10 halos, hover tooltip, bidirectional hover. Not "complete" — the user has been iterating on copy and visual register |
+| 2 | The stakes and the problem | Scaffold only | Component exists with bracketed placeholder copy. No real copy written |
+| 3 | The methodology, made visible | Scaffold only | Component exists. Contains placeholders for `<MethodologyWalkthrough />` (Map 2 + spectra) and three `<TopRankedCallout />` cards |
+| 4 | What the analysis made visible | Scaffold only | Component exists with two `<FindingBeat />` placeholders + the italic closing thread line locked in code |
+| 5 | What this enables | Scaffold only | Component exists. Contains `<Glossary />` placeholder |
+
+The old 6-section numbering (Framework Primer / Design Queue / Deep-dive Map / Site Detail / Methodology Drawer) is **superseded** — see [CLAUDE.md](../CLAUDE.md) section labeling.
 
 ---
 
-## Completion Status
+## § 1 Hero — done
 
-| Section | Status | Notes |
-|---------|--------|-------|
-| § 01 Hero | ✅ Complete | All visual fixes applied, bidirectional hover working |
-| § 02 Framework Primer | ⬜ Not started | - |
-| § 03 Design Queue Narrative | ⬜ Not started | - |
-| § 04 Deep-dive Map | ⬜ Not started | Will use Mapbox GL JS |
-| § 05 Site Detail Panel | ⬜ Not started | Route exists at /site/[siteId] |
-| § 06 Methodology Drawer | ⬜ Not started | - |
+- Topbar with partnership lockup (BOP + Natrx logos)
+- Headline "Restoring New York Harbor's Oyster Reefs. But where?" with italic teal "But where?"
+- Lede paragraph
+- Stat stack (78 sites, 2,604 ac, 1 billion goal, 9 variables)
+- Two-column figure (320px panel + map fills the rest)
+- FigurePanel: Fig. 1 caption, top-ranked sites list with hover, suitability legend, top-ranked legend
+- HeroMap: Mapbox GL JS, custom dark inline style, no Mapbox-hosted assets
+  - All 78 sites as a single circle layer, color by composite score using `interpolate` expression
+  - Sub-0.5 sites muted; top-10 sites get 1.15× radius and pulsing halo
+  - Land masses fed from `public/data/nyc-boroughs.geojson`, `nj-shoreline.geojson`, `westchester.geojson`
+  - Borough labels (JetBrains Mono uppercase) and water-body labels (Fraunces italic, river labels rotated)
+  - Hover tooltip (Tooltip + SiteTooltipContent)
+  - Bidirectional hover via `setFeatureState`
+  - Non-interactive (no pan/zoom/scroll). Hero is for looking.
+- Footer with methodology line
 
----
+## § 1 Hero — outstanding polish
 
-## § 01 Hero Checklist
-
-- [x] Topbar with partnership lockup (BOP + Natrx logos)
-- [x] Headline with italic teal "But where?"
-- [x] Lede paragraph
-- [x] Three-stat stack (78 sites, 2604 ac, 6 variables)
-- [x] Two-column figure layout (320px panel + map)
-- [x] FigurePanel with Fig. 1 caption
-- [x] Top-ranked sites list with hover interaction
-- [x] Suitability legend
-- [x] Top-ranked legend
-- [x] SVG map with coastlines
-- [x] 78 site markers colored by suitability
-- [x] Top-ranked (1-10) pulsing halos
-- [x] Bidirectional hover between panel and map
-- [x] Tooltips on site hover
-- [x] Footer with methodology link
-- [x] Favicon
+- The user has not finalized the visual register. Subject to iteration.
+- Mobile responsiveness: untested below the lg breakpoint. Figure scaffolding has mobile-first heights but real verification is pending.
 
 ---
 
-## Known Technical Debt
+## § 2–5 — outstanding work
 
-1. **Mapbox token not yet configured** - Will need for § 04
-2. **PDF generation not implemented** - Planned for § 05
-3. **No mobile responsiveness yet** - Hero assumes desktop viewport
-4. **Statistics GeoJSON not yet used** - Needed for § 05 site detail
+In priority order:
+
+1. **§ 2 copy.** Two paragraphs, ~80 words each. Stakes (oysters as keystone, BOP's mission, Allee effect) + the structural problem (78 sites, per-site instrumentation, 30% design bottleneck). Source: `_overview-documents/BOP_Natrx_Project_Narrative_DRAFT_v0_2.md` Parts 1–2.
+2. **§ 3 Map 2 + spectra panel.** Six-step guided sequence. Reader-controlled Previous/Next. Each step adds a layer to the map and a curve to the spectra panel. Detailed spec in [CLAUDE.md § 3](../CLAUDE.md).
+3. **§ 3 TopRankedCallout component.** Three cards (Arthur Kill, Living Breakwaters, Wolfe's Pond). Visuals can pull from the Wave Analysis Report PDF in `_master_docs/`.
+4. **§ 4 FindingBeat component.** Used twice (erosion co-benefit, data confidence).
+5. **§ 5 Glossary component.** Collapsible, ~18 terms. Definitions in CLAUDE.md.
 
 ---
 
-## Environment Setup
+## Environment
 
 ```bash
-# Required
-NEXT_PUBLIC_MAPBOX_TOKEN=<token>  # Not yet set, needed for § 04
-
-# Dev server
-npm run dev
-
-# Build
-npm run build
+NEXT_PUBLIC_MAPBOX_TOKEN=pk.eyJ1IjoiZHls...  # 94 chars, in .env.local AND on Vercel
 ```
 
----
+`.env.local` is gitignored. The token on Vercel is set for Production, Preview, and Development scopes.
 
-## File Locations Quick Reference
+Dev server: `npm run dev` (runs on port 3000 by default; we used 3033 in some debugging sessions).
 
-| Purpose | File |
-|---------|------|
-| Design tokens | `tailwind.config.ts` |
-| Suitability colors | `src/lib/colors.ts` |
-| Coastline coordinates | `src/lib/land.ts` |
-| Map projection | `src/lib/projection.ts` |
-| App constants | `src/lib/constants.ts` |
-| Hero map component | `src/components/hero/HeroMap.tsx` |
-| Rankings data | `public/data/BOP_Feb2026_Pipeline_Rankings.geojson` |
-| Statistics data | `public/data/BOP_Feb2026_Pipeline_statistics.geojson` |
+Build: `npm run build`. Production build verifies type checks AND ESLint.
 
 ---
 
-## Next Steps (When Resuming)
+## Files: at-a-glance
 
-1. **Start § 02 Framework Primer** - Teach how sites were scored
-   - 4-5 progressive panels with small visualizations
-   - Salinity, chlorophyll-a, dissolved oxygen drivers
-   - DO-modifier formula demonstration
-   - Physical/built-environment flags
-
-2. **Mobile responsiveness** - Can be deferred but should be addressed before § 04
-
-3. **Mapbox setup** - Configure token in `.env.local` before starting § 04
+| Purpose | Path |
+|---|---|
+| Design tokens, animations | `tailwind.config.ts` |
+| Global CSS, scrollbar, tooltip, fade-up classes | `src/app/globals.css` |
+| Suitability color logic | `src/lib/colors.ts` |
+| Centroid math (used by HeroMap) | `src/lib/data.ts` |
+| Marker radius math (used by HeroMap) | `src/lib/projection.ts` |
+| Legacy SVG coastline coordinates (still imported by `CoastlineTest`) | `src/lib/land.ts` |
+| Hero section wrapper | `src/components/hero/HeroSection.tsx` |
+| Hero figure (panel + map) | `src/components/hero/HeroFigure.tsx` |
+| Mapbox Map 1 | `src/components/hero/HeroMap.tsx` |
+| Hero left panel | `src/components/hero/FigurePanel.tsx` |
+| Headline | `src/components/hero/Headline.tsx` |
+| Stat stack | `src/components/hero/StatStack.tsx` |
+| Section shell + placeholder | `src/components/sections/SectionShell.tsx`, `PlaceholderBlock.tsx` |
+| § 2–5 scaffolds | `src/components/sections/StakesAndProblem.tsx`, `MethodologyMadeVisible.tsx`, `WhatAnalysisMadeVisible.tsx`, `WhatThisEnables.tsx` |
+| Tooltip | `src/components/ui/Tooltip.tsx` |
+| Animated entrance wrapper | `src/components/ui/AnimatedEntrance.tsx` |
+| Suitability + top-ranked legends | `src/components/ui/Legend.tsx` |
+| Page root | `src/app/page.tsx` |
+| Site detail route (unused for now) | `src/app/site/[siteId]/page.tsx` |
+| Coastline experiment route | `src/app/test-map/page.tsx` |
 
 ---
 
-## Editorial Reminders
+## Known technical debt
 
-- **No em dashes** - Use commas, periods, colons, parentheses
-- **No "It's not X, it's Y"** - AI cliché, avoid
-- **"Suitability score"** not "confidence"
-- **"Data support"** or **"monitoring coverage"** for the ConfidenceRule field
-- **"Sites already in design"** not "pipeline"
-- **"Candidate sites"** for the full pool of 78
+- The site detail route (`/site/[siteId]`) is a stub. No content yet. Not in the new 5-section scope but the route is still wired.
+- `src/components/hero/CoastlineTest.tsx` and `src/app/test-map/page.tsx` are debugging artifacts from earlier work. Safe to remove if you're confident, but they're tiny and currently isolated.
+- `src/lib/projection.ts` and `src/lib/land.ts` were for the old SVG hero. They're still used (`calculateMarkerRadius` is consumed by HeroMap, the COASTLINES constant is consumed by CoastlineTest). When CoastlineTest is removed, `land.ts` can go.
+- `scripts/` contains data-prep scripts: `split-statistics.js`, `generate-framework-primer.js`. Probably still useful for re-running data prep. Not on the critical path.
+- No automated tests. The user's review loop is visual: push to main, refresh Vercel, eyeball.
+- No PDF generation yet (was planned for site detail per old brief; not in current 5-section structure).
+- No mobile QA pass.
+
+---
+
+## Editorial reminders (lock)
+
+- **No em dashes anywhere.** Use commas, periods, colons, parentheses, or semicolons.
+- **No "It's not X, it's Y" or "It's not just X, it's Y"** constructions. AI cliché.
+- **No "unexpected", "surprise", "discovery", or "happy accident"** anywhere in § 4. The shoreline erosion data was a deliverable, not a discovery.
+- **No CTAs anywhere on the page.** No "talk to us," no "request a demo," no button-styled links.
+- **Past tense for completed work, present tense for the partnership and the framework.**
+- **Natrx Assess gets italicized on first reference per section**, then dropped to roman afterwards. No promotion, no product card treatment.
+- **Top sites get named directly in the body copy:** Arthur Kill #1 (0.87), Living Breakwaters cluster #2–7 (0.74–0.79), Wolfe's Pond #8 (0.65).
