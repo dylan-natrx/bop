@@ -36,12 +36,7 @@ export function MethodologyWalkthrough() {
     []
   )
 
-  const continueReading = useCallback(() => {
-    const target = document.getElementById('analysis-made-visible')
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }, [])
-
-  // Keyboard navigation
+// Keyboard navigation
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       // Don't trap keys when a focusable input owns them
@@ -154,7 +149,6 @@ export function MethodologyWalkthrough() {
             onPrevious={goPrev}
             onNext={goNext}
             onJumpTo={jumpTo}
-            onContinueReading={continueReading}
           />
         </div>
       </div>

@@ -8,8 +8,6 @@ interface WalkthroughControlsProps {
   onPrevious: () => void
   onNext: () => void
   onJumpTo: (step: number) => void
-  /** Called when the user clicks the Step 6 "Continue reading" affordance */
-  onContinueReading: () => void
 }
 
 /**
@@ -25,7 +23,6 @@ export function WalkthroughControls({
   onPrevious,
   onNext,
   onJumpTo,
-  onContinueReading,
 }: WalkthroughControlsProps) {
   const isFirst = currentStep === 1
   const isLast = currentStep === STEP_COUNT
@@ -88,32 +85,20 @@ export function WalkthroughControls({
           ← Previous
         </button>
 
-        {isLast ? (
-          <button
-            type="button"
-            onClick={onContinueReading}
-            className="
-              font-mono text-eyebrow uppercase tracking-[0.22em]
-              text-teal-aqua hover:text-ivory
-              transition-colors duration-200
-            "
-          >
-            Continue reading →
-          </button>
-        ) : (
-          <button
-            type="button"
-            onClick={onNext}
-            aria-label="Next step"
-            className="
-              font-mono text-eyebrow uppercase tracking-[0.22em]
-              text-ivory hover:text-teal-aqua
-              transition-colors duration-200
-            "
-          >
-            Next →
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={onNext}
+          disabled={isLast}
+          aria-label="Next step"
+          className="
+            font-mono text-eyebrow uppercase tracking-[0.22em]
+            text-ivory hover:text-teal-aqua
+            disabled:text-ivory-faint/40 disabled:cursor-not-allowed disabled:hover:text-ivory-faint/40
+            transition-colors duration-200
+          "
+        >
+          Next →
+        </button>
       </div>
     </div>
   )
