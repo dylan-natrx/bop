@@ -264,6 +264,7 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
       fitBoundsOptions: {
         padding: { top: 20, right: 24, bottom: 36, left: 24 },
       },
+      projection: 'mercator', // Mapbox 3.x defaults to globe; force flat
       attributionControl: false,
       interactive: false, // hero is for looking, not panning
       doubleClickZoom: false,
