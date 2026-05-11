@@ -19,8 +19,10 @@ The piece must do two jobs simultaneously:
 
 ## Audience
 
-- **Primary:** General public, science-literate but not technical. NY Times, Wired, Hakai readers. Reading on laptops and phones.
-- **Secondary:** Restoration-sector professionals, potential Natrx clients, environmental journalists, BOP supporters/funders.
+Two overlapping audiences, in priority order:
+
+1. **Reporters and editors at climate and infrastructure outlets.** Bloomberg Green, Grist, Inside Climate News, MIT Tech Review, NYT Climate, Bloomberg CityLab. They will land here from a pitch and need to understand the work fast: what was at stake, what Natrx built, what it surfaced, why it matters at scale.
+2. **General public**, science-literate but not technical. Environmental advocates, foundation staff, port authority and coastal infrastructure decision-makers, anyone who cares about urban estuary restoration. Needs jargon translated to plain language, glossary available for the terms that matter.
 
 Not the audience: BOP scientists, Natrx engineers, academic researchers. They have the master document. The tool is downstream.
 
@@ -42,18 +44,21 @@ The phrase "ecological infrastructure" is intentional and rhymes with Natrx's ta
 
 ### Section labeling
 
-Remove the § symbol from all reader-facing labels. Use named labels only:
+Five-section structure, locked. Remove the § symbol from all reader-facing labels. Use named labels only:
 
-| Internal reference | Reader-facing label |
-|-------------------|---------------------|
-| § 01 | (no label, it's the hero) |
-| § 02 | "The Framework" or "How the sites were scored" |
-| § 03 | "Sites Already in Design" |
-| § 04 | "Explore Every Site" or "The Map" |
-| § 05 | "Site Detail" |
-| § 06 | "Methodology" |
+| Internal reference | Reader-facing eyebrow |
+|-------------------|------------------------|
+| § 1 | (no label, it's the hero) |
+| § 2 | "The stakes and the problem" |
+| § 3 | "The methodology, made visible" |
+| § 4 | "What the analysis made visible" |
+| § 5 | "What this enables" |
+
+Top-ranked site callouts live **inside** § 3, not as a standalone section. The glossary lives **inside** § 5, collapsed at the bottom of the page.
 
 Keep numbered § references only in code comments, file names, and internal documentation (like this file). The reader never sees the § symbol.
+
+The older 6-section structure (Framework / Sites Already in Design / Explore the Map / Site Detail / Methodology) is **superseded**. Do not reintroduce it without explicit instruction.
 
 ### Tone Rules
 
@@ -61,6 +66,19 @@ Keep numbered § references only in code comments, file names, and internal docu
 - **No "It's not X, it's Y" or "It's not just X, it's Y" constructions.** This is AI cliché. Use direct assertions or "X, not Y" structures instead.
 - **No false drama, no manufactured tension, no clever wordplay in headlines.** Direct, confident, forward-looking.
 - **"Confidence" must be handled with care.** See the dedicated section below.
+- **No "unexpected," "surprise," "discovery," or "happy accident" language anywhere in § 4.** This was the brief Natrx was hired to deliver. The framing is *what the work showed,* not *what we found out.* BOP came to Natrx specifically because Natrx Assess produces wave and shoreline change data and Lise Montefiore's water quality expertise was exactly what was needed. The shoreline erosion data was a deliverable, not a discovery; the data-support inversion is the framework being honest about itself, not a happy accident.
+- **Past tense for completed work, present tense for the partnership and the framework.** The 26-week engagement is past. The partnership is ongoing. The framework is in active use ("BOP can now target additional monitoring..."). Named people (Nick Brady, Mike McCann, Lise Montefiore) are present-tense ("Nick Brady leads...," "Lise Montefiore brings...").
+
+### Natrx Assess editorial chrome
+
+Treat *Natrx Assess* the way an editorial feature names a specific tool: identified clearly because accuracy demands it, never promoted.
+
+- **Italic on first reference per section.** Fraunces italic, inline, same weight as surrounding body copy. Don't bold it. Don't link it. Don't pull-quote it.
+- **Subsequent references in the same section drop the italic.** Treat it as a proper noun after the first naming.
+- **No CTAs anywhere on the page.** No "talk to us," no "request a demo," no button-styled links to Natrx Assess or Address, no contact form, no email capture.
+- **Methodology callouts are editorial footnotes, not product cards.** When the body copy names a methodology (MEIP, NAIP imagery, fetch-limited wave modeling) the visual treatment is footnote-style: small Fraunces italic line set apart, not a card with a logo and CTA.
+
+The test: would a New York Times feature on this work name *Natrx Assess* by name? Yes. Would it include a "talk to us" CTA? No. Follow that line.
 
 ### What to call things
 
@@ -152,92 +170,60 @@ Editorial dark mode, journalism-grade, scientifically serious. Pudding.cool, NYT
 
 ---
 
-## v1 Scope (the full layered reveal)
+## v1 Scope (the five sections, locked)
 
-Build all six sections as a single scrolling experience. Each section inherits the visual language above.
+Build all five sections as a single scrolling experience. Each section inherits the visual language above. The two custom maps (Map 1 in § 1, Map 2 inside § 3) share Mapbox GL JS with the same custom dark inline style.
 
-### § 01 — Hero (no reader-facing label needed)
-What `hero_reference.html` already shows. Topbar with partnership lockup. Headline + lede on the left, four-stat stack on the right (78 sites, 2,604 ac, 1 billion goal, 9 variables). Two-column figure: left panel with Fig. 1 caption, top-ranked sites list, suitability legend; right panel with the SVG map (subtle NY Harbor coastline, place labels, 78 site centroids colored by suitability, top-ranked halos pulsing). Footer with logo lockup and methodology line.
+### § 1 — Hero (no reader-facing eyebrow)
+Topbar with partnership lockup. Headline ("Restoring New York Harbor's Oyster Reefs. But where?") + lede on the left, four-stat stack on the right (78 sites, 2,604 ac, 1 billion goal, 9 variables). Two-column figure: left panel with Fig. 1 caption, top-ranked sites list, suitability legend; right panel with **Map 1**. Footer with logo lockup and methodology line.
 
-Port the SVG map from `hero_reference.html` directly. The hero is finalized. Don't redesign it.
+**Map 1** is the confidence-builder: reader lands, sees the harbor, understands scope in one glance. Mapbox GL JS, custom inline dark style. All 78 sites rendered as a single circle layer (centroids sized by acreage, colored by composite score using the locked gradient stops). Top-10 sites get a 1.15× radius and a pulsing teal halo. Land masses from `nyc-boroughs.geojson`, `nj-shoreline.geojson`, `westchester.geojson`. Borough labels in JetBrains Mono uppercase; water-body labels (Upper Bay, Lower Bay, Raritan Bay, Jamaica Bay, East River, Hudson River, Arthur Kill) in Fraunces italic. No pan, zoom, click, popup, or layer toggle. Hover tooltip only.
 
-### § 02 — The Framework (reader-facing: "How the sites were scored")
-Teach the reader how the framework works in 4–5 progressive panels, each with a small data visualization that demonstrates the variable being introduced. Suggested progression:
+### § 2 — The stakes and the problem
+Plain-language version of two beats, combined:
 
-1. **The question.** Restated: 78 sites, finite budget, no consistent way to compare across them before this work.
-2. **Three water-quality drivers.** Salinity, chlorophyll-a, dissolved oxygen. Show how each is measured (public monitoring stations) and what range matters for oysters. Small per-variable maps showing the spatial distribution of each, cross-fading.
-3. **The composite.** Visual demonstration of the DO-modifier formula: `(salinity_score + chla_score) / 2 × DO_score`. Make the math legible.
-4. **Three physical/built-environment flags.** Wave exposure, depth suitability, shoreline erosion (physical) plus near-CSO, near-MS4, near-park (built environment). Frame these as constraints rather than scores.
-5. **The output.** A site's rank is the composite score plus the flags. Each site gets a one-line readout.
+1. **The stakes.** New York Harbor as one of the richest estuaries in the world. Oysters as a keystone species. The collapse of the reefs and the ecosystem services they provided. BOP's mission to deploy one billion oyster spat by 2035. The Allee effect as the reason concentration matters.
+2. **The problem.** 78 candidate sites. BOP's established per-site instrumentation method as rigorous, expensive, and not scalable. The 30 percent design bottleneck. The absence of an analytical layer that could compare candidates against one another at scale.
 
-**Required content for § 02:**
-- The three-category structure (water quality, shoreline dynamics, built environment) with explanation of how each variable was measured
-- The "10 years ago" callout: this analysis wasn't possible a decade ago because public monitoring expansion and satellite imagery resolution have only recently reached sufficient density
-- The 30+ sources detail with the rigor of excluding insufficient-data variables (turbidity, total suspended sediments were considered but dropped for data gaps)
-- The dual-aggregation cross-check for ranking consistency (two different aggregation methods produced similar rankings, validating the approach)
+No fancy data visualizations in this section. Text-led, editorial. Headline + two paragraphs + section break.
 
-Use Framer Motion for the cross-fades. Avoid layer toggles in this section; this is teaching, not exploration.
+### § 3 — The methodology, made visible (Map 2 + spectra panel + top-ranked callouts)
+This is the teaching section. The reader watches site suitability emerge from layered data through a guided, reader-controlled walkthrough.
 
-### § 03 — Sites Already in Design (reader-facing: "Sites Already in Design")
-The most important narrative section. Use a horizontally scrolling or scroll-pinned layout to walk through:
+**Map 2 + spectra panel — six-step guided sequence.** Same Mapbox style as Map 1, same site geometry. A controller walks the reader through six states with smooth (~600ms ease-in-out) color interpolation between steps. Reader controls progression with Previous and Next; no free exploration. Beside the map, a spectra panel renders custom SVG curves that stack as each variable is introduced.
 
-- 11 sites are already in active design, totaling 288 acres
-- They mostly cluster in Western Long Island Sound (Flushing Bay, Pugsley Creek, Powell's Cove, Turtle Cove, City Island, Bush Terminal Park) plus Paerdegat Basin in Brooklyn and Brooklyn Bridge Park in the Upper Harbor
-- Their ranks span 38 to 74, never the top of the list
-- Their data support is mostly Robust or Strong, where the top-ranked sites tend toward Sparse
-- This is the "two-track investment" insight: build first where the data is dense, monitor where you want to build big
+1. **Salinity (the Goldilocks variable).** Curve: optimum window, hump shape, ~16 PSU peak.
+2. **Add chlorophyll-a (food, with a catch).** Curve: linear, with a hatched "eutrophication danger zone" above ~20 µg/L.
+3. **Add dissolved oxygen (the limiter).** Curve: step function across the % of measurements below 3 mg/L hypoxia threshold. After this step, surface the composite formula `(sal + chla) / 2 × DO` for the curious reader, with an honest note that the literal math is not a three-way intersection and the stacked-curves visual teaches the *concept* of stacked constraints.
+4. **Add wave exposure (Natrx Assess).** Map overlays a wave-exposure flag on flagged sites. Spectra panel adds a wave-exposure suitability curve framed as a teaching visualization of the ecological logic, not a scored input.
+5. **Add shoreline erosion (Natrx Assess).** Map overlays an erosion flag. Spectra panel does *not* add a curve; instead a small annotation reads "Erosion is a flag, not a curve. Sites near actively eroding shorelines are tagged for the co-benefit story."
+6. **The practical filters.** Map overlays parkland, CSO, and MS4 proximity flags. Section closes by noting these are constraints, not scores.
 
-Use a side-by-side comparison treatment: top-ranked sites on one side (sparse data), sites already in design on the other (robust data). Make the inversion visible. Land on the synthesis: the framework gives BOP both a construction queue and a monitoring investment plan.
+**Top-ranked site callouts (nested inside § 3, after the walkthrough).** Three editorial cards, in rank order:
+- **Arthur Kill, #1, 0.87.** The redemption arc. Staten Island's historically industrial west shore now leads the harbor on combined salinity, chlorophyll-a, and dissolved oxygen.
+- **Living Breakwaters cluster, #2–7, 0.74–0.79.** Independent validation of an iconic resilience installation. Six sites within the SCAPE-designed system rank in the top seven.
+- **Wolfe's Pond, #8, 0.65.** Staten Island park site, publicly accessible, strong across every variable.
 
-### § 04 — The Map (reader-facing: "Explore Every Site")
-The working tool. Mapbox GL JS with a custom Natrx-skinned dark style (start from a Mapbox Standard or Light dark base, restyle to match `hero_reference.html`'s palette). Render full site polygons (not just centroids) from `BOP_Feb2026_Pipeline_Rankings.geojson`.
+Visuals for the callouts can pull from `BOP_Wave_Analysis_Report.pdf` (per-site aerial + shoreline change overlay + wind rose).
 
-**Layer toggles** (left rail or floating control panel):
-- Suitability score (default on, choropleth fill)
-- Sites already in design (pulsing accent on the 11 Design sites)
-- Data support / monitoring coverage (the renamed confidence tiers, choropleth)
-- Wave exposure (categorical: Yes/No/NA)
-- Erosion (Yes/No/NA)
-- Depth suitability (Yes/No)
-- Near CSO outfall (within 50ft)
-- Near MS4 outfall (within 50ft)
-- Near park (within 1640ft)
+### § 4 — What the analysis made visible
+The section title is "What the analysis made visible." No "unexpected," no "surprise," no "discovery." See the Section 4 framing rule under Tone Rules.
 
-Pan, zoom, hover, click. Click a polygon → site detail panel slides in.
+Two beats, plus a closing thread:
 
-### § 05 — Site Detail (reader-facing: "Site Detail")
-Triggered by click in § 04, also linkable via URL hash (`#/site/27` for Arthur Kill). Single-site spread:
+1. **The co-benefit.** Many top-ranked sites sit adjacent to actively eroding shorelines. Oyster reefs function as natural breakwaters. The *Natrx Assess* shoreline change analysis (MEIP methodology, NAIP imagery 2010 to present) identifies which sites deliver biodiversity restoration and shoreline protection from a single intervention. This is the kind of multi-variable insight Assess is built to produce.
+2. **Data confidence and where to invest next.** The framework also surfaced where observational data is robust and where it is thin. Sites already in design carry strong data because they have been studied. Some top-ranked candidates carry less observational support because they have not been studied as deeply. BOP can target additional monitoring exactly where it would compound the value of the analysis. The methodology is honest about its own uncertainty, and that honesty is itself a deliverable.
 
-- Site name and waterbody
-- Status (Active design / Proposed future site)
-- Rank, suitability score, data support tier (using public-facing tier names)
-- Six flags rendered as clean status icons
-- The water-quality breakdown: salinity, chlorophyll-a, DO with their bootstrap CIs (use `BOP_Feb2026_Pipeline_statistics.geojson` for the per-site numbers)
-- Distance to nearest monitoring station for each parameter
-- Acreage and depth distribution
-- A small site map showing just this site's polygon in geographic context
-- "Download brief" button → triggers PDF generation (server-side via Puppeteer or @react-pdf/renderer)
+**Closing thread (single italic line, ~35 words):** Assess and the team's expertise didn't just answer *which sites.* They answered *which sites, with what confidence, and where additional investment should go next.*
 
-Per-site PDF is a high-value deliverable for journalists. Make it look print-quality, single page, Natrx-branded.
+### § 5 — What this enables (portability + glossary)
+The portability story. Coastal districts, port authorities, state agencies, foundations, NGOs all face the same prioritization decision. The methodology charts a third path between site-by-site instrumentation that does not scale and habitat-suitability models that demand continuous data most environments cannot supply. Named comparable estuaries: San Francisco Bay, the Chesapeake. The methodology is the deliverable, not the New York Harbor result alone.
 
-### § 06 — Methodology (reader-facing: "Methodology")
-A collapsible/scrollable section at the bottom for readers who want the full technical story. Source the content from `BOP_Master_Document_Final.pdf`. Cover:
+Close with a short paragraph on the ongoing partnership: BOP plans more monitoring this summer; the framework can re-run with updated inputs without rebuilding the scoring system. Natrx's broader position (*Assess* for analytical capability, Address for fabrication, the field track record) as the answer to the full question from where to act through what to deploy. **No CTA. No "talk to us." No button-styled links.**
 
-- The 26-week engagement scope
-- Data sources used (NYC DEP, USGS, NOAA, NAIP imagery, NYHC monitoring network, etc.)
-- The DO-modifier composite formula with reasoning
-- How data support tiers are computed (bootstrap CIs + nearest-station distance)
-- The wave-fetch model and 1m-resolution shoreline change analysis (highlight Natrx Assess-generated layers as the proprietary contribution)
-- Caveats and limitations the framework surfaces
+**Glossary (collapsed by default at the bottom of § 5).** ~18 plain-language definitions: Eastern oyster, salinity / PSU, chlorophyll-a, dissolved oxygen / hypoxia, Habitat Suitability Index, composite score / DO-modifier, confidence interval, fetch-limited wave modeling, shoreline change analysis (MEIP), NAIP imagery, CSO, MS4, subtidal vs intertidal, Allee effect, spat, keystone species, estuary, bathymetry. Definitions drawn from `BOP_Master_Document_Final.pdf` and `_overview-documents/Natrx_x_Billion_Oyster_Project_Overview.docx`.
 
-**Required content for § 06:**
-- The four-workshop co-creation story: framework was built collaboratively with BOP over multiple working sessions, not handed down
-- BOP's local expertise shaping variable selection: they brought decades of field knowledge that informed which variables mattered
-- The two aggregation methods cross-check: ranking consistency was validated by running two different aggregation approaches
-- The framework's adaptability to new data: BOP plans more monitoring this summer; the framework can re-run with updated inputs
-- The precision that the framework is repeatable for BOP but not directly portable to other harbors without recalibration to local conditions
-
-Footer with full credits, partnership lockup, and links to BOP and Natrx.
+Footer with full credits, partnership lockup, methodology line, and links to BOP and Natrx (text links, not buttons).
 
 ---
 
@@ -322,19 +308,24 @@ For implementation details and session continuity, see:
 - **`docs/PROJECT_STATUS.md`** - Current completion status, checklists, next steps
 - **`docs/SESSION_HANDOFF.md`** - Quick context for resuming work
 
-### Current State (§ 01 Hero)
+### Current State
 
-The hero section is complete with:
-- Custom SVG map using Mercator projection (not Mapbox)
-- Bidirectional hover state between FigurePanel and HeroMap
-- Top-ranked sites (1-10) with pulsing halos and glow effects
-- Suitability coloring with 0.5 threshold (gradient+stroke above, muted below)
-- Extended coastlines with natural-looking edges
-- Water layer with subtle teal tint, land darker than background
+§ 1 Hero is in progress: Mapbox GL JS implementation of Map 1 with custom dark inline style, all 78 sites as a circle layer, top-10 halos, hover tooltip, bidirectional hover between `HeroMap` and `FigurePanel`. Map land contrast brought up to `#0E2236` so the harbor silhouettes read. Water-body and borough labels in place. Not finalized; iteration ongoing.
+
+§ 2–5 are scaffolded with placeholder copy and component-placeholder blocks only. No real copy, no Map 2, no spectra panel, no top-ranked callout components, no glossary component. Components live in `src/components/sections/`.
 
 Key implementation files:
-- `src/lib/colors.ts` - Suitability color functions, threshold logic
-- `src/lib/land.ts` - Coastline polygon coordinates
-- `src/lib/projection.ts` - Mercator projection parameters
-- `src/components/hero/HeroMap.tsx` - SVG map rendering
-- `src/components/hero/FigurePanel.tsx` - Left panel with rank mappings
+- `src/components/hero/HeroMap.tsx` — Map 1, Mapbox GL JS, inline dark style
+- `src/components/hero/HeroFigure.tsx` — figure shell + bidirectional hover state
+- `src/components/hero/FigurePanel.tsx` — left panel with rank mappings
+- `src/components/sections/SectionShell.tsx` — shared layout (eyebrow + content) for § 2–5
+- `src/components/sections/PlaceholderBlock.tsx` — labeled component-placeholder
+- `src/components/sections/StakesAndProblem.tsx` — § 2
+- `src/components/sections/MethodologyMadeVisible.tsx` — § 3 (will host Map 2 + spectra + callouts)
+- `src/components/sections/WhatAnalysisMadeVisible.tsx` — § 4 (two beats + thread)
+- `src/components/sections/WhatThisEnables.tsx` — § 5 (portability + glossary)
+- `src/lib/colors.ts` — suitability color functions, 0.5 threshold logic
+- `public/data/rankings.geojson` — 78 sites (the authoritative source for map rendering and rankings)
+- `public/data/nyc-boroughs.geojson` / `nj-shoreline.geojson` / `westchester.geojson` — land masses for the Mapbox basemap
+
+The custom SVG / Mercator hero (`src/lib/projection.ts`, `src/lib/land.ts`, the SVG-based `HeroMap`) was the previous approach. The Mapbox rebuild now lives in `HeroMap.tsx`; the SVG-era helpers in `projection.ts` and `land.ts` are still imported elsewhere (`calculateMarkerRadius`, `CoastlineTest`) so they're kept for now. Reconsider once § 2–5 are real.
