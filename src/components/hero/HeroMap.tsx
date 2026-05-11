@@ -17,13 +17,24 @@ const HARBOR_BOUNDS: [[number, number], [number, number]] = [
   [-73.70, 41.05],
 ]
 
-const PLACE_LABELS: { name: string; lng: number; lat: number }[] = [
+const BOROUGH_LABELS: { name: string; lng: number; lat: number }[] = [
   { name: 'MANHATTAN', lng: -73.97, lat: 40.78 },
   { name: 'BROOKLYN', lng: -73.94, lat: 40.65 },
   { name: 'QUEENS', lng: -73.81, lat: 40.73 },
   { name: 'BRONX', lng: -73.87, lat: 40.85 },
   { name: 'STATEN ISLAND', lng: -74.16, lat: 40.58 },
-  { name: 'NEW JERSEY', lng: -74.18, lat: 40.71 },
+  { name: 'NEW JERSEY', lng: -74.22, lat: 40.72 },
+]
+
+// Water-body labels — smaller, italic, more faint than borough labels
+const WATER_LABELS: { name: string; lng: number; lat: number; rotate?: number }[] = [
+  { name: 'Upper Bay', lng: -74.045, lat: 40.665 },
+  { name: 'Lower Bay', lng: -74.040, lat: 40.520 },
+  { name: 'Raritan Bay', lng: -74.180, lat: 40.490 },
+  { name: 'Jamaica Bay', lng: -73.862, lat: 40.610 },
+  { name: 'East River', lng: -73.930, lat: 40.780, rotate: -55 },
+  { name: 'Hudson River', lng: -74.005, lat: 40.815, rotate: -78 },
+  { name: 'Arthur Kill', lng: -74.215, lat: 40.605, rotate: -80 },
 ]
 
 interface SiteCentroidProps extends RankingSite {
@@ -147,8 +158,8 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
             type: 'fill',
             source: 'land-westchester',
             paint: {
-              'fill-color': '#04101C',
-              'fill-opacity': 0.92,
+              'fill-color': '#0E2236',
+              'fill-opacity': 1,
             },
           },
           {
@@ -156,8 +167,8 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
             type: 'fill',
             source: 'land-nj',
             paint: {
-              'fill-color': '#04101C',
-              'fill-opacity': 0.92,
+              'fill-color': '#0E2236',
+              'fill-opacity': 1,
             },
           },
           {
@@ -165,8 +176,8 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
             type: 'fill',
             source: 'land-nyc',
             paint: {
-              'fill-color': '#04101C',
-              'fill-opacity': 0.92,
+              'fill-color': '#0E2236',
+              'fill-opacity': 1,
             },
           },
           {
@@ -174,8 +185,8 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
             type: 'line',
             source: 'land-nyc',
             paint: {
-              'line-color': 'rgba(70, 110, 145, 0.18)',
-              'line-width': 1,
+              'line-color': 'rgba(120, 158, 184, 0.35)',
+              'line-width': 1.1,
             },
           },
           {
@@ -183,8 +194,8 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
             type: 'line',
             source: 'land-nj',
             paint: {
-              'line-color': 'rgba(70, 110, 145, 0.18)',
-              'line-width': 1,
+              'line-color': 'rgba(120, 158, 184, 0.35)',
+              'line-width': 1.1,
             },
           },
           {
@@ -192,8 +203,8 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
             type: 'line',
             source: 'land-westchester',
             paint: {
-              'line-color': 'rgba(70, 110, 145, 0.18)',
-              'line-width': 1,
+              'line-color': 'rgba(120, 158, 184, 0.35)',
+              'line-width': 1.1,
             },
           },
           {
@@ -270,24 +281,51 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
     mapRef.current = map
 
     map.on('load', () => {
-      // Place borough labels as DOM markers
-      labelMarkersRef.current = PLACE_LABELS.map((label) => {
+      // Borough labels — JetBrains Mono uppercase
+      const boroughMarkers = BOROUGH_LABELS.map((label) => {
         const el = document.createElement('div')
         el.textContent = label.name
         el.style.cssText = `
           font-family: var(--font-jetbrains), ui-monospace, monospace;
-          font-size: 9px;
+          font-size: 10px;
+          font-weight: 500;
           letter-spacing: 0.22em;
-          color: rgba(110, 104, 89, 0.78);
+          color: rgba(184, 176, 160, 0.7);
           text-transform: uppercase;
           pointer-events: none;
           white-space: nowrap;
           user-select: none;
+          text-shadow: 0 0 6px rgba(6, 19, 33, 0.9);
         `
         return new mapboxgl.Marker({ element: el, anchor: 'center' })
           .setLngLat([label.lng, label.lat])
           .addTo(map)
       })
+
+      // Water-body labels — Fraunces italic, smaller, more faint, sometimes angled
+      const waterMarkers = WATER_LABELS.map((label) => {
+        const el = document.createElement('div')
+        el.textContent = label.name
+        el.style.cssText = `
+          font-family: var(--font-fraunces), ui-serif, serif;
+          font-style: italic;
+          font-weight: 300;
+          font-size: 11px;
+          letter-spacing: 0.04em;
+          color: rgba(184, 176, 160, 0.42);
+          pointer-events: none;
+          white-space: nowrap;
+          user-select: none;
+          text-shadow: 0 0 6px rgba(6, 19, 33, 0.9);
+          transform: ${label.rotate ? `rotate(${label.rotate}deg)` : 'none'};
+          transform-origin: center;
+        `
+        return new mapboxgl.Marker({ element: el, anchor: 'center' })
+          .setLngLat([label.lng, label.lat])
+          .addTo(map)
+      })
+
+      labelMarkersRef.current = [...boroughMarkers, ...waterMarkers]
 
       // Top-10 pulsing halos as DOM markers
       const top10 = sitesGeoJson.features.filter(
