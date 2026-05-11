@@ -25,17 +25,22 @@ const VB_H = 70
 interface CurveDef {
   key: SpectraCurve
   title: string
+  /** Short descriptor of what the Y-axis represents (e.g. "Habitat suitability") */
+  subtitle: string
   xLabel: string
   xTicks: { x: number; label: string }[]
   path: string
   favorableZone: { x: number; width: number }
   annotation: { text: string; x: number; y: number }
+  /** Optional inline label drawn at a specific threshold (e.g. wave's 3 ft flag) */
+  thresholdLabel?: { text: string; x: number; y: number }
 }
 
 const CURVE_DEFS: Record<SpectraCurve, CurveDef> = {
   salinity: {
     key: 'salinity',
     title: 'Salinity',
+    subtitle: 'Habitat suitability',
     xLabel: 'PSU',
     xTicks: [
       { x: 0, label: '0' },
@@ -58,6 +63,7 @@ const CURVE_DEFS: Record<SpectraCurve, CurveDef> = {
   chla: {
     key: 'chla',
     title: 'Chlorophyll-a',
+    subtitle: 'Habitat suitability',
     xLabel: 'µg/L',
     xTicks: [
       { x: 0, label: '0' },
@@ -71,6 +77,7 @@ const CURVE_DEFS: Record<SpectraCurve, CurveDef> = {
   do: {
     key: 'do',
     title: 'Dissolved oxygen',
+    subtitle: 'Habitat suitability',
     xLabel: '% below 3 mg/L',
     xTicks: [
       { x: 0, label: '0%' },
@@ -92,6 +99,7 @@ const CURVE_DEFS: Record<SpectraCurve, CurveDef> = {
   wave: {
     key: 'wave',
     title: 'Wave exposure',
+    subtitle: 'Constructability, not a habitat score',
     xLabel: 'feet',
     xTicks: [
       { x: 0, label: '0' },
@@ -108,7 +116,8 @@ const CURVE_DEFS: Record<SpectraCurve, CurveDef> = {
       L 200 66
     `,
     favorableZone: { x: 28, width: 60 },
-    annotation: { text: 'Flagged above 3 ft', x: 28, y: 21 },
+    annotation: { text: 'Sweet spot ~1 ft', x: 28, y: 21 },
+    thresholdLabel: { text: 'Engineering flag', x: 96, y: 4 },
   },
 }
 
@@ -268,19 +277,24 @@ function CurvePlot({
         transition-colors duration-200
       `}
     >
-      <div className="flex items-baseline justify-between mb-0.5">
-        <div className="flex items-baseline gap-2">
-          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-ivory-dim">
-            {curve.title}
+      <div className="mb-1.5">
+        <div className="flex items-baseline justify-between mb-0.5">
+          <div className="flex items-baseline gap-2">
+            <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-ivory-dim">
+              {curve.title}
+            </div>
+            {!isActive && (
+              <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-ivory-faint opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                Revisit →
+              </span>
+            )}
           </div>
-          {!isActive && (
-            <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-ivory-faint opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-              Revisit →
-            </span>
-          )}
+          <div className="font-mono text-[9px] uppercase tracking-[0.18em] text-ivory-faint">
+            {curve.xLabel}
+          </div>
         </div>
-        <div className="font-mono text-[9px] uppercase tracking-[0.18em] text-ivory-faint">
-          {curve.xLabel}
+        <div className="font-serif italic text-[11px] leading-snug text-ivory-faint/85">
+          {curve.subtitle}
         </div>
       </div>
 
@@ -296,6 +310,19 @@ function CurvePlot({
         >
           {curve.annotation.text}
         </div>
+
+        {/* Threshold label (e.g. the wave chart's "Engineering flag" by the 3 ft dashed line) */}
+        {curve.thresholdLabel && (
+          <div
+            className="absolute font-mono uppercase tracking-[0.18em] text-[9px] text-teal-aqua/85 pointer-events-none whitespace-nowrap"
+            style={{
+              left: `${(curve.thresholdLabel.x / VB_W) * 100}%`,
+              top: `${(curve.thresholdLabel.y / VB_H) * 100}%`,
+            }}
+          >
+            {curve.thresholdLabel.text}
+          </div>
+        )}
 
         {/* "Eutrophication" overlay for the chl-a danger zone */}
         {showDanger && (
