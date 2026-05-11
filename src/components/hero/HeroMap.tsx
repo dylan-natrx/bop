@@ -59,6 +59,7 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
 
   const [hoveredSite, setHoveredSite] = useState<RankingSite | null>(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
   // Build a centroid-based GeoJSON with computed properties
   const sitesGeoJson = useMemo(() => {
@@ -112,13 +113,15 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
   useEffect(() => {
     if (!mapNodeRef.current || mapRef.current) return
     if (!MAPBOX_TOKEN) {
-      console.warn('Missing NEXT_PUBLIC_MAPBOX_TOKEN')
+      setErrorMsg('Missing NEXT_PUBLIC_MAPBOX_TOKEN at build time. The env var is not present in the Vercel build environment.')
       return
     }
 
     mapboxgl.accessToken = MAPBOX_TOKEN
 
-    const map = new mapboxgl.Map({
+    let map: MapboxMap
+    try {
+      map = new mapboxgl.Map({
       container: mapNodeRef.current,
       style: {
         version: 8,
@@ -147,11 +150,6 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
             id: 'background',
             type: 'background',
             paint: { 'background-color': '#061321' },
-          },
-          {
-            id: 'water-tint',
-            type: 'background',
-            paint: { 'background-color': 'rgba(19, 125, 118, 0.06)' },
           },
           {
             id: 'land-westchester-fill',
@@ -277,8 +275,24 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
       pitchWithRotate: false,
       maxZoom: 13,
     })
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err)
+      setErrorMsg(`Mapbox init threw: ${message}`)
+      return
+    }
 
     mapRef.current = map
+
+    // Surface any Mapbox-emitted error directly into the UI
+    map.on('error', (e) => {
+      const err = e?.error
+      const message = err
+        ? (err instanceof Error ? err.message : String(err))
+        : 'Mapbox emitted an unspecified error'
+      // eslint-disable-next-line no-console
+      console.error('[HeroMap] Mapbox error', e)
+      setErrorMsg(message)
+    })
 
     map.on('load', () => {
       // Borough labels — JetBrains Mono uppercase
@@ -483,18 +497,47 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
     }
   }, [hoveredRanks, sitesGeoJson])
 
-  // Token guard
-  if (!MAPBOX_TOKEN) {
-    return (
-      <div className="flex items-center justify-center w-full h-full text-ivory-dim text-body-sm font-mono px-6 text-center">
-        Missing NEXT_PUBLIC_MAPBOX_TOKEN. Add it to .env.local and restart the dev server.
-      </div>
-    )
-  }
+  // Build-time token guard (NEXT_PUBLIC_* inlined at build, so this fires only
+  // if the env var was not present in the build environment)
+  const tokenMissing = !MAPBOX_TOKEN
 
   return (
     <div ref={containerRef} className="relative w-full h-full min-h-[560px]">
       <div ref={mapNodeRef} className="absolute inset-0" />
+
+      {(tokenMissing || errorMsg) && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center p-8 pointer-events-none">
+          <div
+            className="
+              max-w-[520px] w-full
+              border border-rule rounded-card
+              bg-bg-deep/95
+              p-6
+              text-ivory text-body-sm leading-relaxed
+              backdrop-blur-sm
+              pointer-events-auto
+            "
+            role="alert"
+          >
+            <div className="font-mono text-eyebrow uppercase text-teal-bright/80 mb-2">
+              Map could not render
+            </div>
+            <div className="font-mono text-[13px] text-ivory whitespace-pre-wrap break-words">
+              {tokenMissing
+                ? 'Missing NEXT_PUBLIC_MAPBOX_TOKEN at build time. Confirm the env var is set on the live Vercel project (Preview + Production + Development) and push a new commit to rebuild.'
+                : errorMsg}
+            </div>
+            <div className="mt-3 text-ivory-dim text-[12px] font-sans">
+              Common causes:
+              <ul className="list-disc ml-5 mt-1 space-y-1">
+                <li>Token URL restrictions on Mapbox.com exclude the Vercel preview domain</li>
+                <li>Token revoked or expired</li>
+                <li>Style spec rejected by mapbox-gl validation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Tooltip
         x={mousePos.x}
