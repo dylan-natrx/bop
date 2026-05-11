@@ -126,9 +126,11 @@ The three water quality curves remain visible but de-emphasized. The Goldilocks 
 **Step title:**
 Wave exposure, from Natrx Assess
 
-**Step copy** (first sentence emphasized; *Natrx Assess* in italic on first reference per CLAUDE.md):
+**Step copy** (first sentence emphasized; *Natrx Assess* in italic on first reference per CLAUDE.md). Two paragraphs:
 
-***Natrx Assess* now adds data BOP did not previously have.** Site-level wave energy modeling, computed for every candidate location using fetch-limited wind-wave equations from the Army Corps of Engineers Coastal Engineering Manual. Wave exposure has its own sweet spot: enough movement to deliver food and oxygen, not so much that structures fail and oysters wash off before they take hold. Sites with modeled waves above three feet are flagged for additional engineering review. The ranking holds. The reader's understanding of which top sites carry which complications sharpens.
+**This is where *Natrx Assess* starts adding data BOP did not previously have, and where the framework starts answering a different kind of question.** The water quality variables produced a ranking based on biology. Everything that comes next is information about context: how a site behaves under wave energy, how its shoreline is moving, what it sits next to. The ranking does not change. The reader's understanding of what each ranked site actually is gets richer.
+
+Site-level wave energy modeling, computed for every candidate location using fetch-limited wind-wave equations from the Army Corps of Engineers Coastal Engineering Manual. Wave exposure has its own sweet spot. Enough movement to deliver food and oxygen, not so much that engineered structures fail or oysters wash off before they take hold. Sites where modeled waves exceed three feet at meaningful frequencies are flagged for additional engineering review. Some of the strongest sites in the pipeline carry that flag. They remain strong. They also remain expensive to build.
 
 ---
 
@@ -143,9 +145,11 @@ Erosion does not have a suitability curve. Treat it differently. The panel shows
 **Step title:**
 Shoreline erosion, from Natrx Assess
 
-**Step copy** (first sentence emphasized; *Natrx Assess* in italic):
+**Step copy** (first sentence emphasized; per CLAUDE.md *Natrx Assess* runs roman here as the subsequent reference within the same section). Two paragraphs:
 
-***Natrx Assess* also delivers a one-meter resolution analysis of shoreline erosion, going back fifteen years, using NAIP satellite imagery and the Marsh Edge from Image Processing methodology.** Eight sites show erosion of more than a foot per year. Fifteen more show active retreat. Several sit in the top tier of the suitability ranking, and the overlap is the story. Oyster reefs function as natural breakwaters. Where strong water quality meets actively eroding shoreline, one intervention delivers two outcomes: restored habitat and a protected coast.
+**Natrx Assess also delivers a one-meter resolution analysis of shoreline erosion, going back fifteen years, using NAIP satellite imagery and the Marsh Edge from Image Processing methodology.** Eight sites show erosion of more than a foot per year. Fifteen more show active retreat at lower rates.
+
+Several of those eroding shorelines sit next to the top-ranked restoration candidates. That overlap is the story. Oyster reefs function as natural breakwaters, dampening wave energy and slowing the loss of marsh edges. Where strong water quality meets actively retreating coast, the same restoration project delivers two outcomes: a rebuilt habitat and a stabilized shore. One investment, two returns. The ranking told BOP which sites to restore. The erosion overlay tells them which restorations are worth twice as much per dollar spent.
 
 ---
 
@@ -165,9 +169,11 @@ The water quality curves remain visible. Erosion annotation remains. A final ann
 **Step title:**
 The practical filters
 
-**Step copy** (first sentence emphasized):
+**Step copy** (first sentence emphasized). Two paragraphs:
 
-**The last layer is operational.** BOP works primarily on publicly owned parkland, where restoration runs alongside community education, so proximity to NYC parks is tracked. Sites near combined sewer and stormwater outfalls are flagged for permitting and water quality complications, regardless of how strong a site scores ecologically. The pipeline that survives every layer is the pipeline BOP can actually execute. Out of 78 candidates, more than thirty datasets, and six layers of analysis, the framework points to ten to fifteen priority projects ready for design and permitting. That is the answer the engagement was built to produce.
+**The final layer is operational.** BOP works primarily on or near publicly owned parkland, where the work supports community education alongside ecological restoration, so proximity to NYC parks is part of every site's profile. Sites near combined sewer and stormwater outfalls carry permitting and water quality complications that affect feasibility regardless of how a site scores ecologically, so those are tracked too.
+
+Stack the layers together and the picture comes into focus. Seventy-eight candidate sites. More than thirty datasets. Six layers of synthesis: salinity, chlorophyll-a, dissolved oxygen, wave energy, shoreline change, operational context. The framework points to roughly ten to fifteen priority projects ready for design and permitting. That is the answer the engagement was built to produce, and it is the answer BOP can rerun next year as new data lands, without Natrx in the loop.
 
 ---
 

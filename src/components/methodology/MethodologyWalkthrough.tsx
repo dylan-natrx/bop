@@ -121,17 +121,31 @@ export function MethodologyWalkthrough() {
       {/* Bottom strip: copy spans the full width; controls anchor bottom-right */}
       <div className="border-t border-rule-soft px-5 lg:px-8 py-5 lg:py-6">
         <AnimatePresence mode="wait">
-          <motion.p
+          <motion.div
             key={step.id}
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="font-sans text-[13px] lg:text-[14px] font-light leading-[1.6]"
+            className="font-sans text-[13px] lg:text-[14px] font-light leading-[1.6] space-y-3"
           >
-            <span className="text-ivory">{step.lede}</span>{' '}
-            <span className="text-ivory-dim">{step.body}</span>
-          </motion.p>
+            {/* First paragraph: lede inline with the first body paragraph */}
+            <p>
+              <span className="text-ivory">{step.lede}</span>
+              {step.bodyParagraphs[0] ? (
+                <>
+                  {' '}
+                  <span className="text-ivory-dim">{step.bodyParagraphs[0]}</span>
+                </>
+              ) : null}
+            </p>
+            {/* Subsequent paragraphs */}
+            {step.bodyParagraphs.slice(1).map((paragraph, i) => (
+              <p key={i} className="text-ivory-dim">
+                {paragraph}
+              </p>
+            ))}
+          </motion.div>
         </AnimatePresence>
 
         <div className="mt-5 lg:mt-6">
