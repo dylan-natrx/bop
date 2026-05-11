@@ -1,5 +1,5 @@
 import { SectionShell } from './SectionShell'
-import { ImagePlaceholder } from './ImagePlaceholder'
+import { EditorialImage } from './EditorialImage'
 
 export function StakesAndProblem() {
   return (
@@ -47,14 +47,11 @@ export function StakesAndProblem() {
             col-span-1 lg:col-span-5 lg:col-start-8
             mt-2
           ">
-          <ImagePlaceholder
-            kicker="Fig. — Section 2 imagery"
-            caption={
-              <>
-                New York Harbor at [location], [date]. [Photographer / Source].
-                Final image is an atmospheric harbor photograph, TBD.
-              </>
-            }
+          <EditorialImage
+            src="/site-imagery/section2.jpg"
+            alt="New York Harbor"
+            width={829}
+            height={1040}
             aspect="4 / 5"
           />
         </aside>

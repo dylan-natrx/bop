@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { ImagePlaceholder } from './ImagePlaceholder'
+import { SiteMiniMap } from './SiteMiniMap'
 
 interface TopRankedCalloutProps {
   /** Site name */
@@ -8,23 +8,29 @@ interface TopRankedCalloutProps {
   meta: string
   /** Body copy as ReactNode (may include inline italics) */
   body: ReactNode
-  /** Caption for the site's image once real imagery is in place */
-  imageCaption: string
+  /**
+   * IDs of the sites this card represents. Single site for Arthur Kill and
+   * Wolfe's Pond; six IDs for the Living Breakwaters cluster. The card's
+   * mini-map zooms to fit all matching site polygons.
+   */
+  siteIds: string[]
 }
 
 /**
  * Editorial card for one of the top-ranked sites surfaced by the framework.
  * Three of these sit in a row in Section 3 below the methodology walkthrough.
  *
- * Layout: image at the top, then site name in Fraunces serif, meta line in
- * JetBrains Mono, body copy in Inter. Matches the page's dark editorial
- * register and uses the suitability gradient stops for the meta accent.
+ * Layout: a live Mapbox mini-map at the top, zoomed to the site polygon(s)
+ * with the matching geometry highlighted in teal-aqua. Below the map, the
+ * site name in Fraunces, meta line in JetBrains Mono, body copy in Inter.
+ * The mini-map uses the same dark editorial style as Map 1 and Map 2 so
+ * the cards read as one visual system with the rest of the page.
  */
 export function TopRankedCallout({
   name,
   meta,
   body,
-  imageCaption,
+  siteIds,
 }: TopRankedCalloutProps) {
   return (
     <article className="
@@ -33,11 +39,7 @@ export function TopRankedCallout({
       bg-bg-mid/30
       p-5 lg:p-6
     ">
-      <ImagePlaceholder
-        kicker="Site visual"
-        caption={imageCaption}
-        aspect="4 / 3"
-      />
+      <SiteMiniMap siteIds={siteIds} aspect="4 / 3" />
 
       <div className="flex flex-col gap-1">
         <h3 className="font-serif font-light text-ivory text-xl lg:text-2xl leading-tight">

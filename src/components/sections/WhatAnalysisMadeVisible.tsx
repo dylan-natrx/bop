@@ -1,6 +1,6 @@
 import { SectionShell } from './SectionShell'
 import { FindingBeat } from './FindingBeat'
-import { ImagePlaceholder } from './ImagePlaceholder'
+import { EditorialImage } from './EditorialImage'
 import { ConfidenceDistributionChart } from './ConfidenceDistributionChart'
 
 export function WhatAnalysisMadeVisible() {
@@ -58,17 +58,18 @@ export function WhatAnalysisMadeVisible() {
             </p>
           }
           visual={
-            <ImagePlaceholder
-              kicker="Fig. — Shoreline change"
+            <EditorialImage
+              src="/site-imagery/shoreline-change.png"
+              alt="Shoreline change analysis at Living Breakwaters, 2010 to 2025"
+              width={2244}
+              height={1574}
+              aspect="4 / 3"
               caption={
                 <>
-                  Shoreline change rates at Living Breakwaters, 2010 to 2025.
-                  Red indicates active retreat. Source: Natrx Assess shoreline
-                  change analysis. Final image extracted from the Wave Analysis
-                  Report.
+                  Fig. — Shoreline change rates at Living Breakwaters, 2010 to
+                  2025. Source: Natrx Assess shoreline change analysis.
                 </>
               }
-              aspect="4 / 3"
             />
           }
         />

@@ -49,7 +49,7 @@ export function MethodologyMadeVisible() {
           <TopRankedCallout
             name="Arthur Kill"
             meta="Rank 1 · Score 0.87 · Staten Island, Upper Harbor"
-            imageCaption="Arthur Kill site polygon rendered on the page's Mapbox base style. Final treatment: zoomed to the site, polygon highlighted in the page palette."
+            siteIds={['27']}
             body={
               <>
                 The strongest site in the pipeline sits on the industrial west
@@ -65,7 +65,7 @@ export function MethodologyMadeVisible() {
           <TopRankedCallout
             name="Living Breakwaters cluster"
             meta="Ranks 2–7 · Scores 0.79 to 0.74 · Raritan Bay"
-            imageCaption="Living Breakwaters cluster (six sites, ranks 2–7) on the page's Mapbox base style, polygons highlighted in the page palette."
+            siteIds={['36', '37', '38', '40', '41', '42']}
             body={
               <>
                 Six locations within the Living Breakwaters system, the
@@ -81,7 +81,7 @@ export function MethodologyMadeVisible() {
           <TopRankedCallout
             name="Wolfe's Pond"
             meta="Rank 8 · Score 0.65 · Raritan Bay"
-            imageCaption="Wolfe's Pond site polygon on the page's Mapbox base style, polygon highlighted in the page palette."
+            siteIds={['30']}
             body={
               <>
                 The most fully-rounded candidate at this tier. Wolfe&apos;s
