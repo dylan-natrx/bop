@@ -136,7 +136,11 @@ export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
   // Each item knows the step it was added at and renders its own visual.
   const items: StackItem[] = []
 
-  // Curves
+  // Curves. Each water-quality curve carries its own favorable-zone shading
+  // from the moment the curve is introduced (not gated by step). The
+  // shape of the curve already tells the optimum story; the zone makes it
+  // immediate. Step 3 is then the implicit "all three align" moment because
+  // all three zones are visible together for the first time.
   step.visibleCurves.forEach((curveKey) => {
     const addedAtStep =
       curveKey === 'salinity' ? 1 :
@@ -144,6 +148,8 @@ export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
       curveKey === 'do' ? 3 :
       4
     const def = CURVE_DEFS[curveKey]
+    const isWaterQualityCurve =
+      curveKey === 'salinity' || curveKey === 'chla' || curveKey === 'do'
     items.push({
       key: `curve-${curveKey}`,
       addedAtStep,
@@ -152,10 +158,7 @@ export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
         <CurvePlot
           curve={def}
           isActive={isActive}
-          showGoldilocksBand={
-            step.showGoldilocksBand &&
-            (curveKey === 'salinity' || curveKey === 'chla' || curveKey === 'do')
-          }
+          showFavorableZone={isWaterQualityCurve}
           showDanger={curveKey === 'chla'}
           showFlagThreshold={curveKey === 'wave'}
         />
@@ -249,7 +252,8 @@ export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
 interface CurvePlotProps {
   curve: CurveDef
   isActive: boolean
-  showGoldilocksBand: boolean
+  /** Render the favorable zone shading. Always true for the three water-quality curves. */
+  showFavorableZone: boolean
   showDanger: boolean
   showFlagThreshold: boolean
 }
@@ -257,7 +261,7 @@ interface CurvePlotProps {
 function CurvePlot({
   curve,
   isActive,
-  showGoldilocksBand,
+  showFavorableZone,
   showDanger,
   showFlagThreshold,
 }: CurvePlotProps) {
@@ -293,19 +297,21 @@ function CurvePlot({
             {curve.xLabel}
           </div>
         </div>
-        <div className="font-serif italic text-[11px] leading-snug text-ivory-faint/85">
+        <div className="font-serif italic text-[12px] leading-snug text-ivory-dim">
           {curve.subtitle}
         </div>
       </div>
 
       <div className="relative" style={{ height: CURVE_HEIGHT }}>
-        {/* Annotation as HTML overlay (legible regardless of SVG stretching) */}
+        {/* Annotation as HTML overlay (legible regardless of SVG stretching).
+            Soft text-shadow keeps it readable over the curve fill. */}
         <div
-          className="absolute font-serif italic text-[11px] leading-snug text-ivory-dim/85 pointer-events-none"
+          className="absolute font-serif italic text-[12.5px] leading-snug text-ivory pointer-events-none"
           style={{
             left: `${annotationLeftPct}%`,
             top: `${annotationTopPct}%`,
             maxWidth: '60%',
+            textShadow: '0 0 6px rgba(6, 19, 33, 0.85)',
           }}
         >
           {curve.annotation.text}
@@ -314,10 +320,11 @@ function CurvePlot({
         {/* Threshold label (e.g. the wave chart's "Engineering flag" by the 3 ft dashed line) */}
         {curve.thresholdLabel && (
           <div
-            className="absolute font-mono uppercase tracking-[0.18em] text-[9px] text-teal-aqua/85 pointer-events-none whitespace-nowrap"
+            className="absolute font-mono uppercase tracking-[0.18em] text-[10px] text-teal-aqua pointer-events-none whitespace-nowrap"
             style={{
               left: `${(curve.thresholdLabel.x / VB_W) * 100}%`,
               top: `${(curve.thresholdLabel.y / VB_H) * 100}%`,
+              textShadow: '0 0 6px rgba(6, 19, 33, 0.85)',
             }}
           >
             {curve.thresholdLabel.text}
@@ -327,8 +334,12 @@ function CurvePlot({
         {/* "Eutrophication" overlay for the chl-a danger zone */}
         {showDanger && (
           <div
-            className="absolute font-mono uppercase tracking-[0.22em] text-[9px] text-ivory-faint/70 pointer-events-none"
-            style={{ right: '6%', bottom: '14%' }}
+            className="absolute font-mono uppercase tracking-[0.22em] text-[10px] text-ivory-dim pointer-events-none"
+            style={{
+              right: '6%',
+              bottom: '14%',
+              textShadow: '0 0 6px rgba(6, 19, 33, 0.85)',
+            }}
           >
             Eutrophication
           </div>
@@ -339,13 +350,13 @@ function CurvePlot({
         className="w-full h-full block"
         preserveAspectRatio="none"
       >
-        {showGoldilocksBand && (
+        {showFavorableZone && (
           <rect
             x={curve.favorableZone.x}
             y={-CURVE_PADDING_Y}
             width={curve.favorableZone.width}
             height={VB_H + CURVE_PADDING_Y * 2}
-            fill="rgba(111, 227, 208, 0.08)"
+            fill="rgba(111, 227, 208, 0.1)"
           />
         )}
         {showDanger && <DangerZone />}
