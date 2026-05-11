@@ -1,41 +1,34 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import type { StepConfig, SpectraCurve } from './steps'
 
 /**
- * Custom SVG spectra panel for the methodology walkthrough.
+ * Spectra panel — stack of applied filters.
  *
- * Hand-tuned curves per the spec — these are illustrative shapes, not
- * pixel-mapped projections of the actual transfer functions. The
- * accompanying "Show the math" disclosure on Step 3 provides the
- * literal composite formula for readers who want precision.
+ * Each step adds one new filter to the stack. The newest addition appears at
+ * the top; previously-added filters get pushed down. Every item is clickable
+ * and jumps the walkthrough back to the step where that filter was added.
  */
 interface SpectraPanelProps {
   step: StepConfig
+  onJumpToStep: (step: number) => void
 }
 
-const CURVE_HEIGHT = 110 // px per curve plot
-const CURVE_PADDING_X = 8 // viewbox horizontal padding
-const CURVE_PADDING_Y = 12 // viewbox vertical padding
+const CURVE_HEIGHT = 78 // px per curve plot
+const CURVE_PADDING_X = 8
+const CURVE_PADDING_Y = 10
 const VB_W = 200
-const VB_H = 80
+const VB_H = 70
 
-// Maps the curve key to its plot definition
 interface CurveDef {
   key: SpectraCurve
   title: string
   xLabel: string
   xTicks: { x: number; label: string }[]
-  /**
-   * SVG path string for the curve in a 0..200 × 0..80 viewbox.
-   * Y is inverted in SVG so high suitability = low Y.
-   */
   path: string
-  /** Favorable zone rect (rendered subtly under the curve) */
   favorableZone: { x: number; width: number }
-  /** Annotation label and its rough position over the plot */
   annotation: { text: string; x: number; y: number }
 }
 
@@ -51,18 +44,16 @@ const CURVE_DEFS: Record<SpectraCurve, CurveDef> = {
       { x: 89, label: '20' },
       { x: 178, label: '40' },
     ],
-    // 0-45 PSU → x 0-200. 12-20 PSU plateau (x 53-89) at y ~9 (≈0.89 suitability).
-    // Steep rise from 5 PSU (x 22) to 12 PSU; smooth descent from 20 to 40 PSU.
     path: `
-      M 0 76
-      L 22 76
-      C 32 76, 44 25, 55 10
-      L 89 10
-      C 105 10, 140 60, 178 76
-      L 200 76
+      M 0 66
+      L 22 66
+      C 32 66, 44 22, 55 9
+      L 89 9
+      C 105 9, 140 52, 178 66
+      L 200 66
     `,
     favorableZone: { x: 55, width: 34 },
-    annotation: { text: 'Optimum 12–20 PSU', x: 72, y: 22 },
+    annotation: { text: 'Optimum 12–20 PSU', x: 70, y: 19 },
   },
   chla: {
     key: 'chla',
@@ -73,9 +64,8 @@ const CURVE_DEFS: Record<SpectraCurve, CurveDef> = {
       { x: 100, label: '20' },
       { x: 200, label: '40' },
     ],
-    // Linear from (0, 76) to (200, 6). Hatched zone above 20 µg/L (x >= 100).
-    path: `M 0 76 L 200 6`,
-    favorableZone: { x: 50, width: 50 }, // 10-20 µg/L sweet spot before eutrophication
+    path: `M 0 66 L 200 6`,
+    favorableZone: { x: 50, width: 50 },
     annotation: { text: 'Linear food response', x: 50, y: 22 },
   },
   do: {
@@ -88,19 +78,16 @@ const CURVE_DEFS: Record<SpectraCurve, CurveDef> = {
       { x: 67, label: '10%' },
       { x: 200, label: '30%+' },
     ],
-    // Step function: 1.0 below 2%, 0.75 between 2-10%, 0.5 above 10%.
-    // Y: 0 = suitability 1.0; 76 = suitability 0.
-    // suitability 1.0 → y 6; 0.75 → y 23.5; 0.5 → y 41.
     path: `
       M 0 6
       L 13 6
-      L 13 23.5
-      L 67 23.5
-      L 67 41
-      L 200 41
+      L 13 22
+      L 67 22
+      L 67 36
+      L 200 36
     `,
     favorableZone: { x: 0, width: 13 },
-    annotation: { text: 'Hypoxia threshold, 3 mg/L', x: 16, y: 16 },
+    annotation: { text: 'Hypoxia threshold, 3 mg/L', x: 16, y: 14 },
   },
   wave: {
     key: 'wave',
@@ -113,79 +100,146 @@ const CURVE_DEFS: Record<SpectraCurve, CurveDef> = {
       { x: 150, label: '3' },
       { x: 200, label: '4+' },
     ],
-    // Hump shape with peak around 1 ft, decline starting at 2, threshold flag at 3.
     path: `
-      M 0 76
-      C 18 76, 32 24, 50 14
-      C 70 8, 85 12, 100 22
-      C 120 36, 140 60, 150 70
-      L 200 76
+      M 0 66
+      C 18 66, 32 20, 50 12
+      C 70 6, 85 10, 100 20
+      C 120 32, 140 52, 150 60
+      L 200 66
     `,
     favorableZone: { x: 28, width: 60 },
-    annotation: { text: 'Optimum, flagged above 3 ft', x: 30, y: 24 },
+    annotation: { text: 'Flagged above 3 ft', x: 28, y: 21 },
   },
 }
 
-export function SpectraPanel({ step }: SpectraPanelProps) {
+interface StackItem {
+  /** Unique key */
+  key: string
+  /** Step at which this filter was added; clicking jumps here */
+  addedAtStep: number
+  /** Short label shown alongside the item */
+  label: string
+  render: (isActive: boolean) => ReactNode
+}
+
+export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
+  // Build the stack of all items applicable up to the current step.
+  // Each item knows the step it was added at and renders its own visual.
+  const items: StackItem[] = []
+
+  // Curves
+  step.visibleCurves.forEach((curveKey) => {
+    const addedAtStep =
+      curveKey === 'salinity' ? 1 :
+      curveKey === 'chla' ? 2 :
+      curveKey === 'do' ? 3 :
+      4
+    const def = CURVE_DEFS[curveKey]
+    items.push({
+      key: `curve-${curveKey}`,
+      addedAtStep,
+      label: def.title,
+      render: (isActive) => (
+        <CurvePlot
+          curve={def}
+          isActive={isActive}
+          showGoldilocksBand={
+            step.showGoldilocksBand &&
+            (curveKey === 'salinity' || curveKey === 'chla' || curveKey === 'do')
+          }
+          showDanger={curveKey === 'chla'}
+          showFlagThreshold={curveKey === 'wave'}
+        />
+      ),
+    })
+  })
+
+  // Annotations
+  if (step.showErosionAnnotation) {
+    items.push({
+      key: 'erosion-annotation',
+      addedAtStep: 5,
+      label: 'Shoreline erosion',
+      render: (isActive) => (
+        <AnnotationBlock
+          eyebrow="Shoreline erosion"
+          body="Erosion is not a suitability variable. It is a flag for co-benefit. Sites adjacent to actively eroding shorelines are tagged, because oyster reefs function as natural breakwaters."
+          isActive={isActive}
+        />
+      ),
+    })
+  }
+  if (step.showFiltersAnnotation) {
+    items.push({
+      key: 'filters-annotation',
+      addedAtStep: 6,
+      label: 'Context filters',
+      render: (isActive) => (
+        <AnnotationBlock
+          eyebrow="Context filters"
+          body="Not suitability variables. Constraints on which suitable sites are also actionable: parkland proximity, combined sewer outfalls, separate stormwater outfalls."
+          isActive={isActive}
+        />
+      ),
+    })
+  }
+
+  // Newest first
+  const sorted = [...items].sort((a, b) => b.addedAtStep - a.addedAtStep)
+
   return (
     <div
-      className="flex flex-col gap-6"
+      className="flex flex-col gap-3"
       role="region"
       aria-label="Variable suitability curves"
     >
       <div>
-        <div className="font-mono text-eyebrow uppercase text-ivory-faint mb-1.5">
-          Suitability curves
+        <div className="font-mono text-eyebrow uppercase text-ivory-faint mb-1">
+          Applied filters
         </div>
-        <div className="font-sans text-[12px] text-ivory-faint leading-relaxed max-w-[40ch]">
-          Shapes of each variable&apos;s suitability function. As the walkthrough advances, curves stack.
+        <div className="font-sans text-[11px] text-ivory-faint leading-relaxed max-w-[40ch]">
+          Newest at top. Click a filter to revisit that step.
         </div>
       </div>
 
-      <AnimatePresence>
-        {step.visibleCurves.map((curveKey) => (
-          <CurvePlot
-            key={curveKey}
-            curve={CURVE_DEFS[curveKey]}
-            isFocus={step.focusCurve === curveKey}
-            showGoldilocksBand={
-              step.showGoldilocksBand &&
-              (curveKey === 'salinity' ||
-                curveKey === 'chla' ||
-                curveKey === 'do')
-            }
-            showDanger={curveKey === 'chla'}
-            showFlagThreshold={curveKey === 'wave'}
-          />
-        ))}
+      <AnimatePresence initial={false}>
+        {sorted.map((item) => {
+          const isActive = item.addedAtStep === step.id
+          return (
+            <motion.div
+              key={item.key}
+              layout
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: isActive ? 1 : 0.6, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+            >
+              <button
+                type="button"
+                onClick={() => onJumpToStep(item.addedAtStep)}
+                aria-label={`Revisit step ${item.addedAtStep}: ${item.label}`}
+                className={`
+                  group w-full text-left rounded-card
+                  transition-colors duration-200
+                  ${isActive ? '' : 'hover:opacity-100'}
+                  ${isActive ? 'cursor-default' : 'cursor-pointer'}
+                `}
+              >
+                {item.render(isActive)}
+              </button>
+            </motion.div>
+          )
+        })}
       </AnimatePresence>
 
-      <AnimatePresence>
-        {step.showErosionAnnotation && (
-          <AnnotationBlock
-            key="erosion"
-            eyebrow="Shoreline erosion"
-            body="Erosion is not a suitability variable. It is a flag for co-benefit. Sites adjacent to actively eroding shorelines are tagged, because oyster reefs function as natural breakwaters."
-          />
-        )}
-        {step.showFiltersAnnotation && (
-          <AnnotationBlock
-            key="filters"
-            eyebrow="Context filters"
-            body="Not suitability variables. Constraints on which suitable sites are also actionable: parkland proximity, combined sewer outfalls, separate stormwater outfalls."
-          />
-        )}
-        {step.showMathDisclosure && (
-          <MathDisclosure key="math" />
-        )}
-      </AnimatePresence>
+      {step.showMathDisclosure && <MathDisclosure />}
     </div>
   )
 }
 
 interface CurvePlotProps {
   curve: CurveDef
-  isFocus: boolean
+  isActive: boolean
   showGoldilocksBand: boolean
   showDanger: boolean
   showFlagThreshold: boolean
@@ -193,23 +247,31 @@ interface CurvePlotProps {
 
 function CurvePlot({
   curve,
-  isFocus,
+  isActive,
   showGoldilocksBand,
   showDanger,
   showFlagThreshold,
 }: CurvePlotProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 4 }}
-      animate={{ opacity: isFocus ? 1 : 0.55, y: 0 }}
-      exit={{ opacity: 0, y: -4 }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="bg-bg-mid/45 border border-rule-soft rounded-card px-4 pt-3 pb-2"
-      aria-label={`${curve.title} suitability curve`}
+    <div
+      className={`
+        relative px-3 pt-2 pb-1.5 rounded-card
+        ${isActive
+          ? 'bg-bg-mid/55 border border-teal-bright/35'
+          : 'bg-bg-mid/30 border border-rule-soft group-hover:border-rule'}
+        transition-colors duration-200
+      `}
     >
-      <div className="flex items-baseline justify-between mb-1">
-        <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-ivory-dim">
-          {curve.title}
+      <div className="flex items-baseline justify-between mb-0.5">
+        <div className="flex items-baseline gap-2">
+          <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-ivory-dim">
+            {curve.title}
+          </div>
+          {!isActive && (
+            <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-ivory-faint opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              Revisit →
+            </span>
+          )}
         </div>
         <div className="font-mono text-[9px] uppercase tracking-[0.18em] text-ivory-faint">
           {curve.xLabel}
@@ -218,11 +280,10 @@ function CurvePlot({
 
       <svg
         viewBox={`-${CURVE_PADDING_X} -${CURVE_PADDING_Y} ${VB_W + CURVE_PADDING_X * 2} ${VB_H + CURVE_PADDING_Y * 2}`}
-        className="w-full"
+        className="w-full block"
         style={{ height: CURVE_HEIGHT }}
         preserveAspectRatio="none"
       >
-        {/* Favorable zone background */}
         {showGoldilocksBand && (
           <rect
             x={curve.favorableZone.x}
@@ -232,38 +293,27 @@ function CurvePlot({
             fill="rgba(111, 227, 208, 0.08)"
           />
         )}
-
-        {/* Eutrophication "danger zone" for chl-a */}
-        {showDanger && (
-          <DangerZone />
-        )}
-
-        {/* Wave flag threshold line at x=150 (= 3 ft) */}
+        {showDanger && <DangerZone />}
         {showFlagThreshold && (
-          <g>
-            <line
-              x1={150}
-              y1={-CURVE_PADDING_Y / 2}
-              x2={150}
-              y2={VB_H + CURVE_PADDING_Y / 2}
-              stroke="rgba(43, 168, 160, 0.42)"
-              strokeWidth={0.6}
-              strokeDasharray="3 2"
-            />
-          </g>
+          <line
+            x1={150}
+            y1={-CURVE_PADDING_Y / 2}
+            x2={150}
+            y2={VB_H + CURVE_PADDING_Y / 2}
+            stroke="rgba(43, 168, 160, 0.4)"
+            strokeWidth={0.6}
+            strokeDasharray="3 2"
+          />
         )}
 
-        {/* Axis baseline */}
         <line
           x1={0}
           y1={VB_H}
           x2={VB_W}
           y2={VB_H}
-          stroke="rgba(242, 237, 227, 0.12)"
+          stroke="rgba(242, 237, 227, 0.1)"
           strokeWidth={0.5}
         />
-
-        {/* Tick marks */}
         {curve.xTicks.map((tick) => (
           <g key={tick.label}>
             <line
@@ -276,12 +326,12 @@ function CurvePlot({
             />
             <text
               x={tick.x}
-              y={VB_H + 8}
+              y={VB_H + 7}
               textAnchor="middle"
-              fill="rgba(184, 176, 160, 0.55)"
+              fill="rgba(184, 176, 160, 0.5)"
               style={{
                 fontFamily: 'var(--font-jetbrains), ui-monospace, monospace',
-                fontSize: 5,
+                fontSize: 4.8,
                 letterSpacing: '0.18em',
               }}
             >
@@ -290,23 +340,19 @@ function CurvePlot({
           </g>
         ))}
 
-        {/* Filled area under the curve */}
         <path
           d={`${curve.path} L 200 ${VB_H} L 0 ${VB_H} Z`}
           fill="rgba(19, 125, 118, 0.14)"
         />
-
-        {/* The curve itself */}
         <path
           d={curve.path}
           fill="none"
           stroke="#2BA8A0"
-          strokeWidth={1.4}
+          strokeWidth={1.3}
           strokeLinecap="round"
           strokeLinejoin="round"
         />
 
-        {/* Annotation */}
         <text
           x={curve.annotation.x}
           y={curve.annotation.y}
@@ -314,18 +360,17 @@ function CurvePlot({
           style={{
             fontFamily: 'var(--font-fraunces), ui-serif, serif',
             fontStyle: 'italic',
-            fontSize: 6.5,
+            fontSize: 6,
           }}
         >
           {curve.annotation.text}
         </text>
       </svg>
-    </motion.div>
+    </div>
   )
 }
 
 function DangerZone() {
-  // Hatched stripe pattern across the high end (x 100-200 = 20-40 µg/L)
   const stripes = []
   for (let i = 0; i < 14; i++) {
     const x = 100 + i * 7
@@ -336,7 +381,7 @@ function DangerZone() {
         y1={-CURVE_PADDING_Y}
         x2={x - 10}
         y2={VB_H + CURVE_PADDING_Y}
-        stroke="rgba(184, 176, 160, 0.18)"
+        stroke="rgba(184, 176, 160, 0.16)"
         strokeWidth={0.5}
       />
     )
@@ -353,12 +398,12 @@ function DangerZone() {
       {stripes}
       <text
         x={150}
-        y={VB_H - 6}
+        y={VB_H - 4}
         textAnchor="middle"
-        fill="rgba(184, 176, 160, 0.6)"
+        fill="rgba(184, 176, 160, 0.55)"
         style={{
           fontFamily: 'var(--font-jetbrains), ui-monospace, monospace',
-          fontSize: 5,
+          fontSize: 4.8,
           letterSpacing: '0.18em',
           textTransform: 'uppercase',
         }}
@@ -369,34 +414,44 @@ function DangerZone() {
   )
 }
 
-function AnnotationBlock({ eyebrow, body }: { eyebrow: string; body: string }) {
+interface AnnotationBlockProps {
+  eyebrow: string
+  body: string
+  isActive: boolean
+}
+
+function AnnotationBlock({ eyebrow, body, isActive }: AnnotationBlockProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 4 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -4 }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="border-l-2 border-teal/50 pl-4 py-1"
+    <div
+      className={`
+        relative px-3 py-3 rounded-card border-l-2
+        ${isActive
+          ? 'border-l-teal-bright bg-bg-mid/55 border-y border-r border-y-teal-bright/25 border-r-teal-bright/25'
+          : 'border-l-teal/55 bg-bg-mid/30 border-y border-r border-y-rule-soft border-r-rule-soft group-hover:border-l-teal-bright/80'}
+        transition-colors duration-200
+      `}
     >
-      <div className="font-mono text-eyebrow uppercase text-ivory-faint mb-1">
-        {eyebrow}
+      <div className="flex items-baseline justify-between mb-1">
+        <div className="font-mono text-eyebrow uppercase text-ivory-faint">
+          {eyebrow}
+        </div>
+        {!isActive && (
+          <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-ivory-faint opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            Revisit →
+          </span>
+        )}
       </div>
-      <div className="font-sans text-[12px] text-ivory-dim leading-relaxed">
+      <div className="font-sans text-[11.5px] text-ivory-dim leading-relaxed">
         {body}
       </div>
-    </motion.div>
+    </div>
   )
 }
 
 function MathDisclosure() {
   const [isOpen, setIsOpen] = useState(false)
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 4 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -4 }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
-    >
+    <div className="mt-2">
       <button
         type="button"
         onClick={() => setIsOpen((v) => !v)}
@@ -409,7 +464,7 @@ function MathDisclosure() {
         {isOpen ? 'Hide the math' : 'Show the math'} →
       </button>
       {isOpen && (
-        <div className="mt-3 text-[12px] font-sans text-ivory-dim leading-relaxed border-l-2 border-rule pl-4 py-1">
+        <div className="mt-2 text-[11.5px] font-sans text-ivory-dim leading-relaxed border-l-2 border-rule pl-3 py-1">
           <div className="font-mono text-[12px] text-ivory mb-2">
             composite = (sal_score + chla_score) ÷ 2 × do_score
           </div>
@@ -418,6 +473,6 @@ function MathDisclosure() {
           </p>
         </div>
       )}
-    </motion.div>
+    </div>
   )
 }

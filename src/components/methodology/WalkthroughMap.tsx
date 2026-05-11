@@ -39,37 +39,47 @@ interface WalkthroughSiteProps {
   Status: 'Design' | 'Proposed Future Site'
   Rank: number
   Acres: number
-  /** Composite score from rankings (for tooltip display) */
   Score: number
-  /** Per-variable scores, looked up from statistics */
   sal_score: number
   chla_score: number
   do_score: number
-  /** Flag presence (Yes if the site is flagged) */
   NearWave: 'Yes' | 'No'
   NearErosion: 'Yes' | 'No'
   NearPark: 'Yes' | 'No'
   NearCSO: 'Yes' | 'No'
   NearMS4: 'Yes' | 'No'
-  /** Computed display fields */
   _radius: number
-  /** Per-step display score, refreshed when step changes */
   _displayScore: number
+  /** When 1, the site has been dimmed out by an active filter this step. */
+  _filteredOut: 0 | 1
 }
 
-/**
- * Compute the score used to color a site for a given step.
- */
-function computeDisplayScore(p: {
-  sal_score: number
-  chla_score: number
-  do_score: number
-}, colorMode: StepConfig['colorMode']): number {
+function computeDisplayScore(
+  p: { sal_score: number; chla_score: number; do_score: number },
+  colorMode: StepConfig['colorMode']
+): number {
   if (colorMode === 'salinity') return p.sal_score ?? 0
   if (colorMode === 'salinity_chla')
     return ((p.sal_score ?? 0) + (p.chla_score ?? 0)) / 2
-  // composite: BOP's water quality composite formula
   return (((p.sal_score ?? 0) + (p.chla_score ?? 0)) / 2) * (p.do_score ?? 0)
+}
+
+/**
+ * Decide whether a site is "filtered out" (dimmed) for the current step.
+ *
+ * Narrowing semantics:
+ *   - Wave (step 4+): sites flagged for excessive wave exposure are dimmed.
+ *   - Erosion (step 5+): NOT a filter. Erosion-adjacent sites are highlighted
+ *     positively because the reef-as-breakwater co-benefit is desirable.
+ *   - Practical filters (step 6): CSO and MS4 proximity dim sites for
+ *     permitting/feasibility reasons. Park proximity is positive — park-
+ *     adjacent sites stay visible.
+ */
+function isFilteredOut(p: WalkthroughSiteProps, visibleFlags: StepConfig['visibleFlags']): boolean {
+  if (visibleFlags.includes('wave') && p.NearWave === 'Yes') return true
+  if (visibleFlags.includes('cso') && p.NearCSO === 'Yes') return true
+  if (visibleFlags.includes('ms4') && p.NearMS4 === 'Yes') return true
+  return false
 }
 
 export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
@@ -82,7 +92,6 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [mapReady, setMapReady] = useState(false)
 
-  // Join rankings + stats into a centroid GeoJSON. Recomputes _displayScore per step.
   const sitesGeoJson = useMemo(() => {
     const valid = rankings.features.filter((f) => {
       const acres = (f.properties as RankingSite).Acres
@@ -103,8 +112,6 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
       const chla_score = Number(stat.chla_score ?? 0)
       const do_score = Number(stat.do_score ?? 0)
 
-      // Flag presence: prefer the statistics binary if present, fall back to the
-      // ranking flag.  wave_sup_3ft, erosion_gt_1_ft_yr in stats are numeric flags.
       const NearWave: 'Yes' | 'No' =
         Number(stat.wave_sup_3ft ?? 0) > 0 || rankProps.WaveExposure === 'Yes'
           ? 'Yes'
@@ -116,7 +123,7 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
 
       const radius = calculateMarkerRadius(rankProps.Acres, minA, maxA, 3.5, 8)
 
-      const props: WalkthroughSiteProps = {
+      const partial: Omit<WalkthroughSiteProps, '_filteredOut'> = {
         id: rankProps.id,
         Site: rankProps.Site,
         Status: rankProps.Status,
@@ -134,6 +141,10 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
         _radius: radius,
         _displayScore: computeDisplayScore({ sal_score, chla_score, do_score }, step.colorMode),
       }
+      const props: WalkthroughSiteProps = {
+        ...partial,
+        _filteredOut: isFilteredOut(partial as WalkthroughSiteProps, step.visibleFlags) ? 1 : 0,
+      }
 
       return {
         type: 'Feature' as const,
@@ -147,9 +158,8 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
       type: 'FeatureCollection' as const,
       features,
     }
-  }, [rankings, stats, step.colorMode])
+  }, [rankings, stats, step.colorMode, step.visibleFlags])
 
-  // Mount the map once
   useEffect(() => {
     if (!mapNodeRef.current || mapRef.current) return
     if (!MAPBOX_TOKEN) {
@@ -180,28 +190,17 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
             { id: 'land-nj-edge', type: 'line', source: 'land-nj', paint: { 'line-color': 'rgba(120, 158, 184, 0.35)', 'line-width': 1.1 } },
             { id: 'land-westchester-edge', type: 'line', source: 'land-westchester', paint: { 'line-color': 'rgba(120, 158, 184, 0.35)', 'line-width': 1.1 } },
 
-            // Flag rings — drawn UNDER the site circle so the site reads on top
+            // Erosion highlight ring — only visible at step 5+ as a co-benefit indicator
             {
-              id: 'flag-practical',
+              id: 'erosion-highlight',
               type: 'circle',
               source: 'sites',
-              filter: ['any', ['==', ['get', 'NearPark'], 'Yes'], ['==', ['get', 'NearCSO'], 'Yes'], ['==', ['get', 'NearMS4'], 'Yes']],
+              filter: ['all',
+                ['==', ['get', 'NearErosion'], 'Yes'],
+                ['==', ['get', '_filteredOut'], 0],
+              ],
               paint: {
-                'circle-radius': ['+', ['get', '_radius'], 11],
-                'circle-color': 'rgba(0,0,0,0)',
-                'circle-stroke-color': 'rgba(184, 176, 160, 0.6)',
-                'circle-stroke-width': 1,
-                'circle-opacity': 0,
-                'circle-stroke-opacity-transition': { duration: 600 },
-              },
-            },
-            {
-              id: 'flag-erosion',
-              type: 'circle',
-              source: 'sites',
-              filter: ['==', ['get', 'NearErosion'], 'Yes'],
-              paint: {
-                'circle-radius': ['+', ['get', '_radius'], 7],
+                'circle-radius': ['+', ['get', '_radius'], 3.5],
                 'circle-color': 'rgba(0,0,0,0)',
                 'circle-stroke-color': '#6FE3D0',
                 'circle-stroke-width': 1.2,
@@ -209,22 +208,8 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
                 'circle-stroke-opacity-transition': { duration: 600 },
               },
             },
-            {
-              id: 'flag-wave',
-              type: 'circle',
-              source: 'sites',
-              filter: ['==', ['get', 'NearWave'], 'Yes'],
-              paint: {
-                'circle-radius': ['+', ['get', '_radius'], 3.5],
-                'circle-color': 'rgba(0,0,0,0)',
-                'circle-stroke-color': '#2BA8A0',
-                'circle-stroke-width': 1.4,
-                'circle-stroke-opacity': 0,
-                'circle-stroke-opacity-transition': { duration: 600 },
-              },
-            },
 
-            // Main site circles (drawn on top of flag rings)
+            // Site circles. Opacity, color, and stroke respond to the step.
             {
               id: 'sites-circle',
               type: 'circle',
@@ -248,25 +233,33 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
                 ],
                 'circle-stroke-width': [
                   'case',
-                  ['<', ['get', '_displayScore'], 0.5],
-                  0,
+                  ['<', ['get', '_displayScore'], 0.5], 0,
                   1.2,
                 ],
                 'circle-opacity': [
                   'case',
-                  ['<', ['get', '_displayScore'], 0.5],
-                  0.45,
+                  // Filtered-out sites fade hard
+                  ['==', ['get', '_filteredOut'], 1], 0.18,
+                  // Below-threshold sites stay muted (existing behavior)
+                  ['<', ['get', '_displayScore'], 0.5], 0.45,
+                  1,
+                ],
+                'circle-stroke-opacity': [
+                  'case',
+                  ['==', ['get', '_filteredOut'], 1], 0.18,
+                  ['<', ['get', '_displayScore'], 0.5], 0.45,
                   1,
                 ],
                 'circle-color-transition': { duration: 600 },
                 'circle-opacity-transition': { duration: 600 },
+                'circle-stroke-opacity-transition': { duration: 600 },
                 'circle-stroke-width-transition': { duration: 600 },
               },
             },
           ],
         },
         bounds: HARBOR_BOUNDS,
-        fitBoundsOptions: { padding: { top: 16, right: 18, bottom: 26, left: 18 } },
+        fitBoundsOptions: { padding: { top: 14, right: 16, bottom: 22, left: 16 } },
         projection: 'mercator',
         attributionControl: false,
         interactive: false,
@@ -291,7 +284,6 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
     })
 
     map.on('load', () => {
-      // Borough labels (same treatment as Map 1)
       labelMarkersRef.current = BOROUGH_LABELS.map((label) => {
         const el = document.createElement('div')
         el.textContent = label.name
@@ -300,7 +292,7 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
           font-size: 9px;
           font-weight: 500;
           letter-spacing: 0.22em;
-          color: rgba(184, 176, 160, 0.6);
+          color: rgba(184, 176, 160, 0.55);
           text-transform: uppercase;
           pointer-events: none;
           white-space: nowrap;
@@ -312,7 +304,6 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
           .addTo(map)
       })
 
-      // Hover tooltip on the sites circle layer
       map.on('mousemove', 'sites-circle', (e) => {
         if (!e.features?.length) return
         map.getCanvas().style.cursor = 'pointer'
@@ -347,7 +338,7 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // Push updated sites data when the step changes (recomputed _displayScore).
+  // Push updated sites when the step changes
   useEffect(() => {
     const map = mapRef.current
     if (!map || !mapReady) return
@@ -357,28 +348,17 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
     }
   }, [sitesGeoJson, mapReady])
 
-  // Toggle flag-ring layer opacity per step
+  // Erosion highlight opacity per step
   useEffect(() => {
     const map = mapRef.current
     if (!map || !mapReady) return
-
-    const showWave = step.visibleFlags.includes('wave') ? 0.95 : 0
-    const showErosion = step.visibleFlags.includes('erosion') ? 0.95 : 0
-    const showPractical =
-      step.visibleFlags.includes('park') ||
-      step.visibleFlags.includes('cso') ||
-      step.visibleFlags.includes('ms4')
-        ? 0.85
-        : 0
-
-    map.setPaintProperty('flag-wave', 'circle-stroke-opacity', showWave)
-    map.setPaintProperty('flag-erosion', 'circle-stroke-opacity', showErosion)
-    map.setPaintProperty('flag-practical', 'circle-stroke-opacity', showPractical)
+    const showErosion = step.visibleFlags.includes('erosion') ? 0.85 : 0
+    map.setPaintProperty('erosion-highlight', 'circle-stroke-opacity', showErosion)
   }, [step.visibleFlags, mapReady])
 
   if (!MAPBOX_TOKEN) {
     return (
-      <div className="relative w-full h-full min-h-[440px] flex items-center justify-center p-6 text-center text-ivory-dim font-mono text-body-sm">
+      <div className="relative w-full h-full min-h-[380px] flex items-center justify-center p-6 text-center text-ivory-dim font-mono text-body-sm">
         Missing NEXT_PUBLIC_MAPBOX_TOKEN.
       </div>
     )
@@ -387,7 +367,7 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-full min-h-[440px] lg:min-h-[520px]"
+      className="relative w-full h-full min-h-[380px] lg:min-h-[420px]"
     >
       <div
         ref={mapNodeRef}

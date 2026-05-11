@@ -88,7 +88,7 @@ export function MethodologyWalkthrough() {
       aria-label="Methodology walkthrough"
     >
       {/* Step header */}
-      <div className="px-6 lg:px-10 pt-8 lg:pt-10 pb-6 border-b border-rule-soft">
+      <div className="px-5 lg:px-8 pt-5 lg:pt-6 pb-4 border-b border-rule-soft">
         <div className="flex items-baseline justify-between gap-6">
           <div className="font-mono text-eyebrow uppercase tracking-[0.22em] text-ivory-faint tabular-nums">
             Step {step.id} of {STEP_COUNT}
@@ -101,41 +101,41 @@ export function MethodologyWalkthrough() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="mt-2 font-serif font-light text-ivory text-2xl lg:text-3xl leading-tight"
+            className="mt-1.5 font-serif font-light text-ivory text-xl lg:text-2xl leading-tight"
           >
             {step.title}
           </motion.h3>
         </AnimatePresence>
       </div>
 
-      {/* Panels */}
+      {/* Panels: map on the left, spectra + step copy share the right column */}
       <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr]">
         <div className="lg:border-r lg:border-rule-soft">
           <WalkthroughMap rankings={rankings} stats={stats} step={step} />
         </div>
-        <div className="p-6 lg:p-8 lg:max-h-[600px] lg:overflow-y-auto">
-          <SpectraPanel step={step} />
+        <div className="flex flex-col lg:h-[440px]">
+          <div className="px-5 pt-5 pb-3 lg:px-6 lg:pt-5 lg:pb-3 overflow-y-auto flex-1 border-b border-rule-soft">
+            <SpectraPanel step={step} onJumpToStep={jumpTo} />
+          </div>
+          <div className="px-5 py-4 lg:px-6 lg:py-4">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={step.id}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+                className="font-sans text-[12.5px] text-ivory-dim font-light leading-[1.55]"
+              >
+                {step.copy}
+              </motion.p>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
 
-      {/* Step copy */}
-      <div className="px-6 lg:px-10 pt-8 pb-2 border-t border-rule-soft">
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={step.id}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="font-sans text-body text-ivory-dim font-light leading-[1.65] max-w-[68ch]"
-          >
-            {step.copy}
-          </motion.p>
-        </AnimatePresence>
-      </div>
-
       {/* Controls */}
-      <div className="px-6 lg:px-10 pb-8 lg:pb-10">
+      <div className="px-5 lg:px-8 pb-5 lg:pb-6 pt-4 border-t border-rule-soft">
         <WalkthroughControls
           currentStep={currentStep}
           onPrevious={goPrev}

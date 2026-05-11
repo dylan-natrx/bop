@@ -23,7 +23,7 @@ export function WalkthroughControls({
   const isLast = currentStep === STEP_COUNT
 
   return (
-    <div className="flex items-center justify-between gap-6 mt-10 lg:mt-12">
+    <div className="flex items-center justify-between gap-6 mt-3">
       {/* Previous */}
       <button
         type="button"
