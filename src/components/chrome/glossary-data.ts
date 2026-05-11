@@ -6,14 +6,14 @@ export interface GlossaryEntry {
 }
 
 /**
- * The ~18 plain-language definitions called for in CLAUDE.md.
+ * Plain-language definitions for the terms that travel through the piece.
  *
  * Drawn from the BOP Master Document and the Natrx project overview. Phrasing
  * intentionally lay; these are not the scientific definitions.
  *
  * Sort order is roughly the order a reader encounters the terms in the page;
  * the drawer renders them as a definition list and they're also browsable
- * alphabetically by readers. Inline <GlossaryTerm> usage from body copy opens
+ * top-to-bottom by readers. Inline <GlossaryTerm> usage from body copy opens
  * the drawer scrolled to the specific term via the `id` below.
  */
 export const GLOSSARY: GlossaryEntry[] = [
@@ -34,6 +34,12 @@ export const GLOSSARY: GlossaryEntry[] = [
     term: 'Keystone species',
     definition:
       'A species whose presence disproportionately shapes its ecosystem. Oysters are keystone in estuaries because they filter water, build reef habitat that supports other species, and stabilize shorelines against wave energy.',
+  },
+  {
+    id: 'filter-feeder',
+    term: 'Filter feeder',
+    definition:
+      'An animal that eats by straining suspended particles out of the surrounding water, rather than by hunting or grazing. Eastern oysters draw water across their gills as they breathe, retaining phytoplankton and other small food particles. A single adult filters around fifty gallons a day, which is why oyster reefs improve water clarity at the scale of an entire estuary.',
   },
   {
     id: 'allee-effect',
@@ -66,16 +72,28 @@ export const GLOSSARY: GlossaryEntry[] = [
       'A pigment found in microscopic algae (phytoplankton), used as a proxy for how much food is in the water. Oysters filter and eat phytoplankton, so adequate chlorophyll-a indicates an adequate food supply. Too much is a sign of eutrophication.',
   },
   {
+    id: 'algal-bloom',
+    term: 'Algal bloom',
+    definition:
+      'A rapid, dense growth of algae in a water body, usually triggered by an oversupply of nutrients (see Eutrophication). Blooms cloud the water while they grow, then crash dissolved oxygen as they decompose. Some species also release toxins. A leading cause of hypoxia in coastal estuaries.',
+  },
+  {
     id: 'eutrophication',
     term: 'Eutrophication',
     definition:
-      'An overload of nutrients, usually from runoff or wastewater, that triggers excessive algae growth in a water body. As the resulting algae blooms die off and decompose, they pull oxygen out of the water and can suffocate the same animals (oysters included) the blooms initially fed. The danger zone at the high end of the chlorophyll-a curve.',
+      'An overload of nutrients, usually from runoff or wastewater, that triggers excessive algae growth in a water body. As the resulting algal blooms die off and decompose, they pull oxygen out of the water and can suffocate the same animals (oysters included) the blooms initially fed. The danger zone at the high end of the chlorophyll-a curve.',
   },
   {
     id: 'dissolved-oxygen',
-    term: 'Dissolved oxygen and hypoxia',
+    term: 'Dissolved oxygen',
     definition:
-      'The amount of oxygen dissolved in water. Oysters need oxygen to breathe; below about 3 mg/L (hypoxia) most marine animals struggle. Persistent hypoxia rules out a site for restoration.',
+      'The amount of oxygen dissolved in water, the supply oysters and other marine animals draw on to breathe. Measured in milligrams per liter. Below roughly 3 mg/L, conditions tip into hypoxia and most marine life struggles.',
+  },
+  {
+    id: 'hypoxia',
+    term: 'Hypoxia',
+    definition:
+      'Oxygen depletion in water, conventionally defined as dissolved oxygen below 3 milligrams per liter. Below this threshold most marine animals struggle to survive. In New York Harbor, hypoxia is a recurring summer condition driven by warm water, runoff, and the decay of algal blooms. Persistent hypoxia rules a site out for oyster restoration.',
   },
   {
     id: 'habitat-suitability-index',
@@ -106,6 +124,12 @@ export const GLOSSARY: GlossaryEntry[] = [
     term: 'Shoreline change analysis (MEIP)',
     definition:
       'Marsh Edge from Image Processing. A technique that traces the moving edge of marsh vegetation across multiple years of satellite imagery to measure erosion rates at roughly one-meter resolution.',
+  },
+  {
+    id: 'natural-breakwater',
+    term: 'Natural breakwater',
+    definition:
+      'A living structure that absorbs and dissipates incoming wave energy before it reaches shore, the ecological counterpart to a concrete or stone breakwater. Mature oyster reefs slow erosion of marsh edges and protect adjacent shorelines. The co-benefit pattern the methodology surfaces in step 5: sites with both strong water quality and active erosion are sites where a single intervention delivers two outcomes.',
   },
   {
     id: 'naip-imagery',
