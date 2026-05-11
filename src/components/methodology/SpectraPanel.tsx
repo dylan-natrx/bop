@@ -252,6 +252,12 @@ function CurvePlot({
   showDanger,
   showFlagThreshold,
 }: CurvePlotProps) {
+  // Annotation x/y in viewBox → percentages so we can position HTML overlays
+  // crisply (SVG <text> with preserveAspectRatio="none" stretches text
+  // horizontally and renders illegibly).
+  const annotationLeftPct = (curve.annotation.x / VB_W) * 100
+  const annotationTopPct = (curve.annotation.y / VB_H) * 100
+
   return (
     <div
       className={`
@@ -278,10 +284,32 @@ function CurvePlot({
         </div>
       </div>
 
+      <div className="relative" style={{ height: CURVE_HEIGHT }}>
+        {/* Annotation as HTML overlay (legible regardless of SVG stretching) */}
+        <div
+          className="absolute font-serif italic text-[11px] leading-snug text-ivory-dim/85 pointer-events-none"
+          style={{
+            left: `${annotationLeftPct}%`,
+            top: `${annotationTopPct}%`,
+            maxWidth: '60%',
+          }}
+        >
+          {curve.annotation.text}
+        </div>
+
+        {/* "Eutrophication" overlay for the chl-a danger zone */}
+        {showDanger && (
+          <div
+            className="absolute font-mono uppercase tracking-[0.22em] text-[9px] text-ivory-faint/70 pointer-events-none"
+            style={{ right: '6%', bottom: '14%' }}
+          >
+            Eutrophication
+          </div>
+        )}
+
       <svg
         viewBox={`-${CURVE_PADDING_X} -${CURVE_PADDING_Y} ${VB_W + CURVE_PADDING_X * 2} ${VB_H + CURVE_PADDING_Y * 2}`}
-        className="w-full block"
-        style={{ height: CURVE_HEIGHT }}
+        className="w-full h-full block"
         preserveAspectRatio="none"
       >
         {showGoldilocksBand && (
@@ -314,30 +342,18 @@ function CurvePlot({
           stroke="rgba(242, 237, 227, 0.1)"
           strokeWidth={0.5}
         />
+        {/* Tick marks only — labels drop, the curve title + annotation
+            already tell the reader what they need to know. */}
         {curve.xTicks.map((tick) => (
-          <g key={tick.label}>
-            <line
-              x1={tick.x}
-              y1={VB_H}
-              x2={tick.x}
-              y2={VB_H + 2}
-              stroke="rgba(242, 237, 227, 0.18)"
-              strokeWidth={0.5}
-            />
-            <text
-              x={tick.x}
-              y={VB_H + 7}
-              textAnchor="middle"
-              fill="rgba(184, 176, 160, 0.5)"
-              style={{
-                fontFamily: 'var(--font-jetbrains), ui-monospace, monospace',
-                fontSize: 4.8,
-                letterSpacing: '0.18em',
-              }}
-            >
-              {tick.label}
-            </text>
-          </g>
+          <line
+            key={tick.label}
+            x1={tick.x}
+            y1={VB_H}
+            x2={tick.x}
+            y2={VB_H + 2.5}
+            stroke="rgba(242, 237, 227, 0.22)"
+            strokeWidth={0.6}
+          />
         ))}
 
         <path
@@ -352,20 +368,8 @@ function CurvePlot({
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-
-        <text
-          x={curve.annotation.x}
-          y={curve.annotation.y}
-          fill="rgba(184, 176, 160, 0.78)"
-          style={{
-            fontFamily: 'var(--font-fraunces), ui-serif, serif',
-            fontStyle: 'italic',
-            fontSize: 6,
-          }}
-        >
-          {curve.annotation.text}
-        </text>
       </svg>
+      </div>
     </div>
   )
 }
@@ -396,20 +400,6 @@ function DangerZone() {
         fill="rgba(184, 176, 160, 0.04)"
       />
       {stripes}
-      <text
-        x={150}
-        y={VB_H - 4}
-        textAnchor="middle"
-        fill="rgba(184, 176, 160, 0.55)"
-        style={{
-          fontFamily: 'var(--font-jetbrains), ui-monospace, monospace',
-          fontSize: 4.8,
-          letterSpacing: '0.18em',
-          textTransform: 'uppercase',
-        }}
-      >
-        Eutrophication
-      </text>
     </g>
   )
 }

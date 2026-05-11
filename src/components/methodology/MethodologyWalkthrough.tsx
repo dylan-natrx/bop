@@ -118,23 +118,23 @@ export function MethodologyWalkthrough() {
         </div>
       </div>
 
-      {/* Bottom strip: step copy on the left, controls on the right */}
-      <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] border-t border-rule-soft">
-        <div className="px-5 lg:px-8 py-5 lg:py-6 lg:border-r lg:border-rule-soft">
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={step.id}
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="font-sans text-[13px] lg:text-[14px] text-ivory-dim font-light leading-[1.6]"
-            >
-              {step.copy}
-            </motion.p>
-          </AnimatePresence>
-        </div>
-        <div className="px-5 lg:px-6 py-5 lg:py-6 flex flex-col justify-center">
+      {/* Bottom strip: copy spans the full width; controls anchor bottom-right */}
+      <div className="border-t border-rule-soft px-5 lg:px-8 py-5 lg:py-6">
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={step.id}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="font-sans text-[13px] lg:text-[14px] font-light leading-[1.6]"
+          >
+            <span className="text-ivory">{step.lede}</span>{' '}
+            <span className="text-ivory-dim">{step.body}</span>
+          </motion.p>
+        </AnimatePresence>
+
+        <div className="mt-5 lg:mt-6">
           <WalkthroughControls
             currentStep={currentStep}
             onPrevious={goPrev}

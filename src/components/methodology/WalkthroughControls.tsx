@@ -13,9 +13,12 @@ interface WalkthroughControlsProps {
 }
 
 /**
- * Stacked vertical layout suited to a narrow column.
- * Row 1: step counter + six-dot indicator.
- * Row 2: Previous / Next (or Continue reading on the last step).
+ * Single horizontal row, right-anchored, that lives in the bottom strip of
+ * the walkthrough. Order, left to right:
+ *
+ *   Step N / 6   •••••   ← Previous   Next →
+ *
+ * On narrow viewports the group wraps; controls stay grouped.
  */
 export function WalkthroughControls({
   currentStep,
@@ -28,9 +31,8 @@ export function WalkthroughControls({
   const isLast = currentStep === STEP_COUNT
 
   return (
-    <div className="flex flex-col gap-4">
-      {/* Row 1: indicator */}
-      <div className="flex items-center justify-between gap-3">
+    <div className="flex items-center justify-end gap-x-6 gap-y-3 flex-wrap">
+      <div className="flex items-center gap-3">
         <span className="font-mono text-eyebrow uppercase tracking-[0.22em] text-ivory-faint tabular-nums">
           Step {currentStep} / {STEP_COUNT}
         </span>
@@ -70,8 +72,7 @@ export function WalkthroughControls({
         </div>
       </div>
 
-      {/* Row 2: linear nav */}
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex items-center gap-6">
         <button
           type="button"
           onClick={onPrevious}
