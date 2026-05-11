@@ -1,5 +1,6 @@
 import { SectionShell } from './SectionShell'
 import { PlaceholderBlock } from './PlaceholderBlock'
+import { MethodologyWalkthrough } from '@/components/methodology/MethodologyWalkthrough'
 
 export function MethodologyMadeVisible() {
   return (
@@ -34,11 +35,7 @@ export function MethodologyMadeVisible() {
 
       {/* Map 2 + spectra panel — the six-step guided sequence */}
       <div className="mt-20 lg:mt-28">
-        <PlaceholderBlock
-          componentName="MethodologyWalkthrough"
-          description="Map 2 plus the spectra panel. Six-step guided sequence teaching the methodology: salinity, then chlorophyll-a, then dissolved oxygen, then wave exposure (Natrx Assess), then shoreline erosion (Natrx Assess), then the practical filters. The map recolors at each step; the spectra panel stacks one suitability curve at a time. Reader-controlled progression with Previous and Next."
-          minHeight={520}
-        />
+        <MethodologyWalkthrough />
       </div>
 
       {/* Top-ranked sites callouts — three editorial cards nested inside the section */}
