@@ -205,15 +205,6 @@ export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
       role="region"
       aria-label="Variable suitability curves"
     >
-      <div>
-        <div className="font-mono text-eyebrow uppercase text-ivory-faint mb-1">
-          Applied filters
-        </div>
-        <div className="font-sans text-[11px] text-ivory-faint leading-relaxed max-w-[40ch]">
-          Newest at top. Click a filter to revisit that step.
-        </div>
-      </div>
-
       <AnimatePresence initial={false}>
         {sorted.map((item) => {
           const isActive = item.addedAtStep === step.id
