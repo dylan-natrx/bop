@@ -1,4 +1,5 @@
 import { SectionShell } from './SectionShell'
+import { EditorialImage } from './EditorialImage'
 
 // Note: the glossary lives in the persistent right-edge drawer
 // (SiteChromeProvider + SiteDrawer), not in this section. § 5 closes the
@@ -46,6 +47,16 @@ export function WhatThisEnables() {
             platform paired with field experience from ExoForm deployments at
             scale, is the answer to the full question.
           </p>
+        </div>
+
+        <div className="col-span-1 lg:col-span-8 lg:col-start-3 mt-12 lg:mt-16">
+          <EditorialImage
+            src="/site-imagery/nyoyster.webp"
+            alt="A New York Harbor oyster"
+            width={1201}
+            height={901}
+            aspect="4 / 3"
+          />
         </div>
       </div>
     </SectionShell>
