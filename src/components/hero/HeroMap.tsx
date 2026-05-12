@@ -127,21 +127,9 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
         version: 8,
         name: 'BOP Hero Dark',
         sources: {
-          'land-nyc': {
+          'land-region': {
             type: 'geojson',
-            data: '/data/nyc-boroughs.geojson',
-          },
-          'land-nj': {
-            type: 'geojson',
-            data: '/data/nj-shoreline.geojson',
-          },
-          'land-westchester': {
-            type: 'geojson',
-            data: '/data/westchester.geojson',
-          },
-          'land-upstate': {
-            type: 'geojson',
-            data: '/data/upstate-ny-ct.geojson',
+            data: '/data/region-land.geojson',
           },
           'water-hudson': {
             type: 'geojson',
@@ -160,66 +148,12 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
             paint: { 'background-color': '#061321' },
           },
           {
-            id: 'land-upstate-fill',
+            id: 'land-region-fill',
             type: 'fill',
-            source: 'land-upstate',
+            source: 'land-region',
             paint: {
               'fill-color': '#15314A',
               'fill-opacity': 1,
-            },
-          },
-          {
-            id: 'land-westchester-fill',
-            type: 'fill',
-            source: 'land-westchester',
-            paint: {
-              'fill-color': '#15314A',
-              'fill-opacity': 1,
-            },
-          },
-          {
-            id: 'land-nj-fill',
-            type: 'fill',
-            source: 'land-nj',
-            paint: {
-              'fill-color': '#15314A',
-              'fill-opacity': 1,
-            },
-          },
-          {
-            id: 'land-nyc-fill',
-            type: 'fill',
-            source: 'land-nyc',
-            paint: {
-              'fill-color': '#15314A',
-              'fill-opacity': 1,
-            },
-          },
-          {
-            id: 'land-nyc-edge',
-            type: 'line',
-            source: 'land-nyc',
-            paint: {
-              'line-color': 'rgba(120, 158, 184, 0.35)',
-              'line-width': 1.1,
-            },
-          },
-          {
-            id: 'land-nj-edge',
-            type: 'line',
-            source: 'land-nj',
-            paint: {
-              'line-color': 'rgba(120, 158, 184, 0.35)',
-              'line-width': 1.1,
-            },
-          },
-          {
-            id: 'land-upstate-edge',
-            type: 'line',
-            source: 'land-upstate',
-            paint: {
-              'line-color': 'rgba(120, 158, 184, 0.35)',
-              'line-width': 1.1,
             },
           },
           {
@@ -232,9 +166,18 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
             },
           },
           {
-            id: 'land-westchester-edge',
+            id: 'land-region-edge',
             type: 'line',
-            source: 'land-westchester',
+            source: 'land-region',
+            paint: {
+              'line-color': 'rgba(120, 158, 184, 0.35)',
+              'line-width': 1.1,
+            },
+          },
+          {
+            id: 'water-hudson-edge',
+            type: 'line',
+            source: 'water-hudson',
             paint: {
               'line-color': 'rgba(120, 158, 184, 0.35)',
               'line-width': 1.1,
