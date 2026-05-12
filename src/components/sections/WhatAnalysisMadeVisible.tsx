@@ -13,7 +13,7 @@ export function WhatAnalysisMadeVisible() {
             text-4xl sm:text-5xl lg:text-6xl
             max-w-[22ch]
           ">
-          The framework answered <s className="text-ivory-faint decoration-ivory-faint decoration-1">one</s> three questions.
+          Two patterns the ranking surfaced.
         </h2>
 
         <div className="
@@ -22,33 +22,29 @@ export function WhatAnalysisMadeVisible() {
             font-sans text-body text-ivory-dim font-light leading-[1.65]
           ">
           <p>
-            The brief was to identify the sites most suitable for building new
-            oyster reef infrastructure in New York Harbor. The work delivered
-            that. It also delivered two additional findings the engagement was
-            designed to produce, both of which BOP can carry forward into the
-            next phase of work.
+            The ranking told BOP which sites are most suitable for
+            restoration. Two patterns within the ranking shape what BOP does
+            next.
           </p>
         </div>
       </div>
 
       <div className="mt-16 lg:mt-20 space-y-12 lg:space-y-16">
         <FindingBeat
-          number={1}
           subhead="Oysters and shorelines, one intervention."
           body={
             <p>
               Many of the highest-ranked sites sit adjacent to actively eroding
-              shorelines. The{' '}
-              <em className="font-serif italic">Natrx Assess</em> shoreline
-              change analysis, using the Marsh Edge from Image Processing
-              methodology applied to NAIP satellite imagery from 2010 to
-              present, identified erosion rates of one foot per year or greater
-              at eight candidate locations and active retreat at fifteen more.
-              Several of those sit in the top tier of the suitability ranking.
-              Oyster reefs function as natural breakwaters, dampening wave
-              energy and slowing the loss of marsh edges. Where strong water
-              quality and active erosion overlap, the same project restores
-              habitat and stabilizes coast.
+              shorelines.{' '}
+              <em className="font-serif italic">Natrx Assess</em> measured
+              shoreline change at every candidate location, using satellite
+              imagery going back to 2010. Eight sites are losing more than a
+              foot of shoreline a year. Fifteen more are retreating at slower
+              rates. Several sit in the top tier of the suitability ranking.
+              Oyster reefs function as natural breakwaters: they dampen wave
+              energy and slow the loss of marsh edge. Where strong water
+              quality meets active erosion, the same project restores habitat
+              and stabilizes coast.
             </p>
           }
           visual={
@@ -60,8 +56,10 @@ export function WhatAnalysisMadeVisible() {
               aspect="4 / 3"
               caption={
                 <>
-                  Fig. — Shoreline change rates at Living Breakwaters, 2010 to
-                  2025. Source: Natrx Assess shoreline change analysis.
+                  Shoreline change at Living Breakwaters, 2010 to 2025. Red
+                  indicates active retreat. Source: Natrx Assess, using NAIP
+                  satellite imagery and the Marsh Edge from Image Processing
+                  methodology.
                 </>
               }
             />
@@ -69,20 +67,19 @@ export function WhatAnalysisMadeVisible() {
         />
 
         <FindingBeat
-          number={2}
           subhead="Where the data is strong, and where it is not."
           body={
             <p>
-              The analysis surfaced where its own inputs are strong and where
-              they are thin. Sites that BOP has already advanced into design
-              carry robust observational data because they have been studied
-              directly. Several of the top-ranked candidates from the new
-              analysis carry less observational support, classified as
-              moderate or low confidence, because they have not been studied
-              at the same depth. The framework names this rather than hiding
-              it. The result tells BOP not only which sites rank highest, but
-              exactly where the next round of monitoring investment would
-              compound the value of the analysis already produced.
+              The analysis surfaced which sites are backed by strong
+              observational data and which are not. Sites that BOP has already
+              advanced into design have been studied directly and carry
+              high-confidence inputs. Several top-ranked candidates from this
+              new analysis have not been studied as deeply, and the framework
+              labels their underlying data as moderate or low confidence. That
+              distinction matters. The ranking tells BOP which sites are most
+              suitable. The confidence layer tells them where the next round
+              of monitoring would compound the value of the analysis already
+              done.
             </p>
           }
           visual={<ConfidenceDistributionChart />}

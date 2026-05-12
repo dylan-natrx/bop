@@ -40,13 +40,8 @@ export function ConfidenceDistributionChart() {
       "
       aria-label="Distribution of data support across the 78-site pipeline"
     >
-      <figcaption className="flex flex-col gap-1">
-        <div className="font-mono text-eyebrow uppercase text-ivory-faint">
-          Fig. — Data support across the pipeline
-        </div>
-        <div className="font-serif italic text-ivory-dim text-[12.5px] leading-snug max-w-[44ch]">
-          Confidence classifications across the 78-site pipeline.
-        </div>
+      <figcaption className="font-serif italic text-ivory-dim text-[12.5px] leading-snug">
+        Data support across the 78-site pipeline.
       </figcaption>
 
       {/* The bar itself */}

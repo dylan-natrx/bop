@@ -1,8 +1,6 @@
 import type { ReactNode } from 'react'
 
 interface FindingBeatProps {
-  /** Beat number, shown as a small kicker (e.g. 1, 2) */
-  number: number
   /** Short subhead summarizing the beat's argument */
   subhead: string
   /** Body copy as ReactNode (may include inline italics) */
@@ -17,14 +15,12 @@ interface FindingBeatProps {
 
 /**
  * Section 4 building block. Two of these stack in §4, each carrying one of
- * the two beats: the erosion co-benefit story and the data-confidence /
- * where-to-monitor story.
+ * the two patterns the ranking surfaced.
  *
- * Layout: large number kicker + subhead, body copy, optional visual to the
- * right (or below on narrow viewports).
+ * Layout: subhead, body copy, optional visual to the right (or below on
+ * narrow viewports).
  */
 export function FindingBeat({
-  number,
   subhead,
   body,
   visual,
@@ -32,10 +28,7 @@ export function FindingBeat({
   return (
     <article className="border-t border-rule-soft pt-10 lg:pt-12">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-        <header className="lg:col-span-12 lg:flex lg:items-baseline lg:gap-6 mb-2">
-          <span className="font-mono text-eyebrow uppercase tracking-[0.22em] text-teal-bright tabular-nums">
-            Beat {number}
-          </span>
+        <header className="lg:col-span-12 mb-2">
           <h3 className="font-serif font-light text-ivory text-2xl lg:text-3xl leading-snug">
             {subhead}
           </h3>
