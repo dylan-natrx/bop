@@ -13,7 +13,7 @@ export function WhatAnalysisMadeVisible() {
             text-4xl sm:text-5xl lg:text-6xl
             max-w-[22ch]
           ">
-          The framework answered three questions, not one.
+          The framework answered <s className="text-ivory-faint decoration-ivory-faint decoration-1">one</s> three questions.
         </h2>
 
         <div className="
