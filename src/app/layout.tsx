@@ -37,6 +37,21 @@ export const metadata: Metadata = {
     description:
       'Where should New York Harbor prioritize building oyster reefs? A data-driven framework for Billion Oyster Project.',
     type: 'website',
+    images: [
+      {
+        url: '/site-imagery/nyoyster.webp',
+        width: 1201,
+        height: 901,
+        alt: 'A New York Harbor oyster, with the city skyline behind it',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Restoring New York Harbor's Oyster Reefs",
+    description:
+      'Where should New York Harbor prioritize building oyster reefs? A data-driven framework for Billion Oyster Project.',
+    images: ['/site-imagery/nyoyster.webp'],
   },
 }
 
