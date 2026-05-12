@@ -179,10 +179,12 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
             'land-nyc': { type: 'geojson', data: '/data/nyc-boroughs.geojson' },
             'land-nj': { type: 'geojson', data: '/data/nj-shoreline.geojson' },
             'land-westchester': { type: 'geojson', data: '/data/westchester.geojson' },
+            'land-upstate': { type: 'geojson', data: '/data/upstate-ny-ct.geojson' },
             sites: { type: 'geojson', data: sitesGeoJson, promoteId: 'id' },
           },
           layers: [
             { id: 'background', type: 'background', paint: { 'background-color': '#061321' } },
+            { id: 'land-upstate-fill', type: 'fill', source: 'land-upstate', paint: { 'fill-color': '#15314A', 'fill-opacity': 1 } },
             { id: 'land-westchester-fill', type: 'fill', source: 'land-westchester', paint: { 'fill-color': '#15314A', 'fill-opacity': 1 } },
             { id: 'land-nj-fill', type: 'fill', source: 'land-nj', paint: { 'fill-color': '#15314A', 'fill-opacity': 1 } },
             { id: 'land-nyc-fill', type: 'fill', source: 'land-nyc', paint: { 'fill-color': '#15314A', 'fill-opacity': 1 } },

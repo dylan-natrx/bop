@@ -139,6 +139,10 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
             type: 'geojson',
             data: '/data/westchester.geojson',
           },
+          'land-upstate': {
+            type: 'geojson',
+            data: '/data/upstate-ny-ct.geojson',
+          },
           sites: {
             type: 'geojson',
             data: sitesGeoJson,
@@ -150,6 +154,15 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
             id: 'background',
             type: 'background',
             paint: { 'background-color': '#061321' },
+          },
+          {
+            id: 'land-upstate-fill',
+            type: 'fill',
+            source: 'land-upstate',
+            paint: {
+              'fill-color': '#15314A',
+              'fill-opacity': 1,
+            },
           },
           {
             id: 'land-westchester-fill',
