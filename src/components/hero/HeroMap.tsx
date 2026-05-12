@@ -143,6 +143,10 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
             type: 'geojson',
             data: '/data/upstate-ny-ct.geojson',
           },
+          'water-hudson': {
+            type: 'geojson',
+            data: '/data/hudson-river.geojson',
+          },
           sites: {
             type: 'geojson',
             data: sitesGeoJson,
@@ -207,6 +211,24 @@ export function HeroMap({ geojson, hoveredRanks, onHoverRanks }: HeroMapProps) {
             paint: {
               'line-color': 'rgba(120, 158, 184, 0.35)',
               'line-width': 1.1,
+            },
+          },
+          {
+            id: 'land-upstate-edge',
+            type: 'line',
+            source: 'land-upstate',
+            paint: {
+              'line-color': 'rgba(120, 158, 184, 0.35)',
+              'line-width': 1.1,
+            },
+          },
+          {
+            id: 'water-hudson-fill',
+            type: 'fill',
+            source: 'water-hudson',
+            paint: {
+              'fill-color': '#061321',
+              'fill-opacity': 1,
             },
           },
           {

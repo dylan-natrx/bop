@@ -180,6 +180,7 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
             'land-nj': { type: 'geojson', data: '/data/nj-shoreline.geojson' },
             'land-westchester': { type: 'geojson', data: '/data/westchester.geojson' },
             'land-upstate': { type: 'geojson', data: '/data/upstate-ny-ct.geojson' },
+            'water-hudson': { type: 'geojson', data: '/data/hudson-river.geojson' },
             sites: { type: 'geojson', data: sitesGeoJson, promoteId: 'id' },
           },
           layers: [
@@ -190,6 +191,8 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
             { id: 'land-nyc-fill', type: 'fill', source: 'land-nyc', paint: { 'fill-color': '#15314A', 'fill-opacity': 1 } },
             { id: 'land-nyc-edge', type: 'line', source: 'land-nyc', paint: { 'line-color': 'rgba(120, 158, 184, 0.35)', 'line-width': 1.1 } },
             { id: 'land-nj-edge', type: 'line', source: 'land-nj', paint: { 'line-color': 'rgba(120, 158, 184, 0.35)', 'line-width': 1.1 } },
+            { id: 'land-upstate-edge', type: 'line', source: 'land-upstate', paint: { 'line-color': 'rgba(120, 158, 184, 0.35)', 'line-width': 1.1 } },
+            { id: 'water-hudson-fill', type: 'fill', source: 'water-hudson', paint: { 'fill-color': '#061321', 'fill-opacity': 1 } },
             { id: 'land-westchester-edge', type: 'line', source: 'land-westchester', paint: { 'line-color': 'rgba(120, 158, 184, 0.35)', 'line-width': 1.1 } },
 
             // Erosion highlight ring — only visible at step 5+ as a co-benefit indicator
