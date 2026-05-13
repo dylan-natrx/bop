@@ -10,6 +10,7 @@ import {
 } from 'react'
 import { DrawerEdgeTab } from './DrawerEdgeTab'
 import { SiteDrawer } from './SiteDrawer'
+import { track } from '@/lib/track'
 
 export type DrawerTab = 'glossary' | 'press'
 
@@ -88,6 +89,11 @@ export function SiteChromeProvider({ children }: SiteChromeProviderProps) {
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [state.isOpen, close])
+
+  // Analytics: fire when drawer transitions to open
+  useEffect(() => {
+    if (state.isOpen) track('drawer_opened', {})
+  }, [state.isOpen])
 
   // Prevent background scroll while open (subtle quality-of-life)
   useEffect(() => {

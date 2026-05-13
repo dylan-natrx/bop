@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 import { useRankingsData } from '@/hooks/useRankingsData'
 import { useStatisticsData } from '@/hooks/useStatisticsData'
+import { track } from '@/lib/track'
 
 import { STEPS, STEP_COUNT } from './steps'
 import { WalkthroughMap } from './WalkthroughMap'
@@ -26,36 +27,39 @@ export function MethodologyWalkthrough() {
   const [currentStep, setCurrentStep] = useState(1)
   const step = useMemo(() => STEPS[currentStep - 1], [currentStep])
 
-  const goNext = useCallback(
-    () => setCurrentStep((s) => Math.min(STEP_COUNT, s + 1)),
-    []
-  )
-  const goPrev = useCallback(() => setCurrentStep((s) => Math.max(1, s - 1)), [])
-  const jumpTo = useCallback(
-    (n: number) => setCurrentStep(() => Math.min(STEP_COUNT, Math.max(1, n))),
-    []
-  )
+  const advance = useCallback((via: 'next' | 'previous' | 'jump' | 'keyboard', to: number | 'next' | 'previous') => {
+    setCurrentStep((s) => {
+      const target =
+        to === 'next' ? Math.min(STEP_COUNT, s + 1)
+        : to === 'previous' ? Math.max(1, s - 1)
+        : Math.min(STEP_COUNT, Math.max(1, to))
+      if (target !== s) track('walkthrough_step', { step: target, via })
+      return target
+    })
+  }, [])
 
-// Keyboard navigation
+  const goNext = useCallback(() => advance('next', 'next'), [advance])
+  const goPrev = useCallback(() => advance('previous', 'previous'), [advance])
+  const jumpTo = useCallback((n: number) => advance('jump', n), [advance])
+
+  // Keyboard navigation
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      // Don't trap keys when a focusable input owns them
       const target = e.target as HTMLElement | null
       if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) {
         return
       }
       if (e.key === 'ArrowRight' || (e.key === ' ' && !e.shiftKey)) {
-        // Only act when the walkthrough is in viewport (cheap check via document.activeElement scope)
         e.preventDefault()
-        goNext()
+        advance('keyboard', 'next')
       } else if (e.key === 'ArrowLeft' || (e.key === ' ' && e.shiftKey)) {
         e.preventDefault()
-        goPrev()
+        advance('keyboard', 'previous')
       }
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [goNext, goPrev])
+  }, [advance])
 
   if (rError || sError) {
     return (

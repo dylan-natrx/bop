@@ -1,5 +1,9 @@
-import type { ReactNode } from 'react'
+'use client'
+
+import { useCallback, useRef, type ReactNode } from 'react'
 import { SiteMiniMap } from './SiteMiniMap'
+import { useFireOnView } from '@/hooks/useFireOnView'
+import { track } from '@/lib/track'
 
 interface TopRankedCalloutProps {
   /** Site name */
@@ -32,8 +36,14 @@ export function TopRankedCallout({
   body,
   siteIds,
 }: TopRankedCalloutProps) {
+  const ref = useRef<HTMLElement | null>(null)
+  const onView = useCallback(() => track('top_ranked_viewed', { site: name }), [name])
+  useFireOnView(ref, onView, { threshold: 0.6, skipInitial: true })
+
   return (
-    <article className="
+    <article
+      ref={ref}
+      className="
       flex flex-col gap-4
       border border-rule rounded-card
       bg-bg-mid/30

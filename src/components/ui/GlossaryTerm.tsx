@@ -2,6 +2,7 @@
 
 import type { ReactNode } from 'react'
 import { useDrawer } from '@/components/chrome/SiteChromeProvider'
+import { track } from '@/lib/track'
 
 interface GlossaryTermProps {
   /**
@@ -28,7 +29,10 @@ export function GlossaryTerm({ termId, children }: GlossaryTermProps) {
   return (
     <button
       type="button"
-      onClick={() => open('glossary', termId)}
+      onClick={() => {
+        track('glossary_term_clicked', { term_id: termId })
+        open('glossary', termId)
+      }}
       style={{
         font: 'inherit',
         color: 'inherit',
