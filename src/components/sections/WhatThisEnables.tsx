@@ -70,6 +70,20 @@ export function WhatThisEnables() {
           </div>
         </div>
 
+        {/* Pullquote: Lise Montefiore on the partnership scale.
+            Sits between the three-beat block and the closing portability
+            paragraph as a hinge from "what this means for BOP" to
+            "what carries forward to the broader field." */}
+        <div className="col-span-1 lg:col-span-8 lg:col-start-3 mt-12 lg:mt-16">
+          <Pullquote
+            attribution="Lise Montefiore"
+            role="Data Scientist, Natrx"
+          >
+            What we did is a small piece of the big work BOP is doing to
+            restore the harbor. The goal itself is impressive.
+          </Pullquote>
+        </div>
+
         {/* Closing paragraph: zooms out from BOP-specific outcomes to the
             broader portability story */}
         <div className="
@@ -94,17 +108,6 @@ export function WhatThisEnables() {
             this year is part of a larger shift in how restoration
             decisions get made at landscape scale.
           </p>
-        </div>
-
-        {/* Closing pullquote: Lise Montefiore on the partnership scale */}
-        <div className="col-span-1 lg:col-span-8 lg:col-start-3 mt-12 lg:mt-16">
-          <Pullquote
-            attribution="Lise Montefiore"
-            role="Data Scientist, Natrx"
-          >
-            What we did is a small piece of a big work BOP is doing to
-            restore the harbor. The goal itself is impressive.
-          </Pullquote>
         </div>
 
         <div className="col-span-1 lg:col-span-8 lg:col-start-3 mt-12 lg:mt-16">
