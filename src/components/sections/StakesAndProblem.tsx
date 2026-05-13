@@ -31,15 +31,18 @@ export function StakesAndProblem() {
           <p>
             BOP maintains a pipeline of 78 candidate restoration sites and a
             target of ten to fifteen funded, permitted projects ready to break
-            ground by 2029 or 2030. Their established assessment method is
-            rigorous and expensive: vessel time, scientific instrumentation,
-            lab analysis, tens of thousands of dollars per location. The
-            method produces high-quality data. It does not scale across 78
-            sites at any budget the organization could realistically secure.
-            Without a way to compare candidate sites against one another,
-            every site had to advance to thirty percent design before a go or
-            no-go decision could be made.
+            ground by 2029 or 2030. For four hundred years, restoration in the
+            harbor happened opportunistically. Sites moved forward when a
+            parks department said yes, when a marina allowed a cage, when
+            access was available. The data to compare candidate sites against
+            one another did not exist, so every site that entered the pipeline
+            had to advance to thirty percent design before any go or no-go
+            decision could be made. The method produced high-quality data per
+            site. It did not scale across 78 sites at any budget the
+            organization could realistically secure.
           </p>
+          {/* Future pullquote slot: reserved for an interview quote about the
+              pre-comparative era of harbor restoration. */}
         </div>
 
         <aside className="
