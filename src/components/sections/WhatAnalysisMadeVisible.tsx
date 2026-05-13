@@ -2,7 +2,6 @@ import { SectionShell } from './SectionShell'
 import { FindingBeat } from './FindingBeat'
 import { EditorialImage } from './EditorialImage'
 import { ConfidenceDistributionChart } from './ConfidenceDistributionChart'
-import { Pullquote } from './Pullquote'
 
 export function WhatAnalysisMadeVisible() {
   return (
@@ -66,17 +65,6 @@ export function WhatAnalysisMadeVisible() {
             />
           }
         />
-
-        <Pullquote
-          attribution="Mike McCann"
-          role="Director of Science and Research, Billion Oyster Project"
-        >
-          What we have now is a ranking and a confidence layer attached to
-          every site. That&apos;s where the science comes in. We&apos;re
-          never certain. But knowing where we&apos;re confident and where
-          we&apos;re not is exactly what we want when we&apos;re making
-          these decisions.
-        </Pullquote>
 
         <FindingBeat
           subhead="A map of where to invest in more data next."

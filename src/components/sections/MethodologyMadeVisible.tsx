@@ -44,11 +44,11 @@ export function MethodologyMadeVisible() {
           attribution="Mike McCann"
           role="Director of Science and Research, Billion Oyster Project"
         >
-          It took me weeks and weeks to do just one of five regions.
-          That&apos;s the alternative. The Natrx team brought really efficient
-          ways to work through all five regions, the entire scale of the
-          harbor. It was a huge capacity gain that we wouldn&apos;t have been
-          able to do otherwise.
+          What we have now is a ranking and a confidence layer attached to
+          every site. That&apos;s where the science comes in. We&apos;re
+          never certain. But knowing where we&apos;re confident and where
+          we&apos;re not is exactly what we want when we&apos;re making
+          these decisions.
         </Pullquote>
       </div>
 
