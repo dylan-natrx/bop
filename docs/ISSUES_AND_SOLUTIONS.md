@@ -1,6 +1,153 @@
 # Issues and Solutions
 
-Running log of gotchas. Newest first. The 2026-05-11 rebuild session entries are the high-value ones; the older items from the SVG-era hero are kept for reference.
+Running log of gotchas. Newest first. The 2026-05-12 map-basemap-rebuild session and the 2026-05-11 Mapbox rebuild session entries are the high-value ones; the older items from the SVG-era hero are kept for reference.
+
+---
+
+## 2026-05-12 — v1 polish + map basemap rebuild
+
+### Section copy: negation framing keeps creeping in
+
+**Symptom:** Across multiple revision passes, body copy on the methodology spectra panel kept opening with negation: "Not suitability variables.", "Erosion is not a suitability variable.", "Constructability, not a habitat score." Each time, the user flagged the pattern and asked for a rewrite.
+
+**Cause:** Definitions naturally drift into "what it isn't first" framing. The panel was originally written as a glossary of definitions rather than as a confident running summary of what the reader has just added at each step.
+
+**Rule, now memorialized:** never open a reader-facing copy block with a negation. Lead with what the thing IS. Avoid abstract single-word jargon ("constructability") where a verb phrase explains what it does ("how buildable the site is"). Memory note: `memory/feedback_no_negation_jargon_copy.md`.
+
+### "Continue reading" on walkthrough step 6 skipped §3 callouts
+
+**Symptom:** On the methodology walkthrough's final step, the "Continue reading →" button scrolled to `#analysis-made-visible` (§4). That skipped the "What the ranking surfaces" Arthur Kill / Living Breakwaters / Wolfe's Pond callout cards, which sit inside §3 below the walkthrough.
+
+**Fix:** dropped the affordance entirely. On step 6, the Next button is disabled (mirrors how Previous looks on step 1). Reader scrolls naturally past the walkthrough into the callouts. Removed the unused `continueReading` callback and prop chain through `WalkthroughControls`.
+
+**File:** [src/components/methodology/WalkthroughControls.tsx](../src/components/methodology/WalkthroughControls.tsx), [MethodologyWalkthrough.tsx](../src/components/methodology/MethodologyWalkthrough.tsx)
+
+### Land contrast was too low — land read as water
+
+**Symptom:** Production map showed land filled, but the upper-left area "above New Jersey" looked empty. The user explicitly named this as a problem.
+
+**Cause:** Land fill `#0E2236` was only 8/15/21 RGB above water bg `#061321`. Where polygon edges sat off-screen (upper Hudson Valley, far western mainland), the fill blended into water visually. Where polygon edges WERE visible (Staten Island, NJ Raritan Bay shore), the borough/coast outline made the land color readable by adjacency. So the issue only appeared in regions of the visible map far from any rendered edge.
+
+**Fix:** bumped land fill from `#0E2236` to `#15314A` (the `bg-soft` palette token; brightness delta of 15/30/41 from water). Applied across all five Mapbox instances (HeroMap, WalkthroughMap, three SiteMiniMaps).
+
+**Diagnosis path:** queryRenderedFeatures confirmed the polygons were rendering at the test points — Mapbox knew it was land, the user couldn't see it. Brightness ramp to a palette-approved token resolved without further iteration.
+
+**File:** [src/components/hero/HeroMap.tsx](../src/components/hero/HeroMap.tsx), [methodology/WalkthroughMap.tsx](../src/components/methodology/WalkthroughMap.tsx), [sections/SiteMiniMap.tsx](../src/components/sections/SiteMiniMap.tsx)
+
+### Hero figure margins asymmetric
+
+**Symptom:** The user reported the right viewport margin around the hero figure looked smaller than the left. Visual confirmation: figure left edge at viewport x=212 px, right edge at viewport x=1692 (right margin 100 px). At a 1800 px viewport that's 212 vs 100.
+
+**Cause:** Hero `<figure>` had `w-[95vw] max-w-[1480px] mx-auto`. Section parent had `max-w-scaffold mx-auto px-scaffold-x` (1480 cap with 56 px padding inside). The figure tried to be 1480 px wide inside a 1368 px parent content area. The browser absorbed the 112 px overflow with `margin-right: -112px` (only on the right), shifting the figure left of center.
+
+**Fix:** removed `w-[95vw] max-w-[1480px] mx-auto` from the figure. It now occupies the section content area naturally (1368 px at large viewports), giving symmetric margins.
+
+**File:** [src/components/hero/HeroFigure.tsx](../src/components/hero/HeroFigure.tsx)
+
+### Coarse upstate polygon clip created visible wedge
+
+**Symptom:** When we added a polygon to fill the empty area above NJ, a triangular wedge appeared poking into the visible map from the upper-right. The user identified it as a polygon edge artifact.
+
+**Cause:** The original Connecticut polygon (from PublicaMundi) was 16 points. Its south-west corner near Long Island Sound was traced with three coarse vertices that created an angled triangle dipping into the visible map area around Greenwich / Stamford. At any reasonable zoom level the polygon's straight edges between widely-spaced vertices became visible as wedges.
+
+**Initial fix:** upgraded to US Census 1:500k state boundaries — NY at 1119 points, CT at 283 points. Shorelines along LI Sound now trace smoothly.
+
+**Lingering issue:** The clipped polygon still had a small Suffolk County Long Island sub-polygon (Eaton's Neck, where LI's north shore extends just past lat 40.95). That sliver rendered as a small mysterious island east of Brooklyn.
+
+**Second fix:** dropped sub-polygons under 0.1 sq deg from the multipolygon, keeping only the mainland NY chunk.
+
+### Long Island west edge had a visible vertical seam
+
+**Symptom:** Where Queens met Nassau (eastern edge of NYC), a vertical line appeared in the landmass. Long Island east of Queens looked like a flat blob without a coastline.
+
+**Cause:** The upstate polygon was clipped at lng −73.72 (rectangle edge) to exclude the NYC harbor area. NYC's eastern coastline (Queens–Nassau border, run through the Queens borough polygon) sits at the actual Queens-Nassau political boundary at lng −73.70. The two edges didn't align. The upstate polygon's edge stroke drew a visible straight vertical line where its rectangular clip wall met the NYC polygon's irregular coast.
+
+**Also:** the upstate polygon had no edge stroke, so Long Island east of the seam had no visible coast outline — just a flat fill blob.
+
+**Real fix (the OSM rebuild):** replaced the patchwork of NYC + NJ + Westchester + upstate-NY + CT with a single OSM-coastline-derived `region-land.geojson`. Same fidelity everywhere; no political-boundary seams. Edge stroke applied uniformly via `land-region-edge` so Long Island, Brooklyn, Queens, Nassau, Suffolk, Westchester, Rockland, CT, and NJ all carry the same outline treatment.
+
+### Hudson River disappeared above north Manhattan
+
+**Symptom:** South of Manhattan the Hudson reads as water (carved out by the harbor exclusion). North of Manhattan the river vanished into the land mass.
+
+**Cause:** NJ, Westchester, and the new upstate polygon each trace their political boundary down the middle of the Hudson (state lines run through the river). They collectively paved the river. Even where NJ ended (lng −73.89 in the Yonkers region), Westchester's western edge started at lng −73.90 — the two abutted with only ~1km between them at certain latitudes.
+
+**First attempt:** hand-traced a 13-point Hudson ribbon polygon as a water mask drawn on top. Worked but the polygon was crude — width changes were abrupt, the Tappan Zee bulge was in the wrong place, the river termination at the visible top edge looked unnatural.
+
+**Real fix (the OSM rebuild):** fetched real Hudson River multipolygon relations from OSM (`natural=water` `water=river` with `waterway:name=Hudson River` plus the Tappan Zee relation and unnamed Hudson segments). Unioned into a single polygon, simplified to 0.0002°. ~55KB. Carves the river out cleanly at real coordinates with the actual Tappan Zee widening.
+
+**File:** [public/data/hudson-river.geojson](../public/data/hudson-river.geojson)
+
+### Dev server HMR gets stuck on geojson changes
+
+**Symptom:** After editing a geojson file in `public/data/`, the dev server's map renders empty with `loaded: false`. No clear error in the console (the bursts of "Mapbox error [object Object]" are stale from previous failed states, not new). Even a hard reload doesn't recover.
+
+**Diagnosis:** queryRenderedFeatures returns empty for all layers including known-good ones. `map.getSource('land-region')` returns undefined. The map style never finishes loading.
+
+**Workaround:** `pkill -f "next" && sleep 2 && npm run dev`. After a fresh server restart with a cleared HMR state, the map loads correctly.
+
+**Verification path when HMR is stuck:** `npm run build` is the authoritative source of truth. The production build is what matters; trust it over the dev preview when geojson files are in flux.
+
+### OSM coastline data fetch + stitch (how the rebuild was done)
+
+**Goal:** replace the patchwork of NYC boroughs + NJ shoreline + Westchester + upstate-NY-CT polygons with one geographically-accurate land source.
+
+**Process:**
+1. Fetch OSM coastline ways via Overpass for bbox `40.4,-74.4,41.5,-71.7`:
+   ```
+   [out:json][timeout:180];
+   (way["natural"="coastline"](40.4,-74.4,41.5,-71.7););
+   out geom qt;
+   ```
+   Returns 2,194 ways, ~10.6MB raw.
+2. Stitch ways into chains: for each way, match its last node id to the first node id of another way. Each closed chain becomes an island polygon; each open chain is a coastline that exits the bbox.
+3. The longest open chain (59,310 points) is the mainland coast: NJ shore through NYC harbor through Long Island Sound to east CT. Close it artificially along the bbox edges (top-right → top → top-left → bottom-left → start) to form a polygon.
+4. The largest closed chain (41,697 points) is Long Island including Brooklyn / Queens / Nassau / Suffolk.
+5. Other notable closed chains: Manhattan (3,736 pts), Staten Island (2,820 pts), various barrier islands.
+6. Filter out tiny islands (area < 1e-5 sq deg).
+7. Simplify with `shapely.simplify(0.0002, preserve_topology=True)` to ~22m on-ground tolerance.
+8. Save as a single MultiPolygon FeatureCollection.
+
+Final size: 132 polygons, ~614KB. Same fidelity everywhere.
+
+**Why this works:** OSM coastline is the natural sea/ocean coast. It correctly carves out interior waters (East River separating Manhattan from Brooklyn/Queens, Harlem River separating Manhattan from Bronx, Jamaica Bay, Upper Bay, etc.) because those are tidally connected to the open ocean. It does NOT include inland rivers like the Hudson, which need a separate water mask.
+
+### Hudson polygon construction from OSM
+
+**Goal:** carve out the Hudson River as water.
+
+**Process:**
+1. Fetch all `natural=water` and `relation natural=water` in the Hudson valley bbox `40.85,-74.05,41.5,-73.7`:
+   ```
+   (way["natural"="water"](40.85,-74.05,41.5,-73.7);
+    relation["natural"="water"](40.85,-74.05,41.5,-73.7););
+   ```
+2. Filter relations to:
+   - `type=multipolygon`
+   - `natural=water`
+   - NOT `water=reservoir/pond/lake`
+   - Bbox intersects the Hudson corridor
+   - Name doesn't contain Hackensack / Reservoir / Lake / Pond
+3. For each relation, stitch the `outer` member ways into closed rings (same stitching as coastlines but matching by coordinate equality not node id). Stitch `inner` rings too.
+4. Build Polygon(outer_ring, holes=[inner_rings...]). Apply `buffer(0)` to fix any self-intersections.
+5. Union all relation polygons via `shapely.ops.unary_union`.
+6. Simplify with the same 0.0002° tolerance.
+
+Final size: ~55KB. Covers the river from Spuyten Duyvil through the Tappan Zee up to the visible top.
+
+### Custom analytics events with one-time-fire semantics
+
+**Goal:** track section reach and top-ranked card visibility without flooding the dashboard with duplicate events per session.
+
+**Pattern:** `useFireOnView` hook ([src/hooks/useFireOnView.ts](../src/hooks/useFireOnView.ts)). Takes a ref + callback. Creates an IntersectionObserver, fires the callback exactly once when the element first crosses the threshold, then disconnects.
+
+**Key option:** `skipInitial: true` records the initial scroll position and refuses to fire while `window.scrollY === initialScrollY`. This avoids a flood of "section reached" events on first paint for elements that happen to be in the viewport before the user has scrolled.
+
+**Where used:**
+- `SectionViewTracker` — zero-height `<span>` rendered at the top of every `SectionShell`. Threshold 0.01 (basically "any pixel visible"). Fires `section_reached` with the section id.
+- `TopRankedCallout` — threshold 0.6 (most of the card visible). Fires `top_ranked_viewed` with the site name.
+
+**Why `SectionViewTracker` exists:** to keep `SectionShell` server-rendered. The tracker is a small client component child; SectionShell can stay a Server Component.
 
 ---
 
