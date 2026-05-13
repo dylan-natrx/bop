@@ -2,6 +2,7 @@ import { SectionShell } from './SectionShell'
 import { FindingBeat } from './FindingBeat'
 import { EditorialImage } from './EditorialImage'
 import { ConfidenceDistributionChart } from './ConfidenceDistributionChart'
+import { Pullquote } from './Pullquote'
 
 export function WhatAnalysisMadeVisible() {
   return (
@@ -66,20 +67,35 @@ export function WhatAnalysisMadeVisible() {
           }
         />
 
+        <Pullquote
+          attribution="Mike McCann"
+          role="Director of Science and Research, Billion Oyster Project"
+        >
+          What we have now is a ranking and a confidence layer attached to
+          every site. That&apos;s where the science comes in. We&apos;re
+          never certain. But knowing where we&apos;re confident and where
+          we&apos;re not is exactly what we want when we&apos;re making
+          these decisions.
+        </Pullquote>
+
         <FindingBeat
-          subhead="Where the data is strong, and where it is not."
+          subhead="A map of where to invest in more data next."
           body={
             <p>
-              The analysis surfaced which sites are backed by strong
-              observational data and which are not. Sites that BOP has already
-              advanced into design have been studied directly and carry
-              high-confidence inputs. Several top-ranked candidates from this
-              new analysis have not been studied as deeply, and the framework
-              labels their underlying data as moderate or low confidence. That
-              distinction matters. The ranking tells BOP which sites are most
-              suitable. The confidence layer tells them where the next round
-              of monitoring would compound the value of the analysis already
-              done.
+              Strong site rankings depend on strong underlying data, and
+              observational coverage across the harbor is uneven. The
+              framework names that unevenness directly, classifying each
+              site&apos;s confidence level based on how well the available
+              data supports its score. Sites already advanced into BOP&apos;s
+              design pipeline carry high-confidence inputs because they have
+              been studied. Several top-ranked candidates from the new
+              analysis carry less observational support, simply because they
+              have not yet been studied at the same depth. Knowing exactly
+              where confidence is lower tells BOP exactly where to send the
+              next round of monitoring effort: water quality loggers, field
+              validation, additional sampling. The framework doesn&apos;t
+              just rank sites. It surfaces the highest-value targets for the
+              next investment in observation.
             </p>
           }
           visual={<ConfidenceDistributionChart />}

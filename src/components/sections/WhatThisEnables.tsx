@@ -30,11 +30,9 @@ export function WhatThisEnables() {
               Operational
             </div>
             <p className="font-sans text-body text-ivory-dim font-light leading-[1.65]">
-              Ten priority sites can advance in parallel, rather than every
-              candidate site advancing sequentially through thirty percent
-              design before any decision can be made. Time and capital that
-              previously flowed into sites that should have been screened out
-              earlier now flow into the sites most likely to deliver.
+              BOP can now move ten priority sites toward design and
+              permitting at the same time, with the comparative ranking
+              guiding where to commit time and capital first.
             </p>
           </div>
 
@@ -45,11 +43,13 @@ export function WhatThisEnables() {
             </div>
             <p className="font-sans text-body text-ivory-dim font-light leading-[1.65]">
               Oyster restoration in New York Harbor requires approvals from a
-              patchwork of state and federal agencies. When BOP returns to
-              those agencies with the comprehensive ranking, the underlying
-              methodology, and the confidence layer behind every site, the
-              agencies see the whole pipeline. The result is predictability
-              the previous process could not deliver.
+              range of state and federal agencies. The new framework gives
+              those agencies a complete view of the candidate pipeline: the
+              ranking, the methodology behind every site&apos;s position
+              within the ranking, and the confidence level driving each
+              position. When BOP returns to the permitting process with this
+              work, the conversation starts from documented, comparative
+              analysis the agencies have not previously had.
             </p>
           </div>
 
@@ -77,23 +77,28 @@ export function WhatThisEnables() {
             font-sans text-body text-ivory-dim font-light leading-[1.65]
           ">
           <p>
-            The harbor is the test case. The decision class is national.
             Coastal districts, state agencies, port authorities, and
-            foundations all face the same question. The framework built for
-            New York Harbor is portable. The water quality scoring retunes
-            for local salinity regimes. The wave and shoreline change
-            products from{' '}
-            <em className="font-serif italic">Natrx Assess</em> run for any
-            coastal geography with NAIP-equivalent imagery. San Francisco
-            Bay and the Chesapeake face the same fundamental question, with
-            their own data realities. The work happening in New York Harbor
-            this summer is the beginning of how restoration gets done at
-            landscape scale.
+            foundations are increasingly facing site-prioritization
+            questions of their own. The methodology built for New York
+            Harbor is a transferable framework. The underlying data is
+            local. The scoring functions retune to the salinity, food, and
+            oxygen conditions of whichever estuary the work is applied to.{' '}
+            <em className="font-serif italic">Natrx Assess</em> erosion
+            analyses can be run for any shoreline geography with publicly
+            available satellite imagery. Each estuary brings its own
+            ecological complexity and its own data realities. What carries
+            forward is the structure: comparative analysis across all
+            candidate sites at once, with confidence levels disclosed,
+            calibrated to the place. The work happening in New York Harbor
+            this year is part of a larger shift in how restoration
+            decisions get made at landscape scale.
           </p>
         </div>
 
-        {/* Future pullquote slot: reserved for an interview quote that
-            closes the section, ahead of the oyster image. */}
+        {/* Pullquote slot: held empty, awaiting Lise Montefiore interview.
+            If the interview does not happen before publication, this
+            placeholder can be removed and the section ships with no
+            pullquote in § 5. */}
 
         <div className="col-span-1 lg:col-span-8 lg:col-start-3 mt-12 lg:mt-16">
           <EditorialImage
