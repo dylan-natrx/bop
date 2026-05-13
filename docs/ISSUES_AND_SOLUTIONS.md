@@ -4,6 +4,58 @@ Running log of gotchas. Newest first. The 2026-05-12 map-basemap-rebuild session
 
 ---
 
+## 2026-05-12 (late) — editorial second pass
+
+### Pullquote component added; two on the page
+
+**Context:** Live editorial review surfaced a need for interview quotes inside the page flow — partnership voices doing the kind of work that body copy can't do (institutional confidence, scale of the alternative). Built a single reusable component and placed two instances.
+
+**Component:** [src/components/sections/Pullquote.tsx](../src/components/sections/Pullquote.tsx). Treatment: Fraunces italic body at section-subhead scale, JetBrains Mono uppercase attribution + role separated by a middle dot (`·`), left vertical rule in teal-bright (`border-l-2`), `max-w-[60ch]` centered. Reads as a quoted aside; not a section heading. Props: `children` (quote body), `attribution`, optional `role`, optional `className`.
+
+**Placements:**
+- **§ 3, between intro and walkthrough:** Mike McCann (Director of Science and Research, Billion Oyster Project) on the confidence layer — "What we have now is a ranking and a confidence layer attached to every site. … Knowing where we're confident and where we're not is exactly what we want when we're making these decisions." Names the editorial through-line of the page before the reader steps through how the framework was built.
+- **§ 5, between the three operational beats and the closing portability paragraph:** Lise Montefiore, PhD, MS (Data Scientist, Natrx) — "What we did is a small piece of the big work BOP is doing to restore the harbor. The goal itself is impressive." Hinges from "what this means for BOP" to "what carries forward to the broader field."
+
+A future pullquote slot is reserved in § 2 below paragraph 2 (marked with an HTML comment) for an additional interview voice if one lands before publication.
+
+### § 2 paragraph 2: four-hundred-year framing folded in
+
+Replaced paragraph 2 to name the pre-comparative era directly: "For four hundred years, restoration in the harbor happened opportunistically. Sites moved forward when a parks department said yes, when a marina allowed a cage, when access was available." Lands on the same scale point as the previous draft.
+
+### § 3 intro rewrite
+
+Opens on the partnership ("Natrx and Billion Oyster Project built the methodology together") and lands on a new framing: "the first harbor-wide comparative look at all 78 candidate sites at once, calibrated to the specific ecology and geography of New York Harbor." Dataset / workshop / data-product counts retained verbatim. Walkthrough sequence sentence retained verbatim.
+
+### § 4 Beat 2 reframed as a data-investment map
+
+**Old subhead:** "Where the data is strong, and where it is not."
+**New subhead:** "A map of where to invest in more data next."
+
+Body rewritten to lead on the unevenness of observational coverage, name what each confidence level actually means (high-confidence inputs at advanced design sites; less observational support at newly-ranked candidates), and close on the practical output — knowing exactly where to send water quality loggers, field validation, and additional sampling. The framework doesn't just rank; it surfaces the highest-value targets for the next investment in observation. The italic closing thread at the bottom of § 4 is untouched.
+
+### § 5 full restructure into Operational / Institutional / Mission
+
+**Eyebrow:** WHAT THIS ENABLES → WHAT THIS UNLOCKS.
+**Headline:** "The methodology travels." → "The pipeline becomes operational."
+
+Three nested beats, each with a teal-bright JetBrains Mono uppercase kicker and a single paragraph:
+- **Operational** — BOP can move ten priority sites toward design and permitting in parallel, comparative ranking guiding the commit order.
+- **Institutional** — agencies now see the whole pipeline (ranking + methodology + confidence per site); the conversation starts from documented, comparative analysis the agencies have not previously had.
+- **Mission** — the 2035 one-billion-oyster target is operationally achievable for the first time.
+
+Followed by the Lise Montefiore pullquote (hinge), then a rewritten closing paragraph that opens on the broader audience and lands on "what carries forward is the structure: comparative analysis across all candidate sites at once, with confidence levels disclosed, calibrated to the place."
+
+**Section id stays `what-this-enables`** so existing anchors and the SectionNav "At scale" link don't break.
+
+### Editorial process learnings worth carrying forward
+
+- **Pullquote count is intentional.** We landed on two visible pullquotes (McCann in §3, Montefiore in §5) plus one reserved slot in §2. Earlier iterations had a McCann pullquote in §4 as well; we collapsed to one McCann quote — the confidence-layer framing — because two from the same speaker started to feel imbalanced. Lesson: when two quotes exist from the same source, pick the one that does the most editorial work for the section it's in, not the one that "fits."
+- **Pullquote placement matters more than the quote itself.** McCann's confidence-layer quote works **between** §3 intro and walkthrough because it names what the reader is about to see being built. It would NOT work between Beat 1 and Beat 2 of §4 — by that point in the reader's journey the framing is already established and the quote becomes redundant.
+- **Section eyebrow can carry editorial intent.** Renaming WHAT THIS ENABLES → WHAT THIS UNLOCKS was a small change with a real shift in tone — from "capability we offer" to "barrier we remove." Editorial eyebrows aren't just labels.
+- **Credentials matter for journalist-facing pages.** Lise Montefiore's attribution went through three forms: "Lise Montefiore", then "Lise Montefiore, PhD", then "Lise Montefiore, PhD, MS." For a piece pitched to climate / infrastructure reporters, the credentials read as authority and should be present in any quote attribution where the speaker holds them.
+
+---
+
 ## 2026-05-12 — v1 polish + map basemap rebuild
 
 ### Section copy: negation framing keeps creeping in

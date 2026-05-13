@@ -76,7 +76,7 @@ export function WhatThisEnables() {
             "what carries forward to the broader field." */}
         <div className="col-span-1 lg:col-span-8 lg:col-start-3 mt-12 lg:mt-16">
           <Pullquote
-            attribution="Lise Montefiore, PhD"
+            attribution="Lise Montefiore, PhD, MS"
             role="Data Scientist, Natrx"
           >
             What we did is a small piece of the big work BOP is doing to

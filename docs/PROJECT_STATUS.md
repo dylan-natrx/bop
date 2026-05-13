@@ -7,10 +7,10 @@ Last meaningful update: 2026-05-12. **v1 is feature-complete.** All five section
 | § | Section | Status | Notes |
 |---|---|---|---|
 | 1 | Hero | ✅ Done | Mapbox GL JS, all 78 sites, top-10 halos, hover tooltip, bidirectional hover. Sticky `SectionNav` replaces the original Topbar. |
-| 2 | The stakes and the problem | ✅ Done | Real copy. `EditorialImage` of the harbor on the right column. |
-| 3 | The methodology, made visible | ✅ Done | Intro + 6-step `MethodologyWalkthrough` (map 3fr / spectra 2fr / bottom strip) + 3 `TopRankedCallout` cards each with a live `SiteMiniMap`. |
-| 4 | What the analysis made visible | ✅ Done | Two `FindingBeat` blocks (no kicker labels): shoreline change `EditorialImage` for beat 1, `ConfidenceDistributionChart` for beat 2. |
-| 5 | What this enables | ✅ Done | Two paragraphs + `nyoyster.webp` closing image (also the OG image). |
+| 2 | The stakes and the problem | ✅ Done | Two paragraphs. Paragraph 2 carries the four-hundred-year opportunistic-vs-comparative framing. `EditorialImage` of the harbor on the right column. Future pullquote slot reserved below paragraph 2. |
+| 3 | The methodology, made visible | ✅ Done | Intro (now credits the partnership and the 78-site comparative scope) + Mike McCann pullquote on the confidence-layer framing + 6-step `MethodologyWalkthrough` (map 3fr / spectra 2fr / bottom strip) + 3 `TopRankedCallout` cards each with a live `SiteMiniMap`. |
+| 4 | What the analysis made visible | ✅ Done | Two `FindingBeat` blocks (no kicker labels): shoreline change `EditorialImage` for beat 1 ("Oysters and shorelines, one intervention."), `ConfidenceDistributionChart` for beat 2 ("A map of where to invest in more data next.") — Beat 2 now frames the confidence layer as a data-investment map. |
+| 5 | What this unlocks | ✅ Done | Eyebrow renamed WHAT THIS ENABLES → WHAT THIS UNLOCKS. Headline "The pipeline becomes operational." Three nested beats (Operational / Institutional / Mission) + Lise Montefiore, PhD, MS pullquote hinge + closing portability paragraph + `nyoyster.webp` closing image (also the OG image). |
 
 The original 6-section numbering (Framework Primer / Design Queue / Deep-dive Map / Site Detail / Methodology Drawer) is **superseded** — see [CLAUDE.md](../CLAUDE.md) for the locked 5-section structure.
 
@@ -116,8 +116,9 @@ Dev: `npm run dev` (port 3000 by default). Build: `npm run build`.
 | §4 container | `src/components/sections/WhatAnalysisMadeVisible.tsx` |
 | §4 finding beat block | `src/components/sections/FindingBeat.tsx` |
 | §4 confidence distribution chart | `src/components/sections/ConfidenceDistributionChart.tsx` |
-| §5 portability + closing | `src/components/sections/WhatThisEnables.tsx` |
+| §5 unlocks (3 beats + closing) | `src/components/sections/WhatThisEnables.tsx` |
 | Editorial image frame | `src/components/sections/EditorialImage.tsx` |
+| Pullquote (used in §3 + §5) | `src/components/sections/Pullquote.tsx` |
 | Placeholder block (legacy, unused in v1) | `src/components/sections/PlaceholderBlock.tsx` |
 
 ### Methodology walkthrough (§3 inner)
