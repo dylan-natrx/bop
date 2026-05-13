@@ -1,5 +1,6 @@
 import { SectionShell } from './SectionShell'
 import { EditorialImage } from './EditorialImage'
+import { Pullquote } from './Pullquote'
 
 // § 5 closes the page with three beats — operational, institutional,
 // mission — followed by a closing paragraph on the portability of the
@@ -95,10 +96,16 @@ export function WhatThisEnables() {
           </p>
         </div>
 
-        {/* Pullquote slot: held empty, awaiting Lise Montefiore interview.
-            If the interview does not happen before publication, this
-            placeholder can be removed and the section ships with no
-            pullquote in § 5. */}
+        {/* Closing pullquote: Lise Montefiore on the partnership scale */}
+        <div className="col-span-1 lg:col-span-8 lg:col-start-3 mt-12 lg:mt-16">
+          <Pullquote
+            attribution="Lise Montefiore"
+            role="Data Scientist, Natrx"
+          >
+            What we did is a small piece of a big work BOP is doing to
+            restore the harbor. The goal itself is impressive.
+          </Pullquote>
+        </div>
 
         <div className="col-span-1 lg:col-span-8 lg:col-start-3 mt-12 lg:mt-16">
           <EditorialImage
