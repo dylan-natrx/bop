@@ -8,86 +8,64 @@ interface WalkthroughMapLegendProps {
 }
 
 /**
- * Legend panel pinned to the bottom-right of the walkthrough map.
+ * Legend strip pinned to the bottom of the walkthrough map.
  *
- * Evolves per step. Entries are introduced cumulatively:
- *   - Always visible: priority site (bright), below threshold (faded gray)
- *   - From step 4: cost flag ring (amber) — wave; later CSO and MS4 too
- *   - From step 5: co-benefit ring (teal-aqua) — erosion; later park too
+ * Horizontal single row, centered. Entries are introduced cumulatively as
+ * the walkthrough progresses, matching the symbols the reader sees on the
+ * map dots above:
+ *   - Always visible: priority site (bright), below threshold (faded)
+ *   - From step 4: cost flag (amber outer ring)
+ *   - From step 5: co-benefit (teal-aqua inner ring)
  *
- * Reads as the reader's key for what the rings on the map mean. Body
- * copy under the map explains why each ring is being introduced; this
- * is the lookup card.
+ * Labels are terse on purpose. The body copy below the map names which
+ * specific flags fold into each ring at each step. Hovering a bright site
+ * shows full flag values via the existing tooltip.
  */
 export function WalkthroughMapLegend({ step }: WalkthroughMapLegendProps) {
   const showCost = step.visibleFlags.includes('wave')
   const showCoBenefit = step.visibleFlags.includes('erosion')
 
-  // At step 6 the cost flag rolls in CSO + MS4, and co-benefit rolls in
-  // park. Until then the labels read as the single flag the step introduces.
-  const costLabel = step.id >= 6
-    ? 'Cost flag (wave, CSO, MS4)'
-    : 'Cost flag (wave exposure)'
-  const coBenefitLabel = step.id >= 6
-    ? 'Co-benefit (erosion, parkland)'
-    : 'Co-benefit (shoreline erosion)'
-
   return (
     <div
       aria-label="Map legend"
       className="
-        absolute bottom-3 right-3 z-10
-        w-[min(78vw,260px)]
-        px-4 py-3
-        bg-bg-deep/85 backdrop-blur-sm
-        border border-rule
-        rounded
-        flex flex-col gap-2
+        absolute bottom-0 left-0 right-0 z-10
+        px-4 py-2
+        bg-bg-deep/80 backdrop-blur-sm
+        border-t border-rule-soft
+        flex items-center justify-center
+        gap-x-5 lg:gap-x-7
+        flex-wrap
         pointer-events-none
       "
     >
-      <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-ivory-faint mb-0.5">
-        Legend
-      </div>
-
-      <LegendRow>
-        <PriorityDot />
-        <span>Priority site</span>
-      </LegendRow>
-
-      <LegendRow>
-        <FadedDot />
-        <span>Below threshold</span>
-      </LegendRow>
+      <LegendEntry symbol={<PriorityDot />} label="Priority site" />
+      <LegendEntry symbol={<FadedDot />} label="Below threshold" />
 
       <AnimatePresence initial={false}>
         {showCost ? (
           <motion.div
             key="cost"
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
+            layout
+            initial={{ opacity: 0, x: -4 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -4 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
           >
-            <LegendRow>
-              <CostRing />
-              <span>{costLabel}</span>
-            </LegendRow>
+            <LegendEntry symbol={<CostRing />} label="Cost flag" />
           </motion.div>
         ) : null}
 
         {showCoBenefit ? (
           <motion.div
             key="cobenefit"
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
+            layout
+            initial={{ opacity: 0, x: -4 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -4 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
           >
-            <LegendRow>
-              <CoBenefitRing />
-              <span>{coBenefitLabel}</span>
-            </LegendRow>
+            <LegendEntry symbol={<CoBenefitRing />} label="Co-benefit" />
           </motion.div>
         ) : null}
       </AnimatePresence>
@@ -95,46 +73,53 @@ export function WalkthroughMapLegend({ step }: WalkthroughMapLegendProps) {
   )
 }
 
-function LegendRow({ children }: { children: React.ReactNode }) {
+function LegendEntry({
+  symbol,
+  label,
+}: {
+  symbol: React.ReactNode
+  label: string
+}) {
   return (
-    <div className="flex items-center gap-3 font-sans text-[11.5px] text-ivory-dim leading-none">
-      {children}
+    <div className="flex items-center gap-2 font-sans text-[11px] text-ivory-dim leading-none whitespace-nowrap">
+      {symbol}
+      <span>{label}</span>
     </div>
   )
 }
 
-// Symbol primitives. Each one is sized to match the map dot's visual.
+// Symbol primitives — match the geometry of the actual map circle layers.
 
 function PriorityDot() {
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" className="shrink-0">
-      <circle cx="9" cy="9" r="5" fill="#6FE3D0" stroke="rgba(111,227,208,0.55)" strokeWidth="1.2" />
+    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" className="shrink-0">
+      <circle cx="8" cy="8" r="4.5" fill="#6FE3D0" stroke="rgba(111,227,208,0.55)" strokeWidth="1.2" />
     </svg>
   )
 }
 
 function FadedDot() {
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" className="shrink-0">
-      <circle cx="9" cy="9" r="5" fill="rgba(80, 105, 115, 0.85)" opacity="0.4" />
+    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" className="shrink-0">
+      <circle cx="8" cy="8" r="4.5" fill="rgba(80, 105, 115, 0.85)" opacity="0.4" />
     </svg>
   )
 }
 
 function CostRing() {
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" className="shrink-0">
-      <circle cx="9" cy="9" r="3.5" fill="#6FE3D0" />
-      <circle cx="9" cy="9" r="7.5" fill="none" stroke="#D9B47A" strokeWidth="1.1" />
+    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" className="shrink-0">
+      <circle cx="8" cy="8" r="3" fill="#6FE3D0" />
+      <circle cx="8" cy="8" r="6.5" fill="none" stroke="#D9B47A" strokeWidth="1.1" />
     </svg>
   )
 }
 
 function CoBenefitRing() {
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" className="shrink-0">
-      <circle cx="9" cy="9" r="3.5" fill="#6FE3D0" />
-      <circle cx="9" cy="9" r="6" fill="none" stroke="#6FE3D0" strokeWidth="1.1" />
+    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" className="shrink-0">
+      <circle cx="8" cy="8" r="3" fill="#6FE3D0" />
+      <circle cx="8" cy="8" r="5.5" fill="none" stroke="#6FE3D0" strokeWidth="1.1" />
     </svg>
   )
 }
