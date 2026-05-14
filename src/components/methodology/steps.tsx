@@ -55,7 +55,7 @@ export const STEPS: StepConfig[] = [
     title: 'Salinity, the Goldilocks variable',
     lede: 'Salinity is a Goldilocks variable.',
     bodyParagraphs: [
-      'Too little salt and oysters cannot survive. Too much, and they cannot either. Most of New York Harbor sits in the optimum range. The upper Hudson does not, and that single gradient already begins to sort the pipeline. Downstream sites near Yonkers and Hastings-on-Hudson score perfectly. Upstream at Piermont, Irvington, and Ossining, the water is too fresh, and the sites drop out. One variable, and the map starts telling a different story than the brief.',
+      "Too little salt, oysters can't survive. Too much, they can't either. The optimum is roughly 12 to 20 PSU. Most of the harbor sits in range. The upper Hudson runs too fresh. Sites near Piermont, Irvington, and Ossining drop out at this step. One variable, and the field is already sorting itself.",
     ],
     colorMode: 'salinity',
     visibleFlags: [],
@@ -71,7 +71,7 @@ export const STEPS: StepConfig[] = [
     title: 'Adding chlorophyll-a, the food layer',
     lede: 'Oysters are filter feeders.',
     bodyParagraphs: [
-      'They need food in the water, measured by chlorophyll-a. The relationship is mostly more is better, with a real catch: too much chlorophyll-a signals algae blooms, which crash oxygen and kill the oysters those blooms feed. The scoring captures the productive range. The methodology flags the danger zone. Adding this layer reshapes the field. Sites strong on salinity but thin on food production lose ground. Sites strong on both come forward.',
+      'They need food in the water, measured by chlorophyll-a. More is mostly better, with a catch: past a threshold, chlorophyll-a signals algae blooms that crash oxygen and kill the oysters the blooms feed. The score captures the productive range and flags the danger zone. Sites strong on salinity but thin on food drop further. Sites strong on both come forward.',
     ],
     colorMode: 'salinity_chla',
     visibleFlags: [],
@@ -85,9 +85,9 @@ export const STEPS: StepConfig[] = [
   {
     id: 3,
     title: 'Adding dissolved oxygen, the limiter',
-    lede: 'Dissolved oxygen does not need to be high.',
+    lede: "Dissolved oxygen doesn't need to be high.",
     bodyParagraphs: [
-      "It just cannot fall below survival levels. In the composite formula, oxygen acts as a multiplier, so sites that regularly slip into hypoxia get their other strengths cut in half. This is where the methodology earns its keep. Arthur Kill on Staten Island emerges as the strongest site in the pipeline. Six locations inside the Living Breakwaters system cluster just behind. The harbor's industrial west shore, often written off, now leads on the variables that matter most to oyster restoration. Three variables, each with its own shape, combined into one defensible ranking.",
+      "It just can't fall below survival. Oxygen acts as a multiplier in the composite, so sites that slip into hypoxia get their other strengths cut in half. The ranking locks here. Arthur Kill on Staten Island emerges at the top. Six locations inside the Living Breakwaters system cluster just behind. The harbor's industrial west shore, long written off, now leads on the variables that actually matter for oyster restoration. Roughly 15 of 78 sites pass the biology gate.",
     ],
     colorMode: 'composite',
     visibleFlags: [],
@@ -101,14 +101,16 @@ export const STEPS: StepConfig[] = [
   {
     id: 4,
     title: 'Wave exposure, from Natrx Assess',
-    lede: (
-      <>
-        This is where <Em>Natrx Assess</Em> starts adding data BOP did not previously have, and where the framework starts answering a different kind of question.
-      </>
-    ),
+    lede: 'The next three steps describe external factors at each ranked site.',
     bodyParagraphs: [
-      "The water quality variables produced a ranking based on biology. Everything that comes next is information about context: how a site behaves under wave energy, how its shoreline is moving, what it sits next to. The ranking does not change. The reader's understanding of what each ranked site actually is gets richer.",
-      'Site-level wave energy modeling, computed for every candidate location using fetch-limited wind-wave equations from the Army Corps of Engineers Coastal Engineering Manual. Wave exposure has its own sweet spot. Enough movement to deliver food and oxygen, not so much that engineered structures fail or oysters wash off before they take hold. Sites where modeled waves exceed three feet at meaningful frequencies are flagged for additional engineering review. Some of the strongest sites in the pipeline carry that flag. They remain strong. They also remain expensive to build.',
+      <>
+        Wave exposure is the feasibility question. A site can score perfectly
+        on biology and still need storm-rated infrastructure because the water
+        moves too hard. Every top-ten site in this pipeline carries a wave
+        flag. They stay in the priority set. You can&apos;t pay your way to
+        better water, but you can pay for engineering. The framework now tells
+        BOP what to budget for. Wave energy data from <Em>Natrx Assess</Em>.
+      </>,
     ],
     colorMode: 'composite',
     visibleFlags: ['wave'],
@@ -122,11 +124,9 @@ export const STEPS: StepConfig[] = [
   {
     id: 5,
     title: 'Shoreline erosion, from Natrx Assess',
-    lede:
-      'Natrx Assess also delivers a one-meter resolution analysis of shoreline erosion, going back fifteen years, using NAIP satellite imagery and the Marsh Edge from Image Processing methodology.',
+    lede: 'Wave adds cost. Erosion adds value.',
     bodyParagraphs: [
-      'Eight sites show erosion of more than a foot per year. Fifteen more show active retreat at lower rates.',
-      'Several of those eroding shorelines sit next to the top-ranked restoration candidates. That overlap is the story. Oyster reefs function as natural breakwaters, dampening wave energy and slowing the loss of marsh edges. Where strong water quality meets actively retreating coast, the same restoration project delivers two outcomes: a rebuilt habitat and a stabilized shore. One investment, two returns. The ranking told BOP which sites to restore. The erosion overlay tells them which restorations are worth twice as much per dollar spent.',
+      'Sites that pass biology and sit next to actively retreating shoreline get a positive flag. A reef would dampen wave energy and slow the loss of marsh edge. One project, two outcomes. A discount on cost and performance.',
     ],
     colorMode: 'composite',
     visibleFlags: ['wave', 'erosion'],
@@ -140,10 +140,10 @@ export const STEPS: StepConfig[] = [
   {
     id: 6,
     title: 'The practical filters',
-    lede: 'The final layer is operational.',
+    lede: 'The last layer is operational.',
     bodyParagraphs: [
-      "BOP works primarily on or near publicly owned parkland, where the work supports community education alongside ecological restoration, so proximity to NYC parks is part of every site's profile. Sites near combined sewer and stormwater outfalls carry permitting and water quality complications that affect feasibility regardless of how a site scores ecologically, so those are tracked too.",
-      'Stack the layers together and the picture comes into focus. Seventy-eight candidate sites. More than thirty datasets. Six layers of synthesis: salinity, chlorophyll-a, dissolved oxygen, wave energy, shoreline change, operational context. The framework points to roughly ten to fifteen priority projects ready for design and permitting. That is the answer the engagement was built to produce, and it is the answer BOP can rerun next year as new data lands, without Natrx in the loop.',
+      "Sites near combined sewer and stormwater outfalls carry permitting friction with state and federal agencies. Sites near publicly accessible parkland make BOP's mission easier. Neither changes which sites are suitable. Both shape what BOP plans for and where it commits time first.",
+      'Stack the six layers together and the picture comes into focus. Seventy-eight candidates. Three biology layers narrow the field to the suitable set. Three external layers describe what the framework now knows about each. Roughly ten to fifteen priority projects emerge, with their cost, permitting, and co-benefit profile fully visible. That is the answer the engagement was built to produce. BOP can rerun the analysis next year as new data lands.',
     ],
     colorMode: 'composite',
     visibleFlags: ['wave', 'erosion', 'park', 'cso', 'ms4'],

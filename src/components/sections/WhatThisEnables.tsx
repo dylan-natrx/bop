@@ -105,8 +105,8 @@ export function WhatThisEnables() {
             forward is the structure: comparative analysis across all
             candidate sites at once, with confidence levels disclosed,
             calibrated to the place. The work happening in New York Harbor
-            this year is part of a larger shift in how restoration
-            decisions get made at landscape scale.
+            this year is part of a larger shift. The natural world and the
+            built one, in service of each other.
           </p>
         </div>
 
