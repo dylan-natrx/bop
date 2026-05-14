@@ -207,7 +207,7 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
       type: 'FeatureCollection' as const,
       features,
     }
-  }, [rankings, stats, step.colorMode, step.visibleFlags])
+  }, [rankings, stats, step.colorMode, step.visibleFlags, step.id])
 
   useEffect(() => {
     if (!mapNodeRef.current || mapRef.current) return
@@ -239,10 +239,9 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
             // Priority halo — outermost soft teal-aqua ring. Appears
             // only at step 6 on top-10 sites. Reveals the framework's
             // recommendation: of the suitable set, these are where BOP
-            // commits first. Render order matters — this layer is drawn
-            // BEFORE cost-flag-ring and cobenefit-ring so it sits visually
-            // beneath them at the dot center (largest radius, lowest in
-            // the stack).
+            // commits first. Pulses subtly via a rAF loop in the effect
+            // below; built-in transitions are deliberately omitted so
+            // they don't fight the per-frame setPaintProperty calls.
             {
               id: 'priority-halo',
               type: 'circle',
@@ -254,8 +253,6 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
                 'circle-stroke-color': '#6FE3D0',
                 'circle-stroke-width': 1.1,
                 'circle-stroke-opacity': 0.55,
-                'circle-stroke-opacity-transition': { duration: 800 },
-                'circle-radius-transition': { duration: 600 },
               },
             },
 
@@ -443,6 +440,66 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
       source.setData(sitesGeoJson as unknown as GeoJSON.FeatureCollection)
     }
   }, [sitesGeoJson, mapReady])
+
+  // Subtle pulse on the priority halo at step 6 only. Continuous sine
+  // wave that gently scales the halo (~1 → 1.4 of its base offset) and
+  // its stroke opacity (0.30 → 0.80) over a 3-second cycle. Stops
+  // cleanly when the reader steps away from step 6 — the priority-halo
+  // layer's filter then evaluates false everywhere and the halos
+  // disappear regardless of paint state.
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !mapReady) return
+    if (step.id !== 6) return
+
+    const PERIOD_MS = 3000
+    const BASE_OFFSET = 8.5
+    const PULSE_AMOUNT = 5.5
+    const BASE_OPACITY = 0.30
+    const OPACITY_AMOUNT = 0.50
+
+    let raf = 0
+    let startTime: number | null = null
+
+    const animate = (t: number) => {
+      if (startTime === null) startTime = t
+      const elapsed = t - startTime
+      const phase = (elapsed % PERIOD_MS) / PERIOD_MS
+      // 0..1 sine wave (peaks at phase=0.25)
+      const wave = (Math.sin(phase * Math.PI * 2 - Math.PI / 2) + 1) / 2
+
+      const offset = BASE_OFFSET + wave * PULSE_AMOUNT
+      const opacity = BASE_OPACITY + wave * OPACITY_AMOUNT
+
+      // Guard against the layer being torn down mid-frame on step transitions
+      if (!map.getLayer('priority-halo')) return
+
+      map.setPaintProperty('priority-halo', 'circle-radius', [
+        '+',
+        ['get', '_radius'],
+        offset,
+      ])
+      map.setPaintProperty('priority-halo', 'circle-stroke-opacity', opacity)
+
+      raf = requestAnimationFrame(animate)
+    }
+
+    raf = requestAnimationFrame(animate)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      // Reset to the static base values so a later return to step 6
+      // doesn't start mid-cycle on stale paint state.
+      if (map.getLayer('priority-halo')) {
+        map.setPaintProperty('priority-halo', 'circle-radius', [
+          '+',
+          ['get', '_radius'],
+          BASE_OFFSET,
+        ])
+        map.setPaintProperty('priority-halo', 'circle-stroke-opacity', 0.55)
+      }
+    }
+  }, [step.id, mapReady])
 
   if (!MAPBOX_TOKEN) {
     return (
