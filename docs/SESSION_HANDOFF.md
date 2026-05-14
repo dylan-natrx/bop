@@ -2,7 +2,9 @@
 
 **Pick up here.** This is the single doc to read first when resuming work. It assumes nothing about prior context.
 
-Last meaningful work: 2026-05-12. The page is feature-complete for v1, with a second editorial pass landed late that day. All five sections have real copy and real visuals. Both Mapbox maps and the three top-ranked mini-maps are wired to a single OSM-derived land source. Vercel Analytics + Speed Insights are live with custom editorial events. Two pullquotes are in place — Mike McCann (BOP Director of Science and Research) between §3 intro and the methodology walkthrough, and Lise Montefiore, PhD, MS (Data Scientist, Natrx) hinging §5 between the three operational beats and the closing portability paragraph. § 5 is restructured around a three-beat block — Operational / Institutional / Mission — followed by the portability close.
+Last meaningful work: 2026-05-14. Page is feature-complete for v1 plus an editorial second pass plus a pre-public access gate. All five sections have real copy and real visuals. Both Mapbox maps and the three top-ranked mini-maps are wired to a single OSM-derived land source. Vercel Analytics + Speed Insights are live with custom editorial events. Two pullquotes (Mike McCann in §3, Lise Montefiore, PhD, MS in §5). §5 restructured around Operational / Institutional / Mission beats with a portability close. **Password gate** (middleware + custom-branded login page) is shipped and blocking unauthenticated access in production. Editorial spine for the methodology walkthrough is now locked: biology gates the ranking; external factors describe what it takes to build the surviving sites.
+
+**Currently in flight:** the methodology map's narrowing model. The visual "every step narrows" gesture filters out the actual priority set at step 6 because every top-ten site carries `NearWave='Yes'`. Next change: biology narrows (steps 1–3); wave/CSO/MS4 become flag markers (not filters) on bright surviving sites at steps 4 and 6. Erosion ring at step 5 stays as the positive overlay. See ISSUES_AND_SOLUTIONS for the editorial spine and operational consequence.
 
 ---
 
@@ -25,6 +27,26 @@ A media-grade, public-facing explainer page documenting the Billion Oyster Proje
 | `_overview-documents/BOP_Natrx_Project_Narrative_DRAFT_v0_2.md` (untracked, local) | Master narrative, source of truth for all copy |
 
 The untracked references live in your local working tree only — they're in `.gitignore` because they're source material, not source code.
+
+---
+
+## Pre-public access gate
+
+The site is gated by a custom-branded password page while in editorial review. Architecture:
+
+- **`src/middleware.ts`** — Next.js middleware. Checks `bop-auth` cookie on every request. Missing or invalid → redirect to `/login?from=<original-path>`. Matcher excludes `_next/static`, `_next/image`, `_vercel`, `favicon.ico`, `/images`, `/site-imagery`, `/data`, `/login`, `/api/auth`. **Lives in `src/`, not project root** — see ISSUES doc; root location is silently ignored on `src/`-layout projects.
+- **`src/app/login/page.tsx`** — BOP × Natrx branded login page. Form is a Suspense-wrapped client component.
+- **`src/app/api/auth/login/route.ts`** — POST handler validating credentials against env vars, setting `bop-auth` cookie on success.
+
+Env vars (defaults in code are safe-for-local-dev; set on Vercel for prod):
+- `AUTH_USERNAME` — default: `natrx`
+- `AUTH_PASSWORD` — default: `resili3nc3`
+- `AUTH_TOKEN` — the cookie value (default: `bop-preview-2026`). Rotate to invalidate all sessions.
+- `AUTH_DISABLED=true` — optional, no-ops the gate without removing files.
+
+**To remove when public:** delete `src/middleware.ts` (and optionally `src/app/login` and `src/app/api/auth`). Or set `AUTH_DISABLED=true`.
+
+**Vercel Deployment Protection must be OFF** for the custom gate to be the only gate. The platform-level Vercel Auth intercepts before middleware runs and would mask the branded page. Disabled at `vercel.com/dylan-natrx/bop/settings/deployment-protection` → Vercel Authentication → Disabled for Production.
 
 ---
 

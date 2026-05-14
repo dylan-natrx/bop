@@ -1,6 +1,6 @@
 # Project Status
 
-Last meaningful update: 2026-05-12. **v1 is feature-complete.** All five sections have real copy and real visuals. Map architecture rebuilt on OSM coastline data. Analytics + Speed Insights wired.
+Last meaningful update: 2026-05-14. **v1 is feature-complete plus pre-public password gate.** All five sections have real copy and real visuals. Map architecture rebuilt on OSM coastline data. Analytics + Speed Insights wired. Walkthrough controls promoted into the header with a mobile pill+menu. Two pullquotes in place (McCann §3, Montefiore §5). Custom-branded password gate at `src/middleware.ts` + `src/app/login` blocking unauthenticated access. Currently iterating on the methodology map's narrowing model — biology narrows, wave/CSO/MS4 become flag markers (not filters).
 
 ## Section completion
 
@@ -93,6 +93,15 @@ Dev: `npm run dev` (port 3000 by default). Build: `npm run build`.
 | Page root | `src/app/page.tsx` |
 | Global CSS, scrollbar, tooltip, fade-up classes | `src/app/globals.css` |
 | Design tokens, animations | `tailwind.config.ts` |
+
+### Pre-public gate
+| Purpose | Path |
+|---|---|
+| Middleware (checks `bop-auth` cookie, redirects to /login) | `src/middleware.ts` |
+| Login page (BOP × Natrx branded, Suspense-wrapped form) | `src/app/login/page.tsx` |
+| Login form (client component, posts to /api/auth/login) | `src/app/login/LoginForm.tsx` |
+| Auth API (validates credentials, sets `bop-auth` cookie) | `src/app/api/auth/login/route.ts` |
+| Env vars documented | `.env.local.example` |
 
 ### Hero (§1)
 | Purpose | Path |

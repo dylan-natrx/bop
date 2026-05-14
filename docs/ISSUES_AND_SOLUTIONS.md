@@ -4,6 +4,66 @@ Running log of gotchas. Newest first. The 2026-05-12 map-basemap-rebuild session
 
 ---
 
+## 2026-05-14 — password gate + walkthrough header + editorial spine
+
+### Password gate is silently ignored at project root when using src/ layout
+
+**Symptom:** Built and pushed `middleware.ts` at the project root with a redirect-to-`/login` handler for unauthenticated requests. Browser hit production and got `HTTP/2 200` on `/` — the prerendered home page — instead of the expected `307` redirect to `/login`. No error in the build output. The `/login` and `/api/auth/login` routes were both deployed and reachable.
+
+**Root cause:** Project uses the `src/` directory layout (`src/app/`). Next.js looks for middleware at **`src/middleware.ts`** when `src/` is the source root, not at the project root. The root-level file was silently ignored — Next.js doesn't warn when it finds a `middleware.ts` outside the expected location.
+
+**Fix:** `git mv middleware.ts src/middleware.ts` and rebuild. The build output then includes `ƒ Middleware 34.2 kB`, confirming registration. The middleware is the single source of truth for whether it's actually wired: if that line is missing from the build summary, the middleware isn't running. Always check.
+
+**File:** [src/middleware.ts](../src/middleware.ts)
+
+### Vercel Deployment Protection masks custom middleware
+
+**Symptom:** Before the middleware-location fix above, while testing the password gate, the URL returned `HTTP/2 401` with a `_vercel_sso_nonce` cookie. As project owner I passed through silently and never saw my own gate. From an incognito window I got Vercel's generic SSO login page, not the BOP × Natrx branded one.
+
+**Root cause:** Vercel Deployment Protection ("Vercel Authentication") is on by default for personal projects. It intercepts every request **before** custom middleware runs and forces SSO authentication via the Vercel team. Two gates fighting each other — but Vercel's wins because it's at the platform layer.
+
+**Fix:** Disable Vercel Deployment Protection on the project at `vercel.com/dylan-natrx/bop/settings/deployment-protection`. Set **Vercel Authentication** to **Disabled** for Production. Preview environments can stay protected if desired. Change takes effect instantly, no redeploy needed.
+
+**Trade-off:** custom middleware-based gate gives BOP × Natrx branding, a shared credential model, and an easy-remove path. Vercel's built-in protection gives zero-code platform-level auth but ties access to Vercel team membership and renders a Vercel-branded login page. For a journalist-facing preview, the custom gate is the right call.
+
+### Editorial spine for the methodology section
+
+**Context:** Across multiple revisions the methodology walkthrough never read cleanly because three different visual operations (recoloring, filtering, positive overlay) were happening at different steps without a unifying frame. The user's instinct — "every step narrows from 78 to ~10" — collided with the data: every top-ten site (Arthur Kill, Living Breakwaters cluster, Wolfe's Pond, Conch Basin) carries `NearWave='Yes'`, and Arthur Kill also carries `NearMS4='Yes'`. Hard-narrowing on those flags eliminated the priority set the framework actually points to.
+
+**Resolution (editorial spine, locked):**
+
+> The framework asks two questions in order. First, where can oysters thrive? Biology — three water-quality variables scored across all 78 candidates. Second, what do the surrounding conditions add or subtract? Wave energy, shoreline change, permitting context, mission fit. Mixing both dimensions, calibrated to one place, is the framework's contribution. Biology gates the ranking; external factors describe what it takes to build the surviving sites.
+
+**Operational consequence for the map:** steps 1–3 narrow by suitability score. Steps 4–6 do NOT narrow — they layer flag markers on the surviving priority set. Wave / CSO / MS4 are friction flags (added cost or permitting overhead). Erosion is a positive flag (co-benefit). Park is a positive flag (mission fit). Arthur Kill ends step 6 still bright, with multiple flag markers attached, exactly because that's what the framework actually says about it: the strongest biology in the pipeline with known engineering and permitting costs to be planned for.
+
+**Companion thesis** (woven into §3 intro and §5 closing): the project's deeper question is where the natural world and the built one strengthen each other in one specific place. The methodology is a way of asking that question rigorously.
+
+### Walkthrough controls header relocation + mobile pill+menu
+
+**Symptom:** Step nav lived in the bottom strip of the walkthrough. On short viewports the bottom strip was the first thing to clip — you couldn't reach Next without scrolling. On mobile the flat row (counter + dots + Prev/Next) wrapped awkwardly, often leaving "Step N / 6" alone on its own line with no controls visible.
+
+**Fix:** Promoted controls into the walkthrough header inline with the step title. The standalone "STEP N OF 6" eyebrow disappears because the inline counter inside the controls does the same job. On mobile, the flat row is replaced by a compact pill (`3 / 6 ▾`) that opens a popover menu listing all six step titles with the current step highlighted, plus Prev/Next at the bottom. Tap a step → jump + close. Tap outside / Escape → close.
+
+**Implementation:** Single `WalkthroughControls` component renders both presentations from the same state. Desktop uses `hidden lg:flex` flat row; mobile uses `flex lg:hidden` pill + Framer Motion AnimatePresence popover. The mobile menu doubles as a table of contents for the walkthrough.
+
+**File:** [src/components/methodology/WalkthroughControls.tsx](../src/components/methodology/WalkthroughControls.tsx), [src/components/methodology/MethodologyWalkthrough.tsx](../src/components/methodology/MethodologyWalkthrough.tsx)
+
+### Pullquote pattern — count is intentional
+
+Two visible pullquotes on the page:
+- §3 (Mike McCann, Director of Science and Research, BOP) between intro and walkthrough — on the confidence-layer framing.
+- §5 (Lise Montefiore, PhD, MS, Data Scientist, Natrx) between the three operational beats and the closing portability paragraph — "What we did is a small piece of the big work BOP is doing to restore the harbor."
+
+Earlier iterations had a McCann quote in both §3 and §4. We collapsed to one McCann quote (§3) because two from the same speaker started to feel imbalanced. **Lesson:** when two quotes exist from the same source, pick the one that does the most editorial work for the section it's in, not the one that "fits." Placement matters more than the quote itself.
+
+A third pullquote slot is reserved in §2 below paragraph 2 (HTML comment placeholder) for an additional interview voice if one lands.
+
+### Press contact email updated
+
+`dylan@mondayandpartners.com` → `dylan@natrx.io`. Replaced in both the login page footer and the drawer's press contact panel. Name "Dylan DiBona" added on the login page above the email to match the drawer panel treatment.
+
+---
+
 ## 2026-05-12 (late) — editorial second pass
 
 ### Pullquote component added; two on the page
