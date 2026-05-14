@@ -5,7 +5,7 @@ import { LoginForm } from './LoginForm'
 export const metadata: Metadata = {
   title: "Restoring New York Harbor's Oyster Reefs — Access",
   description:
-    'Restricted preview. Press contact: dylan@mondayandpartners.com.',
+    'Restricted preview. Press contact: dylan@natrx.io.',
   robots: {
     index: false,
     follow: false,
@@ -80,8 +80,11 @@ export default function LoginPage() {
           <div className="font-mono text-eyebrow uppercase tracking-[0.22em] text-ivory-faint mb-2">
             Press access
           </div>
+          <div className="font-serif font-light text-ivory text-[15px] leading-tight mb-1">
+            Dylan DiBona
+          </div>
           <a
-            href="mailto:dylan@mondayandpartners.com"
+            href="mailto:dylan@natrx.io"
             className="
               font-sans text-[13px] text-ivory-dim hover:text-ivory
               underline decoration-dotted underline-offset-4 decoration-teal/60
@@ -89,7 +92,7 @@ export default function LoginPage() {
               transition-colors duration-200
             "
           >
-            dylan@mondayandpartners.com
+            dylan@natrx.io
           </a>
         </div>
       </div>

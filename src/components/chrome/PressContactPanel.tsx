@@ -22,7 +22,7 @@ export function PressContactPanel() {
             Press contact, Natrx &times; Billion Oyster Project
           </div>
           <a
-            href="mailto:dylan@mondayandpartners.com"
+            href="mailto:dylan@natrx.io"
             className="
               inline-block mt-2
               font-mono text-body-sm tracking-wide
@@ -30,7 +30,7 @@ export function PressContactPanel() {
               transition-colors duration-200
             "
           >
-            dylan@mondayandpartners.com
+            dylan@natrx.io
           </a>
         </div>
 
