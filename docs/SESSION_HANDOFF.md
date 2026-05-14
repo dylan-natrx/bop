@@ -2,9 +2,18 @@
 
 **Pick up here.** This is the single doc to read first when resuming work. It assumes nothing about prior context.
 
-Last meaningful work: 2026-05-14. Page is feature-complete for v1 plus an editorial second pass plus a pre-public access gate. All five sections have real copy and real visuals. Both Mapbox maps and the three top-ranked mini-maps are wired to a single OSM-derived land source. Vercel Analytics + Speed Insights are live with custom editorial events. Two pullquotes (Mike McCann in §3, Lise Montefiore, PhD, MS in §5). §5 restructured around Operational / Institutional / Mission beats with a portability close. **Password gate** (middleware + custom-branded login page) is shipped and blocking unauthenticated access in production. Editorial spine for the methodology walkthrough is now locked: biology gates the ranking; external factors describe what it takes to build the surviving sites.
+Last meaningful work: 2026-05-14 (late). **v1 is live at https://bop.natrx.report behind the password gate.** All five sections have real copy and real visuals. Map storytelling rebuilt: biology gates (steps 1–3), external factors overlay as flag markers (steps 4–6), priority projects revealed at step 6 with a pulsing halo. Spectra panel uses a two-color treatment (teal = biology, amber = external). Legend evolved into a horizontal strip pinned to the bottom of the map. Mobile section nav got a hamburger menu. Custom domain wired up with Cloudflare DNS + per-domain Vercel CNAME target. Two pullquotes (Mike McCann §3, Lise Montefiore, PhD, MS §5). Vercel Analytics + Speed Insights are live with custom editorial events.
 
-**Currently in flight:** the methodology map's narrowing model. The visual "every step narrows" gesture filters out the actual priority set at step 6 because every top-ten site carries `NearWave='Yes'`. Next change: biology narrows (steps 1–3); wave/CSO/MS4 become flag markers (not filters) on bright surviving sites at steps 4 and 6. Erosion ring at step 5 stays as the positive overlay. See ISSUES_AND_SOLUTIONS for the editorial spine and operational consequence.
+**The editorial spine for the entire methodology section, locked:**
+> The framework's complete recommendation isn't just "top-10 by biology." It's "top-10 by biology, with full cost/permitting/co-benefit context attached."
+
+Steps 1–3 narrow by biology. Steps 4–6 attach context without narrowing further. The priority halo at step 6 reveals the top-10 inside the wider suitable set, with all flag rings visible. Arthur Kill ends step 6 with priority halo + cost ring + co-benefit ring + bright dot — exactly what the framework says about it: strongest biology, with engineering cost and permitting friction known, and shoreline co-benefit attached.
+
+**Vocabulary locked across the page:**
+- Candidate sites = the original 78
+- Suitable site = passed biology gate (22, bright dot)
+- Priority project = top-10 by composite (haloed at step 6 only)
+- Reserve = suitable but not in top-10 (12, bright but unhaloed)
 
 ---
 

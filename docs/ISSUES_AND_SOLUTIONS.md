@@ -4,6 +4,98 @@ Running log of gotchas. Newest first. The 2026-05-12 map-basemap-rebuild session
 
 ---
 
+## 2026-05-14 (late) — map storytelling rebuild + custom domain launch
+
+### Map narrowing model collided with the data; rebuilt as overlay system
+
+**Symptom:** At step 6, the priority set went dark. Arthur Kill (rank 1) faded. Most of the top-10 faded. What stayed bright was a cluster above Queens — sites ranked 11–22.
+
+**Root cause:** I had wave / CSO / MS4 filtering sites OUT of the priority set ("every step narrows"). The data: every top-ten site has `NearWave='Yes'`. Arthur Kill also has `NearMS4='Yes'`. So filtering on those flags eliminated the priority set entirely. What remained bright was the suitable-but-not-priority subset — the opposite of what the framework actually recommends.
+
+**Resolution (the editorial spine):**
+> The framework's complete recommendation isn't just "top-10 by biology." It's "top-10 by biology, with full cost/permitting/co-benefit context attached."
+
+Steps 1–3 narrow by biology score. Steps 4–6 layer context on the surviving set — they never filter. Wave / CSO / MS4 are friction flags (added cost or permitting overhead). Erosion / parkland are positive co-benefit flags. Arthur Kill ends step 6 still bright with a stack of flag markers, exactly because that's what the framework actually says about it.
+
+**Implementation:**
+- Replaced `isFilteredOut` semantics with `computeFlags` returning `_costFlag` / `_coBenefit` per site per step. Flags never affect `_visible`.
+- Two new map layers (`cost-flag-ring` amber, `cobenefit-ring` teal) overlay on bright sites. Same `_visible` filter so faded sites never carry rings.
+
+**File:** [src/components/methodology/WalkthroughMap.tsx](../src/components/methodology/WalkthroughMap.tsx)
+
+### Priority reveal at step 6 with pulsing halo
+
+**Context:** Even after the overlay rebuild, the user pointed out that the bright suitable cluster above Queens still read as priority. Suitable ≠ priority. The framework's 22 suitable sites include both the 10 priority projects and 12 reserve sites.
+
+**Resolution:** Added a `_isPriority` 0/1 prop that's true only when `Rank ≤ 10 AND step.id === 6 AND _visible === 1`. New `priority-halo` map layer renders soft teal-aqua outer ring at +8.5px radius, ONLY at step 6. The list is technically determined at step 3 (the ranking locks there), but the halo appears only at step 6 because that's when the recommendation is COMPLETE — biology gated, external context layered on. The reveal lands as synthesis ("emerge inside the suitable set"), not invention ("the framework discovers these at step 6").
+
+A `requestAnimationFrame` loop adds a subtle continuous pulse at step 6 only — sine wave, 3s period, radius oscillating +8.5 → +14, opacity 0.30 → 0.80 in lockstep. Cleanup resets to base state on step change. Built-in Mapbox transitions dropped from the `priority-halo` layer so they don't fight the per-frame `setPaintProperty` calls.
+
+**Vocabulary locked across the page:**
+- **Candidate sites** = original 78
+- **Suitable site** = bright dot, passed biology gate (22 sites)
+- **Priority project** = top-10 by composite (top of suitable set, revealed at step 6 with halo)
+- **Reserve** = suitable but not in top-10 (12 sites)
+
+### Spectra panel two-color treatment for biology vs external
+
+Items added at steps 1–3 (biology — salinity, chlorophyll-a, dissolved oxygen) wear teal accents. Items added at steps 4–6 (external — wave, erosion annotation, context filters annotation) wear warm amber accents (`#D9B47A`). The reader sees the panel shift from all-teal to mixed teal-and-amber when the walkthrough turns at step 4, reinforcing the structural pivot the body copy is already naming.
+
+Implementation: `dimension: 'biology' | 'external'` tag on each StackItem, derived from `addedAtStep` (≤3 = biology, ≥4 = external). Threaded through CurvePlot and AnnotationBlock to drive border / line / threshold-label colors. Favorable-zone shading stays teal-aqua at low opacity across all curves (positive habitat range is dimension-agnostic).
+
+**File:** [src/components/methodology/SpectraPanel.tsx](../src/components/methodology/SpectraPanel.tsx)
+
+### Legend evolved from card to horizontal strip
+
+**First attempt:** stacked card in the bottom-right corner of the map. ~140px tall footprint, ate vertical map real estate at steps 4–6 when the entry list grew.
+
+**Resolution:** Horizontal single-row strip pinned to the bottom edge of the map. ~28px tall, full-width, backdrop-blur, terse labels (dropped parentheticals — body copy below names which flags fold into each ring). Bottom edge of the visible map is open Atlantic in this view so the strip doesn't cover sites or coastlines. Framer Motion `layout` animation smooths the strip's resize as entries fade in.
+
+At step 6 the strip grows to include a 5th entry — `Priority project` (haloed symbol) — distinct from `Suitable site` (bright unfilled).
+
+**File:** [src/components/methodology/WalkthroughMapLegend.tsx](../src/components/methodology/WalkthroughMapLegend.tsx)
+
+### Mobile hamburger nav for SectionNav
+
+The mobile presentation of SectionNav was just a non-interactive counter ("3 / 5") that named the active section but didn't navigate. Replaced with a hamburger button that opens a dropdown menu of all five section links with the current one highlighted, plus Prev/Next-equivalent affordances. Same pattern as the methodology walkthrough's mobile pill+menu — single component, both presentations, breakpoint-toggled visibility. Hamburger icon morphs to X via Framer Motion when open.
+
+**File:** [src/components/layout/SectionNav.tsx](../src/components/layout/SectionNav.tsx)
+
+### Custom domain `bop.natrx.report`
+
+**Setup that worked:**
+1. Vercel project → Settings → Domains → add `bop.natrx.report`. Vercel issues a per-domain CNAME target (e.g. `38f2819e7422b20a.vercel-dns-017.com`).
+2. Cloudflare DNS → CNAME record `bop` → that target, **DNS only (grey cloud)**.
+3. Wait for delegation propagation.
+
+**Code changes paired with the launch:**
+- `metadataBase: new URL('https://bop.natrx.report')` in `app/layout.tsx`. Without it, Next.js falls back to `http://localhost:3000` when resolving absolute URLs (OG image, Twitter card) and emits a build warning. External scrapers would have rendered a broken image URL on the new host.
+- Mapbox token: verified URL restrictions allow the new domain (token is currently unrestricted, so no action needed).
+
+### Two-step nameserver setup, easy to confuse
+
+**Symptom:** User shared a screenshot of Cloudflare's DNS panel showing the assigned nameservers (`major.ns.cloudflare.com`, `tess.ns.cloudflare.com`) and said "nameservers are already set." But `dig +short NS natrx.report @8.8.8.8` returned empty — meaning the public TLD didn't know about Cloudflare yet.
+
+**Root cause:** Cloudflare's dashboard shows the nameservers IT has ASSIGNED to the zone. Those values must also be set at the registrar (wherever the domain was purchased) for the TLD registry to delegate queries to Cloudflare. Two different places; the Cloudflare dashboard's "Cloudflare Nameservers" section is informational, not active.
+
+**Resolution:** User went to the registrar, set the NS records to `major.ns.cloudflare.com` + `tess.ns.cloudflare.com`. Propagation landed within ~10 minutes. `dig +short NS natrx.report @8.8.8.8` then returned the Cloudflare names; CNAME chain resolved through to Vercel; cert issued automatically.
+
+**Diagnostic pattern for next time:**
+```bash
+# Did the registrar delegation propagate?
+dig +short NS natrx.report @8.8.8.8
+
+# What does Cloudflare's NS think it should resolve?
+dig +short @major.ns.cloudflare.com bop.natrx.report
+
+# What does the public resolver think?
+dig +short bop.natrx.report @8.8.8.8
+```
+
+If query 2 succeeds but queries 1 and 3 are empty, the issue is registrar delegation, not Cloudflare configuration.
+
+---
+
 ## 2026-05-14 — password gate + walkthrough header + editorial spine
 
 ### Password gate is silently ignored at project root when using src/ layout

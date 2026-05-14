@@ -1,6 +1,8 @@
 # Project Status
 
-Last meaningful update: 2026-05-14. **v1 is feature-complete plus pre-public password gate.** All five sections have real copy and real visuals. Map architecture rebuilt on OSM coastline data. Analytics + Speed Insights wired. Walkthrough controls promoted into the header with a mobile pill+menu. Two pullquotes in place (McCann §3, Montefiore §5). Custom-branded password gate at `src/middleware.ts` + `src/app/login` blocking unauthenticated access. Currently iterating on the methodology map's narrowing model — biology narrows, wave/CSO/MS4 become flag markers (not filters).
+Last meaningful update: 2026-05-14 (late). **v1 is LIVE at https://bop.natrx.report behind the password gate.** All five sections have real copy and real visuals. Map storytelling rebuilt around the editorial spine: biology gates the ranking (steps 1–3); external factors overlay as flag markers (steps 4–6); priority projects revealed at step 6 with a pulsing halo. Spectra panel uses two-color treatment (teal biology / amber external). Horizontal-strip legend pinned to bottom of map. Mobile section nav has a hamburger menu. Custom-branded password gate at `src/middleware.ts` + `src/app/login` blocking unauthenticated access. Custom domain wired up via Cloudflare DNS + Vercel per-domain CNAME target.
+
+**Editorial spine, locked:** the framework's complete recommendation isn't just "top-10 by biology." It's "top-10 by biology, with full cost/permitting/co-benefit context attached." See `memory/project_methodology_editorial_spine.md`.
 
 ## Section completion
 
