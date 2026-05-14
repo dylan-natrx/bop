@@ -10,6 +10,7 @@ import { Tooltip, SiteTooltipContent } from '@/components/ui/Tooltip'
 import { calculateCentroid } from '@/lib/data'
 import { calculateMarkerRadius } from '@/lib/projection'
 import type { StepConfig } from './steps'
+import { WalkthroughMapLegend } from './WalkthroughMapLegend'
 
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN ?? ''
 
@@ -429,6 +430,8 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
           </div>
         </div>
       )}
+
+      <WalkthroughMapLegend step={step} />
 
       <Tooltip
         x={mousePos.x}
