@@ -86,25 +86,31 @@ export function MethodologyWalkthrough() {
       role="region"
       aria-label="Methodology walkthrough"
     >
-      {/* Step header */}
+      {/* Step header: title on the left, step nav on the right.
+          Controls used to live in the bottom strip; promoted into the header
+          so they're visible the moment the walkthrough enters the viewport
+          and aren't the first thing to clip on short viewports. */}
       <div className="px-5 lg:px-8 pt-5 lg:pt-6 pb-4 border-b border-rule-soft">
-        <div className="flex items-baseline justify-between gap-6">
-          <div className="font-mono text-eyebrow uppercase tracking-[0.22em] text-ivory-faint tabular-nums">
-            Step {step.id} of {STEP_COUNT}
-          </div>
+        <div className="flex items-center justify-between gap-4 lg:gap-8">
+          <AnimatePresence mode="wait">
+            <motion.h3
+              key={step.id}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              className="font-serif font-light text-ivory text-xl lg:text-2xl leading-tight min-w-0"
+            >
+              {step.title}
+            </motion.h3>
+          </AnimatePresence>
+          <WalkthroughControls
+            currentStep={currentStep}
+            onPrevious={goPrev}
+            onNext={goNext}
+            onJumpTo={jumpTo}
+          />
         </div>
-        <AnimatePresence mode="wait">
-          <motion.h3
-            key={step.id}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="mt-1.5 font-serif font-light text-ivory text-xl lg:text-2xl leading-tight"
-          >
-            {step.title}
-          </motion.h3>
-        </AnimatePresence>
       </div>
 
       {/* Panels: map on the left, spectra stack on the right */}
@@ -117,7 +123,8 @@ export function MethodologyWalkthrough() {
         </div>
       </div>
 
-      {/* Bottom strip: copy spans the full width; controls anchor bottom-right */}
+      {/* Bottom strip: copy spans the full width. Controls live in the
+          header now, so this strip is body-copy-only. */}
       <div className="border-t border-rule-soft px-5 lg:px-8 py-5 lg:py-6">
         <AnimatePresence mode="wait">
           <motion.div
@@ -146,15 +153,6 @@ export function MethodologyWalkthrough() {
             ))}
           </motion.div>
         </AnimatePresence>
-
-        <div className="mt-5 lg:mt-6">
-          <WalkthroughControls
-            currentStep={currentStep}
-            onPrevious={goPrev}
-            onNext={goNext}
-            onJumpTo={jumpTo}
-          />
-        </div>
       </div>
     </div>
   )
