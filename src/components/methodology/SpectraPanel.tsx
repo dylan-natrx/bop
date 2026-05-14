@@ -121,6 +121,8 @@ const CURVE_DEFS: Record<SpectraCurve, CurveDef> = {
   },
 }
 
+type Dimension = 'biology' | 'external'
+
 interface StackItem {
   /** Unique key */
   key: string
@@ -128,7 +130,15 @@ interface StackItem {
   addedAtStep: number
   /** Short label shown alongside the item */
   label: string
-  render: (isActive: boolean) => ReactNode
+  /**
+   * Which dimension this item belongs to. Biology items (salinity, chla,
+   * dissolved oxygen) get teal accents. External items (wave, erosion,
+   * operational filters) get warm amber accents. The visual cue tells the
+   * reader they've moved from "where can oysters thrive" (biology) to
+   * "what does it take to build it" (external).
+   */
+  dimension: Dimension
+  render: (isActive: boolean, dimension: Dimension) => ReactNode
 }
 
 export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
@@ -150,14 +160,17 @@ export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
     const def = CURVE_DEFS[curveKey]
     const isWaterQualityCurve =
       curveKey === 'salinity' || curveKey === 'chla' || curveKey === 'do'
+    const dimension: Dimension = isWaterQualityCurve ? 'biology' : 'external'
     items.push({
       key: `curve-${curveKey}`,
       addedAtStep,
       label: def.title,
-      render: (isActive) => (
+      dimension,
+      render: (isActive, dim) => (
         <CurvePlot
           curve={def}
           isActive={isActive}
+          dimension={dim}
           showFavorableZone={isWaterQualityCurve}
           showDanger={curveKey === 'chla'}
           showFlagThreshold={curveKey === 'wave'}
@@ -172,11 +185,13 @@ export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
       key: 'erosion-annotation',
       addedAtStep: 5,
       label: 'Shoreline erosion',
-      render: (isActive) => (
+      dimension: 'external',
+      render: (isActive, dim) => (
         <AnnotationBlock
           eyebrow="Shoreline erosion"
           body="Where suitable sites sit next to actively retreating shorelines, oyster reefs deliver a second outcome. They dampen wave energy and slow the loss of marsh edge. The map flags these sites."
           isActive={isActive}
+          dimension={dim}
         />
       ),
     })
@@ -186,11 +201,13 @@ export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
       key: 'filters-annotation',
       addedAtStep: 6,
       label: 'Context filters',
-      render: (isActive) => (
+      dimension: 'external',
+      render: (isActive, dim) => (
         <AnnotationBlock
           eyebrow="Context filters"
           body="Operational conditions that shape which suitable sites BOP can build on. Proximity to publicly accessible parkland, distance from combined sewer outfalls, distance from separate stormwater outfalls."
           isActive={isActive}
+          dimension={dim}
         />
       ),
     })
@@ -228,7 +245,7 @@ export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
                   ${isActive ? 'cursor-default' : 'cursor-pointer'}
                 `}
               >
-                {item.render(isActive)}
+                {item.render(isActive, item.dimension)}
               </button>
             </motion.div>
           )
@@ -243,6 +260,7 @@ export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
 interface CurvePlotProps {
   curve: CurveDef
   isActive: boolean
+  dimension: Dimension
   /** Render the favorable zone shading. Always true for the three water-quality curves. */
   showFavorableZone: boolean
   showDanger: boolean
@@ -252,6 +270,7 @@ interface CurvePlotProps {
 function CurvePlot({
   curve,
   isActive,
+  dimension,
   showFavorableZone,
   showDanger,
   showFlagThreshold,
@@ -262,12 +281,21 @@ function CurvePlot({
   const annotationLeftPct = (curve.annotation.x / VB_W) * 100
   const annotationTopPct = (curve.annotation.y / VB_H) * 100
 
+  // Dimension-aware accent. Biology curves wear teal; external curves
+  // (currently only wave) wear amber. The active border is the bright
+  // accent at 35% opacity; inactive uses the soft rule color so the
+  // dimension cue lives in the active state.
+  const activeBorder =
+    dimension === 'biology'
+      ? 'border-teal-bright/35'
+      : 'border-[#D9B47A]/50'
+
   return (
     <div
       className={`
         relative px-3 pt-2 pb-1.5 rounded-card
         ${isActive
-          ? 'bg-bg-mid/55 border border-teal-bright/35'
+          ? `bg-bg-mid/55 border ${activeBorder}`
           : 'bg-bg-mid/30 border border-rule-soft group-hover:border-rule'}
         transition-colors duration-200
       `}
@@ -308,10 +336,14 @@ function CurvePlot({
           {curve.annotation.text}
         </div>
 
-        {/* Threshold label (e.g. the wave chart's "Engineering flag" by the 3 ft dashed line) */}
+        {/* Threshold label (e.g. the wave chart's "Engineering flag" by the
+            3 ft dashed line). External-dimension curves (wave) wear amber
+            so the label color matches the active border treatment. */}
         {curve.thresholdLabel && (
           <div
-            className="absolute font-mono uppercase tracking-[0.18em] text-[10px] text-teal-aqua pointer-events-none whitespace-nowrap"
+            className={`absolute font-mono uppercase tracking-[0.18em] text-[10px] pointer-events-none whitespace-nowrap ${
+              dimension === 'external' ? 'text-[#D9B47A]' : 'text-teal-aqua'
+            }`}
             style={{
               left: `${(curve.thresholdLabel.x / VB_W) * 100}%`,
               top: `${(curve.thresholdLabel.y / VB_H) * 100}%`,
@@ -357,7 +389,7 @@ function CurvePlot({
             y1={-CURVE_PADDING_Y / 2}
             x2={150}
             y2={VB_H + CURVE_PADDING_Y / 2}
-            stroke="rgba(43, 168, 160, 0.4)"
+            stroke="rgba(217, 180, 122, 0.55)"
             strokeWidth={0.6}
             strokeDasharray="3 2"
           />
@@ -387,12 +419,12 @@ function CurvePlot({
 
         <path
           d={`${curve.path} L 200 ${VB_H} L 0 ${VB_H} Z`}
-          fill="rgba(19, 125, 118, 0.14)"
+          fill={dimension === 'external' ? 'rgba(217, 180, 122, 0.12)' : 'rgba(19, 125, 118, 0.14)'}
         />
         <path
           d={curve.path}
           fill="none"
-          stroke="#2BA8A0"
+          stroke={dimension === 'external' ? '#D9B47A' : '#2BA8A0'}
           strokeWidth={1.3}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -437,16 +469,27 @@ interface AnnotationBlockProps {
   eyebrow: string
   body: string
   isActive: boolean
+  dimension: Dimension
 }
 
-function AnnotationBlock({ eyebrow, body, isActive }: AnnotationBlockProps) {
+function AnnotationBlock({ eyebrow, body, isActive, dimension }: AnnotationBlockProps) {
+  // Both annotation blocks (Shoreline erosion, Context filters) are
+  // external-dimension. The biology branch is kept for symmetry in case
+  // a future annotation needs the teal treatment.
+  const activeClasses =
+    dimension === 'biology'
+      ? 'border-l-teal-bright bg-bg-mid/55 border-y border-r border-y-teal-bright/25 border-r-teal-bright/25'
+      : 'border-l-[#D9B47A] bg-bg-mid/55 border-y border-r border-y-[#D9B47A]/25 border-r-[#D9B47A]/25'
+  const inactiveClasses =
+    dimension === 'biology'
+      ? 'border-l-teal/55 bg-bg-mid/30 border-y border-r border-y-rule-soft border-r-rule-soft group-hover:border-l-teal-bright/80'
+      : 'border-l-[#D9B47A]/55 bg-bg-mid/30 border-y border-r border-y-rule-soft border-r-rule-soft group-hover:border-l-[#D9B47A]/80'
+
   return (
     <div
       className={`
         relative px-3 py-3 rounded-card border-l-2
-        ${isActive
-          ? 'border-l-teal-bright bg-bg-mid/55 border-y border-r border-y-teal-bright/25 border-r-teal-bright/25'
-          : 'border-l-teal/55 bg-bg-mid/30 border-y border-r border-y-rule-soft border-r-rule-soft group-hover:border-l-teal-bright/80'}
+        ${isActive ? activeClasses : inactiveClasses}
         transition-colors duration-200
       `}
     >
