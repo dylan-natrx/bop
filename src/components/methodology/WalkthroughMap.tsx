@@ -50,8 +50,15 @@ interface WalkthroughSiteProps {
   NearMS4: 'Yes' | 'No'
   _radius: number
   _displayScore: number
-  /** When 1, the site has been dimmed out by an active filter this step. */
+  /** When 1, the site failed a flag-based filter at this step (wave, CSO, MS4). */
   _filteredOut: 0 | 1
+  /**
+   * When 1, the site is in the bright priority set at this step.
+   * When 0, the site is faded — dropped either by score (below 0.5 threshold
+   * under the current step's color formula) or by a flag-based filter.
+   * Single source of truth for the binary bright/faded visual state.
+   */
+  _visible: 0 | 1
 }
 
 function computeDisplayScore(
@@ -123,7 +130,7 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
 
       const radius = calculateMarkerRadius(rankProps.Acres, minA, maxA, 3.5, 8)
 
-      const partial: Omit<WalkthroughSiteProps, '_filteredOut'> = {
+      const partial: Omit<WalkthroughSiteProps, '_filteredOut' | '_visible'> = {
         id: rankProps.id,
         Site: rankProps.Site,
         Status: rankProps.Status,
@@ -141,9 +148,12 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
         _radius: radius,
         _displayScore: computeDisplayScore({ sal_score, chla_score, do_score }, step.colorMode),
       }
+      const filteredOut = isFilteredOut(partial as WalkthroughSiteProps, step.visibleFlags)
+      const belowThreshold = partial._displayScore < 0.5
       const props: WalkthroughSiteProps = {
         ...partial,
-        _filteredOut: isFilteredOut(partial as WalkthroughSiteProps, step.visibleFlags) ? 1 : 0,
+        _filteredOut: filteredOut ? 1 : 0,
+        _visible: filteredOut || belowThreshold ? 0 : 1,
       }
 
       return {
@@ -187,14 +197,18 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
             { id: 'land-region-edge', type: 'line', source: 'land-region', paint: { 'line-color': 'rgba(120, 158, 184, 0.35)', 'line-width': 1.1 } },
             { id: 'water-hudson-edge', type: 'line', source: 'water-hudson', paint: { 'line-color': 'rgba(120, 158, 184, 0.35)', 'line-width': 1.1 } },
 
-            // Erosion highlight ring — only visible at step 5+ as a co-benefit indicator
+            // Erosion highlight ring — appears at step 5 as a positive
+            // co-benefit overlay on surviving sites. Doesn't narrow the
+            // field; just adds a "this one's worth twice as much per
+            // dollar" marker. Filter uses _visible so faded sites never
+            // get a ring even if they carry NearErosion='Yes'.
             {
               id: 'erosion-highlight',
               type: 'circle',
               source: 'sites',
               filter: ['all',
                 ['==', ['get', 'NearErosion'], 'Yes'],
-                ['==', ['get', '_filteredOut'], 0],
+                ['==', ['get', '_visible'], 1],
               ],
               paint: {
                 'circle-radius': ['+', ['get', '_radius'], 3.5],
@@ -206,7 +220,12 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
               },
             },
 
-            // Site circles. Opacity, color, and stroke respond to the step.
+            // Site circles. Single binary visual: bright (in the priority
+            // set at this step) vs faded (dropped out, either by score
+            // threshold or by flag filter). The reader doesn't need to
+            // tell those two faded states apart — both mean "not in the
+            // current priority set" — so they share one gray-faded
+            // treatment.
             {
               id: 'sites-circle',
               type: 'circle',
@@ -215,37 +234,36 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
                 'circle-radius': ['get', '_radius'],
                 'circle-color': [
                   'case',
-                  ['<', ['get', '_displayScore'], 0.5],
-                  'rgba(80, 105, 115, 0.85)',
+                  ['==', ['get', '_visible'], 1],
                   ['interpolate', ['linear'], ['get', '_displayScore'],
                     0.5, '#2A4A56',
                     0.685, '#137D76',
                     0.87, '#6FE3D0'],
+                  'rgba(80, 105, 115, 0.85)',
                 ],
                 'circle-stroke-color': [
                   'case',
-                  ['<', ['get', '_displayScore'], 0.5],
-                  'rgba(0,0,0,0)',
+                  ['==', ['get', '_visible'], 1],
                   'rgba(111, 227, 208, 0.55)',
+                  'rgba(0,0,0,0)',
                 ],
                 'circle-stroke-width': [
                   'case',
-                  ['<', ['get', '_displayScore'], 0.5], 0,
+                  ['==', ['get', '_visible'], 1],
                   1.2,
+                  0,
                 ],
                 'circle-opacity': [
                   'case',
-                  // Filtered-out sites fade hard
-                  ['==', ['get', '_filteredOut'], 1], 0.18,
-                  // Below-threshold sites stay muted (existing behavior)
-                  ['<', ['get', '_displayScore'], 0.5], 0.45,
+                  ['==', ['get', '_visible'], 1],
                   1,
+                  0.20,
                 ],
                 'circle-stroke-opacity': [
                   'case',
-                  ['==', ['get', '_filteredOut'], 1], 0.18,
-                  ['<', ['get', '_displayScore'], 0.5], 0.45,
+                  ['==', ['get', '_visible'], 1],
                   1,
+                  0.20,
                 ],
                 'circle-color-transition': { duration: 600 },
                 'circle-opacity-transition': { duration: 600 },
