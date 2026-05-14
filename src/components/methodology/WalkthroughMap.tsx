@@ -50,15 +50,25 @@ interface WalkthroughSiteProps {
   NearMS4: 'Yes' | 'No'
   _radius: number
   _displayScore: number
-  /** When 1, the site failed a flag-based filter at this step (wave, CSO, MS4). */
-  _filteredOut: 0 | 1
   /**
    * When 1, the site is in the bright priority set at this step.
-   * When 0, the site is faded — dropped either by score (below 0.5 threshold
-   * under the current step's color formula) or by a flag-based filter.
-   * Single source of truth for the binary bright/faded visual state.
+   * Narrowing is driven by biology alone — `_displayScore >= 0.5` under the
+   * step's color formula. Steps 4–6 do NOT narrow; they layer flag markers
+   * on the surviving set.
    */
   _visible: 0 | 1
+  /**
+   * When 1, the site has an active feasibility/friction flag at this step
+   * (wave at step 4+, CSO or MS4 at step 6). Rendered as an outer amber
+   * ring. Does not affect `_visible`.
+   */
+  _costFlag: 0 | 1
+  /**
+   * When 1, the site has an active co-benefit flag at this step (erosion
+   * at step 5+, park at step 6). Rendered as an inner teal-aqua ring.
+   * Does not affect `_visible`.
+   */
+  _coBenefit: 0 | 1
 }
 
 function computeDisplayScore(
@@ -72,21 +82,30 @@ function computeDisplayScore(
 }
 
 /**
- * Decide whether a site is "filtered out" (dimmed) for the current step.
+ * Compute the flag markers active for a site at a given step.
  *
- * Narrowing semantics:
- *   - Wave (step 4+): sites flagged for excessive wave exposure are dimmed.
- *   - Erosion (step 5+): NOT a filter. Erosion-adjacent sites are highlighted
- *     positively because the reef-as-breakwater co-benefit is desirable.
- *   - Practical filters (step 6): CSO and MS4 proximity dim sites for
- *     permitting/feasibility reasons. Park proximity is positive — park-
- *     adjacent sites stay visible.
+ * Spine:
+ *   - Steps 1–3: biology only. No flags.
+ *   - Step 4: wave is a cost flag.
+ *   - Step 5: wave (cost) + erosion (co-benefit).
+ *   - Step 6: wave + CSO + MS4 (cost) and erosion + park (co-benefit).
+ *
+ * Flags are NEVER filters. A wave-flagged site stays bright; the framework
+ * says it remains the priority site, just with engineering cost to plan
+ * around. Same for CSO/MS4 (permitting friction).
  */
-function isFilteredOut(p: WalkthroughSiteProps, visibleFlags: StepConfig['visibleFlags']): boolean {
-  if (visibleFlags.includes('wave') && p.NearWave === 'Yes') return true
-  if (visibleFlags.includes('cso') && p.NearCSO === 'Yes') return true
-  if (visibleFlags.includes('ms4') && p.NearMS4 === 'Yes') return true
-  return false
+function computeFlags(
+  p: { NearWave: 'Yes' | 'No'; NearCSO: 'Yes' | 'No'; NearMS4: 'Yes' | 'No'; NearErosion: 'Yes' | 'No'; NearPark: 'Yes' | 'No' },
+  visibleFlags: StepConfig['visibleFlags']
+): { costFlag: boolean; coBenefit: boolean } {
+  const costFlag =
+    (visibleFlags.includes('wave') && p.NearWave === 'Yes') ||
+    (visibleFlags.includes('cso') && p.NearCSO === 'Yes') ||
+    (visibleFlags.includes('ms4') && p.NearMS4 === 'Yes')
+  const coBenefit =
+    (visibleFlags.includes('erosion') && p.NearErosion === 'Yes') ||
+    (visibleFlags.includes('park') && p.NearPark === 'Yes')
+  return { costFlag, coBenefit }
 }
 
 export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
@@ -130,7 +149,7 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
 
       const radius = calculateMarkerRadius(rankProps.Acres, minA, maxA, 3.5, 8)
 
-      const partial: Omit<WalkthroughSiteProps, '_filteredOut' | '_visible'> = {
+      const partial: Omit<WalkthroughSiteProps, '_visible' | '_costFlag' | '_coBenefit'> = {
         id: rankProps.id,
         Site: rankProps.Site,
         Status: rankProps.Status,
@@ -148,12 +167,15 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
         _radius: radius,
         _displayScore: computeDisplayScore({ sal_score, chla_score, do_score }, step.colorMode),
       }
-      const filteredOut = isFilteredOut(partial as WalkthroughSiteProps, step.visibleFlags)
-      const belowThreshold = partial._displayScore < 0.5
+      const aboveThreshold = partial._displayScore >= 0.5
+      const { costFlag, coBenefit } = computeFlags(partial, step.visibleFlags)
       const props: WalkthroughSiteProps = {
         ...partial,
-        _filteredOut: filteredOut ? 1 : 0,
-        _visible: filteredOut || belowThreshold ? 0 : 1,
+        _visible: aboveThreshold ? 1 : 0,
+        // Flags only register on bright sites — a faded site can't carry a
+        // visible flag because there's no marker to attach it to.
+        _costFlag: aboveThreshold && costFlag ? 1 : 0,
+        _coBenefit: aboveThreshold && coBenefit ? 1 : 0,
       }
 
       return {
@@ -197,26 +219,45 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
             { id: 'land-region-edge', type: 'line', source: 'land-region', paint: { 'line-color': 'rgba(120, 158, 184, 0.35)', 'line-width': 1.1 } },
             { id: 'water-hudson-edge', type: 'line', source: 'water-hudson', paint: { 'line-color': 'rgba(120, 158, 184, 0.35)', 'line-width': 1.1 } },
 
-            // Erosion highlight ring — appears at step 5 as a positive
-            // co-benefit overlay on surviving sites. Doesn't narrow the
-            // field; just adds a "this one's worth twice as much per
-            // dollar" marker. Filter uses _visible so faded sites never
-            // get a ring even if they carry NearErosion='Yes'.
+            // Cost / friction flag ring — amber, outer halo. Appears on
+            // bright sites that carry an active external feasibility flag
+            // (wave at step 4+, CSO or MS4 at step 6). NEVER filters; the
+            // sites stay bright. Says "this is a priority site with a
+            // known cost to plan around."
             {
-              id: 'erosion-highlight',
+              id: 'cost-flag-ring',
               type: 'circle',
               source: 'sites',
-              filter: ['all',
-                ['==', ['get', 'NearErosion'], 'Yes'],
-                ['==', ['get', '_visible'], 1],
-              ],
+              filter: ['==', ['get', '_costFlag'], 1],
               paint: {
-                'circle-radius': ['+', ['get', '_radius'], 3.5],
+                'circle-radius': ['+', ['get', '_radius'], 5],
+                'circle-color': 'rgba(0,0,0,0)',
+                'circle-stroke-color': '#D9B47A',
+                'circle-stroke-width': 1.2,
+                'circle-stroke-opacity': 0.8,
+                'circle-stroke-opacity-transition': { duration: 600 },
+                'circle-radius-transition': { duration: 600 },
+              },
+            },
+
+            // Co-benefit ring — teal-aqua, inner halo. Appears on bright
+            // sites that carry a positive external flag (erosion at step
+            // 5+, park at step 6). The erosion case is the
+            // reef-as-breakwater "two outcomes for one project" overlay;
+            // the park case says the site aligns with BOP's mission.
+            {
+              id: 'cobenefit-ring',
+              type: 'circle',
+              source: 'sites',
+              filter: ['==', ['get', '_coBenefit'], 1],
+              paint: {
+                'circle-radius': ['+', ['get', '_radius'], 2.5],
                 'circle-color': 'rgba(0,0,0,0)',
                 'circle-stroke-color': '#6FE3D0',
                 'circle-stroke-width': 1.2,
-                'circle-stroke-opacity': 0,
+                'circle-stroke-opacity': 0.85,
                 'circle-stroke-opacity-transition': { duration: 600 },
+                'circle-radius-transition': { duration: 600 },
               },
             },
 
@@ -362,14 +403,6 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
       source.setData(sitesGeoJson as unknown as GeoJSON.FeatureCollection)
     }
   }, [sitesGeoJson, mapReady])
-
-  // Erosion highlight opacity per step
-  useEffect(() => {
-    const map = mapRef.current
-    if (!map || !mapReady) return
-    const showErosion = step.visibleFlags.includes('erosion') ? 0.85 : 0
-    map.setPaintProperty('erosion-highlight', 'circle-stroke-opacity', showErosion)
-  }, [step.visibleFlags, mapReady])
 
   if (!MAPBOX_TOKEN) {
     return (
