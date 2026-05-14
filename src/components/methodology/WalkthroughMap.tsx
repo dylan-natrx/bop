@@ -70,6 +70,17 @@ interface WalkthroughSiteProps {
    * Does not affect `_visible`.
    */
   _coBenefit: 0 | 1
+  /**
+   * When 1, the site is in the priority set revealed at step 6
+   * (Rank ≤ 10 AND bright). Rendered as an outermost soft teal-aqua
+   * halo. Visible only at step 6, the culmination of the walkthrough.
+   * The top-ten list itself is determined by the composite score at
+   * step 3; the halo appears only at step 6 once external context
+   * (cost, co-benefit) has been layered on, so the reveal lands as
+   * "ten priority projects emerge with their full profile," not "the
+   * framework discovers them at step 6."
+   */
+  _isPriority: 0 | 1
 }
 
 function computeDisplayScore(
@@ -150,7 +161,7 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
 
       const radius = calculateMarkerRadius(rankProps.Acres, minA, maxA, 3.5, 8)
 
-      const partial: Omit<WalkthroughSiteProps, '_visible' | '_costFlag' | '_coBenefit'> = {
+      const partial: Omit<WalkthroughSiteProps, '_visible' | '_costFlag' | '_coBenefit' | '_isPriority'> = {
         id: rankProps.id,
         Site: rankProps.Site,
         Status: rankProps.Status,
@@ -170,6 +181,10 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
       }
       const aboveThreshold = partial._displayScore >= 0.5
       const { costFlag, coBenefit } = computeFlags(partial, step.visibleFlags)
+      // Priority set reveal: top-10 by Rank, only at step 6, only on
+      // bright sites. The Rank field carries ties (e.g. rank 10 covers
+      // three Arthur Kill parcels) — `<= 10` captures the full top tier.
+      const isPriority = step.id === 6 && aboveThreshold && rankProps.Rank <= 10
       const props: WalkthroughSiteProps = {
         ...partial,
         _visible: aboveThreshold ? 1 : 0,
@@ -177,6 +192,7 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
         // visible flag because there's no marker to attach it to.
         _costFlag: aboveThreshold && costFlag ? 1 : 0,
         _coBenefit: aboveThreshold && coBenefit ? 1 : 0,
+        _isPriority: isPriority ? 1 : 0,
       }
 
       return {
@@ -219,6 +235,29 @@ export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
             { id: 'water-hudson-fill', type: 'fill', source: 'water-hudson', paint: { 'fill-color': '#061321', 'fill-opacity': 1 } },
             { id: 'land-region-edge', type: 'line', source: 'land-region', paint: { 'line-color': 'rgba(120, 158, 184, 0.35)', 'line-width': 1.1 } },
             { id: 'water-hudson-edge', type: 'line', source: 'water-hudson', paint: { 'line-color': 'rgba(120, 158, 184, 0.35)', 'line-width': 1.1 } },
+
+            // Priority halo — outermost soft teal-aqua ring. Appears
+            // only at step 6 on top-10 sites. Reveals the framework's
+            // recommendation: of the suitable set, these are where BOP
+            // commits first. Render order matters — this layer is drawn
+            // BEFORE cost-flag-ring and cobenefit-ring so it sits visually
+            // beneath them at the dot center (largest radius, lowest in
+            // the stack).
+            {
+              id: 'priority-halo',
+              type: 'circle',
+              source: 'sites',
+              filter: ['==', ['get', '_isPriority'], 1],
+              paint: {
+                'circle-radius': ['+', ['get', '_radius'], 8.5],
+                'circle-color': 'rgba(111, 227, 208, 0.08)',
+                'circle-stroke-color': '#6FE3D0',
+                'circle-stroke-width': 1.1,
+                'circle-stroke-opacity': 0.55,
+                'circle-stroke-opacity-transition': { duration: 800 },
+                'circle-radius-transition': { duration: 600 },
+              },
+            },
 
             // Cost / friction flag ring — amber, outer halo. Appears on
             // bright sites that carry an active external feasibility flag
