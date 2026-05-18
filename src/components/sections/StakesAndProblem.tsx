@@ -31,12 +31,12 @@ export function StakesAndProblem() {
             spat deployed across the harbor by 2035.
           </p>
           <p>
-            For four hundred years, restoration in the harbor happened
-            opportunistically. Sites moved forward when a parks department
-            said yes, when a marina allowed a cage, when access was available.
-            At proof-of-concept scale, that was the right discipline. It gave
-            the Billion Oyster Project a decade of small-reef work and real
-            evidence of what survives where in the harbor.
+            Restoration in the harbor has happened opportunistically. Sites
+            moved forward when a parks department said yes, when a marina
+            allowed a cage, when access was available. At proof-of-concept
+            scale, that was the right discipline. It gave the Billion Oyster
+            Project a decade of small-reef work and real evidence of what
+            survives where in the harbor.
           </p>
           <p>
             At the scale of one billion oysters by 2035, the program needed a

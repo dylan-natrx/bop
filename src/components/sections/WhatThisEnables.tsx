@@ -31,9 +31,9 @@ export function WhatThisEnables() {
               Operational
             </div>
             <p className="font-sans text-body text-ivory-dim font-light leading-[1.65]">
-              BOP can now move ten priority sites toward design and
-              permitting at the same time, with the comparative ranking
-              guiding where to commit time and capital first.
+              BOP can now move priority sites toward design and permitting at
+              the same time, with the comparative ranking guiding where to
+              commit time and capital first.
             </p>
           </div>
 
@@ -48,9 +48,15 @@ export function WhatThisEnables() {
               those agencies a complete view of the candidate pipeline: the
               ranking, the methodology behind every site&apos;s position
               within the ranking, and the confidence level driving each
-              position. When BOP returns to the permitting process with this
-              work, the conversation starts from documented, comparative
-              analysis the agencies have not previously had.
+              position. It is the level of analytical rigor regulators have
+              been wanting from the field for some time. Concurrently, BOP is
+              working with New York State on an Environmental Impact
+              Statement for its oyster restoration activities, scheduled to
+              conclude by the end of 2028. Once complete, the EIS streamlines
+              permitting for individual sites, and the framework&apos;s
+              analysis feeds directly into it. When BOP returns to project
+              permitting, the conversation starts from documented,
+              comparative analysis the agencies have not previously had.
             </p>
           </div>
 
@@ -63,9 +69,9 @@ export function WhatThisEnables() {
               BOP&apos;s target is one billion oysters in the water by 2035.
               The harbor currently holds under 200 million. The gap requires
               years of deployment at scales BOP has not previously reached.
-              The new framework makes a parallel pipeline of ten sites
-              credible, which makes the 2035 target operationally achievable
-              for the first time.
+              The new framework makes a parallel pipeline credible, which
+              makes the 2035 target operationally achievable for the first
+              time.
             </p>
           </div>
         </div>
@@ -76,11 +82,12 @@ export function WhatThisEnables() {
             "what carries forward to the broader field." */}
         <div className="col-span-1 lg:col-span-8 lg:col-start-3 mt-12 lg:mt-16">
           <Pullquote
-            attribution="Lise Montefiore, PhD, MS"
-            role="Data Scientist, Natrx"
+            attribution="Lise Montefiore, PhD"
+            role="Water Quality and Data Scientist, Natrx"
           >
-            What we did is a small piece of the big work BOP is doing to
-            restore the harbor. The goal itself is impressive.
+            Water quality data in a harbor like this is complex. Our work
+            was to extract it from many monitoring stations and turn it
+            into something BOP could make decisions from.
           </Pullquote>
         </div>
 
@@ -92,9 +99,10 @@ export function WhatThisEnables() {
             font-sans text-body text-ivory-dim font-light leading-[1.65]
           ">
           <p>
-            Coastal districts, state agencies, port authorities, and
-            foundations are increasingly facing site-prioritization
-            questions of their own. The methodology built for New York
+            Coastal districts, state agencies, port authorities,
+            foundations, and restoration practitioners at every scale are
+            increasingly facing site-prioritization questions of their own.
+            The methodology built for New York
             Harbor is a transferable framework. The underlying data is
             local. The scoring functions retune to the salinity, food, and
             oxygen conditions of whichever estuary the work is applied to.{' '}
