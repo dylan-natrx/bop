@@ -3,6 +3,8 @@ export interface GlossaryEntry {
   id: string
   term: string
   definition: string
+  /** Product/proper-noun entries (e.g. Natrx Assess) get italic + bold styling in the drawer. */
+  productName?: boolean
 }
 
 /**
@@ -129,6 +131,13 @@ export const GLOSSARY: GlossaryEntry[] = [
     term: 'NAIP imagery',
     definition:
       'National Agriculture Imagery Program. A federal program that captures one-meter-resolution aerial photography of the continental United States roughly every two to three years. The base imagery for the MEIP shoreline analysis.',
+  },
+  {
+    id: 'natrx-assess',
+    term: 'Natrx Assess',
+    productName: true,
+    definition:
+      "Natrx's proprietary remote sensing platform. It gives resilience and restoration planners a historical view field measurement cannot produce, reconstructing more than a decade of shoreline change and modeling wave exposure at any shoreline site.",
   },
   {
     id: 'natural-breakwater',

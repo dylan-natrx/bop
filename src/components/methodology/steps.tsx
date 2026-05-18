@@ -27,7 +27,7 @@ export type SpectraCurve = 'salinity' | 'chla' | 'do' | 'wave'
 
 export interface StepConfig {
   id: number
-  title: string
+  title: ReactNode
   /** First sentence; rendered with emphasis */
   lede: ReactNode
   /**
@@ -46,7 +46,7 @@ export interface StepConfig {
 }
 
 const Em = ({ children }: { children: ReactNode }) => (
-  <em className="font-serif italic">{children}</em>
+  <em className="font-serif italic text-white">{children}</em>
 )
 
 export const STEPS: StepConfig[] = [
@@ -100,7 +100,7 @@ export const STEPS: StepConfig[] = [
   },
   {
     id: 4,
-    title: 'Wave exposure, from Natrx Assess',
+    title: <>Wave exposure, from <Em>Natrx Assess</Em></>,
     lede: 'The next three steps describe external factors at each suitable site.',
     bodyParagraphs: [
       <>
@@ -123,7 +123,7 @@ export const STEPS: StepConfig[] = [
   },
   {
     id: 5,
-    title: 'Shoreline erosion, from Natrx Assess',
+    title: <>Shoreline erosion, from <Em>Natrx Assess</Em></>,
     lede: 'Wave adds cost. Erosion adds value.',
     bodyParagraphs: [
       'Sites that pass biology and sit next to actively retreating shoreline get a positive flag. A reef would dampen wave energy and slow the loss of marsh edge. One project, two outcomes. A discount on cost and performance.',

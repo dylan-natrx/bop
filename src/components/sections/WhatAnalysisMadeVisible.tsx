@@ -36,7 +36,7 @@ export function WhatAnalysisMadeVisible() {
             <p>
               Many of the highest-ranked sites sit adjacent to actively eroding
               shorelines.{' '}
-              <em className="font-serif italic">Natrx Assess</em> measured
+              <em className="font-serif italic text-white">Natrx Assess</em> measured
               shoreline change at every candidate location, using satellite
               imagery going back to 2010. Eight sites are losing more than a
               foot of shoreline a year. Fifteen more are retreating at slower

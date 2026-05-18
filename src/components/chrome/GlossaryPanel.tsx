@@ -13,13 +13,19 @@ export function GlossaryPanel() {
       </p>
 
       <dl className="space-y-7">
-        {GLOSSARY.map(({ id, term, definition }) => (
+        {GLOSSARY.map(({ id, term, definition, productName }) => (
           <div
             key={id}
             id={`glossary-term-${id}`}
             className="scroll-mt-6"
           >
-            <dt className="font-serif font-light text-ivory text-lg leading-snug mb-1.5">
+            <dt
+              className={
+                productName
+                  ? 'font-serif italic font-medium text-ivory text-lg leading-snug mb-1.5'
+                  : 'font-serif font-light text-ivory text-lg leading-snug mb-1.5'
+              }
+            >
               {term}
             </dt>
             <dd className="font-sans text-body-sm text-ivory-dim leading-relaxed">

@@ -106,7 +106,7 @@ export function WhatThisEnables() {
             Harbor is a transferable framework. The underlying data is
             local. The scoring functions retune to the salinity, food, and
             oxygen conditions of whichever estuary the work is applied to.{' '}
-            <em className="font-serif italic">Natrx Assess</em> erosion
+            <em className="font-serif italic text-white">Natrx Assess</em> erosion
             analyses can be run for any shoreline geography with publicly
             available satellite imagery. Each estuary brings its own
             ecological complexity and its own data realities. What carries
