@@ -1,5 +1,6 @@
 import { SectionShell } from './SectionShell'
 import { EditorialImage } from './EditorialImage'
+import { GlossaryTerm } from '@/components/ui/GlossaryTerm'
 
 export function StakesAndProblem() {
   return (
@@ -11,7 +12,7 @@ export function StakesAndProblem() {
             text-4xl sm:text-5xl lg:text-6xl
             max-w-[22ch]
           ">
-          Rebuilding the harbor&apos;s oyster reefs, and choosing where to start.
+          Rebuilding the harbor&apos;s oyster reefs, in the right order.
         </h2>
 
         <div className="
@@ -20,26 +21,32 @@ export function StakesAndProblem() {
             font-sans text-body text-ivory-dim font-light leading-[1.65]
           ">
           <p>
-            New York Harbor was once one of the most productive estuaries on
-            Earth. Three hundred and fifty square miles of oyster reef, water
-            clear enough to see fifteen feet down, a food web that fed the
-            eastern seaboard. Centuries of dredging, overharvest, and
-            industrial discharge collapsed it. Billion Oyster Project is
-            rebuilding that foundation, one site at a time, with a target of
-            one billion oyster spat deployed across the harbor by 2035.
+            For four hundred years, oyster restoration in New York Harbor has
+            happened opportunistically. Where a parks department said yes.
+            Where a marina allowed a cage off a pier. Where a wild oyster
+            population pointed the way. At proof-of-concept scale, that was
+            the right discipline. It gave the Billion Oyster Project a decade
+            of small-reef work in the water, and real evidence of what
+            survives where in a harbor that was once one of the most
+            productive estuaries on Earth.
           </p>
           <p>
-            BOP maintains a pipeline of 78 candidate restoration sites and a
-            target of ten to fifteen funded, permitted projects ready to break
-            ground by 2029 or 2030. For four hundred years, restoration in the
-            harbor happened opportunistically. Sites moved forward when a
-            parks department said yes, when a marina allowed a cage, when
-            access was available. The data to compare candidate sites against
-            one another did not exist, so every site that entered the pipeline
-            had to advance to thirty percent design before any go or no-go
-            decision could be made. The method produced high-quality data per
-            site. It did not scale across 78 sites at any budget the
-            organization could realistically secure.
+            At the scale of one billion oysters by 2035, the program needed a
+            different kind of decision. The pipeline contains 78{' '}
+            <GlossaryTerm termId="candidate-site">
+              candidate restoration sites
+            </GlossaryTerm>
+            . Comparing them against one another across the variables that
+            govern reef success required a framework that had to be built. The
+            alternative was to advance each site through 30 percent design
+            before a go-or-no-go call, burning capital across locations that
+            better information could have ruled out earlier. The shift the
+            program had to make was from opportunistic siting to systemwide
+            planning.
+          </p>
+          <p>
+            The framework on this page is how Billion Oyster Project and Natrx
+            built that capability together.
           </p>
           {/* Future pullquote slot: reserved for an interview quote about the
               pre-comparative era of harbor restoration. */}

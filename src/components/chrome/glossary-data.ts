@@ -35,6 +35,12 @@ export const GLOSSARY: GlossaryEntry[] = [
       'The underwater topography of a water body: depths, slopes, channels. Bathymetric data tells you whether a site has the right depth profile for oyster reef construction.',
   },
   {
+    id: 'candidate-site',
+    term: 'Candidate site',
+    definition:
+      "A discrete reef-scale polygon evaluated by the framework. Some BOP-named locations contain multiple candidate sites. The 78 candidate sites correspond to about 60 named locations in BOP's working pipeline; the Living Breakwaters complex, for example, contains six.",
+  },
+  {
     id: 'chlorophyll-a',
     term: 'Chlorophyll-a',
     definition:
