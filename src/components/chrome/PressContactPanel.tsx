@@ -10,30 +10,27 @@ export function PressContactPanel() {
         For reporters covering coastal restoration, ecological infrastructure, and the urban-estuary recovery story.
       </p>
 
-      <div className="space-y-8">
+      {/* Two contacts, side-by-side on md+, stacked on narrow drawer widths.
+          Each card carries an affiliation eyebrow that links to the org so
+          the two press contacts read as equal partners, not a ranked list. */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6 lg:gap-8">
         <div>
-          <div className="font-mono text-eyebrow uppercase text-ivory-faint mb-2">
-            Inquiries
-          </div>
-          <div className="font-serif font-light text-ivory text-xl leading-tight">
+          <a
+            href="https://www.bop.nyc/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              font-mono text-eyebrow uppercase text-ivory-faint hover:text-ivory
+              transition-colors duration-200
+            "
+          >
+            Billion Oyster Project
+          </a>
+          <div className="font-serif font-light text-ivory text-xl leading-tight mt-2">
             Andi Cross
           </div>
           <div className="font-sans text-body-sm text-ivory-dim mt-0.5">
-            Director of Communications, Billion Oyster Project (
-            <a
-              href="https://www.bop.nyc/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="
-                text-ivory-dim hover:text-ivory
-                underline decoration-dotted underline-offset-2 decoration-teal/60
-                hover:decoration-teal-bright hover:decoration-solid
-                transition-colors duration-200
-              "
-            >
-              bop.nyc
-            </a>
-            )
+            Director of Communications
           </div>
           <a
             href="tel:+14845013326"
@@ -48,17 +45,23 @@ export function PressContactPanel() {
           </a>
         </div>
 
-        <div className="h-px bg-rule" />
-
         <div>
-          <div className="font-mono text-eyebrow uppercase text-ivory-faint mb-2">
-            Inquiries
-          </div>
-          <div className="font-serif font-light text-ivory text-xl leading-tight">
+          <a
+            href="https://natrx.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              font-mono text-eyebrow uppercase text-ivory-faint hover:text-ivory
+              transition-colors duration-200
+            "
+          >
+            Natrx
+          </a>
+          <div className="font-serif font-light text-ivory text-xl leading-tight mt-2">
             Dylan DiBona
           </div>
           <div className="font-sans text-body-sm text-ivory-dim mt-0.5">
-            Press contact, Natrx &times; Billion Oyster Project
+            Press contact
           </div>
           <a
             href="mailto:dylan@natrx.io"

@@ -23,24 +23,40 @@ export function Footer() {
           gap-8 lg:gap-16
         "
       >
-        {/* Partnership lockup */}
+        {/* Partnership lockup. Each logo links to its org site (new tab). */}
         <div className="flex items-center gap-8">
-          <Image
-            src="/images/natrx-logo-white.png"
-            alt="Natrx"
-            width={140}
-            height={28}
-            className="h-7 w-auto opacity-95"
-          />
+          <a
+            href="https://natrx.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Natrx"
+            className="inline-flex transition-opacity duration-200 hover:opacity-100"
+          >
+            <Image
+              src="/images/natrx-logo-white.png"
+              alt="Natrx"
+              width={140}
+              height={28}
+              className="h-7 w-auto opacity-95"
+            />
+          </a>
           <div className="w-px h-7 bg-rule" />
-          <Image
-            src="/images/bop-logo.png"
-            alt="Billion Oyster Project"
-            width={88}
-            height={44}
-            className="h-11 w-auto opacity-90"
-            style={{ filter: 'brightness(0) invert(1)' }}
-          />
+          <a
+            href="https://www.billionoysterproject.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Billion Oyster Project"
+            className="inline-flex transition-opacity duration-200 hover:opacity-100"
+          >
+            <Image
+              src="/images/bop-logo.png"
+              alt="Billion Oyster Project"
+              width={88}
+              height={44}
+              className="h-11 w-auto opacity-90"
+              style={{ filter: 'brightness(0) invert(1)' }}
+            />
+          </a>
         </div>
 
         {/* Editorial credit line */}
