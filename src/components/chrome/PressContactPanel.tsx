@@ -16,6 +16,45 @@ export function PressContactPanel() {
             Inquiries
           </div>
           <div className="font-serif font-light text-ivory text-xl leading-tight">
+            Andi Cross
+          </div>
+          <div className="font-sans text-body-sm text-ivory-dim mt-0.5">
+            Director of Communications, Billion Oyster Project (
+            <a
+              href="https://www.bop.nyc/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                text-ivory-dim hover:text-ivory
+                underline decoration-dotted underline-offset-2 decoration-teal/60
+                hover:decoration-teal-bright hover:decoration-solid
+                transition-colors duration-200
+              "
+            >
+              bop.nyc
+            </a>
+            )
+          </div>
+          <a
+            href="tel:+14845013326"
+            className="
+              inline-block mt-2
+              font-mono text-body-sm tracking-wide
+              text-teal-aqua hover:text-ivory
+              transition-colors duration-200
+            "
+          >
+            +1 484 501 3326
+          </a>
+        </div>
+
+        <div className="h-px bg-rule" />
+
+        <div>
+          <div className="font-mono text-eyebrow uppercase text-ivory-faint mb-2">
+            Inquiries
+          </div>
+          <div className="font-serif font-light text-ivory text-xl leading-tight">
             Dylan DiBona
           </div>
           <div className="font-sans text-body-sm text-ivory-dim mt-0.5">
@@ -32,25 +71,6 @@ export function PressContactPanel() {
           >
             dylan@natrx.io
           </a>
-        </div>
-
-        <div className="h-px bg-rule" />
-
-        <div>
-          <div className="font-mono text-eyebrow uppercase text-ivory-faint mb-2">
-            Source materials
-          </div>
-          <p className="font-sans text-body-sm text-ivory-dim leading-relaxed max-w-[44ch]">
-            The BOP &times; Natrx Master Document, the Wave and Shoreline Change Analysis Report, and per-site data are available to reporters working on related coverage. Email above to request access.
-          </p>
-        </div>
-
-        <div className="h-px bg-rule" />
-
-        <div>
-          <p className="font-serif italic font-light text-ivory-dim text-base leading-relaxed max-w-[44ch]">
-            Reporters working on adjacent stories are welcome to reach out. This is editorial outreach, not a commercial channel.
-          </p>
         </div>
       </div>
     </div>
