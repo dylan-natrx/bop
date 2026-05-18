@@ -12,7 +12,7 @@ export function StakesAndProblem() {
             text-4xl sm:text-5xl lg:text-6xl
             max-w-[22ch]
           ">
-          Rebuilding the harbor&apos;s oyster reefs, in the right order.
+          Rebuilding the harbor&apos;s oyster reefs, and choosing where to start.
         </h2>
 
         <div className="
