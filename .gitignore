@@ -57,3 +57,4 @@ next-env.d.ts
 # Keep these on the local filesystem; do not commit.
 _master_docs/
 _overview-documents/
+_screenshots/

@@ -4,8 +4,9 @@ import type { ReactNode } from 'react'
  * Methodology walkthrough — six-step configuration.
  *
  * Each step has:
- *   - title and copy (lede + body paragraphs) drawn from
- *     Methodology_Walkthrough_Spec.md
+ *   - title and copy (lede + body paragraphs); the live source of truth is
+ *     this file and the shipped component. (Earlier pre-build spec at
+ *     Methodology_Walkthrough_Spec.md was retired on 2026-05-18.)
  *   - map state: which score the sites are colored by, which flags filter
  *   - spectra state: which curves are visible, which annotations show,
  *     whether the Goldilocks band appears

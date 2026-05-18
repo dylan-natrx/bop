@@ -4,6 +4,36 @@ Running log of gotchas. Newest first. The 2026-05-12 map-basemap-rebuild session
 
 ---
 
+## 2026-05-18 — post-launch editorial polish
+
+### Natrx Assess as a glossary entry with product-name styling
+
+**Context:** Natrx Assess shows up five times in the body copy (§ 3 intro, § 4 Beat 1, § 5 closing graf, walkthrough steps 4 and 5). The earlier convention — "italicize on first reference per section, then drop to roman" — read fine in any single section but made the named product feel inconsistent across the page. The brief tightened: every body-text occurrence should render in serif italic + pure white, and the first encounter on the page should link to a glossary definition so readers can ground the term immediately.
+
+**Resolution (three coordinated changes):**
+
+1. **Glossary entry with `productName: true`.** New `Natrx Assess` entry in [glossary-data.ts](../src/components/chrome/glossary-data.ts), alphabetically between NAIP imagery and Natural breakwater. The `GlossaryEntry` interface gains an optional `productName?: boolean` flag. `GlossaryPanel` reads the flag and renders the `<dt>` in `font-serif italic font-medium` instead of the default `font-light` — italic preserves the product-name convention from the body copy, medium weight preserves the glossary's heavier-term convention. Default entries are unaffected.
+
+2. **First-encounter `<GlossaryTerm>` wrap.** The § 3 intro's `<em className="font-serif italic text-white">Natrx Assess</em>` is wrapped in `<GlossaryTerm termId="natrx-assess">`. `GlossaryTerm` uses `color: inherit` on its inline button, so the nested `<em>` keeps its own white color while inheriting the dotted-underline affordance. Other body-text occurrences carry the same styling but no link — the inline glossary affordance reads as an introduction, not a recurring footnote.
+
+3. **Walkthrough step titles widened to ReactNode.** `StepConfig.title` was typed as `string`; step 4 and step 5 titles needed to render *Natrx Assess* italic + white inline. Widened to `ReactNode` so the configs can carry JSX fragments like `<>Wave exposure, from <Em>Natrx Assess</Em></>`. Both `MethodologyWalkthrough` (`motion.h3`) and `WalkthroughControls` (mobile dropdown menu) already rendered `{step.title}` and accept ReactNode without further change. The local `Em` component in `steps.tsx` adds `text-white` so titles match the body styling.
+
+**Editorial chrome rule (locked):** body-text Natrx Assess = `<em className="font-serif italic text-white">…</em>`; first-encounter wrap = `<GlossaryTerm termId="natrx-assess">…</GlossaryTerm>` around the `<em>`; figure captions are not styled (chrome, not body voice). Commit `bfb0a25`.
+
+### § 2 expanded; § 5 reshaped around the EIS detail
+
+**§ 2 (commits f893b0c → c960ea5 → 756cde1):** the section grew from a tight two-paragraph block to a four-paragraph body that restores the harbor's pre-collapse condition (350 sq mi reef, 15-foot visibility, food web that fed the eastern seaboard) and lands the 10–15 funded sites by 2029–2030 target. A Carolyn Khoury pullquote sits between paragraphs 3 and 4 ("we've moved from considering each restoration site individually to understanding what the whole system needs to support a self-sustaining population"). Paragraph 3 carries an inline `<GlossaryTerm termId="candidate-site">` on "candidate restoration sites" — first inline glossary usage on the page. The opening of paragraph 2 dropped "For four hundred years," and shifted to present perfect ("restoration in the harbor has happened opportunistically") because the four-hundred-year framing read as journalistic flourish in a paragraph that's actually about BOP's recent operating posture, not history.
+
+**§ 5 (commit 756cde1):** the Operational beat tightened to one sentence. The Institutional beat expanded to six sentences and absorbed the NY State Environmental Impact Statement detail — the EIS is scheduled to conclude by end of 2028 and, once complete, streamlines permitting for individual sites; the framework's analysis feeds directly into it. The Mission beat dropped "ten" so the language reads as "parallel pipeline" rather than naming a count we'd repeat in the next paragraph. Lise Montefiore's pullquote was replaced with new water-quality copy ("Water quality data in a harbor like this is complex. Our work was to extract it from many monitoring stations and turn it into something BOP could make decisions from."); her role was sharpened from "Data Scientist" to "Water Quality and Data Scientist, Natrx"; credential simplified to PhD (dropped MS). The closing portability paragraph opens to "restoration practitioners at every scale" so the audience reads as field-wide, not exclusive to institutional planners.
+
+### Press contact rebuilt as two side-by-side cards
+
+**Symptom:** the original press panel stacked Dylan DiBona at the top and a "Source materials" line below. With Andi Cross added as the BOP-side press contact, stacking made the two contacts feel ranked, with Dylan above and BOP below — exactly the inverse of the editorial reading we wanted ("equal partners").
+
+**Resolution (commits c960ea5 → dd2a795):** the panel became a 2-column md+ grid (`grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6 lg:gap-8`). Each card has an org-named eyebrow that links to the org site (Billion Oyster Project → https://www.bop.nyc/, Natrx → https://natrx.io), the contact's name in Fraunces, the role, and a teal-aqua mono link to phone or email. The "Source materials" copy was dropped — at v1 it doubles the page's editorial-outreach framing without adding affordance. The footer logos were paired with `<a target="_blank">` wrappers linking to natrx.io and billionoysterproject.org so the partnership lockup behaves as a navigational element, not just a credit line.
+
+---
+
 ## 2026-05-14 (late) — map storytelling rebuild + custom domain launch
 
 ### Map narrowing model collided with the data; rebuilt as overlay system

@@ -323,22 +323,22 @@ For implementation details and session continuity, see:
 
 ### Current State
 
-§ 1 Hero is in progress: Mapbox GL JS implementation of Map 1 with custom dark inline style, all 78 sites as a circle layer, top-10 halos, hover tooltip, bidirectional hover between `HeroMap` and `FigurePanel`. Map land contrast brought up to `#0E2236` so the harbor silhouettes read. Water-body and borough labels in place. Not finalized; iteration ongoing.
+**v1 is live at https://bop.natrx.report behind a custom-branded password gate.** Last meaningful update: 2026-05-18. All five sections are built, copy is locked, and the editorial polish is in active rounds. For granular detail (file paths, dates, gotchas, deploy commands), defer to `docs/SESSION_HANDOFF.md` and `docs/PROJECT_STATUS.md` — this block is a high-level snapshot only.
 
-§ 2–5 are scaffolded with placeholder copy and component-placeholder blocks only. No real copy, no Map 2, no spectra panel, no top-ranked callout components, no glossary component. Components live in `src/components/sections/`.
+What's shipped:
 
-Key implementation files:
-- `src/components/hero/HeroMap.tsx` — Map 1, Mapbox GL JS, inline dark style
-- `src/components/hero/HeroFigure.tsx` — figure shell + bidirectional hover state
-- `src/components/hero/FigurePanel.tsx` — left panel with rank mappings
-- `src/components/sections/SectionShell.tsx` — shared layout (eyebrow + content) for § 2–5
-- `src/components/sections/PlaceholderBlock.tsx` — labeled component-placeholder
-- `src/components/sections/StakesAndProblem.tsx` — § 2
-- `src/components/sections/MethodologyMadeVisible.tsx` — § 3 (will host Map 2 + spectra + callouts)
-- `src/components/sections/WhatAnalysisMadeVisible.tsx` — § 4 (two beats + thread)
-- `src/components/sections/WhatThisEnables.tsx` — § 5 (portability + glossary)
-- `src/lib/colors.ts` — suitability color functions, 0.5 threshold logic
-- `public/data/rankings.geojson` — 78 sites (the authoritative source for map rendering and rankings)
-- `public/data/nyc-boroughs.geojson` / `nj-shoreline.geojson` / `westchester.geojson` — land masses for the Mapbox basemap
+- **§ 1 Hero.** Mapbox GL JS, OSM-derived `region-land.geojson` + `hudson-river.geojson` carving the Hudson out of the land mass, all 78 sites as circles colored by composite score, top-10 with pulsing halos, hover tooltip, bidirectional hover between `HeroMap` and `FigurePanel`. Sticky `SectionNav` (4 links + scroll-spy, hamburger on mobile) replaces the original topbar.
+- **§ 2 Stakes & problem.** Four-paragraph body opening on the harbor's lost reefs (350 sq mi, 15-foot visibility) and closing on the shift from opportunistic siting to systemwide planning. Carolyn Khoury pullquote between paragraphs 3 and 4. Inline `<GlossaryTerm termId="candidate-site">` link in paragraph 3. Portrait `EditorialImage` of the harbor.
+- **§ 3 Methodology, made visible.** Intro + Mike McCann pullquote + six-step `MethodologyWalkthrough` (map 3fr / spectra 2fr / bottom strip with copy + right-anchored controls) + three `TopRankedCallout` cards with live `SiteMiniMap`s (Arthur Kill / Living Breakwaters cluster / Wolfe's Pond). The editorial spine: biology gates steps 1–3, external context overlays at steps 4–6 without filtering, priority halo reveals top-10 inside the suitable set at step 6. Spectra panel uses a two-color treatment (teal biology / amber external).
+- **§ 4 What the analysis made visible.** Two `FindingBeat` blocks: shoreline change image for beat 1 ("Oysters and shorelines, one intervention."), `ConfidenceDistributionChart` for beat 2 ("A map of where to invest in more data next.").
+- **§ 5 What this unlocks.** Headline "The pipeline becomes operational." Three nested beats (Operational / Institutional / Mission). Institutional carries the EIS detail (NY State environmental impact statement scheduled to conclude end of 2028). Lise Montefiore pullquote (Water Quality and Data Scientist, Natrx) hinges between the three-beat block and the closing portability paragraph. Closes with `nyoyster.webp` (also the OG image).
 
-The custom SVG / Mercator hero (`src/lib/projection.ts`, `src/lib/land.ts`, the SVG-based `HeroMap`) was the previous approach. The Mapbox rebuild now lives in `HeroMap.tsx`; the SVG-era helpers in `projection.ts` and `land.ts` are still imported elsewhere (`calculateMarkerRadius`, `CoastlineTest`) so they're kept for now. Reconsider once § 2–5 are real.
+**Persistent chrome.** `SiteChromeProvider` + right-edge drawer with two tabs. **Glossary** is 25 alphabetized entries; Natrx Assess and any future product entries carry `productName: true` and render with italic + medium-weight `<dt>` styling per the editorial chrome rules. **Press contact** is two side-by-side cards (Andi Cross, BOP Director of Communications, with phone; Dylan DiBona, Natrx press). No CTAs anywhere. `Footer` has the partnership lockup with each logo linked to its org site (natrx.io, billionoysterproject.org).
+
+**Editorial chrome — Natrx Assess.** Every body-text occurrence renders in serif italic + pure white (`text-white`). First occurrence on the page (§ 3 intro: "Two custom data products were generated by Natrx Assess") wraps in `<GlossaryTerm termId="natrx-assess">` so readers can jump to the drawer definition. Subsequent occurrences (§ 4 Beat 1, § 5 closing portability graf, walkthrough steps 4 and 5) carry the same styling but no link. Figure captions are intentionally not styled — chrome, not body voice.
+
+**Analytics.** Vercel Analytics + Speed Insights wired with five typed editorial events: `section_reached`, `walkthrough_step`, `drawer_opened`, `glossary_term_clicked`, `top_ranked_viewed`. Enabled in the Vercel dashboard.
+
+**Auth gate.** `src/middleware.ts` (note: `src/`, not project root — root location is silently ignored on src-layout projects) + `src/app/login` + `src/app/api/auth/login`. Vercel Deployment Protection is **off** at the platform level so the branded gate is the only gate. `AUTH_DISABLED=true` no-ops it without removing files.
+
+Known dead-code paths kept for inertia: `src/components/hero/CoastlineTest.tsx`, `src/app/test-map/`, `src/lib/land.ts`, most of `src/lib/projection.ts` (only `calculateMarkerRadius` is still used), `src/app/site/[siteId]/` stub. Production maps no longer reference `public/data/nyc-boroughs.geojson` / `nj-shoreline.geojson` / `westchester.geojson` / `upstate-ny-ct.geojson`; they remain only because the diagnostic routes still import them.

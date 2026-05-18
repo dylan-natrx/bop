@@ -1,6 +1,6 @@
 # Technical Specification Notes
 
-Last updated: 2026-05-12. Reflects v1 feature-complete state: OSM-based map architecture, all five sections built, Vercel Analytics wired.
+Last updated: 2026-05-18. Reflects v1 feature-complete state: OSM-based map architecture, all five sections built, Vercel Analytics wired, post-launch editorial polish landed (3 pullquotes, 2-card press contact, Natrx Assess glossary entry + product-name styling, footer org links).
 
 ---
 
@@ -317,7 +317,18 @@ Closes on Escape. Locks body scroll while open. Fires `drawer_opened` analytics 
 
 ### Glossary entries
 
-23 alphabetized definitions in [glossary-data.ts](../src/components/chrome/glossary-data.ts): algal bloom, Allee effect, bathymetry, chlorophyll-a, composite score, confidence interval, CSO, dissolved oxygen, Eastern oyster, estuary, eutrophication, fetch-limited wave modeling, filter feeder, Habitat Suitability Index, hypoxia, keystone species, MS4, NAIP imagery, natural breakwater, salinity, shoreline change analysis (MEIP), spat, subtidal vs. intertidal.
+25 alphabetized definitions in [glossary-data.ts](../src/components/chrome/glossary-data.ts): algal bloom, Allee effect, bathymetry, candidate site, chlorophyll-a, composite score, confidence interval, CSO, dissolved oxygen, Eastern oyster, estuary, eutrophication, fetch-limited wave modeling, filter feeder, Habitat Suitability Index, hypoxia, keystone species, MS4, NAIP imagery, **Natrx Assess**, natural breakwater, salinity, shoreline change analysis (MEIP), spat, subtidal vs. intertidal.
+
+The `GlossaryEntry` interface carries an optional `productName?: boolean` field. Entries with that flag (currently only Natrx Assess) render the drawer `<dt>` in `font-serif italic font-medium` instead of the default `font-light`. Everything else uses the same plain serif treatment. The flag exists to keep the editorial chrome rule (product names italicized) consistent inside the drawer without baking the styling into the term string.
+
+### Inline `<GlossaryTerm>` usage on the page
+
+- § 2 paragraph 3: wraps "candidate restoration sites" → opens drawer at the `candidate-site` entry.
+- § 3 intro: wraps the italic `<em>` containing "Natrx Assess" → opens drawer at the `natrx-assess` entry. This is the page's first encounter of the term; subsequent occurrences (§ 4 Beat 1, § 5 closing graf, walkthrough step 4 and 5 titles and step 4 body) are styled italic + white but not wrapped.
+
+### Body-text styling for Natrx Assess
+
+Every body-text occurrence renders as `<em className="font-serif italic text-white">Natrx Assess</em>` — pure white instead of `text-ivory-dim`, so the named product reads as foregrounded editorial chrome without becoming a button or product card. The walkthrough's local `Em` component in [steps.tsx](../src/components/methodology/steps.tsx) applies the same class so step titles and step bodies stay consistent. `StepConfig.title` is typed as `ReactNode` (not `string`) specifically to allow JSX titles like `<>Wave exposure, from <Em>Natrx Assess</Em></>`. Figure captions are deliberately unstyled.
 
 ---
 
