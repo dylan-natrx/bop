@@ -25,8 +25,10 @@ const VB_H = 70
 interface CurveDef {
   key: SpectraCurve
   title: string
-  /** Short descriptor of what the Y-axis represents (e.g. "Habitat suitability") */
+  /** Short descriptor of what the Y-axis represents (e.g. "Scoring function") */
   subtitle: string
+  /** Optional source/credit line rendered beneath the plot, figure-caption styled */
+  citation?: string
   xLabel: string
   xTicks: { x: number; label: string }[]
   path: string
@@ -40,7 +42,7 @@ const CURVE_DEFS: Record<SpectraCurve, CurveDef> = {
   salinity: {
     key: 'salinity',
     title: 'Salinity',
-    subtitle: 'Habitat suitability',
+    subtitle: 'Scoring function',
     xLabel: 'PSU',
     xTicks: [
       { x: 0, label: '0' },
@@ -59,11 +61,12 @@ const CURVE_DEFS: Record<SpectraCurve, CurveDef> = {
     `,
     favorableZone: { x: 55, width: 34 },
     annotation: { text: 'Optimum 12–20 PSU', x: 70, y: 19 },
+    citation: 'Scoring function adapted from Starke et al. (2011).',
   },
   chla: {
     key: 'chla',
     title: 'Chlorophyll-a',
-    subtitle: 'Habitat suitability',
+    subtitle: 'Scoring function',
     xLabel: 'µg/L',
     xTicks: [
       { x: 0, label: '0' },
@@ -77,7 +80,7 @@ const CURVE_DEFS: Record<SpectraCurve, CurveDef> = {
   do: {
     key: 'do',
     title: 'Dissolved oxygen',
-    subtitle: 'Habitat suitability',
+    subtitle: 'Scoring function',
     xLabel: '% below 3 mg/L',
     xTicks: [
       { x: 0, label: '0%' },
@@ -172,7 +175,6 @@ export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
           isActive={isActive}
           dimension={dim}
           showFavorableZone={isWaterQualityCurve}
-          showDanger={curveKey === 'chla'}
           showFlagThreshold={curveKey === 'wave'}
         />
       ),
@@ -220,7 +222,7 @@ export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
     <div
       className="flex flex-col gap-3"
       role="region"
-      aria-label="Variable suitability curves"
+      aria-label="Variable scoring functions"
     >
       <AnimatePresence initial={false}>
         {sorted.map((item) => {
@@ -263,7 +265,6 @@ interface CurvePlotProps {
   dimension: Dimension
   /** Render the favorable zone shading. Always true for the three water-quality curves. */
   showFavorableZone: boolean
-  showDanger: boolean
   showFlagThreshold: boolean
 }
 
@@ -272,7 +273,6 @@ function CurvePlot({
   isActive,
   dimension,
   showFavorableZone,
-  showDanger,
   showFlagThreshold,
 }: CurvePlotProps) {
   // Annotation x/y in viewBox → percentages so we can position HTML overlays
@@ -354,20 +354,6 @@ function CurvePlot({
           </div>
         )}
 
-        {/* "Eutrophication" overlay for the chl-a danger zone */}
-        {showDanger && (
-          <div
-            className="absolute font-mono uppercase tracking-[0.22em] text-[10px] text-ivory-dim pointer-events-none"
-            style={{
-              right: '6%',
-              bottom: '14%',
-              textShadow: '0 0 6px rgba(6, 19, 33, 0.85)',
-            }}
-          >
-            Eutrophication
-          </div>
-        )}
-
       <svg
         viewBox={`-${CURVE_PADDING_X} -${CURVE_PADDING_Y} ${VB_W + CURVE_PADDING_X * 2} ${VB_H + CURVE_PADDING_Y * 2}`}
         className="w-full h-full block"
@@ -382,7 +368,6 @@ function CurvePlot({
             fill="rgba(111, 227, 208, 0.1)"
           />
         )}
-        {showDanger && <DangerZone />}
         {showFlagThreshold && (
           <line
             x1={150}
@@ -431,37 +416,13 @@ function CurvePlot({
         />
       </svg>
       </div>
-    </div>
-  )
-}
 
-function DangerZone() {
-  const stripes = []
-  for (let i = 0; i < 14; i++) {
-    const x = 100 + i * 7
-    stripes.push(
-      <line
-        key={i}
-        x1={x}
-        y1={-CURVE_PADDING_Y}
-        x2={x - 10}
-        y2={VB_H + CURVE_PADDING_Y}
-        stroke="rgba(184, 176, 160, 0.16)"
-        strokeWidth={0.5}
-      />
-    )
-  }
-  return (
-    <g>
-      <rect
-        x={100}
-        y={-CURVE_PADDING_Y}
-        width={100}
-        height={VB_H + CURVE_PADDING_Y * 2}
-        fill="rgba(184, 176, 160, 0.04)"
-      />
-      {stripes}
-    </g>
+      {curve.citation && (
+        <div className="mt-2 font-mono text-eyebrow uppercase tracking-[0.22em] text-ivory-faint leading-relaxed">
+          {curve.citation}
+        </div>
+      )}
+    </div>
   )
 }
 

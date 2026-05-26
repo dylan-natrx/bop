@@ -111,8 +111,8 @@ export function WhatThisEnables() {
             available satellite imagery. Each estuary brings its own
             ecological complexity and its own data realities. What carries
             forward is the structure: comparative analysis across all
-            candidate sites at once, with confidence levels disclosed,
-            calibrated to the place. The work happening in New York Harbor
+            candidate sites at once, with confidence levels disclosed. The
+            work happening in New York Harbor
             this year is part of a larger shift. The natural world and the
             built one, in service of each other.
           </p>

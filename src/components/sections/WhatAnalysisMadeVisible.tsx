@@ -40,7 +40,7 @@ export function WhatAnalysisMadeVisible() {
               shoreline change at every candidate location, using satellite
               imagery going back to 2010. Eight sites are losing more than a
               foot of shoreline a year. Fifteen more are retreating at slower
-              rates. Several sit in the top tier of the suitability ranking.
+              rates. Several sit in the top tier of the site ranking.
               Oyster reefs function as natural breakwaters: they dampen wave
               energy and slow the loss of marsh edge. Where strong water
               quality meets active erosion, the same project restores habitat

@@ -112,7 +112,7 @@ export function SiteTooltipContent({
           <strong className="text-ivory font-medium">{rank}</strong>
         </div>
         <div className="flex justify-between gap-4">
-          <span className="text-ivory-dim">Suitability</span>
+          <span className="text-ivory-dim">Site score</span>
           <strong className="text-teal-aqua font-medium tabular-nums">
             {score.toFixed(2)}
           </strong>

@@ -37,11 +37,20 @@ export function MethodologyMadeVisible() {
             oysters thrive? Three water-quality variables, scored across all
             78 candidates. Second, what do the surrounding conditions add or
             subtract? Wave energy, shoreline change, permitting context,
-            mission fit. The framework mixes both dimensions, calibrated to
-            each location. It&apos;s a way of asking where the natural world
+            mission fit. The framework integrates both dimensions across all
+            78 sites. It&apos;s a way of asking where the natural world
             and the built one strengthen each other, in one specific place.
             The walkthrough below moves through the analysis in the order it
             was built: biology first, then the external factors.
+          </p>
+          <p className="mt-6">
+            The site score in this walkthrough is a relative measure of
+            water-quality conditions across the 78 candidates. A
+            higher-scoring site carries a stronger combined profile across
+            salinity, chlorophyll-a, and dissolved oxygen. A score of 0.90
+            ranks better than a score of 0.10, but neither carries an absolute
+            claim about habitat quality. The ranking tells BOP where to look
+            first.
           </p>
         </div>
       </div>

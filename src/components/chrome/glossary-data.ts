@@ -49,12 +49,6 @@ export const GLOSSARY: GlossaryEntry[] = [
       'A pigment found in microscopic algae (phytoplankton), used as a proxy for how much food is in the water. Oysters filter and eat phytoplankton, so adequate chlorophyll-a indicates an adequate food supply. Too much is a sign of eutrophication.',
   },
   {
-    id: 'composite-score',
-    term: 'Composite score and DO-modifier',
-    definition:
-      "A site's overall suitability number. Built from salinity and chlorophyll-a averaged together, then multiplied by the dissolved oxygen score. The DO score acts as a multiplier because hypoxia is a hard ecological constraint, not just one factor among many.",
-  },
-  {
     id: 'confidence-interval',
     term: 'Confidence interval',
     definition:
@@ -156,6 +150,12 @@ export const GLOSSARY: GlossaryEntry[] = [
     term: 'Shoreline change analysis (MEIP)',
     definition:
       'Marsh Edge from Image Processing. A technique that traces the moving edge of marsh vegetation across multiple years of satellite imagery to measure erosion rates at roughly one-meter resolution.',
+  },
+  {
+    id: 'site-score',
+    term: 'Site score',
+    definition:
+      "A relative measure of each candidate site's combined profile across salinity, chlorophyll-a, and dissolved oxygen. Scores rank the 78 candidates against one another. A higher score signals a stronger relative profile, not an absolute claim about habitat quality.",
   },
   {
     id: 'spat',

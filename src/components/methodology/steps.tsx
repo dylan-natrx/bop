@@ -72,7 +72,7 @@ export const STEPS: StepConfig[] = [
     title: 'Adding chlorophyll-a, the food layer',
     lede: 'Oysters are filter feeders.',
     bodyParagraphs: [
-      'They need food in the water, measured by chlorophyll-a. More is mostly better, with a catch: past a threshold, chlorophyll-a signals algae blooms that crash oxygen and kill the oysters the blooms feed. The score captures the productive range and flags the danger zone. Sites strong on salinity but thin on food drop further. Sites strong on both come forward.',
+      'They need food in the water, measured by chlorophyll-a. More is generally better, and the score reflects that. The cost of too much (oxygen crashes from algae blooms) registers in the dissolved oxygen step that follows. Sites strong on salinity but thin on food drop further here. Sites strong on both come forward.',
     ],
     colorMode: 'salinity_chla',
     visibleFlags: [],
@@ -88,7 +88,7 @@ export const STEPS: StepConfig[] = [
     title: 'Adding dissolved oxygen, the limiter',
     lede: "Dissolved oxygen doesn't need to be high.",
     bodyParagraphs: [
-      "It just can't fall below survival. Oxygen acts as a multiplier in the composite, so sites that slip into hypoxia get their other strengths cut in half. The ranking locks here. Arthur Kill on Staten Island emerges at the top. Six locations inside the Living Breakwaters system cluster just behind. The harbor's industrial west shore, long written off, now leads on the variables that actually matter for oyster restoration. Twenty-two of 78 sites pass the biology gate. They are the suitable set.",
+      "It just can't fall below survival. Oxygen acts as a multiplier in the composite, so sites that slip into hypoxia get their other strengths cut in half. The ranking locks here. Arthur Kill on Staten Island emerges at the top. Six locations inside the Living Breakwaters system cluster just behind. The harbor's industrial west shore, long written off, now leads on the variables that actually matter for oyster restoration. Twenty-two of 78 sites pass the biology gate. They are the qualifying set.",
     ],
     colorMode: 'composite',
     visibleFlags: [],
@@ -108,7 +108,7 @@ export const STEPS: StepConfig[] = [
         Wave exposure is the feasibility question. A site can score perfectly
         on biology and still need storm-rated infrastructure because the water
         moves too hard. Every top-ten site in this pipeline carries a wave
-        flag. They stay in the suitable set. You can&apos;t pay your way to
+        flag. They stay in the qualifying set. You can&apos;t pay your way to
         better water, but you can pay for engineering. The framework now tells
         BOP what to budget for. Wave energy data from <Em>Natrx Assess</Em>.
       </>,
@@ -144,7 +144,7 @@ export const STEPS: StepConfig[] = [
     lede: 'The last layer is operational.',
     bodyParagraphs: [
       "Sites near combined sewer and stormwater outfalls carry permitting friction with state and federal agencies. Sites near publicly accessible parkland make BOP's mission easier. Neither changes which sites are suitable. Both shape what BOP plans for and where it commits time first.",
-      'Stack the six layers together and the priority projects emerge. The top ten by composite — Arthur Kill, the Living Breakwaters cluster, Wolfe’s Pond, Conch Basin, and the adjacent Arthur Kill parcels — sit inside the wider suitable set, now with their cost, permitting, and co-benefit profile fully visible. They are where the framework points BOP to commit first. The other suitable sites are the reserve, ready to advance as priority sites move toward design and permitting. That is the answer the engagement was built to produce. BOP can rerun the analysis next year as new data lands.',
+      'Stack the six layers together and the priority projects emerge. The top ten by composite — Arthur Kill, the Living Breakwaters cluster, Wolfe’s Pond, Conch Basin, and the adjacent Arthur Kill parcels — sit inside the wider qualifying set, now with their cost, permitting, and co-benefit profile fully visible. They are where the framework points BOP to commit first. The other suitable sites are the reserve, ready to advance as priority sites move toward design and permitting. That is the answer the engagement was built to produce. BOP can rerun the analysis next year as new data lands.',
     ],
     colorMode: 'composite',
     visibleFlags: ['wave', 'erosion', 'park', 'cso', 'ms4'],

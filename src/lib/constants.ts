@@ -50,7 +50,7 @@ export const HERO_STATS = [
   {
     value: 78,
     label: 'Candidate sites',
-    qualifier: 'Across five harbor regions, evaluated for oyster suitability',
+    qualifier: 'Across five harbor regions, ranked for restoration priority',
   },
   {
     value: 2604,

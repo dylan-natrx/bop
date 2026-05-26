@@ -7,13 +7,13 @@ interface LegendProps {
 }
 
 /**
- * Suitability score legend with gradient bar
+ * Site score legend with gradient bar
  */
 export function SuitabilityLegend({ className = '' }: LegendProps) {
   return (
     <div className={className}>
       <div className="font-mono text-eyebrow uppercase text-ivory-dim mb-2">
-        Suitability score
+        Site score
       </div>
       <div
         className="w-full h-1.5 rounded-sm"

@@ -26,7 +26,7 @@ export function FigurePanel({ hoveredRanks, onHoverRanks }: FigurePanelProps) {
         </div>
         <div className="font-serif italic font-light text-body text-ivory leading-snug">
           All 78 candidate sites across New York Harbor, sized by acreage and
-          colored by suitability score.
+          colored by site score.
         </div>
       </div>
 
