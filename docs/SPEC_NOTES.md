@@ -293,6 +293,15 @@ ArrowRight or Space → next (via='keyboard'). ArrowLeft or Shift+Space → prev
 
 The Next button is `disabled` rather than transformed into a "Continue reading" CTA. Earlier the button scrolled to §4, which skipped the "What the ranking surfaces" callout cards inside §3 below the walkthrough — that bug was the reason we dropped the CTA.
 
+### Spectra curves (`SpectraPanel.tsx` → `CURVE_DEFS`)
+
+Each `CurveDef` carries `title`, `subtitle`, `xLabel`/`xTicks`, an SVG `path`, a `favorableZone`, an `annotation`, and an optional `thresholdLabel`. Post-May-26 conventions:
+
+- **`subtitle`** on the three biology curves (salinity, chlorophyll-a, dissolved oxygen) reads **"Scoring function"** (was "Habitat suitability" — changed in Lise's review; the score is a relative ranking, not a calibrated HSI). Wave keeps its descriptive subtitle because it is a teaching curve, not a scored input.
+- **`citation?: string`** (added May 26) renders a figure-caption-styled line beneath the plot (`font-mono`, eyebrow size, uppercase, `text-ivory-faint`). Only salinity sets it: "Scoring function adapted from Starke et al. (2011)."
+- **Chlorophyll-a eutrophication band removed (May 26).** The `DangerZone` function and the `showDanger` prop are gone; chla was the only consumer. The linear food-response curve and its annotation remain. The `favorableZone` (teal productive-range shading) is a separate element and stays. The *Eutrophication* glossary entry is unrelated and untouched.
+- **Hold:** new salinity + dissolved-oxygen threshold values are coming from Lise; both plots are otherwise frozen until those land.
+
 ---
 
 ## Persistent chrome
@@ -317,7 +326,7 @@ Closes on Escape. Locks body scroll while open. Fires `drawer_opened` analytics 
 
 ### Glossary entries
 
-25 alphabetized definitions in [glossary-data.ts](../src/components/chrome/glossary-data.ts): algal bloom, Allee effect, bathymetry, candidate site, chlorophyll-a, composite score, confidence interval, CSO, dissolved oxygen, Eastern oyster, estuary, eutrophication, fetch-limited wave modeling, filter feeder, Habitat Suitability Index, hypoxia, keystone species, MS4, NAIP imagery, **Natrx Assess**, natural breakwater, salinity, shoreline change analysis (MEIP), spat, subtidal vs. intertidal.
+25 alphabetized definitions in [glossary-data.ts](../src/components/chrome/glossary-data.ts): algal bloom, Allee effect, bathymetry, candidate site, chlorophyll-a, confidence interval, CSO, dissolved oxygen, Eastern oyster, estuary, eutrophication, fetch-limited wave modeling, filter feeder, Habitat Suitability Index, hypoxia, keystone species, MS4, NAIP imagery, **Natrx Assess**, natural breakwater, salinity, shoreline change analysis (MEIP), site score, spat, subtidal vs. intertidal. (The "site score" entry was renamed from "composite score" and re-keyed `composite-score` → `site-score` on May 26; the old DO-multiplier explanation moved out of the definition and lives in the walkthrough's "Show the math" disclosure.)
 
 The `GlossaryEntry` interface carries an optional `productName?: boolean` field. Entries with that flag (currently only Natrx Assess) render the drawer `<dt>` in `font-serif italic font-medium` instead of the default `font-light`. Everything else uses the same plain serif treatment. The flag exists to keep the editorial chrome rule (product names italicized) consistent inside the drawer without baking the styling into the term string.
 
@@ -459,7 +468,7 @@ Status          "Design" | "Proposed Future Site"
 Waterbody       string
 Acres           number
 Rank            1–78
-Score           0.0–0.87 (composite suitability)
+Score           0.0–0.87 (composite; surfaced publicly as the relative "Site score")
 ConfidenceRule  "low" | "moderate-" | "moderate" | "moderate+" | "high"
 NearCSO         "Yes" | "No"
 NearMS4         "Yes" | "No"

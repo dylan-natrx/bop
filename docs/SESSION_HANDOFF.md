@@ -2,7 +2,7 @@
 
 **Pick up here.** This is the single doc to read first when resuming work. It assumes nothing about prior context.
 
-Last meaningful work: 2026-05-18. **v1 is live at https://bop.natrx.report behind the password gate.** All five sections have real copy and real visuals. Map storytelling rebuilt: biology gates (steps 1–3), external factors overlay as flag markers (steps 4–6), priority projects revealed at step 6 with a pulsing halo. Spectra panel uses a two-color treatment (teal = biology, amber = external). Legend evolved into a horizontal strip pinned to the bottom of the map. Mobile section nav got a hamburger menu. Custom domain wired up with Cloudflare DNS + per-domain Vercel CNAME target. Three pullquotes (Carolyn Khoury §2, Mike McCann §3, Lise Montefiore PhD §5). Vercel Analytics + Speed Insights are live with custom editorial events.
+Last meaningful work: 2026-05-26. **v1 is live at https://bop.natrx.report behind the password gate.** All five sections have real copy and real visuals. Map storytelling rebuilt: biology gates (steps 1–3), external factors overlay as flag markers (steps 4–6), priority projects revealed at step 6 with a pulsing halo. Spectra panel uses a two-color treatment (teal = biology, amber = external). Legend evolved into a horizontal strip pinned to the bottom of the map. Mobile section nav got a hamburger menu. Custom domain wired up with Cloudflare DNS + per-domain Vercel CNAME target. Three pullquotes (Carolyn Khoury §2, Mike McCann §3, Lise Montefiore PhD §5). Vercel Analytics + Speed Insights are live with custom editorial events.
 
 **Recent editorial polish (May 14–18) — what's changed since the v1 launch state:**
 - § 2 expanded to four paragraphs (harbor history → opportunistic siting → systemwide shift with the 10–15 funded sites / 2029–2030 target → "the framework on this page is how Billion Oyster Project and Natrx built that capability together"). Carolyn Khoury pullquote between paragraphs 3 and 4. Inline `candidate-site` `<GlossaryTerm>` in paragraph 3.
@@ -11,6 +11,18 @@ Last meaningful work: 2026-05-18. **v1 is live at https://bop.natrx.report behin
 - Footer logos now link to natrx.io and billionoysterproject.org.
 - Natrx Assess added to glossary as the first `productName: true` entry (italic + medium-weight `<dt>` in the drawer). Every body-text occurrence renders in serif italic + pure white. First occurrence on the page (§ 3 intro) wraps in `<GlossaryTerm termId="natrx-assess">`; subsequent occurrences are styled but unlinked.
 
+**Scientific review edits (May 26) — Lise Montefiore (Natrx Water Quality & Data Scientist). The why: the framework ranks the 78 candidates against each other on water-quality variables; it is not a calibrated Habitat Suitability Index, and Lise flagged that the copy (Figure 1 especially) was implying it might be. What changed:**
+- **Score reframed as a relative "Site score."** New § 3 paragraph after the "two questions in order" graf: the score "is a relative measure of water-quality conditions across the 78 candidates… A score of 0.90 ranks better than a score of 0.10, but neither carries an absolute claim about habitat quality." "Suitability score" relabeled **Site score** across all chrome — hero legend, Fig. 1 caption, map hover tooltip, and the glossary entry (renamed from "Composite score and DO-modifier"; id `composite-score` → `site-score`; moved to its alphabetical slot between "Shoreline change analysis (MEIP)" and "Spat"; definition rewritten as a relative measure, dropping the old DO-multiplier explanation, which still lives in the walkthrough's "Show the math" disclosure). "Relative site score" is reserved for the § 3 first-use prose only.
+- **"Calibrated" removed.** § 3: "mixes both dimensions, calibrated to each location" → "integrates both dimensions across all 78 sites." § 5: dropped ", calibrated to the place." `grep calibrat` is clean.
+- **Walkthrough score-curve subtitles** "Habitat suitability" → "Scoring function" on the three biology curves (salinity, chlorophyll-a, dissolved oxygen). Wave keeps its own subtitle — it is a teaching curve, not a scored input — and the two annotation blocks (erosion, filters) have no subtitle. Only three plots literally read "Habitat suitability," not the six the brief assumed.
+- **Salinity plot citation** added beneath the curve, figure-caption styled: "Scoring function adapted from Starke et al. (2011)." Implemented as a new optional `citation` field on `CurveDef` in `SpectraPanel.tsx`.
+- **Chlorophyll-a plot** lost the eutrophication threshold band + "Eutrophication" label; the linear food-response curve and its "Linear food response" annotation stay. The `DangerZone` function and the `showDanger` prop were removed (chla was the only consumer). The Eutrophication *glossary* entry is untouched — it's a defined term, not the plot.
+- **Body sweep:** hero stat "evaluated for oyster suitability" → "ranked for restoration priority"; § 4 "top tier of the suitability ranking" → "top tier of the site ranking"; walkthrough "the suitable set" (×3) → "the qualifying set."
+- **Step 2 copy** revised so the consequence of too much food points at the dissolved-oxygen step (where the framework actually flags it) instead of a "danger zone" visual that no longer exists.
+- **aria-label** "Variable suitability curves" → "Variable scoring functions" (screen-reader users read the renamed plots too).
+- **Held for Lise's next pass:** new salinity + dissolved-oxygen threshold values (incoming data — both plots otherwise unchanged); the lower-stakes "suitable" *adjective* uses ("each suitable site," the map legend's "Suitable site," § 4 "most suitable for," two spectra annotations); the Habitat Suitability Index glossary entry (kept — it draws the HSI contrast and aids defensibility).
+- **Shipped:** commit `3c1120a` to `main`, local `next build` clean, Vercel production status green. Code symbols (`SuitabilityLegend`, `SUITABILITY_GRADIENT*`, `SuitableDot`) left unchanged — internal identifiers with no reader surface; renaming them is a separate hygiene task, not a narrative correction.
+
 **The editorial spine for the entire methodology section, locked:**
 > The framework's complete recommendation isn't just "top-10 by biology." It's "top-10 by biology, with full cost/permitting/co-benefit context attached."
 
@@ -18,9 +30,12 @@ Steps 1–3 narrow by biology. Steps 4–6 attach context without narrowing furt
 
 **Vocabulary locked across the page:**
 - Candidate sites = the original 78
-- Suitable site = passed biology gate (22, bright dot)
+- Site score = the relative water-quality score (renamed from "suitability score" on May 26). "Relative site score" appears only in the § 3 first-use prose.
+- Qualifying set = the sites that pass the biology gate (22, bright dot). Called "the suitable set" in walkthrough copy until May 26.
 - Priority project = top-10 by composite (haloed at step 6 only)
-- Reserve = suitable but not in top-10 (12, bright but unhaloed)
+- Reserve = qualifying but not in top-10 (12, bright but unhaloed)
+
+Note the current half-state, by design: the *set* is now the "qualifying set," but individual sites are still described with the adjective "suitable site" (and the map legend still reads "Suitable site"). Those adjective uses are held for Lise's review pass — don't sweep them unprompted.
 
 ---
 
@@ -261,7 +276,7 @@ After pushing to main:
 
 | Say | Not |
 |---|---|
-| Suitability score | Confidence |
+| Site score (chart UI) / relative site score (§ 3 first-use prose) | Suitability score · Habitat Suitability Index · Confidence |
 | Data support / monitoring coverage | Confidence (for ConfidenceRule) |
 | Sites already in design | Pipeline |
 | Candidate sites | Pipeline sites |
