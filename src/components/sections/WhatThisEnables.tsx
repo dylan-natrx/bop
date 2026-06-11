@@ -17,7 +17,7 @@ export function WhatThisEnables() {
             text-4xl sm:text-5xl lg:text-6xl
             max-w-[22ch]
           ">
-          The pipeline becomes operational.
+          The harbor gets a plan it can build on.
         </h2>
 
         <div className="
@@ -28,49 +28,47 @@ export function WhatThisEnables() {
           {/* Beat: Operational */}
           <div className="space-y-3">
             <div className="font-mono text-eyebrow uppercase tracking-[0.22em] text-teal-bright">
-              Operational
+              The work
             </div>
             <p className="font-sans text-body text-ivory-dim font-light leading-[1.65]">
-              BOP can now move priority sites toward design and permitting at
-              the same time, with the comparative ranking guiding where to
-              commit time and capital first.
+              BOP can now push several of the top sites toward design and
+              permitting at the same time, using the ranking to decide where to
+              put its money and effort first.
             </p>
           </div>
 
           {/* Beat: Institutional */}
           <div className="space-y-3">
             <div className="font-mono text-eyebrow uppercase tracking-[0.22em] text-teal-bright">
-              Institutional
+              The agencies
             </div>
             <p className="font-sans text-body text-ivory-dim font-light leading-[1.65]">
-              Oyster restoration in New York Harbor requires approvals from a
-              range of state and federal agencies. The new framework gives
-              those agencies a complete view of the candidate pipeline: the
-              ranking, the methodology behind every site&apos;s position
-              within the ranking, and the confidence level driving each
-              position. It is the level of analytical rigor regulators have
-              been wanting from the field for some time. Concurrently, BOP is
-              working with New York State on an Environmental Impact
-              Statement for its oyster restoration activities, scheduled to
-              conclude by the end of 2028. Once complete, the EIS streamlines
-              permitting for individual sites, and the framework&apos;s
-              analysis feeds directly into it. When BOP returns to project
-              permitting, the conversation starts from documented,
-              comparative analysis the agencies have not previously had.
+              Rebuilding reefs in New York Harbor needs sign-off from a stack of
+              state and federal agencies. The framework hands those agencies a
+              clear, full picture: every site ranked, the reasons behind each
+              ranking, and how much data stands behind it. It is the kind of
+              careful, side-by-side analysis regulators have been asking the
+              field for. At the same time, BOP and New York State are working
+              through an Environmental Impact Statement for oyster restoration,
+              due to wrap by the end of 2028. Once it is done, it clears the
+              permitting path for individual sites, and this analysis feeds
+              straight into it. When BOP comes back to permit projects, the
+              conversation starts from solid, comparative evidence the agencies
+              have not had before.
             </p>
           </div>
 
           {/* Beat: Mission */}
           <div className="space-y-3">
             <div className="font-mono text-eyebrow uppercase tracking-[0.22em] text-teal-bright">
-              Mission
+              The mission
             </div>
             <p className="font-sans text-body text-ivory-dim font-light leading-[1.65]">
-              BOP&apos;s target is one billion oysters in the water by 2035.
-              The harbor currently holds under 200 million. The gap requires
-              years of deployment at scales BOP has not previously reached.
-              The new framework makes a parallel pipeline credible, which
-              makes the 2035 target operationally achievable for the first
+              BOP is aiming for one billion oysters in the water by 2035. The
+              harbor holds under 200 million today. Closing that gap means
+              building far more reef, far faster than before. By making it
+              believable to advance many sites at once instead of one at a
+              time, the framework puts the 2035 goal within reach for the first
               time.
             </p>
           </div>
@@ -99,22 +97,26 @@ export function WhatThisEnables() {
             font-sans text-body text-ivory-dim font-light leading-[1.65]
           ">
           <p>
-            Coastal districts, state agencies, port authorities,
-            foundations, and restoration practitioners at every scale are
-            increasingly facing site-prioritization questions of their own.
-            The methodology built for New York
-            Harbor is a transferable framework. The underlying data is
-            local. The scoring functions retune to the salinity, food, and
-            oxygen conditions of whichever estuary the work is applied to.{' '}
-            <em className="font-serif italic text-white">Natrx Assess</em> erosion
-            analyses can be run for any shoreline geography with publicly
-            available satellite imagery. Each estuary brings its own
-            ecological complexity and its own data realities. What carries
-            forward is the structure: comparative analysis across all
-            candidate sites at once, with confidence levels disclosed. The
-            work happening in New York Harbor
-            this year is part of a larger shift. The natural world and the
-            built one, in service of each other.
+            The same question is waiting all over the map. Coastal towns, state
+            agencies, port authorities, foundations, and restoration groups
+            large and small are all trying to work out where to start. This way
+            of working can answer them, because it doesn&apos;t carry New
+            York&apos;s answer with it. It carries a way of listening to a
+            place: the data a harbor already keeps, and the people who know its
+            water. The scoring is set to each estuary&apos;s own salt, food, and
+            oxygen. The shoreline work from{' '}
+            <em className="font-serif italic text-white">Natrx Assess</em> runs
+            anywhere there are satellite pictures to read. Every place brings
+            its own nature and its own gaps in the data. What travels is the
+            habit of looking at every candidate at once, and being honest about
+            how much we know.
+          </p>
+          <p className="mt-6">
+            An oyster reef is a hopeful kind of thing: something we build that
+            is also alive. It guards a shoreline and feeds a harbor at the same
+            time. Work like this is a bet that what we make and what lives
+            around us can do more than share space. They can look after each
+            other.
           </p>
         </div>
 

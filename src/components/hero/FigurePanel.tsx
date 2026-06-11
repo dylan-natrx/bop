@@ -22,11 +22,11 @@ export function FigurePanel({ hoveredRanks, onHoverRanks }: FigurePanelProps) {
       {/* Caption */}
       <div className="flex flex-col gap-2.5">
         <div className="font-mono text-eyebrow uppercase text-ivory-faint">
-          Fig. 1 — Site distribution
+          Fig. 1 · The 78 sites
         </div>
         <div className="font-serif italic font-light text-body text-ivory leading-snug">
-          All 78 candidate sites across New York Harbor, sized by acreage and
-          colored by site score.
+          All 78 possible sites across New York Harbor. Bigger dots cover more
+          water. Greener dots score higher.
         </div>
       </div>
 

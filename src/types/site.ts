@@ -16,7 +16,7 @@ export interface RankingSite {
   NearPark: 'Yes' | 'No'
   WaveExposure: 'Yes' | 'No' | null
   Erosion: 'Yes' | 'No' | null
-  SuitableDepth: 'Yes' | 'No'
+  PercentageSuitableDepth: number
 }
 
 /**
@@ -86,7 +86,6 @@ export interface SiteStats {
   park_nearest_ft: number
 
   // Depth
-  depth_score: string
   depth_median_ft: number
   depth_0_20ft_pct: number
   depth_20_39ft_pct: number
@@ -95,7 +94,7 @@ export interface SiteStats {
   // Physical environment
   erosion_gt_0_ft_yr: string
   erosion_gt_1_ft_yr: string
-  wave_sup_3ft: number | null
+  wave_sup_3ft: string | null
 
   // Optional editorial content for tier 1 sites
   tier1Editorial?: string

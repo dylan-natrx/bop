@@ -22,9 +22,9 @@ export function WhatAnalysisMadeVisible() {
             font-sans text-body text-ivory-dim font-light leading-[1.65]
           ">
           <p>
-            The ranking told BOP which sites are most suitable for
-            restoration. Two patterns within the ranking shape what BOP does
-            next.
+            The ranking did its main job. It told BOP which places give
+            oysters the best shot. Two more things stand out inside it, and
+            they shape what comes next.
           </p>
         </div>
       </div>
@@ -34,17 +34,16 @@ export function WhatAnalysisMadeVisible() {
           subhead="Oysters and shorelines, one intervention."
           body={
             <p>
-              Many of the highest-ranked sites sit adjacent to actively eroding
-              shorelines.{' '}
+              Some of the higher-ranked sites sit next to a shoreline that is
+              washing away. Using satellite pictures going back to 2010,{' '}
               <em className="font-serif italic text-white">Natrx Assess</em> measured
-              shoreline change at every candidate location, using satellite
-              imagery going back to 2010. Eight sites are losing more than a
-              foot of shoreline a year. Fifteen more are retreating at slower
-              rates. Several sit in the top tier of the site ranking.
-              Oyster reefs function as natural breakwaters: they dampen wave
-              energy and slow the loss of marsh edge. Where strong water
-              quality meets active erosion, the same project restores habitat
-              and stabilizes coast.
+              how every site&apos;s shoreline has moved. Eight sites are losing
+              more than a foot of land a year. Fifteen more are slipping back
+              more slowly. A few of them rank high for oysters too. And an
+              oyster reef is a natural breakwater: it takes the force out of
+              the waves and slows the land&apos;s retreat. So where good water
+              meets a fraying shore, one reef does two jobs at once, a home for
+              oysters and a guard for the coast.
             </p>
           }
           visual={
@@ -57,9 +56,9 @@ export function WhatAnalysisMadeVisible() {
               caption={
                 <>
                   Shoreline change at Living Breakwaters, 2010 to 2025. Red
-                  indicates active retreat. Source: Natrx Assess, using NAIP
-                  satellite imagery and the Marsh Edge from Image Processing
-                  methodology.
+                  marks where the shore is pulling back. Source: Natrx Assess,
+                  using NAIP satellite imagery and the Marsh Edge from Image
+                  Processing method.
                 </>
               }
             />
@@ -70,20 +69,18 @@ export function WhatAnalysisMadeVisible() {
           subhead="A map of where to invest in more data next."
           body={
             <p>
-              Strong site rankings depend on strong underlying data, and
-              observational coverage across the harbor is uneven. The
-              framework names that unevenness directly, classifying each
-              site&apos;s confidence level based on how well the available
-              data supports its score. Sites already advanced into BOP&apos;s
-              design pipeline carry high-confidence inputs because they have
-              been studied. Several top-ranked candidates from the new
-              analysis carry less observational support, simply because they
-              have not yet been studied at the same depth. Knowing exactly
-              where confidence is lower tells BOP exactly where to send the
-              next round of monitoring effort: water quality loggers, field
-              validation, additional sampling. The framework doesn&apos;t
-              just rank sites. It surfaces the highest-value targets for the
-              next investment in observation.
+              A ranking is only as strong as the data under it, and the harbor
+              is watched unevenly. Some places have years of close monitoring;
+              others have very little. The framework says so out loud. For each
+              site, it marks how much data stands behind the score. The sites
+              already in design tend to rest on solid data, because they have
+              been studied for years. Some of the strongest new candidates rest
+              on thinner data, simply because no one has looked as closely yet.
+              Knowing exactly where the data is thin tells BOP exactly where to
+              spend its next round of fieldwork: more sensors in the water,
+              more sampling, more time on site. The framework doesn&apos;t only
+              rank the harbor. It shows where the next bit of effort will pay
+              off most.
             </p>
           }
           visual={<ConfidenceDistributionChart />}
@@ -97,10 +94,10 @@ export function WhatAnalysisMadeVisible() {
           leading-[1.35]
           text-center
         ">
-        The goal was to identify the sites most suitable for building new
-        oyster reef infrastructure in New York Harbor. The framework delivered
-        that ranking. It also delivered a method BOP can rerun next year, and
-        the year after, as new data lands and the pipeline evolves.
+        The job was to find the best places to rebuild oyster reefs in New York
+        Harbor. The framework did that. It also left behind a way of working BOP
+        can run again next year, and the year after, as the harbor keeps
+        changing.
       </div>
     </SectionShell>
   )

@@ -102,7 +102,7 @@ const CURVE_DEFS: Record<SpectraCurve, CurveDef> = {
   wave: {
     key: 'wave',
     title: 'Wave exposure',
-    subtitle: 'How buildable the site is, given local wave energy',
+    subtitle: 'How hard the waves make a site to build',
     xLabel: 'feet',
     xTicks: [
       { x: 0, label: '0' },
@@ -191,7 +191,7 @@ export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
       render: (isActive, dim) => (
         <AnnotationBlock
           eyebrow="Shoreline erosion"
-          body="Where suitable sites sit next to actively retreating shorelines, oyster reefs deliver a second outcome. They dampen wave energy and slow the loss of marsh edge. The map flags these sites."
+          body="Where a strong site sits next to a shoreline that is washing away, a reef does a second job. It softens the waves and slows the land's retreat. The map flags these sites."
           isActive={isActive}
           dimension={dim}
         />
@@ -207,7 +207,7 @@ export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
       render: (isActive, dim) => (
         <AnnotationBlock
           eyebrow="Context filters"
-          body="Operational conditions that shape which suitable sites BOP can build on. Proximity to publicly accessible parkland, distance from combined sewer outfalls, distance from separate stormwater outfalls."
+          body="Real-world conditions that shape where BOP can move first. How close a site sits to a public park, and how far it sits from old sewer and stormwater outfalls."
           isActive={isActive}
           dimension={dim}
         />
@@ -492,7 +492,7 @@ function MathDisclosure() {
             composite = (sal_score + chla_score) ÷ 2 × do_score
           </div>
           <p>
-            The literal composite is not a three-way intersection of the curves above. The two water-quality scores are averaged first, then multiplied by the dissolved-oxygen score, so DO acts as a hard ceiling on the other two. The stacked curves teach the <em>concept</em> of constraints adding up; this formula is the math.
+            Here is how the numbers actually combine. The two water scores, salt and food, are averaged, then multiplied by the oxygen score. That multiply is what lets low oxygen pull a whole site down. The stacked curves above show the <em>idea</em>; this line shows the arithmetic.
           </p>
         </div>
       )}

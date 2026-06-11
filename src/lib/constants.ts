@@ -50,24 +50,24 @@ export const HERO_STATS = [
   {
     value: 78,
     label: 'Candidate sites',
-    qualifier: 'Across five harbor regions, ranked for restoration priority',
+    qualifier: 'Spread across five parts of the harbor, ranked by where to start',
   },
   {
     value: 2604,
     unit: 'ac',
-    label: 'Total candidate footprint',
-    qualifier: 'Combined area if every candidate were built out',
+    label: 'Total area in play',
+    qualifier: 'Every possible site added together',
   },
   {
     displayValue: '1 billion',
     label: 'Oyster goal by 2035',
-    qualifier: "Billion Oyster Project's stated target for New York Harbor",
+    qualifier: 'What Billion Oyster Project is working toward in New York Harbor',
   },
   {
     value: 9,
-    label: 'Environmental variables synthesized',
+    label: 'Conditions weighed at each site',
     qualifier:
-      'Salinity, chlorophyll, oxygen, depth, wave exposure, shoreline change, plus three infrastructure flags',
+      "Salt, food, oxygen, depth, waves, and shoreline change, plus three things about what's nearby",
   },
 ] as const
 

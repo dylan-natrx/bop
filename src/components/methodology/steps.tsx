@@ -56,7 +56,7 @@ export const STEPS: StepConfig[] = [
     title: 'Salinity, the Goldilocks variable',
     lede: 'Salinity is a Goldilocks variable.',
     bodyParagraphs: [
-      "Too little salt, oysters can't survive. Too much, they can't either. The optimum is roughly 12 to 20 PSU. Most of the harbor sits in range. The upper Hudson runs too fresh. Sites near Piermont, Irvington, and Ossining drop out at this step. One variable, and the field is already sorting itself.",
+      "Too little salt and oysters can't survive. Too much and they can't either. But how much is just right depends on the estuary. Far up the Hudson, oysters hold on in water fresher than the textbooks allow, and the people who have worked this harbor for years know it. So the score is set to fit this place, not copied from a manual. Sites near Piermont and Ossining, fresh enough that a one-size formula would throw them out, stay in the running. The real sorting comes a few steps later.",
     ],
     colorMode: 'salinity',
     visibleFlags: [],
@@ -72,7 +72,7 @@ export const STEPS: StepConfig[] = [
     title: 'Adding chlorophyll-a, the food layer',
     lede: 'Oysters are filter feeders.',
     bodyParagraphs: [
-      'They need food in the water, measured by chlorophyll-a. More is generally better, and the score reflects that. The cost of too much (oxygen crashes from algae blooms) registers in the dissolved oxygen step that follows. Sites strong on salinity but thin on food drop further here. Sites strong on both come forward.',
+      'Oysters eat by filtering the water, so they need food floating in it. That food is measured as chlorophyll-a, the green of tiny drifting plants. More food is generally better, and the score follows that. Too much brings its own problem later, when algae blooms die off and pull the oxygen down, but that shows up in the next step. For now, sites with good salt but little food slip back. Sites strong on both move up.',
     ],
     colorMode: 'salinity_chla',
     visibleFlags: [],
@@ -88,7 +88,7 @@ export const STEPS: StepConfig[] = [
     title: 'Adding dissolved oxygen, the limiter',
     lede: "Dissolved oxygen doesn't need to be high.",
     bodyParagraphs: [
-      "It just can't fall below survival. Oxygen acts as a multiplier in the composite, so sites that slip into hypoxia get their other strengths cut in half. The ranking locks here. Arthur Kill on Staten Island emerges at the top. Six locations inside the Living Breakwaters system cluster just behind. The harbor's industrial west shore, long written off, now leads on the variables that actually matter for oyster restoration. Twenty-two of 78 sites pass the biology gate. They are the qualifying set.",
+      "It just can't drop too low for too long. Oxygen works like a dial on everything else: a site that falls into low-oxygen spells sees its other strengths pulled down sharply. This is where the order settles. Arthur Kill, on Staten Island, comes out on top. Six spots inside the Living Breakwaters system sit just behind. The harbor's old industrial west shore, written off for a century, now leads on the things that matter most for oysters. Out of 78 sites, eighteen clear the biology bar. Those are the ones worth backing.",
     ],
     colorMode: 'composite',
     visibleFlags: [],
@@ -102,15 +102,16 @@ export const STEPS: StepConfig[] = [
   {
     id: 4,
     title: <>Wave exposure, from <Em>Natrx Assess</Em></>,
-    lede: 'The next three steps describe external factors at each suitable site.',
+    lede: 'The next three steps look at what surrounds each site that made the cut.',
     bodyParagraphs: [
       <>
-        Wave exposure is the feasibility question. A site can score perfectly
-        on biology and still need storm-rated infrastructure because the water
-        moves too hard. Every top-ten site in this pipeline carries a wave
-        flag. They stay in the qualifying set. You can&apos;t pay your way to
-        better water, but you can pay for engineering. The framework now tells
-        BOP what to budget for. Wave energy data from <Em>Natrx Assess</Em>.
+        Wave exposure is about how hard the water hits. A site can be perfect
+        for oysters and still need sturdier, storm-ready construction because
+        the waves run high. Several of the strongest sites, including the
+        Living Breakwaters cluster, sit in exactly that kind of water. They
+        stay on the list. You can&apos;t pay your way to better water, but you
+        can pay for the engineering, and now BOP knows where it will need to.
+        Wave data comes from <Em>Natrx Assess</Em>.
       </>,
     ],
     colorMode: 'composite',
@@ -127,7 +128,7 @@ export const STEPS: StepConfig[] = [
     title: <>Shoreline erosion, from <Em>Natrx Assess</Em></>,
     lede: 'Wave adds cost. Erosion adds value.',
     bodyParagraphs: [
-      'Sites that pass biology and sit next to actively retreating shoreline get a positive flag. A reef would dampen wave energy and slow the loss of marsh edge. One project, two outcomes. A discount on cost and performance.',
+      "Some sites sit right next to a shoreline that is washing away. Those get a flag too, a hopeful one. A reef in front of a crumbling shore softens the waves and slows the land's retreat. One reef, two jobs at once: a home for oysters and a guard for the coast.",
     ],
     colorMode: 'composite',
     visibleFlags: ['wave', 'erosion'],
@@ -143,8 +144,8 @@ export const STEPS: StepConfig[] = [
     title: 'The practical filters',
     lede: 'The last layer is operational.',
     bodyParagraphs: [
-      "Sites near combined sewer and stormwater outfalls carry permitting friction with state and federal agencies. Sites near publicly accessible parkland make BOP's mission easier. Neither changes which sites are suitable. Both shape what BOP plans for and where it commits time first.",
-      'Stack the six layers together and the priority projects emerge. The top ten by composite — Arthur Kill, the Living Breakwaters cluster, Wolfe’s Pond, Conch Basin, and the adjacent Arthur Kill parcels — sit inside the wider qualifying set, now with their cost, permitting, and co-benefit profile fully visible. They are where the framework points BOP to commit first. The other suitable sites are the reserve, ready to advance as priority sites move toward design and permitting. That is the answer the engagement was built to produce. BOP can rerun the analysis next year as new data lands.',
+      "The last layer is about people and paperwork. Sites near old sewer and stormwater outfalls come with extra permitting hoops from state and federal agencies. Sites next to public parks are easier to fund and to share with the neighborhood. What these change is the path, not the biology: how fast BOP can move, and how much public good a project does along the way.",
+      "Lay all six layers over one another and the first projects come into focus. They are not all alike. Some, like the Living Breakwaters cluster, sit in rougher water that costs more to build in. Some sit beside a shoreline a reef could help hold in place. Arthur Kill, the strongest of them all, sits in calm water with little hard data nearby, which makes it the clearest place to go study next. The top ten are where the framework tells BOP to start. The rest of the qualifying sites wait in reserve, ready to move up as the leaders head into design and permitting. This is what the work set out to deliver. And BOP can run it again next year, as new data comes in.",
     ],
     colorMode: 'composite',
     visibleFlags: ['wave', 'erosion', 'park', 'cso', 'ms4'],

@@ -27,29 +27,27 @@ export function StakesAndProblem() {
             clear enough to see fifteen feet down, a food web that fed the
             eastern seaboard. Centuries of dredging, overharvest, and
             industrial discharge collapsed it. Billion Oyster Project is
-            rebuilding that foundation, with a target of one billion oyster
-            spat deployed across the harbor by 2035.
+            rebuilding that foundation, with a goal of one billion oysters in
+            the harbor by 2035.
           </p>
           <p>
-            Restoration in the harbor has happened opportunistically. Sites
-            moved forward when a parks department said yes, when a marina
-            allowed a cage, when access was available. At proof-of-concept
-            scale, that was the right discipline. It gave the Billion Oyster
-            Project a decade of small-reef work and real evidence of what
-            survives where in the harbor.
+            For years, the work moved ahead wherever it could. A site went
+            forward when a parks department said yes, when a marina allowed a
+            cage, when there was a way in. For a young program proving the
+            idea, that was the right call. It gave Billion Oyster Project a
+            decade of small reefs and real evidence of what survives where.
           </p>
           <p>
-            At the scale of one billion oysters by 2035, the program needed a
-            different kind of decision. BOP&apos;s pipeline contains 78{' '}
+            A billion oysters is a different kind of problem. Billion Oyster
+            Project now has 78{' '}
             <GlossaryTerm termId="candidate-site">
               candidate restoration sites
             </GlossaryTerm>
-            , with a target of ten to fifteen funded, permitted projects
-            ready to break ground by 2029 or 2030. The alternative was to
-            advance each site through 30 percent design before a go-or-no-go
-            call, burning capital across locations that better information
-            could have ruled out earlier. The shift the program had to make
-            was from opportunistic siting to systemwide planning.
+            , and needs ten to fifteen of them funded, permitted, and ready to
+            build by 2029 or 2030. Studying every site halfway just to rule
+            most of them out would burn money the program can&apos;t spare. The
+            real question is the whole-harbor one: out of 78, where do you
+            begin?
           </p>
 
           <Pullquote
@@ -63,8 +61,9 @@ export function StakesAndProblem() {
           </Pullquote>
 
           <p>
-            The framework on this page is how Billion Oyster Project and Natrx
-            built that capability together.
+            Answering that question is the work Billion Oyster Project and
+            Natrx took on together. They did it the harder way, the responsible
+            way. Here is how.
           </p>
         </div>
 

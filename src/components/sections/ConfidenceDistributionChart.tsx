@@ -10,11 +10,11 @@ interface Tier {
 }
 
 // Counts verified against public/data/rankings.geojson ConfidenceRule
-// distribution: 8 high + 14 moderate+ + 24 moderate + 14 moderate- + 18 low = 78.
+// distribution: 8 high + 23 moderate+ + 15 moderate + 14 moderate- + 18 low = 78.
 const TIERS: Tier[] = [
   { internal: 'high', label: 'Robust', count: 8, color: '#6FE3D0' },
-  { internal: 'moderate+', label: 'Strong', count: 14, color: '#2BA8A0' },
-  { internal: 'moderate', label: 'Adequate', count: 24, color: '#137D76' },
+  { internal: 'moderate+', label: 'Strong', count: 23, color: '#2BA8A0' },
+  { internal: 'moderate', label: 'Adequate', count: 15, color: '#137D76' },
   { internal: 'moderate-', label: 'Limited', count: 14, color: '#3F5C68' },
   { internal: 'low', label: 'Sparse', count: 18, color: '#506973' },
 ]
