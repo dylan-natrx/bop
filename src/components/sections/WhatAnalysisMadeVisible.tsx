@@ -35,7 +35,7 @@ export function WhatAnalysisMadeVisible() {
           body={
             <p>
               Some of the higher-ranked sites sit next to a shoreline that is
-              washing away. Using satellite pictures going back to 2010,{' '}
+              washing away. Using aerial imagery going back to 2010,{' '}
               <em className="font-serif italic text-white">Natrx Assess</em> measured
               how every site&apos;s shoreline has moved. Eight sites are losing
               more than a foot of land a year. Fifteen more are slipping back
@@ -57,7 +57,7 @@ export function WhatAnalysisMadeVisible() {
                 <>
                   Shoreline change at Living Breakwaters, 2010 to 2025. Red
                   marks where the shore is pulling back. Source: Natrx Assess,
-                  using NAIP satellite imagery and the Marsh Edge from Image
+                  using NAIP aerial imagery and the Marsh Edge from Image
                   Processing method.
                 </>
               }

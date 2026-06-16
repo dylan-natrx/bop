@@ -94,7 +94,7 @@ The framework distinguishes three analytical categories:
 
 1. **Water quality** (salinity, chlorophyll-a, dissolved oxygen) — drives the suitability score. These are the rank-driving variables, sourced from public monitoring stations.
 
-2. **Shoreline dynamics** (erosion, wave exposure, depth suitability) — come from Natrx Assess. Includes multi-year/historical satellite imagery and wind-driven wave modeling. Contextual layers, not score inputs.
+2. **Shoreline dynamics** (erosion, wave exposure, depth suitability) — come from Natrx Assess. Includes multi-year/historical aerial imagery (NAIP, Assess's primary source; Assess can also use satellite imagery depending on need, availability, and budget) and wind-driven wave modeling. Contextual layers, not score inputs.
 
 3. **Built environment** (CSO outfalls, MS4 outfalls, parkland proximity) — regulatory/infrastructure proximity flags. Also contextual layers.
 

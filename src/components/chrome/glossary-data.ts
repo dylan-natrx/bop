@@ -149,7 +149,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     id: 'meip',
     term: 'Shoreline change analysis (MEIP)',
     definition:
-      'Marsh Edge from Image Processing. A technique that traces the moving edge of marsh vegetation across multiple years of satellite imagery to measure erosion rates at roughly one-meter resolution.',
+      'Marsh Edge from Image Processing. A technique that traces the moving edge of marsh vegetation across multiple years of aerial imagery to measure erosion rates at roughly one-meter resolution.',
   },
   {
     id: 'site-score',

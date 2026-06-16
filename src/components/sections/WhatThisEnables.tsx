@@ -106,7 +106,7 @@ export function WhatThisEnables() {
             water. The scoring is set to each estuary&apos;s own salt, food, and
             oxygen. The shoreline work from{' '}
             <em className="font-serif italic text-white">Natrx Assess</em> runs
-            anywhere there are satellite pictures to read. Every place brings
+            anywhere there is aerial or satellite imagery to read. Every place brings
             its own nature and its own gaps in the data. What travels is the
             habit of looking at every candidate at once, and being honest about
             how much we know.
