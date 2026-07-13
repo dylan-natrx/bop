@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { resolveHost, getTenant } from '@/lib/platform/tenants'
-import { mintSessionValue, verifyTenantCredential, sessionCookieName } from '@/lib/platform/gate'
+import { mintSessionValue, sessionCookieName } from '@/lib/platform/gate'
+import { verifyTenantCredential } from '@/lib/platform/credentials'
 
 /**
  * POST /api/auth/login

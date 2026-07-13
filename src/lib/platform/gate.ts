@@ -16,9 +16,9 @@
  *   - The cookie is host-only (no Domain attribute), so a session on
  *     bop.natrx.report grants nothing on any other subdomain.
  *
- * Everything here except verifyTenantCredential must stay Edge-safe
- * (Web Crypto only): the middleware runs it on every request. bcrypt is
- * loaded lazily and only ever runs in the login route (Node runtime).
+ * Everything in this module must stay Edge-safe (Web Crypto only): the
+ * middleware runs it on every request. bcrypt lives in credentials.ts,
+ * which only the login route (Node runtime) may import.
  */
 
 import { getTenant, type Tenant } from './tenants'
@@ -102,19 +102,3 @@ export async function evaluateTenantGate(
   }
 }
 
-/**
- * Credential check for the login route. bcrypt compare over the combined
- * "<username>:<password>" string — both halves of the shared credential
- * are enforced, and neither exists in plaintext anywhere in the repo.
- * Node runtime only (bcryptjs is loaded lazily so the Edge middleware
- * bundle never pulls it in).
- */
-export async function verifyTenantCredential(
-  tenant: Tenant,
-  username: string,
-  password: string,
-): Promise<boolean> {
-  if (!tenant.passwordHash) return false
-  const { default: bcrypt } = await import('bcryptjs')
-  return bcrypt.compare(`${username}:${password}`, tenant.passwordHash)
-}
