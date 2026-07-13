@@ -37,6 +37,13 @@ export const TENANTS: readonly Tenant[] = [
     passwordHash: '$2b$12$V24wYwDsTVM59gHONRpWq.Z11vFFMmWPVxIrvbc1Xr4fsJ9XDQh6y',
     mediaUrl: 'https://share.natrx.io/billion-oyster-project',
   },
+  {
+    slug: 'demo',
+    displayName: 'Platform Demo',
+    accessMode: 'gated',
+    passwordHash: '$2b$12$ZCu9IjE.RGAS0Fo5Q2Qn6u1848vYHnLMZuiYR0pp8XYg8o091DZdi',
+    mediaUrl: null,
+  },
 ]
 
 export function getTenant(slug: string): Tenant | null {
