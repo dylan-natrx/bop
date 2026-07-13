@@ -1,72 +1,100 @@
 import type { Config } from 'tailwindcss'
 import defaultTheme from 'tailwindcss/defaultTheme'
 
+/**
+ * Platform Tailwind config: token NAMES only. Every value points at a CSS
+ * variable that the owning project defines in its own stylesheet (loaded
+ * only on that project's routes), so no project-specific value lives here
+ * and two projects can never collide. BOP's values: see
+ * src/app/projects/bop/styles/bop.css. Colors are RGB triplets wrapped in
+ * rgb(var() / <alpha-value>) so opacity modifiers (bg-bg-mid/55) work;
+ * tokens with baked-in alpha (rule, land-edge) are plain variables.
+ */
 const config: Config = {
   content: ['./src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
-        // Core palette from hero_reference.html
-        'bg-deep': '#061321',
-        'bg-mid': '#0E2236',
-        'bg-soft': '#15314A',
-        land: '#04101C',
-        'land-edge': 'rgba(70, 110, 145, 0.18)',
+        'bg-deep': 'rgb(var(--bop-bg-deep) / <alpha-value>)',
+        'bg-mid': 'rgb(var(--bop-bg-mid) / <alpha-value>)',
+        'bg-soft': 'rgb(var(--bop-bg-soft) / <alpha-value>)',
+        land: 'rgb(var(--bop-land) / <alpha-value>)',
+        'land-edge': 'var(--bop-land-edge)',
 
-        // Teal spectrum
         teal: {
-          DEFAULT: '#137D76',
-          bright: '#2BA8A0',
-          aqua: '#6FE3D0',
+          DEFAULT: 'rgb(var(--bop-teal) / <alpha-value>)',
+          bright: 'rgb(var(--bop-teal-bright) / <alpha-value>)',
+          aqua: 'rgb(var(--bop-teal-aqua) / <alpha-value>)',
         },
 
-        // Ivory spectrum
         ivory: {
-          DEFAULT: '#F2EDE3',
-          dim: '#B8B0A0',
-          faint: '#6E6859',
+          DEFAULT: 'rgb(var(--bop-ivory) / <alpha-value>)',
+          dim: 'rgb(var(--bop-ivory-dim) / <alpha-value>)',
+          faint: 'rgb(var(--bop-ivory-faint) / <alpha-value>)',
         },
 
-        // Rules / dividers
         rule: {
-          DEFAULT: 'rgba(242, 237, 227, 0.12)',
-          soft: 'rgba(242, 237, 227, 0.06)',
+          DEFAULT: 'var(--bop-rule)',
+          soft: 'var(--bop-rule-soft)',
         },
 
-        // Suitability gradient stops (for JS interpolation)
         suitability: {
-          low: '#2A4A56',
-          mid: '#137D76',
-          high: '#6FE3D0',
+          low: 'rgb(var(--bop-suitability-low) / <alpha-value>)',
+          mid: 'rgb(var(--bop-suitability-mid) / <alpha-value>)',
+          high: 'rgb(var(--bop-suitability-high) / <alpha-value>)',
         },
       },
 
       fontFamily: {
-        serif: ['var(--font-fraunces)', ...defaultTheme.fontFamily.serif],
-        sans: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
-        mono: ['var(--font-jetbrains)', ...defaultTheme.fontFamily.mono],
+        serif: ['var(--project-font-serif)', ...defaultTheme.fontFamily.serif],
+        sans: ['var(--project-font-sans)', ...defaultTheme.fontFamily.sans],
+        mono: ['var(--project-font-mono)', ...defaultTheme.fontFamily.mono],
       },
 
       fontSize: {
-        // Hero headline: clamp(50px, 6.6vw, 100px)
         'hero-headline': [
-          'clamp(50px, 6.6vw, 100px)',
-          { lineHeight: '0.96', letterSpacing: '-0.025em' },
+          'var(--bop-text-hero-headline)',
+          {
+            lineHeight: 'var(--bop-text-hero-headline-lh)',
+            letterSpacing: 'var(--bop-text-hero-headline-ls)',
+          },
         ],
-        // Stat numbers
-        'stat-num': ['60px', { lineHeight: '1', letterSpacing: '-0.02em' }],
-        // Stat unit suffix
-        'stat-unit': ['22px', { lineHeight: '1', letterSpacing: '0' }],
-        // Eyebrows (panel-eyebrow, section markers)
-        eyebrow: ['10px', { lineHeight: '1.4', letterSpacing: '0.22em' }],
-        // Labels (stat-label, panel-section-title)
-        label: ['11px', { lineHeight: '1.45', letterSpacing: '0.18em' }],
-        // Body small
-        'body-sm': ['13px', { lineHeight: '1.5' }],
-        // Body default
-        body: ['17px', { lineHeight: '1.6' }],
+        'stat-num': [
+          'var(--bop-text-stat-num)',
+          {
+            lineHeight: 'var(--bop-text-stat-num-lh)',
+            letterSpacing: 'var(--bop-text-stat-num-ls)',
+          },
+        ],
+        'stat-unit': [
+          'var(--bop-text-stat-unit)',
+          {
+            lineHeight: 'var(--bop-text-stat-unit-lh)',
+            letterSpacing: 'var(--bop-text-stat-unit-ls)',
+          },
+        ],
+        eyebrow: [
+          'var(--bop-text-eyebrow)',
+          {
+            lineHeight: 'var(--bop-text-eyebrow-lh)',
+            letterSpacing: 'var(--bop-text-eyebrow-ls)',
+          },
+        ],
+        label: [
+          'var(--bop-text-label)',
+          {
+            lineHeight: 'var(--bop-text-label-lh)',
+            letterSpacing: 'var(--bop-text-label-ls)',
+          },
+        ],
+        'body-sm': [
+          'var(--bop-text-body-sm)',
+          { lineHeight: 'var(--bop-text-body-sm-lh)' },
+        ],
+        body: ['var(--bop-text-body)', { lineHeight: 'var(--bop-text-body-lh)' }],
       },
 
+      // Same values as Tailwind's defaults; kept for explicitness.
       fontWeight: {
         light: '300',
         normal: '400',
@@ -75,50 +103,28 @@ const config: Config = {
       },
 
       spacing: {
-        // Page scaffold
-        'scaffold-top': '36px',
-        'scaffold-x': '56px',
-        'scaffold-bottom': '40px',
+        'scaffold-top': 'var(--bop-scaffold-top)',
+        'scaffold-x': 'var(--bop-scaffold-x)',
+        'scaffold-bottom': 'var(--bop-scaffold-bottom)',
       },
 
       maxWidth: {
-        scaffold: '1480px',
+        scaffold: 'var(--bop-scaffold-max)',
       },
 
       borderRadius: {
-        card: '4px',
+        card: 'var(--bop-radius-card)',
       },
 
+      // Keyframes live in the owning project's stylesheet next to the
+      // duration/easing variables these names point at.
       animation: {
-        'fade-up': 'fadeUp 1200ms ease-out forwards',
-        'fade-up-fast': 'fadeUp 900ms ease-out forwards',
-        'fade-in': 'fadeIn 1500ms ease-out forwards',
-        'pulse-halo': 'pulseHalo 2.6s ease-in-out infinite',
-        nudge: 'nudge 2s ease-in-out infinite',
-        'draw-line': 'drawLine 800ms ease-out forwards',
-      },
-
-      keyframes: {
-        fadeUp: {
-          from: { opacity: '0', transform: 'translateY(14px)' },
-          to: { opacity: '1', transform: 'translateY(0)' },
-        },
-        fadeIn: {
-          from: { opacity: '0' },
-          to: { opacity: '1' },
-        },
-        pulseHalo: {
-          '0%, 100%': { transform: 'scale(1)', opacity: '0.85' },
-          '50%': { transform: 'scale(2.0)', opacity: '0' },
-        },
-        nudge: {
-          '0%, 100%': { transform: 'translateX(0)' },
-          '50%': { transform: 'translateX(4px)' },
-        },
-        drawLine: {
-          from: { opacity: '0', strokeDashoffset: '60' },
-          to: { opacity: '1', strokeDashoffset: '0' },
-        },
+        'fade-up': 'var(--bop-anim-fade-up)',
+        'fade-up-fast': 'var(--bop-anim-fade-up-fast)',
+        'fade-in': 'var(--bop-anim-fade-in)',
+        'pulse-halo': 'var(--bop-anim-pulse-halo)',
+        nudge: 'var(--bop-anim-nudge)',
+        'draw-line': 'var(--bop-anim-draw-line)',
       },
 
       transitionDuration: {
@@ -126,18 +132,13 @@ const config: Config = {
       },
 
       backdropBlur: {
-        tooltip: '8px',
+        tooltip: 'var(--bop-blur-tooltip)',
       },
 
       backgroundImage: {
-        // Suitability gradient for legends
-        'suitability-gradient':
-          'linear-gradient(90deg, #2A4A56 0%, #137D76 50%, #6FE3D0 100%)',
-        // Page ambient gradients
-        'ambient-teal':
-          'radial-gradient(ellipse 1400px 900px at 28% 38%, rgba(19, 125, 118, 0.18), transparent 60%)',
-        'ambient-aqua':
-          'radial-gradient(ellipse 1100px 800px at 78% 72%, rgba(43, 168, 160, 0.10), transparent 55%)',
+        'suitability-gradient': 'var(--bop-bg-suitability-gradient)',
+        'ambient-teal': 'var(--bop-bg-ambient-teal)',
+        'ambient-aqua': 'var(--bop-bg-ambient-aqua)',
       },
     },
   },

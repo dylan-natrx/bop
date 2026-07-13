@@ -16,9 +16,19 @@ import { evaluateTenantGate, sessionCookieName } from '@/lib/platform/gate'
  * no disable flag and no plaintext credential anywhere — a tenant is open
  * only by being accessMode: 'public' in the registry.
  *
- * Phase 2 will add the rewrite of tenant traffic into app/projects/<slug>.
- * Until then the sole tenant (bop) is served by the root routes.
+ * Tenant traffic is rewritten into that project's route group:
+ *   bop.natrx.report/x → /projects/bop/x. The public URL never contains
+ * /projects/…; a request that already does falls through the rewrite to
+ * /projects/<slug>/projects/… and 404s, so project routes have exactly
+ * one address.
  */
+function rewriteToProject(request: NextRequest, slug: string) {
+  const url = request.nextUrl.clone()
+  const path = url.pathname === '/' ? '' : url.pathname
+  url.pathname = `/projects/${slug}${path}`
+  return NextResponse.rewrite(url)
+}
+
 export async function middleware(request: NextRequest) {
   const resolution = resolveHost(
     request.headers.get('host'),
@@ -31,6 +41,15 @@ export async function middleware(request: NextRequest) {
       return NextResponse.rewrite(new URL('/platform', request.url))
     }
     return new NextResponse('Not found', { status: 404 })
+  }
+
+  const { pathname } = request.nextUrl
+
+  // The login page is project-owned UI but must be reachable ungated.
+  // (Unknown tenants still 404 below because the gate runs first for
+  // everything else, and /projects/<unknown>/login has no route.)
+  if (pathname === '/login' || pathname.startsWith('/login/')) {
+    return rewriteToProject(request, resolution.slug)
   }
 
   const cookieValue = request.cookies.get(sessionCookieName(resolution.slug))?.value
@@ -51,7 +70,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  return NextResponse.next()
+  return rewriteToProject(request, resolution.slug)
 }
 
 /**
@@ -60,11 +79,13 @@ export async function middleware(request: NextRequest) {
  *   - favicon.ico                root favicon
  *   - images, site-imagery, data static assets used by the login page and
  *                                the OG image
- *   - login                      the gate itself
  *   - api/auth                   the credential POST endpoint
+ *
+ * /login is no longer excluded: the middleware rewrites it into the
+ * tenant's project directory (ungated) so each project owns its gate UI.
  */
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|_vercel|favicon\\.ico|images|site-imagery|data|login|api/auth).*)',
+    '/((?!_next/static|_next/image|_vercel|favicon\\.ico|images|site-imagery|data|api/auth).*)',
   ],
 }

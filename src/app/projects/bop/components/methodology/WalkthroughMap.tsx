@@ -1,0 +1,550 @@
+'use client'
+
+import { useEffect, useMemo, useRef, useState } from 'react'
+import mapboxgl, { type Map as MapboxMap } from 'mapbox-gl'
+import 'mapbox-gl/dist/mapbox-gl.css'
+
+import type { RankingSite, SiteStats } from '@/app/projects/bop/types/site'
+import type { RankingsFeatureCollection } from '@/app/projects/bop/types/geojson'
+import { Tooltip, SiteTooltipContent } from '@/app/projects/bop/components/ui/Tooltip'
+import { calculateCentroid } from '@/app/projects/bop/lib/data'
+import { calculateMarkerRadius } from '@/app/projects/bop/lib/projection'
+import type { StepConfig } from './steps'
+import { WalkthroughMapLegend } from './WalkthroughMapLegend'
+
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN ?? ''
+
+const HARBOR_BOUNDS: [[number, number], [number, number]] = [
+  [-74.3, 40.42],
+  [-73.7, 41.05],
+]
+
+const BOROUGH_LABELS: { name: string; lng: number; lat: number }[] = [
+  { name: 'MANHATTAN', lng: -73.97, lat: 40.78 },
+  { name: 'BROOKLYN', lng: -73.94, lat: 40.65 },
+  { name: 'QUEENS', lng: -73.81, lat: 40.73 },
+  { name: 'BRONX', lng: -73.87, lat: 40.85 },
+  { name: 'STATEN ISLAND', lng: -74.16, lat: 40.58 },
+  { name: 'NEW JERSEY', lng: -74.22, lat: 40.72 },
+]
+
+interface WalkthroughMapProps {
+  rankings: RankingsFeatureCollection
+  stats: Record<string, SiteStats>
+  step: StepConfig
+}
+
+interface WalkthroughSiteProps {
+  id: string
+  Site: string
+  Status: 'Design' | 'Proposed Future Site'
+  Rank: number
+  Acres: number
+  Score: number
+  sal_score: number
+  chla_score: number
+  do_score: number
+  NearWave: 'Yes' | 'No'
+  NearErosion: 'Yes' | 'No'
+  NearPark: 'Yes' | 'No'
+  NearCSO: 'Yes' | 'No'
+  NearMS4: 'Yes' | 'No'
+  _radius: number
+  _displayScore: number
+  /**
+   * When 1, the site is in the bright priority set at this step.
+   * Narrowing is driven by biology alone — `_displayScore >= 0.5` under the
+   * step's color formula. Steps 4–6 do NOT narrow; they layer flag markers
+   * on the surviving set.
+   */
+  _visible: 0 | 1
+  /**
+   * When 1, the site has an active feasibility/friction flag at this step
+   * (wave at step 4+, CSO or MS4 at step 6). Rendered as an outer amber
+   * ring. Does not affect `_visible`.
+   */
+  _costFlag: 0 | 1
+  /**
+   * When 1, the site has an active co-benefit flag at this step (erosion
+   * at step 5+, park at step 6). Rendered as an inner teal-aqua ring.
+   * Does not affect `_visible`.
+   */
+  _coBenefit: 0 | 1
+  /**
+   * When 1, the site is in the priority set revealed at step 6
+   * (Rank ≤ 10 AND bright). Rendered as an outermost soft teal-aqua
+   * halo. Visible only at step 6, the culmination of the walkthrough.
+   * The top-ten list itself is determined by the composite score at
+   * step 3; the halo appears only at step 6 once external context
+   * (cost, co-benefit) has been layered on, so the reveal lands as
+   * "ten priority projects emerge with their full profile," not "the
+   * framework discovers them at step 6."
+   */
+  _isPriority: 0 | 1
+}
+
+function computeDisplayScore(
+  p: { sal_score: number; chla_score: number; do_score: number },
+  colorMode: StepConfig['colorMode']
+): number {
+  if (colorMode === 'salinity') return p.sal_score ?? 0
+  if (colorMode === 'salinity_chla')
+    return ((p.sal_score ?? 0) + (p.chla_score ?? 0)) / 2
+  return (((p.sal_score ?? 0) + (p.chla_score ?? 0)) / 2) * (p.do_score ?? 0)
+}
+
+/**
+ * Compute the flag markers active for a site at a given step.
+ *
+ * Spine:
+ *   - Steps 1–3: biology only. No flags.
+ *   - Step 4: wave is a cost flag.
+ *   - Step 5: wave (cost) + erosion (co-benefit).
+ *   - Step 6: wave + CSO + MS4 (cost) and erosion + park (co-benefit).
+ *
+ * Flags are NEVER filters. A wave-flagged site stays bright; the framework
+ * says it remains the priority site, just with engineering cost to plan
+ * around. Same for CSO/MS4 (permitting friction).
+ */
+function computeFlags(
+  p: { NearWave: 'Yes' | 'No'; NearCSO: 'Yes' | 'No'; NearMS4: 'Yes' | 'No'; NearErosion: 'Yes' | 'No'; NearPark: 'Yes' | 'No' },
+  visibleFlags: StepConfig['visibleFlags']
+): { costFlag: boolean; coBenefit: boolean } {
+  const costFlag =
+    (visibleFlags.includes('wave') && p.NearWave === 'Yes') ||
+    (visibleFlags.includes('cso') && p.NearCSO === 'Yes') ||
+    (visibleFlags.includes('ms4') && p.NearMS4 === 'Yes')
+  const coBenefit =
+    (visibleFlags.includes('erosion') && p.NearErosion === 'Yes') ||
+    (visibleFlags.includes('park') && p.NearPark === 'Yes')
+  return { costFlag, coBenefit }
+}
+
+export function WalkthroughMap({ rankings, stats, step }: WalkthroughMapProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const mapNodeRef = useRef<HTMLDivElement>(null)
+  const mapRef = useRef<MapboxMap | null>(null)
+  const labelMarkersRef = useRef<mapboxgl.Marker[]>([])
+  const [hoveredSite, setHoveredSite] = useState<WalkthroughSiteProps | null>(null)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
+  const [mapReady, setMapReady] = useState(false)
+
+  const sitesGeoJson = useMemo(() => {
+    const valid = rankings.features.filter((f) => {
+      const acres = (f.properties as RankingSite).Acres
+      return typeof acres === 'number' && acres > 0
+    })
+    const acresVals = valid.map((f) => (f.properties as RankingSite).Acres)
+    const minA = Math.min(...acresVals)
+    const maxA = Math.max(...acresVals)
+
+    const features = valid.map((feature) => {
+      const rankProps = feature.properties as RankingSite
+      const stat = stats[String(rankProps.id)] ?? ({} as Partial<SiteStats>)
+      const centroid = calculateCentroid(
+        feature.geometry.coordinates as number[][][][] | number[][][]
+      )
+
+      const sal_score = Number(stat.sal_score ?? 0)
+      const chla_score = Number(stat.chla_score ?? 0)
+      const do_score = Number(stat.do_score ?? 0)
+
+      const NearWave: 'Yes' | 'No' =
+        Number(stat.wave_sup_3ft ?? 0) > 0 || rankProps.WaveExposure === 'Yes'
+          ? 'Yes'
+          : 'No'
+      const NearErosion: 'Yes' | 'No' =
+        Number(stat.erosion_gt_1_ft_yr ?? 0) > 0 || rankProps.Erosion === 'Yes'
+          ? 'Yes'
+          : 'No'
+
+      const radius = calculateMarkerRadius(rankProps.Acres, minA, maxA, 3.5, 8)
+
+      const partial: Omit<WalkthroughSiteProps, '_visible' | '_costFlag' | '_coBenefit' | '_isPriority'> = {
+        id: rankProps.id,
+        Site: rankProps.Site,
+        Status: rankProps.Status,
+        Rank: rankProps.Rank,
+        Acres: rankProps.Acres,
+        Score: rankProps.Score,
+        sal_score,
+        chla_score,
+        do_score,
+        NearWave,
+        NearErosion,
+        NearPark: rankProps.NearPark === 'Yes' ? 'Yes' : 'No',
+        NearCSO: rankProps.NearCSO === 'Yes' ? 'Yes' : 'No',
+        NearMS4: rankProps.NearMS4 === 'Yes' ? 'Yes' : 'No',
+        _radius: radius,
+        _displayScore: computeDisplayScore({ sal_score, chla_score, do_score }, step.colorMode),
+      }
+      const aboveThreshold = partial._displayScore >= 0.5
+      const { costFlag, coBenefit } = computeFlags(partial, step.visibleFlags)
+      // Priority set reveal: top-10 by Rank, only at step 6, only on
+      // bright sites. The Rank field carries ties (e.g. rank 10 covers
+      // three Arthur Kill parcels) — `<= 10` captures the full top tier.
+      const isPriority = step.id === 6 && aboveThreshold && rankProps.Rank <= 10
+      const props: WalkthroughSiteProps = {
+        ...partial,
+        _visible: aboveThreshold ? 1 : 0,
+        // Flags only register on bright sites — a faded site can't carry a
+        // visible flag because there's no marker to attach it to.
+        _costFlag: aboveThreshold && costFlag ? 1 : 0,
+        _coBenefit: aboveThreshold && coBenefit ? 1 : 0,
+        _isPriority: isPriority ? 1 : 0,
+      }
+
+      return {
+        type: 'Feature' as const,
+        id: Number(rankProps.id),
+        geometry: { type: 'Point' as const, coordinates: centroid },
+        properties: props,
+      }
+    })
+
+    return {
+      type: 'FeatureCollection' as const,
+      features,
+    }
+  }, [rankings, stats, step.colorMode, step.visibleFlags, step.id])
+
+  useEffect(() => {
+    if (!mapNodeRef.current || mapRef.current) return
+    if (!MAPBOX_TOKEN) {
+      setErrorMsg('Missing NEXT_PUBLIC_MAPBOX_TOKEN at build time.')
+      return
+    }
+    mapboxgl.accessToken = MAPBOX_TOKEN
+
+    let map: MapboxMap
+    try {
+      map = new mapboxgl.Map({
+        container: mapNodeRef.current,
+        style: {
+          version: 8,
+          name: 'BOP Walkthrough Dark',
+          sources: {
+            'land-region': { type: 'geojson', data: '/data/region-land.geojson' },
+            'water-hudson': { type: 'geojson', data: '/data/hudson-river.geojson' },
+            sites: { type: 'geojson', data: sitesGeoJson, promoteId: 'id' },
+          },
+          layers: [
+            { id: 'background', type: 'background', paint: { 'background-color': '#061321' } },
+            { id: 'land-region-fill', type: 'fill', source: 'land-region', paint: { 'fill-color': '#15314A', 'fill-opacity': 1 } },
+            { id: 'water-hudson-fill', type: 'fill', source: 'water-hudson', paint: { 'fill-color': '#061321', 'fill-opacity': 1 } },
+            { id: 'land-region-edge', type: 'line', source: 'land-region', paint: { 'line-color': 'rgba(120, 158, 184, 0.35)', 'line-width': 1.1 } },
+            { id: 'water-hudson-edge', type: 'line', source: 'water-hudson', paint: { 'line-color': 'rgba(120, 158, 184, 0.35)', 'line-width': 1.1 } },
+
+            // Priority halo — outermost soft teal-aqua ring. Appears
+            // only at step 6 on top-10 sites. Reveals the framework's
+            // recommendation: of the suitable set, these are where BOP
+            // commits first. Pulses subtly via a rAF loop in the effect
+            // below; built-in transitions are deliberately omitted so
+            // they don't fight the per-frame setPaintProperty calls.
+            {
+              id: 'priority-halo',
+              type: 'circle',
+              source: 'sites',
+              filter: ['==', ['get', '_isPriority'], 1],
+              paint: {
+                'circle-radius': ['+', ['get', '_radius'], 8.5],
+                'circle-color': 'rgba(111, 227, 208, 0.08)',
+                'circle-stroke-color': '#6FE3D0',
+                'circle-stroke-width': 1.1,
+                'circle-stroke-opacity': 0.55,
+              },
+            },
+
+            // Cost / friction flag ring — amber, outer halo. Appears on
+            // bright sites that carry an active external feasibility flag
+            // (wave at step 4+, CSO or MS4 at step 6). NEVER filters; the
+            // sites stay bright. Says "this is a priority site with a
+            // known cost to plan around."
+            {
+              id: 'cost-flag-ring',
+              type: 'circle',
+              source: 'sites',
+              filter: ['==', ['get', '_costFlag'], 1],
+              paint: {
+                'circle-radius': ['+', ['get', '_radius'], 5],
+                'circle-color': 'rgba(0,0,0,0)',
+                'circle-stroke-color': '#D9B47A',
+                'circle-stroke-width': 1.2,
+                'circle-stroke-opacity': 0.8,
+                'circle-stroke-opacity-transition': { duration: 600 },
+                'circle-radius-transition': { duration: 600 },
+              },
+            },
+
+            // Co-benefit ring — teal-aqua, inner halo. Appears on bright
+            // sites that carry a positive external flag (erosion at step
+            // 5+, park at step 6). The erosion case is the
+            // reef-as-breakwater "two outcomes for one project" overlay;
+            // the park case says the site aligns with BOP's mission.
+            {
+              id: 'cobenefit-ring',
+              type: 'circle',
+              source: 'sites',
+              filter: ['==', ['get', '_coBenefit'], 1],
+              paint: {
+                'circle-radius': ['+', ['get', '_radius'], 2.5],
+                'circle-color': 'rgba(0,0,0,0)',
+                'circle-stroke-color': '#6FE3D0',
+                'circle-stroke-width': 1.2,
+                'circle-stroke-opacity': 0.85,
+                'circle-stroke-opacity-transition': { duration: 600 },
+                'circle-radius-transition': { duration: 600 },
+              },
+            },
+
+            // Site circles. Single binary visual: bright (in the priority
+            // set at this step) vs faded (dropped out, either by score
+            // threshold or by flag filter). The reader doesn't need to
+            // tell those two faded states apart — both mean "not in the
+            // current priority set" — so they share one gray-faded
+            // treatment.
+            {
+              id: 'sites-circle',
+              type: 'circle',
+              source: 'sites',
+              paint: {
+                'circle-radius': ['get', '_radius'],
+                'circle-color': [
+                  'case',
+                  ['==', ['get', '_visible'], 1],
+                  ['interpolate', ['linear'], ['get', '_displayScore'],
+                    0.5, '#2A4A56',
+                    0.685, '#137D76',
+                    0.87, '#6FE3D0'],
+                  'rgba(80, 105, 115, 0.85)',
+                ],
+                'circle-stroke-color': [
+                  'case',
+                  ['==', ['get', '_visible'], 1],
+                  'rgba(111, 227, 208, 0.55)',
+                  'rgba(0,0,0,0)',
+                ],
+                'circle-stroke-width': [
+                  'case',
+                  ['==', ['get', '_visible'], 1],
+                  1.2,
+                  0,
+                ],
+                'circle-opacity': [
+                  'case',
+                  ['==', ['get', '_visible'], 1],
+                  1,
+                  0.20,
+                ],
+                'circle-stroke-opacity': [
+                  'case',
+                  ['==', ['get', '_visible'], 1],
+                  1,
+                  0.20,
+                ],
+                'circle-color-transition': { duration: 600 },
+                'circle-opacity-transition': { duration: 600 },
+                'circle-stroke-opacity-transition': { duration: 600 },
+                'circle-stroke-width-transition': { duration: 600 },
+              },
+            },
+          ],
+        },
+        bounds: HARBOR_BOUNDS,
+        fitBoundsOptions: { padding: { top: 14, right: 16, bottom: 22, left: 16 } },
+        projection: 'mercator',
+        attributionControl: false,
+        interactive: false,
+        doubleClickZoom: false,
+        dragPan: false,
+        dragRotate: false,
+        scrollZoom: false,
+        keyboard: false,
+        touchZoomRotate: false,
+        pitchWithRotate: false,
+        maxZoom: 13,
+      })
+    } catch (err) {
+      setErrorMsg(`Mapbox init threw: ${err instanceof Error ? err.message : String(err)}`)
+      return
+    }
+    mapRef.current = map
+
+    map.on('error', (e) => {
+      // eslint-disable-next-line no-console
+      console.error('[WalkthroughMap] Mapbox error', e)
+    })
+
+    map.on('load', () => {
+      labelMarkersRef.current = BOROUGH_LABELS.map((label) => {
+        const el = document.createElement('div')
+        el.textContent = label.name
+        el.style.cssText = `
+          font-family: var(--font-jetbrains), ui-monospace, monospace;
+          font-size: 9px;
+          font-weight: 500;
+          letter-spacing: 0.22em;
+          color: rgba(184, 176, 160, 0.55);
+          text-transform: uppercase;
+          pointer-events: none;
+          white-space: nowrap;
+          user-select: none;
+          text-shadow: 0 0 6px rgba(6, 19, 33, 0.9);
+        `
+        return new mapboxgl.Marker({ element: el, anchor: 'center' })
+          .setLngLat([label.lng, label.lat])
+          .addTo(map)
+      })
+
+      map.on('mousemove', 'sites-circle', (e) => {
+        if (!e.features?.length) return
+        map.getCanvas().style.cursor = 'pointer'
+        const props = e.features[0].properties as unknown as WalkthroughSiteProps
+        const rect = containerRef.current?.getBoundingClientRect()
+        if (rect) {
+          setMousePos({
+            x: e.originalEvent.clientX - rect.left,
+            y: e.originalEvent.clientY - rect.top,
+          })
+        }
+        setHoveredSite(props)
+      })
+      map.on('mouseleave', 'sites-circle', () => {
+        map.getCanvas().style.cursor = ''
+        setHoveredSite(null)
+      })
+
+      setMapReady(true)
+    })
+
+    const resizeObserver = new ResizeObserver(() => map.resize())
+    if (mapNodeRef.current) resizeObserver.observe(mapNodeRef.current)
+
+    return () => {
+      resizeObserver.disconnect()
+      labelMarkersRef.current.forEach((m) => m.remove())
+      labelMarkersRef.current = []
+      map.remove()
+      mapRef.current = null
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Push updated sites when the step changes
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !mapReady) return
+    const source = map.getSource('sites') as mapboxgl.GeoJSONSource | undefined
+    if (source) {
+      source.setData(sitesGeoJson as unknown as GeoJSON.FeatureCollection)
+    }
+  }, [sitesGeoJson, mapReady])
+
+  // Subtle pulse on the priority halo at step 6 only. Continuous sine
+  // wave that gently scales the halo (~1 → 1.4 of its base offset) and
+  // its stroke opacity (0.30 → 0.80) over a 3-second cycle. Stops
+  // cleanly when the reader steps away from step 6 — the priority-halo
+  // layer's filter then evaluates false everywhere and the halos
+  // disappear regardless of paint state.
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !mapReady) return
+    if (step.id !== 6) return
+
+    const PERIOD_MS = 3000
+    const BASE_OFFSET = 8.5
+    const PULSE_AMOUNT = 5.5
+    const BASE_OPACITY = 0.30
+    const OPACITY_AMOUNT = 0.50
+
+    let raf = 0
+    let startTime: number | null = null
+
+    const animate = (t: number) => {
+      if (startTime === null) startTime = t
+      const elapsed = t - startTime
+      const phase = (elapsed % PERIOD_MS) / PERIOD_MS
+      // 0..1 sine wave (peaks at phase=0.25)
+      const wave = (Math.sin(phase * Math.PI * 2 - Math.PI / 2) + 1) / 2
+
+      const offset = BASE_OFFSET + wave * PULSE_AMOUNT
+      const opacity = BASE_OPACITY + wave * OPACITY_AMOUNT
+
+      // Guard against the layer being torn down mid-frame on step transitions
+      if (!map.getLayer('priority-halo')) return
+
+      map.setPaintProperty('priority-halo', 'circle-radius', [
+        '+',
+        ['get', '_radius'],
+        offset,
+      ])
+      map.setPaintProperty('priority-halo', 'circle-stroke-opacity', opacity)
+
+      raf = requestAnimationFrame(animate)
+    }
+
+    raf = requestAnimationFrame(animate)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      // Reset to the static base values so a later return to step 6
+      // doesn't start mid-cycle on stale paint state.
+      if (map.getLayer('priority-halo')) {
+        map.setPaintProperty('priority-halo', 'circle-radius', [
+          '+',
+          ['get', '_radius'],
+          BASE_OFFSET,
+        ])
+        map.setPaintProperty('priority-halo', 'circle-stroke-opacity', 0.55)
+      }
+    }
+  }, [step.id, mapReady])
+
+  if (!MAPBOX_TOKEN) {
+    return (
+      <div className="relative w-full h-full min-h-[380px] flex items-center justify-center p-6 text-center text-ivory-dim font-mono text-body-sm">
+        Missing NEXT_PUBLIC_MAPBOX_TOKEN.
+      </div>
+    )
+  }
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative w-full h-full min-h-[380px] lg:min-h-[420px]"
+    >
+      <div
+        ref={mapNodeRef}
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+      />
+
+      {errorMsg && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center p-6 pointer-events-none">
+          <div className="max-w-[400px] w-full p-4 bg-bg-deep/95 border border-rule rounded-card font-mono text-[12px] text-ivory">
+            {errorMsg}
+          </div>
+        </div>
+      )}
+
+      <WalkthroughMapLegend step={step} />
+
+      <Tooltip
+        x={mousePos.x}
+        y={mousePos.y}
+        visible={hoveredSite !== null}
+        containerRef={containerRef}
+      >
+        {hoveredSite && (
+          <SiteTooltipContent
+            name={hoveredSite.Site}
+            status={hoveredSite.Status === 'Design' ? 'Active design' : 'Proposed future site'}
+            rank={hoveredSite.Rank}
+            score={hoveredSite.Score}
+            acres={hoveredSite.Acres}
+          />
+        )}
+      </Tooltip>
+    </div>
+  )
+}
