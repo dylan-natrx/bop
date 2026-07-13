@@ -44,10 +44,11 @@ export function StakesAndProblem() {
             <GlossaryTerm termId="candidate-site">
               candidate restoration sites
             </GlossaryTerm>
-            , and needs ten to fifteen of them funded, permitted, and ready to
-            build by 2029 or 2030. Studying every site halfway just to rule
-            most of them out would burn money the program can&apos;t spare. The
-            real question is the whole-harbor one: out of 78, where do you
+            , and, in order to have a critical mass of oysters reproducing
+            together, it needs ten to fifteen of them funded, permitted, and
+            ready to build by 2029 or 2030. Studying every site halfway just to
+            rule most of them out would burn money the program can&apos;t spare.
+            The real question is the whole-harbor one: out of 78, where do you
             begin?
           </p>
 

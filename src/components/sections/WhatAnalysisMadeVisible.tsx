@@ -81,17 +81,18 @@ export function WhatAnalysisMadeVisible() {
           }
           visual={
             <EditorialImage
-              src="/site-imagery/shoreline-change.png"
-              alt="Shoreline change analysis at Living Breakwaters, 2010 to 2025"
-              width={2244}
-              height={1574}
-              aspect="4 / 3"
+              src="/site-imagery/shoreline-change-living-breakwaters.png"
+              alt="Shoreline change analysis at Living Breakwaters, Tottenville, Staten Island"
+              width={1600}
+              height={1012}
+              aspect="3 / 2"
               caption={
                 <>
-                  Shoreline change at Living Breakwaters, 2010 to 2025. Red
-                  marks where the shore is pulling back. Source: Natrx Assess,
+                  Shoreline change at Living Breakwaters, off Tottenville,
+                  Staten Island. Each point measures how far the shore has moved
+                  per year. Red is retreat, blue is gain. Source: Natrx Assess,
                   using NAIP aerial imagery and the Marsh Edge from Image
-                  Processing method.
+                  Processing method. Basemap: Esri, Maxar, Earthstar Geographics.
                 </>
               }
             />

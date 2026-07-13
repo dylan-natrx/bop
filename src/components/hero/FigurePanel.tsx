@@ -1,6 +1,6 @@
 'use client'
 
-import { SuitabilityLegend, TopRankedLegend } from '@/components/ui/Legend'
+import { AreaLegend, SuitabilityLegend, TopRankedLegend } from '@/components/ui/Legend'
 import { TOP_RANKED_SITES } from '@/lib/constants'
 
 // Rank mappings for each panel entry
@@ -25,8 +25,8 @@ export function FigurePanel({ hoveredRanks, onHoverRanks }: FigurePanelProps) {
           Fig. 1 · The 78 sites
         </div>
         <div className="font-serif italic font-light text-body text-ivory leading-snug">
-          All 78 possible sites across New York Harbor. Bigger dots cover more
-          water. Greener dots score higher.
+          All 78 possible sites across New York Harbor. Dot size is the acreage
+          of the site. Dot color is how well the water suits oysters.
         </div>
       </div>
 
@@ -77,7 +77,8 @@ export function FigurePanel({ hoveredRanks, onHoverRanks }: FigurePanelProps) {
       {/* Legend (pushed to bottom) */}
       <div className="mt-auto pt-4">
         <SuitabilityLegend />
-        <TopRankedLegend className="mt-3.5" />
+        <AreaLegend className="mt-5" />
+        <TopRankedLegend className="mt-4" />
       </div>
     </div>
   )

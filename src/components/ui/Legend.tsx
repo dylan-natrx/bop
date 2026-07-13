@@ -29,6 +29,41 @@ export function SuitabilityLegend({ className = '' }: LegendProps) {
 }
 
 /**
+ * Site-area legend. Dot radius on the map encodes acreage on a square-root
+ * scale (see calculateMarkerRadius: 3px at 0 acres, 8px at the 470-acre max).
+ * The circles below are drawn at the exact radii the map uses, so the legend
+ * is a true reference rather than a decorative approximation.
+ */
+const AREA_STOPS = [
+  { acres: 5, radius: 3.52 },
+  { acres: 100, radius: 5.31 },
+  { acres: 470, radius: 8 },
+]
+
+export function AreaLegend({ className = '' }: LegendProps) {
+  return (
+    <div className={className}>
+      <div className="font-mono text-eyebrow uppercase text-ivory-dim mb-2.5">
+        Site area
+      </div>
+      <div className="flex items-end gap-4">
+        {AREA_STOPS.map(({ acres, radius }) => (
+          <div key={acres} className="flex flex-col items-center gap-1.5">
+            <div
+              className="rounded-full bg-ivory-dim/45"
+              style={{ width: radius * 2, height: radius * 2 }}
+            />
+            <span className="font-mono text-[9.5px] tracking-wide text-ivory-dim tabular-nums">
+              {acres} ac
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/**
  * Top-ranked pulse indicator for legends
  */
 export function TopRankedLegend({ className = '' }: LegendProps) {

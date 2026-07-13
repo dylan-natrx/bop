@@ -16,7 +16,9 @@ interface SpectraPanelProps {
   onJumpToStep: (step: number) => void
 }
 
-const CURVE_HEIGHT = 78 // px per curve plot
+// Curve plots are sized so the 440px spectra column shows two at a time
+// before scrolling. Three-up made each plot too short to carry axis labels.
+const CURVE_HEIGHT = 132 // px per curve plot
 const CURVE_PADDING_X = 8
 const CURVE_PADDING_Y = 10
 const VB_W = 200
@@ -388,8 +390,6 @@ function CurvePlot({
           stroke="rgba(242, 237, 227, 0.1)"
           strokeWidth={0.5}
         />
-        {/* Tick marks only — labels drop, the curve title + annotation
-            already tell the reader what they need to know. */}
         {curve.xTicks.map((tick) => (
           <line
             key={tick.label}
@@ -415,6 +415,24 @@ function CurvePlot({
           strokeLinejoin="round"
         />
       </svg>
+      </div>
+
+      {/* X-axis tick labels. Rendered as HTML, not SVG <text>, because the
+          plot uses preserveAspectRatio="none" and would stretch the type.
+          Percentages account for the viewBox's horizontal padding. */}
+      <div className="relative h-3.5 -mt-1" aria-hidden="true">
+        {curve.xTicks.map((tick) => (
+          <span
+            key={tick.label}
+            className="absolute top-0 font-mono text-[9px] tracking-[0.12em] text-ivory-faint whitespace-nowrap"
+            style={{
+              left: `${((tick.x + CURVE_PADDING_X) / (VB_W + CURVE_PADDING_X * 2)) * 100}%`,
+              transform: 'translateX(-50%)',
+            }}
+          >
+            {tick.label}
+          </span>
+        ))}
       </div>
 
       {curve.citation && (
