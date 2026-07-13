@@ -63,6 +63,13 @@ export function WalkthroughMapLegend({ step }: WalkthroughMapLegendProps) {
       <LegendEntry symbol={<SuitableDot />} label="Suitable site" />
       <LegendEntry symbol={<FadedDot />} label="Below threshold" />
 
+      {/* Size key. McCann on the 2026-06-30 review: "It's unclear what the
+          size of the dots corresponds to in this map." It's site acreage, on
+          the same sqrt scale the hero map uses (calculateMarkerRadius). Sits
+          with the always-visible entries because the encoding is live from
+          step 1, not introduced later like the flag rings. */}
+      <LegendEntry symbol={<SizeKey />} label="Dot size = site acreage" />
+
       <AnimatePresence initial={false}>
         {showCost ? (
           <motion.div
@@ -123,6 +130,22 @@ function FadedDot() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" className="shrink-0">
       <circle cx="8" cy="8" r="4.5" fill="rgba(80, 105, 115, 0.85)" opacity="0.4" />
+    </svg>
+  )
+}
+
+/**
+ * Two dots at the extremes of the map's own radius ramp: 3px at the smallest
+ * site, 8px at the 470-acre maximum (calculateMarkerRadius, sqrt scale). Drawn
+ * at true scale so the key is a real reference, not a decorative approximation.
+ * Muted teal rather than the bright suitable-site fill, so it reads as a scale
+ * rather than a site state.
+ */
+function SizeKey() {
+  return (
+    <svg width="30" height="18" viewBox="0 0 30 18" aria-hidden="true" className="shrink-0">
+      <circle cx="4" cy="9" r="3" fill="rgba(111, 227, 208, 0.45)" />
+      <circle cx="20" cy="9" r="8" fill="rgba(111, 227, 208, 0.45)" />
     </svg>
   )
 }
