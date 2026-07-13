@@ -5,7 +5,7 @@ import { evaluateTenantGate, sessionCookieName } from '@/lib/platform/gate'
 /**
  * Platform middleware: hostname → tenant → gate → route.
  *
- *   natrx.report            → the platform holding page (/platform)
+ *   natrx.report            → 302 to https://natrx.io
  *   <slug>.natrx.report     → that tenant, through its access gate
  *   unknown.natrx.report    → 404
  *   localhost / previews    → dev fallback tenant (?tenant= param, then
@@ -36,11 +36,12 @@ export async function middleware(request: NextRequest) {
   )
 
   if (resolution.kind === 'apex') {
-    // The apex serves only the holding page.
-    if (request.nextUrl.pathname === '/') {
-      return NextResponse.rewrite(new URL('/platform', request.url))
-    }
-    return new NextResponse('Not found', { status: 404 })
+    // The apex bounces to the Natrx marketing site. Explicitly 302
+    // (NextResponse.redirect defaults to 307): temporary on purpose, so
+    // what lives at the apex can change later. Never 301 — browsers and
+    // Google cache those permanently. (The /platform holding page remains
+    // in the tree, unrouted, if the apex ever becomes a page again.)
+    return NextResponse.redirect('https://natrx.io', 302)
   }
 
   const { pathname } = request.nextUrl
