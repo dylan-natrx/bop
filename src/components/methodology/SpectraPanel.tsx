@@ -314,7 +314,7 @@ function CurvePlot({
               </span>
             )}
           </div>
-          <div className="font-mono text-[9px] uppercase tracking-[0.18em] text-ivory-faint">
+          <div className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-ivory-dim">
             {curve.xLabel}
           </div>
         </div>
@@ -387,7 +387,7 @@ function CurvePlot({
           y1={VB_H}
           x2={VB_W}
           y2={VB_H}
-          stroke="rgba(242, 237, 227, 0.1)"
+          stroke="rgba(242, 237, 227, 0.18)"
           strokeWidth={0.5}
         />
         {curve.xTicks.map((tick) => (
@@ -396,9 +396,9 @@ function CurvePlot({
             x1={tick.x}
             y1={VB_H}
             x2={tick.x}
-            y2={VB_H + 2.5}
-            stroke="rgba(242, 237, 227, 0.22)"
-            strokeWidth={0.6}
+            y2={VB_H + 3}
+            stroke="rgba(242, 237, 227, 0.4)"
+            strokeWidth={0.7}
           />
         ))}
 
@@ -420,11 +420,11 @@ function CurvePlot({
       {/* X-axis tick labels. Rendered as HTML, not SVG <text>, because the
           plot uses preserveAspectRatio="none" and would stretch the type.
           Percentages account for the viewBox's horizontal padding. */}
-      <div className="relative h-3.5 -mt-1" aria-hidden="true">
+      <div className="relative h-4 -mt-1" aria-hidden="true">
         {curve.xTicks.map((tick) => (
           <span
             key={tick.label}
-            className="absolute top-0 font-mono text-[9px] tracking-[0.12em] text-ivory-faint whitespace-nowrap"
+            className="absolute top-0 font-mono text-[10.5px] tracking-[0.1em] text-ivory-dim whitespace-nowrap"
             style={{
               left: `${((tick.x + CURVE_PADDING_X) / (VB_W + CURVE_PADDING_X * 2)) * 100}%`,
               transform: 'translateX(-50%)',

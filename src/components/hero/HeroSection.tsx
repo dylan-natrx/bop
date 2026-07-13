@@ -27,9 +27,9 @@ export function HeroSection() {
             </div>
             <p className="font-serif italic font-light text-ivory text-lg lg:text-xl leading-snug max-w-[68ch]">
               Every site is scored on one question: how well the water suits
-              oysters. Salinity, food, oxygen. What a reef costs to build there,
-              and what it takes to permit, is a separate question the framework
-              keeps separate.
+              oysters. Salinity, food, oxygen. What it would cost to build a
+              reef there, and what it would take to permit, are questions the
+              score deliberately leaves alone.
             </p>
           </div>
         </div>
