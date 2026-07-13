@@ -58,3 +58,6 @@ next-env.d.ts
 _master_docs/
 _overview-documents/
 _screenshots/
+
+# Working briefs (contain the shared credential in plaintext)
+natrx-report-platform-packet-v2.md

@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 
 /**
  * Password gate. Custom-branded preview access while the page is not yet
- * public. To disable, set AUTH_DISABLED=true (the middleware no-ops and
- * this page is unreachable). To remove entirely, delete middleware.ts
- * and this route.
+ * public. Access policy lives in the tenant registry
+ * (src/lib/platform/tenants.ts): set the tenant's accessMode to 'public'
+ * when the page launches and this gate is never reached.
  */
 export default function LoginPage() {
   return (

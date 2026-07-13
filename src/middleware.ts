@@ -1,49 +1,57 @@
 import { NextResponse, type NextRequest } from 'next/server'
+import { resolveHost } from '@/lib/platform/tenants'
+import { evaluateTenantGate, sessionCookieName } from '@/lib/platform/gate'
 
 /**
- * Password gate for the pre-public preview.
+ * Platform middleware: hostname → tenant → gate → route.
  *
- * Behavior:
- *   - Unauthenticated requests redirect to /login?from=<original-path>.
- *   - Authenticated requests (valid `bop-auth` cookie) pass through.
- *   - To DISABLE the gate (e.g. when the page goes public), set the env var
- *     `AUTH_DISABLED=true`. The matcher below still runs but the middleware
- *     becomes a no-op. Easier than touching the matcher when you want to
- *     re-enable temporarily.
+ *   natrx.report            → the platform holding page (/platform)
+ *   <slug>.natrx.report     → that tenant, through its access gate
+ *   unknown.natrx.report    → 404
+ *   localhost / previews    → dev fallback tenant (?tenant= param, then
+ *                             PLATFORM_DEFAULT_TENANT, then 'bop')
  *
- * Credentials and cookie value live in env vars:
- *   AUTH_USERNAME      shared username (default: natrx)
- *   AUTH_PASSWORD      shared password (default: resili3nc3)
- *   AUTH_TOKEN         the value stored in the bop-auth cookie. Anything
- *                      that matches passes. Default is a fixed string so
- *                      local dev works without configuring env vars; in
- *                      production set this to a long random string.
+ * Access gate (see lib/platform/gate.ts): gated tenants require a valid
+ * HMAC session cookie; otherwise redirect to /login?from=<path>. There is
+ * no disable flag and no plaintext credential anywhere — a tenant is open
+ * only by being accessMode: 'public' in the registry.
  *
- * Cookie semantics: a single shared session token. Anyone with the cookie
- * value is "in." Rotate by changing AUTH_TOKEN — all sessions invalidate.
- *
- * Removed when going public: delete this file. The login page and
- * /api/auth/login route can stay (harmless) or be deleted in the same
- * commit.
+ * Phase 2 will add the rewrite of tenant traffic into app/projects/<slug>.
+ * Until then the sole tenant (bop) is served by the root routes.
  */
+export async function middleware(request: NextRequest) {
+  const resolution = resolveHost(
+    request.headers.get('host'),
+    request.nextUrl.searchParams,
+  )
 
-const AUTH_TOKEN = process.env.AUTH_TOKEN ?? 'bop-preview-2026'
-const AUTH_DISABLED = process.env.AUTH_DISABLED === 'true'
-
-export function middleware(request: NextRequest) {
-  if (AUTH_DISABLED) return NextResponse.next()
-
-  const cookie = request.cookies.get('bop-auth')?.value
-  if (cookie === AUTH_TOKEN) return NextResponse.next()
-
-  // Redirect to /login, preserving the requested path so we can bounce
-  // back after a successful login.
-  const loginUrl = new URL('/login', request.url)
-  const requestedPath = request.nextUrl.pathname + request.nextUrl.search
-  if (requestedPath && requestedPath !== '/') {
-    loginUrl.searchParams.set('from', requestedPath)
+  if (resolution.kind === 'apex') {
+    // The apex serves only the holding page.
+    if (request.nextUrl.pathname === '/') {
+      return NextResponse.rewrite(new URL('/platform', request.url))
+    }
+    return new NextResponse('Not found', { status: 404 })
   }
-  return NextResponse.redirect(loginUrl)
+
+  const cookieValue = request.cookies.get(sessionCookieName(resolution.slug))?.value
+  const { status } = await evaluateTenantGate(resolution.slug, cookieValue)
+
+  if (status === 'not_found' || status === 'draft') {
+    return new NextResponse('Not found', { status: 404 })
+  }
+
+  if (status === 'locked') {
+    // Redirect to /login, preserving the requested path so we can bounce
+    // back after a successful login.
+    const loginUrl = new URL('/login', request.url)
+    const requestedPath = request.nextUrl.pathname + request.nextUrl.search
+    if (requestedPath && requestedPath !== '/') {
+      loginUrl.searchParams.set('from', requestedPath)
+    }
+    return NextResponse.redirect(loginUrl)
+  }
+
+  return NextResponse.next()
 }
 
 /**

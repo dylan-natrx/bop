@@ -1,29 +1,21 @@
 import { NextResponse, type NextRequest } from 'next/server'
+import { resolveHost, getTenant } from '@/lib/platform/tenants'
+import { mintSessionValue, verifyTenantCredential, sessionCookieName } from '@/lib/platform/gate'
 
 /**
  * POST /api/auth/login
  *
  * Body: { username: string, password: string, from?: string }
  *
- * On success: sets `bop-auth` httpOnly cookie containing AUTH_TOKEN,
- * returns { ok: true, redirect: <from or "/"> }.
+ * The tenant is resolved from the request hostname, exactly as the
+ * middleware resolves it. The submitted credential is verified against
+ * the tenant's bcrypt hash in the registry (lib/platform/tenants.ts) —
+ * no plaintext credential exists anywhere in this codebase.
  *
- * On failure: returns 401 with { ok: false, error: <message> }.
- *
- * The middleware (middleware.ts at project root) is the consumer of the
- * cookie. It compares the cookie value against AUTH_TOKEN; any match
- * passes the gate.
- *
- * Credentials and the token live in env vars (defaults are fine for local
- * dev; production should set them):
- *   AUTH_USERNAME   shared username       (default: natrx)
- *   AUTH_PASSWORD   shared password       (default: resili3nc3)
- *   AUTH_TOKEN      bop-auth cookie value (default: bop-preview-2026)
+ * On success: sets the tenant-scoped httpOnly session cookie (an HMAC
+ * value; see lib/platform/gate.ts), returns { ok: true, redirect }.
+ * On failure: 401 with { ok: false, error }.
  */
-
-const AUTH_USERNAME = process.env.AUTH_USERNAME ?? 'natrx'
-const AUTH_PASSWORD = process.env.AUTH_PASSWORD ?? 'resili3nc3'
-const AUTH_TOKEN = process.env.AUTH_TOKEN ?? 'bop-preview-2026'
 
 /** Block path traversal / open-redirect via the `from` field. */
 function safeRedirect(from: unknown): string {
@@ -35,6 +27,15 @@ function safeRedirect(from: unknown): string {
 }
 
 export async function POST(request: NextRequest) {
+  const resolution = resolveHost(
+    request.headers.get('host'),
+    request.nextUrl.searchParams,
+  )
+  const tenant = resolution.kind === 'tenant' ? getTenant(resolution.slug) : null
+  if (!tenant || tenant.accessMode === 'draft') {
+    return NextResponse.json({ ok: false, error: 'Not found.' }, { status: 404 })
+  }
+
   let body: { username?: unknown; password?: unknown; from?: unknown }
   try {
     body = await request.json()
@@ -48,7 +49,8 @@ export async function POST(request: NextRequest) {
   const username = typeof body.username === 'string' ? body.username : ''
   const password = typeof body.password === 'string' ? body.password : ''
 
-  if (username !== AUTH_USERNAME || password !== AUTH_PASSWORD) {
+  const valid = await verifyTenantCredential(tenant, username, password)
+  if (!valid) {
     // Constant-ish delay on failure to discourage credential stuffing.
     // 250ms is enough to be noticeable but not painful for legitimate users.
     await new Promise((r) => setTimeout(r, 250))
@@ -61,8 +63,9 @@ export async function POST(request: NextRequest) {
   const redirect = safeRedirect(body.from)
   const response = NextResponse.json({ ok: true, redirect })
 
-  // 30-day cookie. httpOnly so JS can't read it; secure in prod.
-  response.cookies.set('bop-auth', AUTH_TOKEN, {
+  // 30-day, host-only cookie: a session on one subdomain grants nothing
+  // on any other. httpOnly so JS can't read it; secure in prod.
+  response.cookies.set(sessionCookieName(tenant.slug), await mintSessionValue(tenant), {
     path: '/',
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
