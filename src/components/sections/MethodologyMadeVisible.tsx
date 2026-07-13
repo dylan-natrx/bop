@@ -96,11 +96,20 @@ export function MethodologyMadeVisible() {
             siteIds={['27']}
             body={
               <>
-                The strongest site in the whole study sits in the tidal strait
-                between Staten Island and New Jersey, a stretch of water that
-                spent the twentieth century as a byword for pollution. Today it
-                holds the best mix of salinity, food, and oxygen for oysters
-                anywhere among the 78 sites. The water has quietly come back.
+                <p>
+                  The strongest site in the whole study sits in the tidal strait
+                  between Staten Island and New Jersey, a stretch of water that
+                  spent the twentieth century as a byword for pollution. Today
+                  it holds the best mix of salinity, food, and oxygen for
+                  oysters anywhere among the 78 sites. The water has quietly
+                  come back.
+                </p>
+                <p className="mt-4">
+                  The sediment is a work in progress. Arthur Kill falls inside a
+                  federal Superfund cleanup area, and any in-water work there
+                  has to move through that process. The framework ranks the
+                  water. It makes no claim about how easy the permit will be.
+                </p>
               </>
             }
           />

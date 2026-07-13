@@ -13,7 +13,7 @@ export function WhatAnalysisMadeVisible() {
             text-4xl sm:text-5xl lg:text-6xl
             max-w-[22ch]
           ">
-          Two patterns the ranking surfaced.
+          Three patterns the ranking surfaced.
         </h2>
 
         <div className="
@@ -23,13 +23,46 @@ export function WhatAnalysisMadeVisible() {
           ">
           <p>
             The ranking did its main job. It told Billion Oyster Project which places give
-            oysters the best shot. Two more things stand out inside it, and
+            oysters the best shot. Three more things stand out inside it, and
             they shape what comes next.
           </p>
         </div>
       </div>
 
       <div className="mt-16 lg:mt-20 space-y-12 lg:space-y-16">
+        {/* Beat 1 runs full width (no `visual`). It governs how a reader
+            should read the two beats that follow, so it leads. */}
+        <FindingBeat
+          subhead="The best water is not always the easiest place to build."
+          body={
+            <>
+              <p>
+                The score measures one thing: whether the water at a site suits
+                oysters. Salinity, food, oxygen. That is the question the
+                science can answer cleanly, so that is the question it answers.
+                Everything else a site carries, wave energy, an eroding shore,
+                an outfall pipe, a Superfund boundary, sits in a separate layer,
+                visible but never folded into the number.
+              </p>
+              <p className="mt-6">
+                Arthur Kill is where that choice carries the most weight. It
+                ranks first in the harbor on water quality, and it sits inside a
+                federal Superfund cleanup area, which makes it among the hardest
+                sites to permit that Billion Oyster Project could choose. A
+                framework built to flatter itself would have quietly weighted
+                that away and produced a tidier list. This one puts both facts
+                on the table and leaves the judgment where it belongs, with the
+                people who have to defend it to a regulator.
+              </p>
+              <p className="mt-6">
+                That is the difference between a ranking and a decision. The
+                framework delivers the first so Billion Oyster Project can make
+                the second.
+              </p>
+            </>
+          }
+        />
+
         <FindingBeat
           subhead="Oysters and shorelines, one intervention."
           body={
