@@ -16,7 +16,7 @@ export function PressContactPanel() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6 lg:gap-8">
         <div>
           <a
-            href="https://www.bop.nyc/"
+            href="https://www.billionoysterproject.org/"
             target="_blank"
             rel="noopener noreferrer"
             className="
@@ -76,6 +76,17 @@ export function PressContactPanel() {
           </a>
         </div>
       </div>
+
+      {/* Source materials line, per the brief. Editorial in register: a
+          masthead noting what's available to reporters, not an offer. */}
+      <p className="
+          mt-10 pt-6 border-t border-rule-soft
+          font-sans text-body-sm text-ivory-dim leading-relaxed max-w-[46ch]
+        ">
+        Source materials are available to reporters on request: the Billion
+        Oyster Project and Natrx master document, the wave and shoreline change
+        analysis report, and the per-site data behind every number on this page.
+      </p>
     </div>
   )
 }

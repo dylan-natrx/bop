@@ -73,8 +73,8 @@ export const HERO_STATS = [
 
 // Top-ranked sites for hero panel
 export const TOP_RANKED_SITES = [
-  { name: 'Arthur Kill', meta: 'Top-ranked · Upper Harbor', score: '0.87' },
-  { name: 'Living Breakwaters', meta: 'Six tied sites, ranks 2–7', score: '0.79–0.74' },
+  { name: 'Arthur Kill', meta: 'Rank 1 · Upper Harbor', score: '0.87' },
+  { name: 'Living Breakwaters', meta: 'Six sites · Ranks 2-7', score: '0.79–0.74' },
   { name: "Wolfe's Pond", meta: 'Rank 8 · Raritan Bay', score: '0.65' },
   { name: 'Conch Basin', meta: 'Rank 9 · Jamaica Bay', score: '0.62' },
 ] as const

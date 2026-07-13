@@ -43,6 +43,23 @@ export function MethodologyMadeVisible() {
             </GlossaryTerm>{' '}
             to build two new layers of data the public record doesn&apos;t have.
           </p>
+
+          {/* Cate Collinson brought Natrx to Billion Oyster Project and built
+              the collaboration. Her voice lands here, on the paragraph that
+              describes the engagement, in the same in-column treatment § 2
+              gives the Khoury quote. */}
+          <div className="my-10">
+            <Pullquote
+              attribution="Cate Collinson"
+              role="Associate Director of Restoration Projects, Billion Oyster Project"
+            >
+              The work we&apos;re doing with Natrx was the first step to
+              providing a science-based framework for us to view all of the
+              sites, and the suitability of those sites, habitat-wise.
+              It&apos;s been really exciting to see that product come together.
+            </Pullquote>
+          </div>
+
           <p className="mt-6">
             The framework asks two questions, in order. First: where can
             oysters actually thrive? That comes down to three things about the

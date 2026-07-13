@@ -97,7 +97,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     id: 'filter-feeder',
     term: 'Filter feeder',
     definition:
-      'An animal that eats by straining suspended particles out of the surrounding water, rather than by hunting or grazing. Eastern oysters draw water across their gills as they breathe, retaining phytoplankton and other small food particles. A single adult filters around fifty gallons a day, which is why oyster reefs improve water clarity at the scale of an entire estuary.',
+      'An animal that eats by straining suspended particles out of the surrounding water, rather than by hunting or grazing. Eastern oysters draw water across their gills as they breathe, retaining phytoplankton and other small food particles. A single adult can filter as much as fifty gallons a day, which is why oyster reefs improve water clarity at the scale of an entire estuary.',
   },
   {
     id: 'habitat-suitability-index',
@@ -146,7 +146,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     id: 'salinity',
     term: 'Salinity (PSU)',
     definition:
-      'The concentration of dissolved salts in water. Measured in practical salinity units (PSU); the open ocean averages around 35 PSU, fresh water is near 0. Eastern oysters thrive in brackish conditions, roughly 10 to 25 PSU.',
+      "The concentration of dissolved salts in water. Measured in practical salinity units (PSU); the open ocean averages around 35 PSU, fresh water is near 0. Eastern oysters live across a wide brackish range. This framework scores them highest between 12 and 20 PSU, the window the scoring function treats as optimal. New York Harbor's oysters are known to reproduce below that window, which is why the thresholds were recalibrated to this estuary rather than taken from the literature.",
   },
   {
     id: 'meip',

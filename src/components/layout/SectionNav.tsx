@@ -15,7 +15,7 @@ const NAV_ITEMS: NavItem[] = [
   { id: 'stakes-and-problem', label: 'Stakes' },
   { id: 'methodology', label: 'Methodology' },
   { id: 'analysis-made-visible', label: 'Findings' },
-  { id: 'what-this-enables', label: 'At scale' },
+  { id: 'what-this-enables', label: 'What this unlocks' },
 ]
 
 const NAV_H = 56

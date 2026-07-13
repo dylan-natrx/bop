@@ -112,9 +112,9 @@ export function WhatAnalysisMadeVisible() {
               on thinner data, simply because no one has looked as closely yet.
               Knowing exactly where the data is thin tells Billion Oyster Project exactly where to
               spend its next round of fieldwork: more sensors in the water,
-              more sampling, more time on site. The framework doesn&apos;t only
-              rank the harbor. It shows where the next bit of effort will pay
-              off most.
+              more sampling, more time on site. The ranking points at the
+              harbor. The data-support layer points at the next round of
+              work.
             </p>
           }
           visual={<ConfidenceDistributionChart />}
