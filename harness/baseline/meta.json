@@ -1,0 +1,21 @@
+{
+  "capturedFrom": "https://bop.natrx.report",
+  "capturedAt": "2026-07-13T16:34:06.342Z",
+  "viewports": [
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "tablet",
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    }
+  ]
+}

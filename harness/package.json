@@ -1,0 +1,15 @@
+{
+  "name": "bop-regression-harness",
+  "private": true,
+  "type": "module",
+  "description": "Content + pixel regression harness for bop.natrx.report. Self-contained: installs and runs from this directory so the app's package.json is never touched.",
+  "scripts": {
+    "baseline": "node capture.mjs --out baseline",
+    "check": "node check.mjs"
+  },
+  "dependencies": {
+    "pixelmatch": "^6.0.0",
+    "playwright": "^1.49.0",
+    "pngjs": "^7.0.0"
+  }
+}

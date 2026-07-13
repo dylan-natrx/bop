@@ -1,0 +1,5 @@
+# Keep package-lock.json committed: pixel stability depends on pinning
+# the exact Playwright (and thus Chromium) version.
+node_modules/
+.last-run/
+.calibration/
