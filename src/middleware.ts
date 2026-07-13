@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { resolveHost } from '@/lib/platform/tenants'
+import { resolveHost, getTenant } from '@/lib/platform/tenants'
 import { evaluateTenantGate, sessionCookieName } from '@/lib/platform/gate'
 
 /**
@@ -51,6 +51,21 @@ export async function middleware(request: NextRequest) {
   // everything else, and /projects/<unknown>/login has no route.)
   if (pathname === '/login' || pathname.startsWith('/login/')) {
     return rewriteToProject(request, resolution.slug)
+  }
+
+  // /media: the tenant's media room, published in press releases and
+  // pitch emails, so it is deliberately UNGATED (the Share page it
+  // bounces to runs its own gate). 302 and never 301/308: browsers and
+  // Google cache permanent redirects forever, and /media must remain
+  // ours to change when it becomes a rendered page after the fold into
+  // the unified app. NextResponse.redirect defaults to 307, so the
+  // status is pinned explicitly.
+  if (pathname === '/media') {
+    const tenant = getTenant(resolution.slug)
+    if (!tenant || tenant.accessMode === 'draft' || !tenant.mediaUrl) {
+      return new NextResponse('Not found', { status: 404 })
+    }
+    return NextResponse.redirect(tenant.mediaUrl, 302)
   }
 
   const cookieValue = request.cookies.get(sessionCookieName(resolution.slug))?.value

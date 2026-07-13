@@ -35,7 +35,7 @@ export const TENANTS: readonly Tenant[] = [
     displayName: 'Billion Oyster Project',
     accessMode: 'gated',
     passwordHash: '$2b$12$V24wYwDsTVM59gHONRpWq.Z11vFFMmWPVxIrvbc1Xr4fsJ9XDQh6y',
-    mediaUrl: null, // Phase 3: BOP's Share page on share.natrx.io
+    mediaUrl: 'https://share.natrx.io/billion-oyster-project',
   },
 ]
 
