@@ -22,7 +22,7 @@ export function WhatAnalysisMadeVisible() {
             font-sans text-body text-ivory-dim font-light leading-[1.65]
           ">
           <p>
-            The ranking did its main job. It told BOP which places give
+            The ranking did its main job. It told Billion Oyster Project which places give
             oysters the best shot. Two more things stand out inside it, and
             they shape what comes next.
           </p>
@@ -76,7 +76,7 @@ export function WhatAnalysisMadeVisible() {
               already in design tend to rest on solid data, because they have
               been studied for years. Some of the strongest new candidates rest
               on thinner data, simply because no one has looked as closely yet.
-              Knowing exactly where the data is thin tells BOP exactly where to
+              Knowing exactly where the data is thin tells Billion Oyster Project exactly where to
               spend its next round of fieldwork: more sensors in the water,
               more sampling, more time on site. The framework doesn&apos;t only
               rank the harbor. It shows where the next bit of effort will pay
@@ -95,7 +95,7 @@ export function WhatAnalysisMadeVisible() {
           text-center
         ">
         The job was to find the best places to rebuild oyster reefs in New York
-        Harbor. The framework did that. It also left behind a way of working BOP
+        Harbor. The framework did that. It also left behind a way of working Billion Oyster Project
         can run again next year, and the year after, as the harbor keeps
         changing.
       </div>

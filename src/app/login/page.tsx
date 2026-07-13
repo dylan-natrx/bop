@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 import { LoginForm } from './LoginForm'
 
 export const metadata: Metadata = {
-  title: "Restoring New York Harbor's Oyster Reefs — Access",
+  title: "Restoring New York Harbor's Oyster Reefs | Access",
   description:
     'Restricted preview. Press contact: dylan@natrx.io.',
   robots: {

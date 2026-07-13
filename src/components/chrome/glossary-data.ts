@@ -2,6 +2,8 @@ export interface GlossaryEntry {
   /** Stable identifier used by <GlossaryTerm termId="..."/> to scroll the drawer to this entry. Lowercase, kebab-case. */
   id: string
   term: string
+  /** Latin binomial, rendered italic in parentheses after the term per scientific convention. */
+  latinName?: string
   definition: string
   /** Product/proper-noun entries (e.g. Natrx Assess) get italic + bold styling in the drawer. */
   productName?: boolean
@@ -28,7 +30,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     id: 'allee-effect',
     term: 'Allee effect',
     definition:
-      "An ecological threshold below which a population cannot reproduce fast enough to sustain itself. Below a critical density, sparse spawning oysters cannot fertilize one another's gametes successfully and the population collapses. The Allee effect is why BOP's goal is set at one billion oysters: density matters as much as count.",
+      "An ecological threshold below which a population cannot reproduce fast enough to sustain itself. Below a critical density, sparse spawning oysters cannot fertilize one another's gametes successfully and the population collapses. The Allee effect is why Billion Oyster Project's goal is set at one billion oysters: density matters as much as count.",
   },
   {
     id: 'bathymetry',
@@ -40,7 +42,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     id: 'candidate-site',
     term: 'Candidate site',
     definition:
-      "A discrete reef-scale polygon evaluated by the framework. Some BOP-named locations contain multiple candidate sites. The 78 candidate sites correspond to about 60 named locations in BOP's working pipeline; the Living Breakwaters complex, for example, contains six.",
+      "A discrete reef-scale polygon evaluated by the framework. Some Billion Oyster Project locations contain multiple candidate sites. The 78 candidate sites correspond to about 60 named locations in Billion Oyster Project's working pipeline; the Living Breakwaters complex, for example, contains six.",
   },
   {
     id: 'chlorophyll-a',
@@ -68,7 +70,8 @@ export const GLOSSARY: GlossaryEntry[] = [
   },
   {
     id: 'eastern-oyster',
-    term: 'Eastern oyster (Crassostrea virginica)',
+    term: 'Eastern oyster',
+    latinName: 'Crassostrea virginica',
     definition:
       'The native oyster species of the East Coast of North America. Filters water as it feeds, builds reef structure with its shells, and supports a wide range of estuary species. The keystone species at the center of the Billion Oyster Project restoration work.',
   },

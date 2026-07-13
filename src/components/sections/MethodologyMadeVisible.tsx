@@ -14,7 +14,8 @@ export function MethodologyMadeVisible() {
             text-4xl sm:text-5xl lg:text-6xl
             max-w-[22ch]
           ">
-          How a framework finds the sites that earn the next dollar.
+          How a framework finds the sites that connect a harbor into a
+          self-sustaining system.
         </h2>
 
         <div className="
@@ -35,7 +36,7 @@ export function MethodologyMadeVisible() {
           <p className="mt-6">
             Over twenty-six weeks, Natrx and Billion Oyster Project built this
             together. They worked through more than thirty datasets. They sat
-            down with BOP&apos;s science team across four working sessions. And
+            down with Billion Oyster Project&apos;s science team across four working sessions. And
             they used{' '}
             <GlossaryTerm termId="natrx-assess">
               <em className="font-serif italic text-white">Natrx Assess</em>
@@ -56,9 +57,9 @@ export function MethodologyMadeVisible() {
           <p className="mt-6">
             One note on the site score: it compares these 78 places against
             each other, not against the harbor as a whole. A higher score means
-            a stronger mix of salt, food, and oxygen for oysters. A 0.90 beats
+            a stronger mix of salinity, food, and oxygen for oysters. A 0.90 beats
             a 0.10. Neither one promises, on its own, that oysters will flourish
-            there. The score&apos;s job is to point BOP toward where to look
+            there. The score&apos;s job is to point Billion Oyster Project toward where to look
             first.
           </p>
         </div>
@@ -95,11 +96,11 @@ export function MethodologyMadeVisible() {
             siteIds={['27']}
             body={
               <>
-                The strongest site in the whole study sits on the industrial
-                west shore of Staten Island, a stretch of water that spent the
-                twentieth century as a byword for pollution. Today it holds the
-                best mix of salt, food, and oxygen for oysters anywhere among
-                the 78 sites. The water has quietly come back.
+                The strongest site in the whole study sits in the tidal strait
+                between Staten Island and New Jersey, a stretch of water that
+                spent the twentieth century as a byword for pollution. Today it
+                holds the best mix of salinity, food, and oxygen for oysters
+                anywhere among the 78 sites. The water has quietly come back.
               </>
             }
           />

@@ -28,14 +28,15 @@ export function StakesAndProblem() {
             eastern seaboard. Centuries of dredging, overharvest, and
             industrial discharge collapsed it. Billion Oyster Project is
             rebuilding that foundation, with a goal of one billion oysters in
-            the harbor by 2035.
+            the harbor by 2030.
           </p>
           <p>
-            For years, the work moved ahead wherever it could. A site went
-            forward when a parks department said yes, when a marina allowed a
-            cage, when there was a way in. For a young program proving the
-            idea, that was the right call. It gave Billion Oyster Project a
-            decade of small reefs and real evidence of what survives where.
+            For years, the work moved ahead opportunistically: restoration
+            advanced when a partner provided access or when a specific project
+            received funding. For a young program proving the idea, that was
+            the right call. It gave Billion Oyster Project a decade of data
+            that has shown that, across regions and years, oysters are
+            spawning, and recruitment is occurring harborwide.
           </p>
           <p>
             A billion oysters is a different kind of problem. Billion Oyster

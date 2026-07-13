@@ -56,7 +56,7 @@ export const STEPS: StepConfig[] = [
     title: 'Salinity, the Goldilocks variable',
     lede: 'Salinity is a Goldilocks variable.',
     bodyParagraphs: [
-      "Too little salt and oysters can't survive. Too much and they can't either. But how much is just right depends on the estuary. Far up the Hudson, oysters hold on in water fresher than the textbooks allow, and the people who have worked this harbor for years know it. So the score is set to fit this place, not copied from a manual. Sites near Piermont and Ossining, fresh enough that a one-size formula would throw them out, stay in the running. The real sorting comes a few steps later.",
+      "Too little salinity and oysters can't survive. Too much and they can't either. But how much is just right depends on the estuary. Far up the Hudson, oysters hold on in water fresher than the textbooks allow, and the people who have worked this harbor for years know it. So the score is set to fit this place, not copied from a manual. Sites near Piermont and Ossining, fresh enough that a one-size formula would throw them out, stay in the running. The real sorting comes a few steps later.",
     ],
     colorMode: 'salinity',
     visibleFlags: [],
@@ -72,7 +72,7 @@ export const STEPS: StepConfig[] = [
     title: 'Adding chlorophyll-a, the food layer',
     lede: 'Oysters are filter feeders.',
     bodyParagraphs: [
-      'Oysters eat by filtering the water, so they need food floating in it. That food is measured as chlorophyll-a, the green of tiny drifting plants. More food is generally better, and the score follows that. Too much brings its own problem later, when algae blooms die off and pull the oxygen down, but that shows up in the next step. For now, sites with good salt but little food slip back. Sites strong on both move up.',
+      'Oysters eat by filtering the water, so they need food floating in it. That food is measured as chlorophyll-a, the green of tiny drifting plants. More food is generally better, and the score follows that. Too much brings its own problem later, when algae blooms die off and pull the oxygen down, but that shows up in the next step. For now, sites with good salinity but little food slip back. Sites strong on both move up.',
     ],
     colorMode: 'salinity_chla',
     visibleFlags: [],
@@ -88,7 +88,7 @@ export const STEPS: StepConfig[] = [
     title: 'Adding dissolved oxygen, the limiter',
     lede: "Dissolved oxygen doesn't need to be high.",
     bodyParagraphs: [
-      "It just can't drop too low for too long. Oxygen works like a dial on everything else: a site that falls into low-oxygen spells sees its other strengths pulled down sharply. This is where the order settles. Arthur Kill, on Staten Island, comes out on top. Six spots inside the Living Breakwaters system sit just behind. The harbor's old industrial west shore, written off for a century, now leads on the things that matter most for oysters. Out of 78 sites, eighteen clear the biology bar. Those are the ones worth backing.",
+      "It just can't drop too low for too long. Oxygen works like a dial on everything else: a site that falls into low-oxygen spells sees its other strengths pulled down sharply. This is where the order settles. Arthur Kill, the tidal strait between Staten Island and New Jersey, comes out on top. Six spots inside the Living Breakwaters system sit just behind. The western edge of the harbor, written off for a century, now leads on the things that matter most for oysters. Out of 78 sites, eighteen clear the biology bar. Those are the ones worth backing.",
     ],
     colorMode: 'composite',
     visibleFlags: [],
@@ -110,7 +110,7 @@ export const STEPS: StepConfig[] = [
         the waves run high. Several of the strongest sites, including the
         Living Breakwaters cluster, sit in exactly that kind of water. They
         stay on the list. You can&apos;t pay your way to better water, but you
-        can pay for the engineering, and now BOP knows where it will need to.
+        can pay for the engineering, and now Billion Oyster Project knows where it will need to.
         Wave data comes from <Em>Natrx Assess</Em>.
       </>,
     ],
@@ -144,8 +144,8 @@ export const STEPS: StepConfig[] = [
     title: 'The practical filters',
     lede: 'The last layer is operational.',
     bodyParagraphs: [
-      "The last layer is about people and paperwork. Sites near old sewer and stormwater outfalls come with extra permitting hoops from state and federal agencies. Sites next to public parks are easier to fund and to share with the neighborhood. What these change is the path, not the biology: how fast BOP can move, and how much public good a project does along the way.",
-      "Lay all six layers over one another and the first projects come into focus. They are not all alike. Some, like the Living Breakwaters cluster, sit in rougher water that costs more to build in. Some sit beside a shoreline a reef could help hold in place. Arthur Kill, the strongest of them all, sits in calm water with little hard data nearby, which makes it the clearest place to go study next. The top ten are where the framework tells BOP to start. The rest of the qualifying sites wait in reserve, ready to move up as the leaders head into design and permitting. This is what the work set out to deliver. And BOP can run it again next year, as new data comes in.",
+      "The last layer is about people and paperwork. Sites near old sewer and stormwater outfalls come with extra permitting hoops from state and federal agencies. Sites next to public parks are easier to fund and to share with the neighborhood. What these change is the path, not the biology: how fast Billion Oyster Project can move, and how much public good a project does along the way.",
+      "Lay all six layers over one another and the first projects come into focus. They are not all alike. Some, like the Living Breakwaters cluster, sit in rougher water that costs more to build in. Some sit beside a shoreline a reef could help hold in place. Arthur Kill, the strongest of them all, sits in calm water with little hard data nearby, which makes it the clearest place to go study next. The top ten are where the framework tells Billion Oyster Project to start. The rest of the qualifying sites wait in reserve, ready to move up as the leaders head into design and permitting. This is what the work set out to deliver. And Billion Oyster Project can run it again next year, as new data comes in.",
     ],
     colorMode: 'composite',
     visibleFlags: ['wave', 'erosion', 'park', 'cso', 'ms4'],

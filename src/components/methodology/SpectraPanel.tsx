@@ -207,7 +207,7 @@ export function SpectraPanel({ step, onJumpToStep }: SpectraPanelProps) {
       render: (isActive, dim) => (
         <AnnotationBlock
           eyebrow="Context filters"
-          body="Real-world conditions that shape where BOP can move first. How close a site sits to a public park, and how far it sits from old sewer and stormwater outfalls."
+          body="Real-world conditions that shape where Billion Oyster Project can move first. How close a site sits to a public park, and how far it sits from old sewer and stormwater outfalls."
           isActive={isActive}
           dimension={dim}
         />
@@ -492,7 +492,7 @@ function MathDisclosure() {
             composite = (sal_score + chla_score) ÷ 2 × do_score
           </div>
           <p>
-            Here is how the numbers actually combine. The two water scores, salt and food, are averaged, then multiplied by the oxygen score. That multiply is what lets low oxygen pull a whole site down. The stacked curves above show the <em>idea</em>; this line shows the arithmetic.
+            Here is how the numbers actually combine. The two water scores, salinity and food, are averaged, then multiplied by the oxygen score. That multiply is what lets low oxygen pull a whole site down. The stacked curves above show the <em>idea</em>; this line shows the arithmetic.
           </p>
         </div>
       )}

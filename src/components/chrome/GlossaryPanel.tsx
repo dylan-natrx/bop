@@ -9,11 +9,11 @@ export function GlossaryPanel() {
         Glossary
       </h2>
       <p className="font-sans text-body-sm text-ivory-dim leading-relaxed mb-10 max-w-[42ch]">
-        Plain-language definitions for the terms that travel through this piece. Drawn from the BOP Master Document and the project overview.
+        Plain-language definitions for the terms that travel through this piece. Drawn from the Billion Oyster Project master document and the project overview.
       </p>
 
       <dl className="space-y-7">
-        {GLOSSARY.map(({ id, term, definition, productName }) => (
+        {GLOSSARY.map(({ id, term, latinName, definition, productName }) => (
           <div
             key={id}
             id={`glossary-term-${id}`}
@@ -27,6 +27,13 @@ export function GlossaryPanel() {
               }
             >
               {term}
+              {latinName && (
+                <>
+                  {' ('}
+                  <em className="italic">{latinName}</em>
+                  {')'}
+                </>
+              )}
             </dt>
             <dd className="font-sans text-body-sm text-ivory-dim leading-relaxed">
               {definition}

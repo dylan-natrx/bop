@@ -31,9 +31,9 @@ export function WhatThisEnables() {
               The work
             </div>
             <p className="font-sans text-body text-ivory-dim font-light leading-[1.65]">
-              BOP can now push several of the top sites toward design and
-              permitting at the same time, using the ranking to decide where to
-              put its money and effort first.
+              Billion Oyster Project can now push several of the top sites
+              toward design and permitting at the same time, using the ranking
+              to decide where to put its money and effort first.
             </p>
           </div>
 
@@ -44,17 +44,32 @@ export function WhatThisEnables() {
             </div>
             <p className="font-sans text-body text-ivory-dim font-light leading-[1.65]">
               Rebuilding reefs in New York Harbor needs sign-off from a stack of
-              state and federal agencies. The framework hands those agencies a
-              clear, full picture: every site ranked, the reasons behind each
-              ranking, and how much data stands behind it. It is the kind of
-              careful, side-by-side analysis regulators have been asking the
-              field for. At the same time, BOP and New York State are working
-              through an Environmental Impact Statement for oyster restoration,
-              due to wrap by the end of 2028. Once it is done, it clears the
-              permitting path for individual sites, and this analysis feeds
-              straight into it. When BOP comes back to permit projects, the
-              conversation starts from solid, comparative evidence the agencies
-              have not had before.
+              city, state, and federal agencies. This framework gives those
+              agencies clearer insight into Billion Oyster Project&apos;s
+              decision-making: every potential site ranked, the reasons behind
+              each ranking, and how much data supports it. It is the kind of
+              careful, side-by-side analysis regulators need and ask for, and
+              the kind of resource that facilitates estuary-scale planning and
+              implementation.
+            </p>
+          </div>
+
+          {/* Beat: Institutional, second blurb — the GEIS and the permitting
+              path. Split from the paragraph above per Khoury's note that the
+              combined block ran long. */}
+          <div className="space-y-3">
+            <div className="font-mono text-eyebrow uppercase tracking-[0.22em] text-teal-bright">
+              The review
+            </div>
+            <p className="font-sans text-body text-ivory-dim font-light leading-[1.65]">
+              Over the next two years, Billion Oyster Project and New York State
+              are preparing a Generic Environmental Impact Statement for oyster
+              restoration activities in the estuary, due to wrap by the end of
+              2028. Once this review is done, it will streamline the permitting
+              path for individual restoration sites. This analysis feeds
+              straight into that review. When Billion Oyster Project comes back
+              to permit projects, the conversation starts from solid,
+              comparative evidence the agencies have not had before.
             </p>
           </div>
 
@@ -64,12 +79,12 @@ export function WhatThisEnables() {
               The mission
             </div>
             <p className="font-sans text-body text-ivory-dim font-light leading-[1.65]">
-              BOP is aiming for one billion oysters in the water by 2035. The
-              harbor holds under 200 million today. Closing that gap means
-              building far more reef, far faster than before. By making it
-              believable to advance many sites at once instead of one at a
-              time, the framework puts the 2035 goal within reach for the first
-              time.
+              Billion Oyster Project is aiming for one billion oysters in the
+              water by 2030. Roughly 200 million have been reintroduced so far.
+              Closing that gap means building far more reef, far faster than
+              before. By making it believable to advance many sites at once
+              instead of one at a time, the framework puts the 2030 goal within
+              reach for the first time.
             </p>
           </div>
         </div>
@@ -85,7 +100,7 @@ export function WhatThisEnables() {
           >
             Water quality data in a harbor like this is complex. Our work
             was to extract it from many monitoring stations and turn it
-            into something BOP could make decisions from.
+            into something Billion Oyster Project could make decisions from.
           </Pullquote>
         </div>
 
@@ -103,8 +118,8 @@ export function WhatThisEnables() {
             of working can answer them, because it doesn&apos;t carry New
             York&apos;s answer with it. It carries a way of listening to a
             place: the data a harbor already keeps, and the people who know its
-            water. The scoring is set to each estuary&apos;s own salt, food, and
-            oxygen. The shoreline work from{' '}
+            water. The scoring is set to each estuary&apos;s own salinity, food,
+            and oxygen. The shoreline work from{' '}
             <em className="font-serif italic text-white">Natrx Assess</em> runs
             anywhere there is aerial or satellite imagery to read. Every place brings
             its own nature and its own gaps in the data. What travels is the
@@ -113,8 +128,8 @@ export function WhatThisEnables() {
           </p>
           <p className="mt-6">
             An oyster reef is a hopeful kind of thing: something we build that
-            is also alive. It guards a shoreline and feeds a harbor at the same
-            time. Work like this is a bet that what we make and what lives
+            is also alive. It guards a shoreline and cleans the water around it
+            at the same time. Work like this is a bet that what we make and what lives
             around us can do more than share space. They can look after each
             other.
           </p>

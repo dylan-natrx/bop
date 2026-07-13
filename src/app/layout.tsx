@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   // Next.js falls back to http://localhost:3000 and link previews on
   // external scrapers (Slack, FB, X) get a broken image URL.
   metadataBase: new URL('https://bop.natrx.report'),
-  title: "Restoring New York Harbor's Oyster Reefs — BOP × Natrx",
+  title: "Restoring New York Harbor's Oyster Reefs | Billion Oyster Project × Natrx",
   description:
     'A site prioritization framework for Billion Oyster Project, developed in partnership with Natrx. 78 candidate sites across 2,604 acres of urban estuary.',
   icons: {

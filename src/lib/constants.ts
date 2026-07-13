@@ -60,14 +60,14 @@ export const HERO_STATS = [
   },
   {
     displayValue: '1 billion',
-    label: 'Oyster goal by 2035',
+    label: 'Oyster goal by 2030',
     qualifier: 'What Billion Oyster Project is working toward in New York Harbor',
   },
   {
     value: 9,
     label: 'Conditions weighed at each site',
     qualifier:
-      "Salt, food, oxygen, depth, waves, and shoreline change, plus three things about what's nearby",
+      "Salinity, food, oxygen, depth, waves, and shoreline change, plus three things about what's nearby",
   },
 ] as const
 
