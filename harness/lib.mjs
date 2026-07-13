@@ -52,14 +52,18 @@ export async function launchBrowser() {
   })
 }
 
-export async function newAuthedContext(browser, baseUrl, viewport) {
-  const context = await browser.newContext({
+export async function newContext(browser, viewport) {
+  return browser.newContext({
     viewport: { width: viewport.width, height: viewport.height },
     deviceScaleFactor: 1,
     locale: 'en-US',
     timezoneId: 'America/New_York',
     reducedMotion: 'reduce',
   })
+}
+
+export async function newAuthedContext(browser, baseUrl, viewport) {
+  const context = await newContext(browser, viewport)
   const username = process.env.HARNESS_USERNAME ?? 'natrx'
   const password = process.env.HARNESS_PASSWORD ?? 'resili3nc3'
   const res = await context.request.post(new URL('/api/auth/login', baseUrl).href, {
@@ -87,9 +91,9 @@ async function freezeAnimations(page) {
   await page.waitForTimeout(200)
 }
 
-export async function gotoAndSettle(page, url) {
+export async function gotoAndSettle(page, url, { expectLogin = false } = {}) {
   await page.goto(url, { waitUntil: 'load', timeout: 60_000 })
-  if (page.url().includes('/login')) {
+  if (!expectLogin && page.url().includes('/login')) {
     throw new Error(`Gate blocked the harness: landed on ${page.url()}. Check credentials.`)
   }
   await page.evaluate(() => document.fonts.ready)
@@ -192,6 +196,20 @@ export async function capture(baseUrl, outDir) {
       await context.close()
     }
 
+    // 1b. The login page, pre-authentication — the first thing every
+    // stakeholder sees. Fresh unauthenticated context per viewport.
+    let loginContent = null
+    for (const vp of VIEWPORTS) {
+      const context = await newContext(browser, vp)
+      const page = await context.newPage()
+      await gotoAndSettle(page, new URL('/login', baseUrl).href, { expectLogin: true })
+      const file = path.join(outDir, `login-${vp.name}.png`)
+      await page.screenshot({ path: file, fullPage: true })
+      log(`captured login-${vp.name}.png`)
+      if (vp.name === 'desktop') loginContent = await extractContent(page, 'body')
+      await context.close()
+    }
+
     // 2. Content manifest + component states on a fresh desktop context.
     const context = await newAuthedContext(browser, baseUrl, VIEWPORTS[2])
     const page = await context.newPage()
@@ -200,6 +218,7 @@ export async function capture(baseUrl, outDir) {
     const content = {
       page: await extractContent(page, 'body'),
       meta: await extractMeta(page),
+      login: loginContent,
       walkthroughSteps: {},
       drawerGlossary: null,
       drawerPress: null,
@@ -275,6 +294,9 @@ export const IMAGE_FILES = [
   'mobile.png',
   'tablet.png',
   'desktop.png',
+  'login-mobile.png',
+  'login-tablet.png',
+  'login-desktop.png',
   'hero-map.png',
   'walkthrough-step-1.png',
   'walkthrough-step-2.png',

@@ -108,6 +108,8 @@ function reportContentDiff(base, run) {
   const sections = [
     ['page.texts', base.page?.texts, run.page?.texts],
     ['page.attrs', base.page?.attrs, run.page?.attrs],
+    ['login.texts', base.login?.texts, run.login?.texts],
+    ['login.attrs', base.login?.attrs, run.login?.attrs],
     ['drawerGlossary.texts', base.drawerGlossary?.texts, run.drawerGlossary?.texts],
     ['drawerPress.texts', base.drawerPress?.texts, run.drawerPress?.texts],
     ...Object.keys(base.walkthroughSteps ?? {}).map((k) => [

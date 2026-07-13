@@ -25,10 +25,11 @@ diffs against the committed `baseline/`:
   title and description/OG/Twitter meta, the drawer in both states, and the
   walkthrough copy at all six steps. Hashed; any delta is a FAIL. A content
   failure halts the restructure — report it, do not fix forward.
-- **Pixels: perceptual.** Full-page screenshots at 390 / 768 / 1440, plus
-  element states: hero map, walkthrough (map + spectra) at all six steps,
-  drawer glossary and press contact. pixelmatch threshold 0.1, failing when
-  more than 0.2% of pixels differ. Diff images land in `.last-run/diff/`.
+- **Pixels: perceptual.** Full-page screenshots at 390 / 768 / 1440 for the
+  main page AND the pre-authentication /login page, plus element states:
+  hero map, walkthrough (map + spectra) at all six steps, drawer glossary
+  and press contact. pixelmatch threshold 0.1, failing when more than 0.2%
+  of pixels differ. Diff images land in `.last-run/diff/`.
 
 Exit code 0 = pass, 1 = fail, 2 = harness error.
 

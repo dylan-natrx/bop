@@ -284,6 +284,23 @@
     "twitter:description": "Where should New York Harbor prioritize building oyster reefs? A data-driven framework for Billion Oyster Project.",
     "twitter:image": "https://bop.natrx.report/site-imagery/nyoyster.webp"
   },
+  "login": {
+    "texts": [
+      "×",
+      "Restoring New York Harbor's Oyster Reefs.",
+      "A site prioritization framework developed in partnership by Natrx and Billion Oyster Project. This preview is private while editorial review is in progress.",
+      "Username",
+      "Password",
+      "Enter",
+      "Press access",
+      "Dylan DiBona",
+      "dylan@natrx.io"
+    ],
+    "attrs": [
+      "alt=Billion Oyster Project",
+      "alt=Natrx"
+    ]
+  },
   "walkthroughSteps": {
     "1": {
       "texts": [
