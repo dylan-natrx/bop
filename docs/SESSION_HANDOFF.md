@@ -2,7 +2,98 @@
 
 **Pick up here.** This is the single doc to read first when resuming work. It assumes nothing about prior context.
 
-Last meaningful work: 2026-05-26. **v1 is live at https://bop.natrx.report behind the password gate.** All five sections have real copy and real visuals. Map storytelling rebuilt: biology gates (steps 1–3), external factors overlay as flag markers (steps 4–6), priority projects revealed at step 6 with a pulsing halo. Spectra panel uses a two-color treatment (teal = biology, amber = external). Legend evolved into a horizontal strip pinned to the bottom of the map. Mobile section nav got a hamburger menu. Custom domain wired up with Cloudflare DNS + per-domain Vercel CNAME target. Three pullquotes (Carolyn Khoury §2, Mike McCann §3, Lise Montefiore PhD §5). Vercel Analytics + Speed Insights are live with custom editorial events.
+Last meaningful work: **2026-07-13 — BOP client review round, shipped in 4 commits (`6301891`, `3b2d007`, `1a4daf8`, `5ca05b9`), all on `main`. Read the next section first.**
+
+Prior state: 2026-05-26. **v1 is live at https://bop.natrx.report behind the password gate.** All five sections have real copy and real visuals. Map storytelling rebuilt: biology gates (steps 1–3), external factors overlay as flag markers (steps 4–6), priority projects revealed at step 6 with a pulsing halo. Spectra panel uses a two-color treatment (teal = biology, amber = external). Legend evolved into a horizontal strip pinned to the bottom of the map. Mobile section nav got a hamburger menu. Custom domain wired up with Cloudflare DNS + per-domain Vercel CNAME target. Three pullquotes (Carolyn Khoury §2, Mike McCann §3, Lise Montefiore PhD §5). Vercel Analytics + Speed Insights are live with custom editorial events.
+
+---
+
+## BOP client review round (2026-07-13) — READ THIS FIRST
+
+Source: Google Doc `260630_BillionOysterProject_Comments_on_Natrx_site` (comments from **Mike McCann**, Director of Science and Research, and **Carolyn Khoury**, Director of Restoration). Every item in that doc is now closed. Four commits, all pushed to `main`.
+
+### The two changes that alter the story
+
+**1. Arthur Kill sits in a federal Superfund cleanup area.** This is the big one. The page previously said Arthur Kill "sits in calm water with little hard data nearby, which makes it the clearest place to go study next." That is wrong, and McCann flagged it. Arthur Kill ranks #1 on water quality *and* is among the hardest sites in the harbor to permit. Rather than delete the line, we inverted it: the tension is now the strongest material on the page, because it is the framework's own logic made flesh (the score measures water only; cost and permitting are contextual layers that are never folded into the number).
+
+Landed in three places:
+- `steps.tsx` step 6: the wrong line is gone, replaced with the Superfund + permitting reality.
+- `MethodologyMadeVisible.tsx`: second paragraph on the Arthur Kill `TopRankedCallout` ("The sediment is a work in progress…").
+- `WhatAnalysisMadeVisible.tsx`: **new leading beat**, "The best water is not always the easiest place to build." Runs full width (no `visual`) and governs how the reader reads the two beats after it. Section headline is now "Three patterns the ranking surfaced."
+
+⚠️ **OPEN WITH McCANN: the exact phrasing.** We say Arthur Kill "falls inside a federal Superfund cleanup area," deliberately **not** "is a Superfund site." Arthur Kill is a tidal strait *within* Superfund-affected sediment (LCP Chemicals, Linden NJ, listed 1998, mercury; and the Diamond Alkali natural resource damage restoration area), not itself an NPL listing. McCann's comment used the looser shorthand. He will be the one a reporter calls, so get him to sign off on the wording before this goes public.
+
+**2. The framing moved from funding to connectivity.** Khoury rejected "earn the next dollar" and any ROI-flavored language: these are not for-profit projects. § 3's headline is now "How a framework finds the sites that connect a harbor into a self-sustaining system." Her direction: *connectivity* is the key concept, and the goal is getting "the self-sustaining wheel turning." The § 3 headline is my rendering of her note and is **not yet client-approved**.
+
+### Everything else from the doc, all shipped
+
+- **Goal date is 2030, not 2035.** Everywhere (hero lede, hero stat, § 2, § 5). McCann's instruction. Note this contradicts BOP's widely published "one billion by 2035," so it is worth a sanity check that the goal genuinely moved.
+- **"200 million have been reintroduced so far."** Previously the page said "the harbor holds under 200 million today," a standing-population claim. McCann: "200M is not our current population size." Now in the § 5 Mission beat. (We render it as "*Roughly* 200 million"; he said "200 million" flat. Trivial, but it is a word we added.)
+- **Filtration claim hedged:** "A single adult **can filter as much as** fifty gallons of water a day." Hedged in both the hero lede and the `filter-feeder` glossary entry (they had drifted apart).
+- **"restored first," not "funded first."** Hero lede.
+- **"Salinity," not "salt,"** in all body copy. McCann: "I think the audience can handle the term."
+- **"Billion Oyster Project," never "BOP,"** in all reader-facing copy, per their brand guidelines. Code identifiers, Mapbox style names, cookie names and file paths are untouched.
+- **No harvest implication.** "It guards a shoreline and feeds a harbor" → "…and cleans the water around it." NYC restoration oysters are inedible by design; do not reintroduce any language that suggests otherwise.
+- **Latin binomials italicised.** New optional `latinName` field on `GlossaryEntry`; `GlossaryPanel` renders it in italic parens. Eastern oyster (*Crassostrea virginica*) is the only current user.
+- **Parks is never a bottleneck.** Khoury's verbatim rewrite of the "opportunistic" paragraph in § 2: "For years, the work moved ahead opportunistically: restoration advanced when a partner provided access or when a specific project received funding." Parks has always said yes to them; the old copy implied otherwise.
+- **Decade-of-data line** added to § 2, Khoury's verbatim: "…a decade of data that has shown that, across regions and years, oysters are spawning, and recruitment is occurring harborwide."
+- **Critical-mass context** in § 2: ten to fifteen sites is what it takes to get oysters reproducing together (the Allee effect), not an arbitrary target.
+- **GEIS / permitting block** in § 5 rewritten to Khoury's supplied language and **split into two beats** ("The agencies" / "The review") because she flagged the combined block ran long. Note her text says "the Billion Oyster Project's decision-making"; we dropped the article for consistency with McCann's brand note. Flag if they want it back.
+- **Geography named plainly.** "The harbor's old industrial west shore" was not legible as Arthur Kill. Now "the tidal strait between Staten Island and New Jersey" / "the western edge of the harbor."
+- **Cate Collinson pullquote** added to § 3 (see below).
+- **Hero standfirst** added between the lede and the map, per Khoury's note that readers must understand what the score does *before* they meet the map: *"Every site is scored on one question: how well the water suits oysters. Salinity, food, oxygen. What a reef costs to build there, and what it takes to permit, is a separate question the framework keeps separate."* Hairline rules top and bottom, mono eyebrow "How to read the map." This also sets up the new § 4 beat.
+
+### The Living Breakwaters image was from a different project
+
+`public/site-imagery/shoreline-change.png` depicted a marsh-island system that is **not Staten Island** and was captioned "Shoreline change at Living Breakwaters, 2010 to 2025." It came from some other Natrx project. On a page whose entire argument is analytical rigor, this was the single most dangerous asset on the site.
+
+Replaced with `shoreline-change-living-breakwaters.png`: the **real** Living Breakwaters page (site ID 36) extracted at 400 DPI from `BOP_Wave_Analysis_Report.pdf`, which *Natrx Assess* generated from this project's own data. Caption now credits the Esri/Maxar basemap and explains the red/blue scale.
+
+**Known aesthetic tension:** the real image is a light satellite basemap with a white legend box, so it sits differently against the dark editorial page than the old (fake, dark-toned) one did. The honest fix, if it bothers anyone, is to **ask Nick Brady for the underlying shoreline-change point data** so we can render a dark, web-native version. Worth doing regardless. Do not solve this by going back to a prettier image that isn't ours.
+
+The Wave Analysis Report has a real per-site page for **every** site (53 pages, IDs listed in its TOC). Arthur Kill is pages 21–25, Living Breakwaters 28–34. If any section needs site imagery, pull it from there. Extraction recipe: `pdftoppm -r 400 -f <page> -l <page> -png`, then crop the aerial at fractional bounds `(0.063W, 0.094H) → (0.457W, 0.2865H)` to get the map without the tiny source strip.
+
+### Cate Collinson quote — how it was sourced, in case it's questioned
+
+Khoury asked for a quote from **Cate Collinson** (Associate Director of Restoration Projects), who found Natrx and established the collaboration. The Gemini transcript of the 2026-05-18 interview (`_overview-documents/BOP x Natrx_ Project Background Interview…Gemini.md`) has **zero Collinson speaker labels** — the diarization filed every turn from BOP's end of the call under Carolyn Khoury, because they shared a mic.
+
+But one of those turns is Cate introducing herself, and the handoff is explicit in the transcript:
+
+> **Carolyn Khoury:** …So, that's a new way of doing the restoration for us. So, I'll let Kate go though.
+> **[labeled Carolyn Khoury]:** My name is Kate Collinsson and I am the associate director of restoration projects here. I work under Carolyn…
+
+That turn is unambiguously Cate, and it contains the collaboration quote. It is the **only** passage in the transcript that can be safely attributed to her; do not attribute anything else in that voice without going back to the video. Spelling is "Cate Collinson" (Khoury's doc and her email `ccollinson@`); the ASR guessed "Kate Collinsson."
+
+Placed in § 3 in the intro column, beside the paragraph describing the engagement, matching the in-column treatment § 2 gives the Khoury quote. **The page now carries four pullquotes:** Khoury (§ 2), Collinson (§ 3 intro), McCann (§ 3, before the walkthrough), Montefiore (§ 5).
+
+Also verified while in there: the existing Khoury pullquote is a faithful condensation of what she actually said (transcript turns 26 and 29). It's clean.
+
+### Pre-existing bugs the QA pass caught (all fixed)
+
+These were already live and had nothing to do with the client comments:
+
+1. **§ 4 beat closed on a banned construction.** "The framework doesn't only rank the harbor. It shows where the next bit of effort will pay off most." That is the negation-then-reveal cliché, split across two sentences so it slipped past every previous read. Rewritten.
+2. **"Six tied sites."** The hero `FigurePanel` described the Living Breakwaters cluster as tied. They score 0.79 / 0.79 / 0.78 / 0.76 / 0.76 / 0.74, and the score range printed directly beside it contradicted the word. Now "Six sites · Ranks 2-7."
+3. **"At scale" in the sticky nav.** The brief explicitly rejects that phrase, and it was on every screen. Now matches the § 5 eyebrow, "What this unlocks."
+4. **Salinity stated two ways.** The spectra curve annotates the optimum at 12–20 PSU; the glossary said oysters thrive at 10–25. A reader clicking the glossary term while looking at the curve got two different windows. Aligned to the scoring function, and the definition now names the harbor-specific recalibration (BOP's local knowledge is why the thresholds moved off the literature), which is the better fact anyway.
+5. **Press panel linked to `bop.nyc`** while the footer linked to `billionoysterproject.org`. Unified.
+6. **Press panel was missing the source-materials line** the brief calls for. Added, editorial in register, no CTA.
+
+### Other implementation notes from this round
+
+- **`SpectraPanel` x-axis labels are back.** A previous session had deliberately stripped them ("the curve title + annotation already tell the reader what they need to know"). McCann disagreed. They render as **HTML, not SVG `<text>`**, because the plot uses `preserveAspectRatio="none"` and would stretch the type. `CURVE_HEIGHT` went 78 → 132 so the 440px column shows **two** plots at a time instead of three, which gives the labels room.
+- **New `AreaLegend`** in `Legend.tsx`. Circles are drawn at the exact radii the map uses (`calculateMarkerRadius`, sqrt scale, 3px at 0 ac → 8px at the 470 ac max), so it is a true reference rather than a decorative approximation. McCann couldn't tell what dot size meant; it's acreage.
+- **`FindingBeat` already supported a missing `visual`** (falls back to a wider centred column). No component change was needed for the new full-width § 4 beat.
+
+### Still open
+
+1. **McCann sign-off on the Superfund phrasing.** See above. Highest priority.
+2. **Confirm the 2030 goal date** is a real shift and not a slip in the comment doc.
+3. **Visual review of the rendered page.** Three things were changed without eyes on the result: the light satellite shoreline image against the dark page, the taller spectra plots against the map height, and whether the new hero standfirst crowds the map.
+4. **§ 3 headline** ("…connect a harbor into a self-sustaining system") is my rendering of Khoury's note, not her words. Needs approval.
+5. **Ask Nick Brady for the shoreline-change point data** so the § 4 image can become web-native and dark.
+
+---
 
 **Recent editorial polish (May 14–18) — what's changed since the v1 launch state:**
 - § 2 expanded to four paragraphs (harbor history → opportunistic siting → systemwide shift with the 10–15 funded sites / 2029–2030 target → "the framework on this page is how Billion Oyster Project and Natrx built that capability together"). Carolyn Khoury pullquote between paragraphs 3 and 4. Inline `candidate-site` `<GlossaryTerm>` in paragraph 3.
@@ -100,20 +191,20 @@ Env vars (defaults in code are safe-for-local-dev; set on Vercel for prod):
 
 **§ 2 Stakes & problem ([StakesAndProblem.tsx](../src/components/sections/StakesAndProblem.tsx))** — done. Headline "Rebuilding the harbor's oyster reefs, and choosing where to start." Four body paragraphs: harbor history (350 sq mi reef, 15-foot visibility, food web) → opportunistic siting "happened" at proof-of-concept scale → the shift to systemwide planning with the 10–15 funded sites by 2029–2030 target (inline `<GlossaryTerm termId="candidate-site">` link on "candidate restoration sites") → "the framework on this page is how Billion Oyster Project and Natrx built that capability together." Carolyn Khoury pullquote ("we've moved from considering each restoration site individually to understanding what the whole system needs to support a self-sustaining population") between paragraphs 3 and 4. Portrait-format `EditorialImage` (`section2.jpg`) right column.
 
-**§ 3 Methodology, made visible ([MethodologyMadeVisible.tsx](../src/components/sections/MethodologyMadeVisible.tsx))** — done. Headline "How a framework finds the sites that earn the next dollar." Intro credits the partnership and lands on the framework asking two questions in order. The phrase "Two custom data products were generated by *Natrx Assess*" carries the page's first-encounter `<GlossaryTerm termId="natrx-assess">` wrapper around the italic `<em>` so readers can jump to the drawer entry on first contact. A `Pullquote` from Mike McCann (BOP Director of Science and Research) sits between the intro and the walkthrough — on the confidence-layer framing ("knowing where we're confident and where we're not is exactly what we want when we're making these decisions"). Below the pullquote: the six-step `MethodologyWalkthrough` (`WalkthroughMap` 3fr / `SpectraPanel` 2fr / bottom strip with copy + controls right-anchored). Step 4 and step 5 titles render *Natrx Assess* italic + white inline. Below the walkthrough: three `TopRankedCallout` cards (Arthur Kill / Living Breakwaters cluster / Wolfe's Pond) each with a live `SiteMiniMap`.
+**§ 3 Methodology, made visible ([MethodologyMadeVisible.tsx](../src/components/sections/MethodologyMadeVisible.tsx))** — done. Headline "How a framework finds the sites that connect a harbor into a self-sustaining system." (was "…that earn the next dollar"; Khoury rejected the ROI framing 2026-07-13.) Intro credits the partnership and lands on the framework asking two questions in order. The phrase "Two custom data products were generated by *Natrx Assess*" carries the page's first-encounter `<GlossaryTerm termId="natrx-assess">` wrapper around the italic `<em>` so readers can jump to the drawer entry on first contact. A `Pullquote` from Mike McCann (BOP Director of Science and Research) sits between the intro and the walkthrough — on the confidence-layer framing ("knowing where we're confident and where we're not is exactly what we want when we're making these decisions"). Below the pullquote: the six-step `MethodologyWalkthrough` (`WalkthroughMap` 3fr / `SpectraPanel` 2fr / bottom strip with copy + controls right-anchored). Step 4 and step 5 titles render *Natrx Assess* italic + white inline. Below the walkthrough: three `TopRankedCallout` cards (Arthur Kill / Living Breakwaters cluster / Wolfe's Pond) each with a live `SiteMiniMap`.
 
-**§ 4 What the analysis made visible ([WhatAnalysisMadeVisible.tsx](../src/components/sections/WhatAnalysisMadeVisible.tsx))** — done. Headline "Two patterns the ranking surfaced." Two `FindingBeat` components: beat 1 ("Oysters and shorelines, one intervention.") with `EditorialImage` of shoreline change at Living Breakwaters; beat 2 ("A map of where to invest in more data next.") with `ConfidenceDistributionChart` (stacked horizontal bar showing the 8/14/24/14/18 tier distribution). Beat 2 is the data-investment framing — naming the unevenness of observational coverage and closing on the framework's role as a map of where to send the next round of monitoring effort. Italic closing thread unchanged.
+**§ 4 What the analysis made visible ([WhatAnalysisMadeVisible.tsx](../src/components/sections/WhatAnalysisMadeVisible.tsx))** — done. Headline "Three patterns the ranking surfaced." **Three** `FindingBeat` components as of 2026-07-13: a new full-width leading beat ("The best water is not always the easiest place to build.") carrying the Arthur Kill Superfund disclosure, then beat 1 ("Oysters and shorelines, one intervention.") with `EditorialImage` of shoreline change at Living Breakwaters; beat 2 ("A map of where to invest in more data next.") with `ConfidenceDistributionChart` (stacked horizontal bar showing the 8/14/24/14/18 tier distribution). Beat 2 is the data-investment framing — naming the unevenness of observational coverage and closing on the framework's role as a map of where to send the next round of monitoring effort. Italic closing thread unchanged.
 
-**§ 5 What this unlocks ([WhatThisEnables.tsx](../src/components/sections/WhatThisEnables.tsx))** — done. Eyebrow "What this unlocks." Headline "The pipeline becomes operational." Three nested beats with teal-bright mono kickers — **Operational** (one sentence: BOP can now move priority sites toward design and permitting at the same time, with the comparative ranking guiding where to commit time and capital first), **Institutional** (six sentences with the NY State Environmental Impact Statement detail — scheduled to conclude by end of 2028 — and the "regulators have been wanting" framing), **Mission** (the 2035 one-billion-oyster target is now operationally achievable because the framework makes a parallel pipeline credible). A `Pullquote` from Lise Montefiore, PhD (Water Quality and Data Scientist, Natrx) hinges between the three beats and the closing paragraph ("Water quality data in a harbor like this is complex. Our work was to extract it from many monitoring stations and turn it into something BOP could make decisions from."). Closing paragraph opens to "coastal districts, state agencies, port authorities, foundations, and restoration practitioners at every scale" and renders *Natrx Assess* italic + white. Closes with `nyoyster.webp` (also the page's Open Graph image). Section id stays `what-this-enables` so anchors and nav don't break.
+**§ 5 What this unlocks ([WhatThisEnables.tsx](../src/components/sections/WhatThisEnables.tsx))** — done. Eyebrow "What this unlocks." Headline "The pipeline becomes operational." Three nested beats with teal-bright mono kickers — **Operational** (one sentence: BOP can now move priority sites toward design and permitting at the same time, with the comparative ranking guiding where to commit time and capital first), **Institutional** (six sentences with the NY State Environmental Impact Statement detail — scheduled to conclude by end of 2028 — and the "regulators have been wanting" framing), **Mission** (the 2030 one-billion-oyster target is now operationally achievable because the framework makes a parallel pipeline credible). A `Pullquote` from Lise Montefiore, PhD (Water Quality and Data Scientist, Natrx) hinges between the three beats and the closing paragraph ("Water quality data in a harbor like this is complex. Our work was to extract it from many monitoring stations and turn it into something BOP could make decisions from."). Closing paragraph opens to "coastal districts, state agencies, port authorities, foundations, and restoration practitioners at every scale" and renders *Natrx Assess* italic + white. Closes with `nyoyster.webp` (also the page's Open Graph image). Section id stays `what-this-enables` so anchors and nav don't break.
 
 **Persistent page chrome:**
-- `SectionNav` ([src/components/layout/SectionNav.tsx](../src/components/layout/SectionNav.tsx)) — sticky top, brand lockup left, four short links right (Stakes / Methodology / Findings / At scale). IntersectionObserver scroll-spy.
+- `SectionNav` ([src/components/layout/SectionNav.tsx](../src/components/layout/SectionNav.tsx)) — sticky top, brand lockup left, four short links right (Stakes / Methodology / Findings / What this unlocks). "At scale" was removed 2026-07-13 — the brief bans the phrase. IntersectionObserver scroll-spy.
 - `SiteChromeProvider` ([src/components/chrome/](../src/components/chrome/)) — right-edge drawer affordance + drawer. Two tabs: **Glossary** (25 alphabetized entries; `productName: true` entries — currently only Natrx Assess — render the term in italic + medium-weight) and **Press contact** (two side-by-side cards: Andi Cross / BOP / phone, Dylan DiBona / Natrx / email; each eyebrow links to org site). Drawer opens on edge-tab click, on `<GlossaryTerm>` click anywhere in the body, or programmatically.
 - `Footer` ([src/components/layout/Footer.tsx](../src/components/layout/Footer.tsx)) — partnership lockup with each logo linked to its org site (natrx.io, billionoysterproject.org), divider rule, single editorial credit line.
 
 **Analytics:** Vercel Analytics + Speed Insights wired in `app/layout.tsx`. Custom event wrapper at [src/lib/track.ts](../src/lib/track.ts). Five typed events: `section_reached`, `walkthrough_step`, `drawer_opened`, `glossary_term_clicked`, `top_ranked_viewed`. Page views, geo, referrers visible on the Hobby tier; custom event breakdowns require Pro Analytics ($10/mo base + overage, separate from the Vercel Pro developer subscription).
 
-**Pullquote component ([Pullquote.tsx](../src/components/sections/Pullquote.tsx))** — Fraunces italic body at section-subhead scale, JetBrains Mono uppercase attribution + role separated by a middle dot, left vertical rule in teal-bright, `max-w-[60ch]` centered. Two instances on the page (McCann in §3, Montefiore in §5). The reserved future slot in §2 is marked with an HTML comment.
+**Pullquote component ([Pullquote.tsx](../src/components/sections/Pullquote.tsx))** — Fraunces italic body at section-subhead scale, JetBrains Mono uppercase attribution + role separated by a middle dot, left vertical rule in teal-bright, `max-w-[60ch]` centered. Four instances on the page: Khoury (§2), Collinson (§3 intro), McCann (§3, before the walkthrough), Montefiore (§5).
 
 ---
 
@@ -177,6 +268,8 @@ The OSM rebuild solved all three at once: same fidelity for every coast, real Hu
 ### Git + GitHub
 
 - Two GitHub accounts authed (`dylan-natrx` and `dylandibona`). Pushes need `dylan-natrx` active. If a push 403s, run `gh auth switch --user dylan-natrx`. This still trips us occasionally.
+- **In Cowork, the shell is a sandboxed Linux VM, not your Mac.** It has no `gh` login, no SSH keys, no keychain access, and cannot `git push`. Claude can commit locally; **you** run `git push`. (In Claude Code the shell *is* your machine, so git works normally there — that difference caused an hour of confusion on 2026-07-13.) The GitHub *connector* is a third thing again: an API client that can commit via `push_files` if, and only if, the OAuth grant covers the `dylan-natrx` scope. The Vercel connector currently 403s for exactly this reason: `Not authorized: Trying to access resource under scope "dylan-natrx"`. When re-authorizing either connector, explicitly grant the `dylan-natrx` account/team, not just the personal scope.
+- **Cowork cannot delete files in the repo by default,** which strands `.git/index.lock` after every git command and breaks the next one. Fix: call `allow_cowork_file_delete` once per session.
 - **Never use `git add -A`** near the local-only reference docs (`_master_docs/`, `_overview-documents/`, and the loose top-level `BOP_*.md` notes). The `.gitignore` covers them but the discipline still matters.
 
 ### Layout / CSS gotchas specific to this page
@@ -281,7 +374,12 @@ After pushing to main:
 | Sites already in design | Pipeline |
 | Candidate sites | Pipeline sites |
 | Reef restoration | Oyster farming / aquaculture |
-| Two patterns the ranking surfaced | Unexpected finding / surprise / discovery |
+| Three patterns the ranking surfaced | Unexpected finding / surprise / discovery |
+| Restored first | Funded first |
+| Salinity | Salt |
+| Billion Oyster Project | BOP (in any reader-facing copy) |
+| Connectivity / a self-sustaining system | Earning the next dollar / ROI framing (these are not for-profit projects) |
+| Falls inside a federal Superfund cleanup area | Is a Superfund site (Arthur Kill is a waterway within Superfund-affected sediment, not an NPL listing) |
 | How buildable / where data is strong | Constructability / data-strength jargon |
 | Operational conditions / context filters | "Constraints, not scores" or other negation-led prose |
 
