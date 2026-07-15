@@ -1,6 +1,6 @@
 # Technical Specification Notes
 
-Last updated: 2026-05-18. Reflects v1 feature-complete state: OSM-based map architecture, all five sections built, Vercel Analytics wired, post-launch editorial polish landed (3 pullquotes, 2-card press contact, Natrx Assess glossary entry + product-name styling, footer org links).
+Last updated: 2026-07-15. Reflects the platform restructure (2026-07-13/14): this repo is the **natrx.report multi-project platform**; BOP is one project under `src/app/projects/bop/`. BOP itself is v1 feature-complete through the 2026-07-13 client review round, ungated + `noindex` pre-publication as of 2026-07-15. Platform architecture is summarized in SESSION_HANDOFF.md; the build packet is `natrx-report-platform-packet-v2.md` at repo root.
 
 ---
 
@@ -11,8 +11,9 @@ Last updated: 2026-05-18. Reflects v1 feature-complete state: OSM-based map arch
 - **Framer Motion** for choreographed entrances (the AnimatedEntrance wrapper) and walkthrough step transitions
 - **Mapbox GL JS 3.8** with fully custom inline style spec (no Mapbox-hosted basemap, no tiles, no sprites, no glyphs)
 - **Static GeoJSON** served from `/public/data/`
-- **`@vercel/analytics` + `@vercel/speed-insights`** for telemetry
-- **Deploy:** Vercel, project `dylan-natrx/bop` (`prj_TnieqvvtmxV8wRM3gAQOvHPP2fqI`). Auto-deploys every push to `main`.
+- **`@vercel/analytics` + `@vercel/speed-insights`** for telemetry, mounted in the root layout (platform-wide, every tenant)
+- **bcryptjs** (login route only, Node runtime) + Web Crypto HMAC (Edge middleware) for the platform gate
+- **Deploy:** Vercel, project `dylan-natrx/bop` (`prj_TnieqvvtmxV8wRM3gAQOvHPP2fqI`), serving `*.natrx.report`. Auto-deploys every push to `main`.
 
 ---
 
@@ -20,12 +21,29 @@ Last updated: 2026-05-18. Reflects v1 feature-complete state: OSM-based map arch
 
 ```
 src/
+├── middleware.ts                        # Platform: hostname → tenant → gate → rewrite; apex 302; /media 302
+├── lib/platform/
+│   ├── tenants.ts                       # Tenant registry (slug, accessMode, bcrypt hash, mediaUrl)
+│   ├── gate.ts                          # Gate decision + HMAC session cookie (Edge-safe)
+│   └── credentials.ts                   # bcrypt verify (Node runtime only)
 ├── app/
-│   ├── layout.tsx                       # Root layout, fonts, metadata, OG image, Analytics + SpeedInsights
-│   ├── globals.css                      # Base styles, scrollbar, tooltip CSS, ambient gradients
-│   ├── page.tsx                         # Home page; SiteChromeProvider wraps SectionNav + sections + Footer
-│   ├── site/[siteId]/page.tsx           # Site detail route stub (unused in v1)
-│   └── test-map/page.tsx                # Coastline experiment, debugging artifact
+│   ├── layout.tsx                       # Root layout: bare html/body + Analytics + SpeedInsights
+│   ├── globals.css                      # Tailwind directives only (nothing project-specific)
+│   ├── platform/page.tsx                # Apex holding page (unrouted since the 302 to natrx.io)
+│   ├── api/auth/login/route.ts          # Login POST: verify against tenant hash, set nx-report-<slug> cookie
+│   └── projects/
+│       ├── demo/                        # Isolation-proof tenant (own layout, fonts, styles, login)
+│       └── bop/                         # Everything BOP, laid out below
+eslint-rules/no-cross-project-imports.mjs  # Projects may not import from each other (rule, not convention)
+harness/                                 # Playwright regression harness (content + pixel diff vs baseline)
+
+src/app/projects/bop/
+├── layout.tsx                           # BOP fonts (Fraunces/Inter/JetBrains), metadata, OG image, noindex-until-launch
+├── styles/bop.css                       # BOP base styles, scrollbar, tooltip CSS, ambient gradients
+├── page.tsx                             # Home page; SiteChromeProvider wraps SectionNav + sections + Footer
+├── login/                               # BOP-branded login page (dormant while accessMode is 'public')
+├── site/[siteId]/page.tsx               # Site detail route stub (unused in v1)
+├── test-map/page.tsx                    # Coastline experiment, debugging artifact
 ├── components/
 │   ├── hero/
 │   │   ├── HeroSection.tsx              # Section wrapper (headline + figure)
@@ -52,7 +70,7 @@ src/
 │   │   ├── TopRankedCallout.tsx         # § 3 callout card (3 instances)
 │   │   ├── SiteMiniMap.tsx              # § 3 mini Mapbox map inside each callout
 │   │   ├── WhatAnalysisMadeVisible.tsx  # § 4 container
-│   │   ├── FindingBeat.tsx              # § 4 finding beat (used twice)
+│   │   ├── FindingBeat.tsx              # § 4 finding beat (used 3× as of 2026-07-13)
 │   │   ├── ConfidenceDistributionChart.tsx # § 4 beat 2 stacked bar chart
 │   │   └── WhatThisEnables.tsx          # § 5
 │   ├── chrome/
@@ -61,7 +79,7 @@ src/
 │   │   ├── SiteDrawer.tsx               # Slide-out drawer
 │   │   ├── GlossaryPanel.tsx            # Glossary tab body
 │   │   ├── PressContactPanel.tsx        # Press contact tab body
-│   │   └── glossary-data.ts             # 23 alphabetized terms
+│   │   └── glossary-data.ts             # 25 alphabetized terms
 │   ├── layout/
 │   │   ├── SectionNav.tsx               # Sticky top nav with scroll-spy
 │   │   └── Footer.tsx                   # Simplified page-end footer
@@ -226,7 +244,7 @@ Rank-to-row mapping in FigurePanel:
 
 ### Map 2 (WalkthroughMap) — step semantics
 
-Six step configs in [steps.tsx](../src/components/methodology/steps.tsx). Each step has:
+Six step configs in [steps.tsx](../src/app/projects/bop/components/methodology/steps.tsx). Each step has:
 - `id`, `title`, `lede`, `bodyParagraphs[]`
 - `colorMode` — how to color the site circles at this step
 - `visibleFlags` — which filter flags (wave, erosion, CSO, MS4, park) to surface
@@ -308,11 +326,11 @@ Each `CurveDef` carries `title`, `subtitle`, `xLabel`/`xTicks`, an SVG `path`, a
 
 ### Sticky section nav
 
-`SectionNav` ([src/components/layout/SectionNav.tsx](../src/components/layout/SectionNav.tsx)) is a 56px-tall sticky header (z-30, backdrop-blur). Brand lockup on the left, four short links on the right. IntersectionObserver scroll-spy with `rootMargin: '-30% 0px -60% 0px'` highlights the active section. Smooth scroll on click with 56px offset to account for the sticky nav height. Links: Stakes / Methodology / Findings / At scale.
+`SectionNav` ([src/app/projects/bop/components/layout/SectionNav.tsx](../src/app/projects/bop/components/layout/SectionNav.tsx)) is a 56px-tall sticky header (z-30, backdrop-blur). Brand lockup on the left, four short links on the right. IntersectionObserver scroll-spy with `rootMargin: '-30% 0px -60% 0px'` highlights the active section. Smooth scroll on click with 56px offset to account for the sticky nav height. Links: Stakes / Methodology / Findings / At scale.
 
 ### Right-edge drawer
 
-`SiteChromeProvider` ([src/components/chrome/SiteChromeProvider.tsx](../src/components/chrome/SiteChromeProvider.tsx)) owns:
+`SiteChromeProvider` ([src/app/projects/bop/components/chrome/SiteChromeProvider.tsx](../src/app/projects/bop/components/chrome/SiteChromeProvider.tsx)) owns:
 - `isOpen: boolean`, `activeTab: 'glossary' | 'press'`, `anchor: string | undefined`
 - `open(tab?, anchor?)`, `close()`, `toggle()`, `setActiveTab(tab)`
 
@@ -322,11 +340,11 @@ Closes on Escape. Locks body scroll while open. Fires `drawer_opened` analytics 
 
 ### Inline glossary terms
 
-`<GlossaryTerm termId="estuary">estuary</GlossaryTerm>` ([src/components/ui/GlossaryTerm.tsx](../src/components/ui/GlossaryTerm.tsx)) renders as an inline button with dotted underline. On click: fires `glossary_term_clicked` with `term_id`, then opens the drawer scrolled to the matching entry.
+`<GlossaryTerm termId="estuary">estuary</GlossaryTerm>` ([src/app/projects/bop/components/ui/GlossaryTerm.tsx](../src/app/projects/bop/components/ui/GlossaryTerm.tsx)) renders as an inline button with dotted underline. On click: fires `glossary_term_clicked` with `term_id`, then opens the drawer scrolled to the matching entry.
 
 ### Glossary entries
 
-25 alphabetized definitions in [glossary-data.ts](../src/components/chrome/glossary-data.ts): algal bloom, Allee effect, bathymetry, candidate site, chlorophyll-a, confidence interval, CSO, dissolved oxygen, Eastern oyster, estuary, eutrophication, fetch-limited wave modeling, filter feeder, Habitat Suitability Index, hypoxia, keystone species, MS4, NAIP imagery, **Natrx Assess**, natural breakwater, salinity, shoreline change analysis (MEIP), site score, spat, subtidal vs. intertidal. (The "site score" entry was renamed from "composite score" and re-keyed `composite-score` → `site-score` on May 26; the old DO-multiplier explanation moved out of the definition and lives in the walkthrough's "Show the math" disclosure.)
+25 alphabetized definitions in [glossary-data.ts](../src/app/projects/bop/components/chrome/glossary-data.ts): algal bloom, Allee effect, bathymetry, candidate site, chlorophyll-a, confidence interval, CSO, dissolved oxygen, Eastern oyster, estuary, eutrophication, fetch-limited wave modeling, filter feeder, Habitat Suitability Index, hypoxia, keystone species, MS4, NAIP imagery, **Natrx Assess**, natural breakwater, salinity, shoreline change analysis (MEIP), site score, spat, subtidal vs. intertidal. (The "site score" entry was renamed from "composite score" and re-keyed `composite-score` → `site-score` on May 26; the old DO-multiplier explanation moved out of the definition and lives in the walkthrough's "Show the math" disclosure.)
 
 The `GlossaryEntry` interface carries an optional `productName?: boolean` field. Entries with that flag (currently only Natrx Assess) render the drawer `<dt>` in `font-serif italic font-medium` instead of the default `font-light`. Everything else uses the same plain serif treatment. The flag exists to keep the editorial chrome rule (product names italicized) consistent inside the drawer without baking the styling into the term string.
 
@@ -337,7 +355,7 @@ The `GlossaryEntry` interface carries an optional `productName?: boolean` field.
 
 ### Body-text styling for Natrx Assess
 
-Every body-text occurrence renders as `<em className="font-serif italic text-white">Natrx Assess</em>` — pure white instead of `text-ivory-dim`, so the named product reads as foregrounded editorial chrome without becoming a button or product card. The walkthrough's local `Em` component in [steps.tsx](../src/components/methodology/steps.tsx) applies the same class so step titles and step bodies stay consistent. `StepConfig.title` is typed as `ReactNode` (not `string`) specifically to allow JSX titles like `<>Wave exposure, from <Em>Natrx Assess</Em></>`. Figure captions are deliberately unstyled.
+Every body-text occurrence renders as `<em className="font-serif italic text-white">Natrx Assess</em>` — pure white instead of `text-ivory-dim`, so the named product reads as foregrounded editorial chrome without becoming a button or product card. The walkthrough's local `Em` component in [steps.tsx](../src/app/projects/bop/components/methodology/steps.tsx) applies the same class so step titles and step bodies stay consistent. `StepConfig.title` is typed as `ReactNode` (not `string`) specifically to allow JSX titles like `<>Wave exposure, from <Em>Natrx Assess</Em></>`. Figure captions are deliberately unstyled.
 
 ---
 
@@ -347,7 +365,7 @@ Installed packages:
 - `@vercel/analytics` — page views, top referrers, geo, custom events
 - `@vercel/speed-insights` — Core Web Vitals from real users
 
-Both rendered in `app/layout.tsx`:
+Both rendered in the **root** layout (`src/app/layout.tsx`), so every tenant on the platform is tracked automatically; separate reports by the Hostname filter in the dashboard:
 
 ```tsx
 import { Analytics } from '@vercel/analytics/next'
@@ -360,7 +378,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 </body>
 ```
 
-### Custom events (via `src/lib/track.ts`)
+### Custom events (via `src/app/projects/bop/lib/track.ts`)
 
 ```ts
 type Events = {
@@ -376,7 +394,7 @@ The wrapper is the single source of truth for the event vocabulary; adding an ev
 
 ### `useFireOnView` hook
 
-[src/hooks/useFireOnView.ts](../src/hooks/useFireOnView.ts). Attach to a ref + callback. Fires the callback exactly once when the element first crosses a visibility threshold, then disconnects the observer. Options:
+[src/app/projects/bop/hooks/useFireOnView.ts](../src/app/projects/bop/hooks/useFireOnView.ts). Attach to a ref + callback. Fires the callback exactly once when the element first crosses a visibility threshold, then disconnects the observer. Options:
 - `threshold` (0..1) — default 0.5
 - `skipInitial` — true skips the initial paint event so events only fire after the user has scrolled
 
@@ -402,7 +420,7 @@ All cookieless. No consent banner required.
 
 ## Typography
 
-Loaded via `next/font/google` in `src/app/layout.tsx`. Exposed as CSS variables `--font-fraunces`, `--font-inter`, `--font-jetbrains`.
+Loaded via `next/font/google` in BOP's own layout (`src/app/projects/bop/layout.tsx`; the root layout is font-free so projects cannot collide). Exposed as CSS variables `--font-fraunces`, `--font-inter`, `--font-jetbrains`.
 
 | Role | Font | Weight | Notes |
 |---|---|---|---|
@@ -480,7 +498,7 @@ SuitableDepth   "Yes" | "No"
 
 ### Public-facing label mappings
 
-`DATA_SUPPORT_LABELS` in `src/types/site.ts`:
+`DATA_SUPPORT_LABELS` in `src/app/projects/bop/types/site.ts`:
 ```
 high      → Robust
 moderate+ → Strong
@@ -538,7 +556,7 @@ Set in `.env.local` (gitignored) and on Vercel for Production/Preview/Developmen
 
 ## Open Graph / Twitter card
 
-Configured in `app/layout.tsx`:
+Configured in `src/app/projects/bop/layout.tsx` (BOP owns its own metadata; note the temporary `robots: noindex` until launch):
 
 ```ts
 openGraph: {
@@ -561,8 +579,8 @@ twitter: {
 
 ## Things known to be obsolete / kept for inertia
 
-- `src/lib/projection.ts` — `calculateProjection` and `projectPoint` are dead code (SVG-era projection math). Only `calculateMarkerRadius` is still consumed by HeroMap.
-- `src/lib/land.ts` — coastline coords for the SVG hero. Still imported by `CoastlineTest.tsx`. Can be deleted along with `CoastlineTest.tsx` and `src/app/test-map/page.tsx` when convenient.
-- `src/components/sections/PlaceholderBlock.tsx` and `ImagePlaceholder.tsx` — used during scaffolding; no v1 component references them anymore.
+- `src/app/projects/bop/lib/projection.ts` — `calculateProjection` and `projectPoint` are dead code (SVG-era projection math). Only `calculateMarkerRadius` is still consumed by HeroMap.
+- `src/app/projects/bop/lib/land.ts` — coastline coords for the SVG hero. Still imported by `CoastlineTest.tsx`. Can be deleted along with `CoastlineTest.tsx` and `src/app/projects/bop/test-map/page.tsx` when convenient.
+- `src/app/projects/bop/components/sections/PlaceholderBlock.tsx` and `ImagePlaceholder.tsx` — used during scaffolding; no v1 component references them anymore.
 - The `/site/[siteId]` route exists but is stub-only. The new 5-section structure may or may not bring it back; site detail might move into § 3 callouts instead.
 - The four legacy land geojson files (`nyc-boroughs`, `nj-shoreline`, `westchester`, `upstate-ny-ct`) are no longer used by production but kept on disk for the diagnostic routes. When those routes are removed, the files can be deleted too.

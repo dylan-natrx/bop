@@ -1,6 +1,8 @@
 # Project Status
 
-Last meaningful update: 2026-05-26. **v1 is LIVE at https://bop.natrx.report behind the password gate.** All five sections have real copy and real visuals. Map storytelling rebuilt around the editorial spine: biology gates the ranking (steps 1–3); external factors overlay as flag markers (steps 4–6); priority projects revealed at step 6 with a pulsing halo. Spectra panel uses two-color treatment (teal biology / amber external). Horizontal-strip legend pinned to bottom of map. Mobile section nav has a hamburger menu. Custom-branded password gate at `src/middleware.ts` + `src/app/login` blocking unauthenticated access. Custom domain wired up via Cloudflare DNS + Vercel per-domain CNAME target.
+Last meaningful update: 2026-07-15. **v1 is LIVE at https://bop.natrx.report, ungated but `noindex` (pre-publication; the URL has not been shared).** The repo is now the **natrx.report multi-project platform**: BOP lives at `src/app/projects/bop/`, the platform (middleware, tenant registry, gate) at `src/middleware.ts` + `src/lib/platform/`, and a second tenant (`demo.natrx.report`, gated) proves project isolation. See SESSION_HANDOFF.md for the platform architecture.
+
+All five sections have real copy and real visuals, current through the 2026-07-13 BOP client review round. Map storytelling built around the editorial spine: biology gates the ranking (steps 1–3); external factors overlay as flag markers (steps 4–6); priority projects revealed at step 6 with a pulsing halo. Spectra panel uses two-color treatment (teal biology / amber external). Horizontal-strip legend pinned to bottom of map. Mobile section nav has a hamburger menu. Wildcard domain `*.natrx.report` attached in Vercel via Cloudflare DNS; the apex 302s to natrx.io.
 
 **Recent editorial polish (May 14–18):** § 2 expanded to a four-paragraph body with a Carolyn Khoury pullquote between paragraphs 3 and 4 and an inline `candidate-site` glossary link in paragraph 3. § 5 reshaped: Operational beat tightened to one sentence, Institutional expanded to six sentences with the NY State Environmental Impact Statement detail (scheduled to conclude by end of 2028), Mission tightened. Lise Montefiore pullquote replaced with new water-quality copy (title: Water Quality and Data Scientist, Natrx; credential simplified to PhD). Press contact rebuilt as two side-by-side cards (Andi Cross, BOP Director of Communications, with phone; Dylan DiBona, Natrx press, email). Footer logos now link to natrx.io and billionoysterproject.org. Natrx Assess added to the glossary with a `productName: true` flag that renders the drawer term in italic + medium-weight; every body-text occurrence styled in serif italic + pure white, with the § 3 first-encounter wrapped in `<GlossaryTerm termId="natrx-assess">`.
 
@@ -14,9 +16,9 @@ Last meaningful update: 2026-05-26. **v1 is LIVE at https://bop.natrx.report beh
 |---|---|---|---|
 | 1 | Hero | ✅ Done | Mapbox GL JS, all 78 sites, top-10 halos, hover tooltip, bidirectional hover. Sticky `SectionNav` replaces the original Topbar. |
 | 2 | The stakes and the problem | ✅ Done | Four paragraphs: harbor history (350 sq mi reef, 15-foot visibility) → opportunistic siting at proof-of-concept scale → the shift to systemwide planning with the 10–15-projects-by-2029-or-2030 target (inline `candidate-site` glossary link) → "the framework on this page is how Billion Oyster Project and Natrx built that capability together." Carolyn Khoury pullquote between paragraphs 3 and 4. Portrait `EditorialImage` of the harbor on the right column. |
-| 3 | The methodology, made visible | ✅ Done | Intro credits the partnership and the 78-site comparative scope; § 3 first-occurrence `<GlossaryTerm termId="natrx-assess">` wraps the italic *Natrx Assess* mention. A relative-**Site score** paragraph follows the "two questions in order" graf (added May 26). Mike McCann pullquote on the confidence-layer framing. 6-step `MethodologyWalkthrough` (map 3fr / spectra 2fr / bottom strip; step 4 and 5 titles render Natrx Assess italic + white). 3 `TopRankedCallout` cards each with a live `SiteMiniMap`. |
-| 4 | What the analysis made visible | ✅ Done | Two `FindingBeat` blocks (no kicker labels): shoreline change `EditorialImage` for beat 1 ("Oysters and shorelines, one intervention.") with Natrx Assess body styling; `ConfidenceDistributionChart` for beat 2 ("A map of where to invest in more data next.") — Beat 2 frames the confidence layer as a data-investment map. |
-| 5 | What this unlocks | ✅ Done | Eyebrow "What this unlocks." Headline "The pipeline becomes operational." Three nested beats — Operational (one sentence on parallel design + permitting), Institutional (six sentences with the NY State EIS detail through end of 2028), Mission (the 2035 one-billion-oyster target operationally achievable). Lise Montefiore, PhD pullquote (role: Water Quality and Data Scientist, Natrx) hinges between the three-beat block and the closing portability paragraph (with Natrx Assess body styling). Closing image: `nyoyster.webp` (also the OG image). |
+| 3 | The methodology, made visible | ✅ Done | Intro credits the partnership and the 78-site comparative scope; § 3 first-occurrence `<GlossaryTerm termId="natrx-assess">` wraps the italic *Natrx Assess* mention. A relative-**Site score** paragraph follows the "two questions in order" graf (added May 26). Headline is the connectivity framing ("…connect a harbor into a self-sustaining system", per Khoury 2026-07-13; her sign-off on the exact wording is still open). Cate Collinson pullquote in the intro column; Mike McCann pullquote on the confidence-layer framing before the walkthrough. 6-step `MethodologyWalkthrough` (map 3fr / spectra 2fr / bottom strip; step 4 and 5 titles render Natrx Assess italic + white). 3 `TopRankedCallout` cards each with a live `SiteMiniMap`. |
+| 4 | What the analysis made visible | ✅ Done | Headline "Three patterns the ranking surfaced." **Three** `FindingBeat` blocks as of 2026-07-13: a full-width leading beat ("The best water is not always the easiest place to build.") carrying the Arthur Kill Superfund disclosure; shoreline change `EditorialImage` ("Oysters and shorelines, one intervention.") with Natrx Assess body styling; `ConfidenceDistributionChart` ("A map of where to invest in more data next.") framing the confidence layer as a data-investment map. |
+| 5 | What this unlocks | ✅ Done | Eyebrow "What this unlocks." Headline "The pipeline becomes operational." Three nested beats — Operational (one sentence on parallel design + permitting), Institutional (six sentences with the NY State EIS detail through end of 2028), Mission (the 2030 one-billion-oyster target operationally achievable; the goal date moved from 2035 to 2030 in the 2026-07-13 review round, per McCann). Lise Montefiore, PhD pullquote (role: Water Quality and Data Scientist, Natrx) hinges between the three-beat block and the closing portability paragraph (with Natrx Assess body styling). Closing image: `nyoyster.webp` (also the OG image). |
 
 The original 6-section numbering (Framework Primer / Design Queue / Deep-dive Map / Site Detail / Methodology Drawer) is **superseded** — see [CLAUDE.md](../CLAUDE.md) for the locked 5-section structure.
 
@@ -24,18 +26,18 @@ The original 6-section numbering (Framework Primer / Design Queue / Deep-dive Ma
 
 ## Persistent page chrome
 
-- **`SectionNav` ([src/components/layout/SectionNav.tsx](../src/components/layout/SectionNav.tsx))** — sticky top, brand lockup left, four short links right (Stakes / Methodology / Findings / At scale). IntersectionObserver scroll-spy with `rootMargin: -30% 0px -60% 0px`. Smooth scroll on click with 56px offset.
-- **Right-edge drawer ([src/components/chrome/](../src/components/chrome/))** — `SiteChromeProvider` + `DrawerEdgeTab` + `SiteDrawer`. Two tabs:
+- **`SectionNav` ([src/app/projects/bop/components/layout/SectionNav.tsx](../src/app/projects/bop/components/layout/SectionNav.tsx))** — sticky top, brand lockup left, four short links right (Stakes / Methodology / Findings / At scale). IntersectionObserver scroll-spy with `rootMargin: -30% 0px -60% 0px`. Smooth scroll on click with 56px offset.
+- **Right-edge drawer ([src/app/projects/bop/components/chrome/](../src/app/projects/bop/components/chrome/))** — `SiteChromeProvider` + `DrawerEdgeTab` + `SiteDrawer`. Two tabs:
   - **Glossary** — 25 entries alphabetized (`glossary-data.ts`). Includes algal bloom, Allee effect, bathymetry, candidate site, chlorophyll-a, confidence interval, CSO, dissolved oxygen, Eastern oyster, estuary, eutrophication, fetch-limited wave modeling, filter feeder, Habitat Suitability Index, hypoxia, keystone species, MS4, NAIP imagery, Natrx Assess, natural breakwater, salinity, shoreline change analysis (MEIP), site score, spat, subtidal vs intertidal. (The "site score" entry was renamed from "composite score" / id `composite-score` → `site-score` on May 26.) Entries flagged with `productName: true` (currently only Natrx Assess) render the `<dt>` term in italic + medium-weight; everything else uses the default light-weight serif.
   - **Press contact** — Two side-by-side cards. Andi Cross (Billion Oyster Project, Director of Communications) with phone `+1 484 501 3326`. Dylan DiBona (Natrx, press contact) with email `dylan@natrx.io`. Each card's eyebrow links to its org site. No CTAs; no source-materials line.
   - Inline `<GlossaryTerm termId="...">` opens the drawer scrolled to the matching entry. Used on `candidate-site` in § 2 and on `natrx-assess` (wrapping the italic `<em>`) in the § 3 intro.
-- **`Footer` ([src/components/layout/Footer.tsx](../src/components/layout/Footer.tsx))** — partnership lockup with each logo linked to its org site (`https://natrx.io`, `https://www.billionoysterproject.org/`), divider rule, single editorial credit line.
+- **`Footer` ([src/app/projects/bop/components/layout/Footer.tsx](../src/app/projects/bop/components/layout/Footer.tsx))** — partnership lockup with each logo linked to its org site (`https://natrx.io`, `https://www.billionoysterproject.org/`), divider rule, single editorial credit line.
 
 ---
 
 ## Analytics + Speed Insights
 
-`@vercel/analytics` and `@vercel/speed-insights` are installed and rendered in `app/layout.tsx`. Typed event wrapper at [src/lib/track.ts](../src/lib/track.ts). Custom events:
+`@vercel/analytics` and `@vercel/speed-insights` are rendered in the **root** layout (`src/app/layout.tsx`), so every tenant on the platform (BOP, demo, and any future project) is tracked automatically. All traffic lands in the single Vercel project's dashboard (`vercel.com/dylan-natrx/bop/analytics`); per-report traffic is separated with the **Hostname** filter (`bop.natrx.report` vs `demo.natrx.report`), a first-class Web Analytics dimension (`requestHostname` in the API). BOP's typed event wrapper lives at [src/app/projects/bop/lib/track.ts](../src/app/projects/bop/lib/track.ts); its five custom events are BOP-only. Custom events:
 
 | Event | Properties | Fires when |
 |---|---|---|
@@ -45,9 +47,9 @@ The original 6-section numbering (Framework Primer / Design Queue / Deep-dive Ma
 | `glossary_term_clicked` | `term_id: string` | A `<GlossaryTerm>` inline is clicked |
 | `top_ranked_viewed` | `site: string` | A `TopRankedCallout` reaches 60% visibility (fires once per session per card) |
 
-**One-time access setup** required after deploy: enable Analytics + Speed Insights in `vercel.com/dylan-natrx/bop` (per-project toggle, not just a package install).
+Analytics + Speed Insights are **enabled** on the Vercel project (the per-project toggle was flipped; the package install alone is not enough — remember this if the project is ever recreated).
 
-The `useFireOnView` hook ([src/hooks/useFireOnView.ts](../src/hooks/useFireOnView.ts)) implements once-per-session intersection firing for `section_reached` and `top_ranked_viewed`. `skipInitial: true` avoids a flood of events on first paint.
+The `useFireOnView` hook ([src/app/projects/bop/hooks/useFireOnView.ts](../src/app/projects/bop/hooks/useFireOnView.ts)) implements once-per-session intersection firing for `section_reached` and `top_ranked_viewed`. `skipInitial: true` avoids a flood of events on first paint.
 
 ---
 
@@ -82,9 +84,10 @@ When the diagnostic routes are deleted, these files can also be deleted.
 
 ```bash
 NEXT_PUBLIC_MAPBOX_TOKEN=pk.eyJ1IjoiZHls...  # 94 chars, in .env.local AND on Vercel
+PLATFORM_SESSION_SECRET=...                  # HMAC key for gated-tenant session cookies; gated tenants fail closed without it
 ```
 
-`.env.local` is gitignored. Token is set on Vercel for Production, Preview, and Development scopes. Tokens shorter than 94 chars indicate paste truncation.
+`.env.local` is gitignored. Both are set on Vercel (Mapbox token for Production, Preview, and Development scopes). Mapbox tokens shorter than 94 chars indicate paste truncation.
 
 Dev: `npm run dev` (port 3000 by default). Build: `npm run build`.
 
@@ -92,109 +95,115 @@ Dev: `npm run dev` (port 3000 by default). Build: `npm run build`.
 
 ## Files: at-a-glance
 
-### App + layout
+### Platform (owns infrastructure; projects own design)
 | Purpose | Path |
 |---|---|
-| Root layout (fonts, metadata, OG image, Analytics + SpeedInsights) | `src/app/layout.tsx` |
-| Page root | `src/app/page.tsx` |
-| Global CSS, scrollbar, tooltip, fade-up classes | `src/app/globals.css` |
-| Design tokens, animations | `tailwind.config.ts` |
+| Root layout (bare html/body shell + Analytics + SpeedInsights, nothing opinionated) | `src/app/layout.tsx` |
+| Platform-global CSS (Tailwind directives only) | `src/app/globals.css` |
+| Middleware (hostname → tenant → gate → rewrite into `/projects/<slug>/`; apex 302 to natrx.io; ungated `/media` 302) | `src/middleware.ts` |
+| Tenant registry (slug, accessMode, bcrypt hash, mediaUrl; no design fields) | `src/lib/platform/tenants.ts` |
+| Access gate (HMAC session cookie, Edge-safe, fail-closed) | `src/lib/platform/gate.ts` |
+| Credential verification (bcrypt, Node-runtime only) | `src/lib/platform/credentials.ts` |
+| Login API (verifies against tenant hash, sets `nx-report-<slug>` cookie) | `src/app/api/auth/login/route.ts` |
+| Apex holding page (unrouted since the 302; kept in the tree) | `src/app/platform/page.tsx` |
+| Cross-project import ban (ESLint rule) | `eslint-rules/no-cross-project-imports.mjs` |
+| Regression harness (content + pixel diff vs committed baseline) | `harness/` |
 
-### Pre-public gate
+### BOP app shell
 | Purpose | Path |
 |---|---|
-| Middleware (checks `bop-auth` cookie, redirects to /login) | `src/middleware.ts` |
-| Login page (BOP × Natrx branded, Suspense-wrapped form) | `src/app/login/page.tsx` |
-| Login form (client component, posts to /api/auth/login) | `src/app/login/LoginForm.tsx` |
-| Auth API (validates credentials, sets `bop-auth` cookie) | `src/app/api/auth/login/route.ts` |
-| Env vars documented | `.env.local.example` |
+| BOP layout (Fraunces/Inter/JetBrains fonts, metadata, OG image, **noindex until launch**) | `src/app/projects/bop/layout.tsx` |
+| Page root | `src/app/projects/bop/page.tsx` |
+| BOP CSS (body gradients, scrollbar, tooltip, fade-up classes) | `src/app/projects/bop/styles/bop.css` |
+| Design tokens, animations | `tailwind.config.ts` |
+| Login page (dormant while BOP is `public`; renders if visited) | `src/app/projects/bop/login/` |
 
 ### Hero (§1)
 | Purpose | Path |
 |---|---|
-| Section wrapper (sticky nav stays above) | `src/components/hero/HeroSection.tsx` |
-| Hero figure (panel + map, bidirectional hover state) | `src/components/hero/HeroFigure.tsx` |
-| Map 1: Mapbox GL JS, custom dark inline style | `src/components/hero/HeroMap.tsx` |
-| Hero left panel (Fig.1, top sites, legends) | `src/components/hero/FigurePanel.tsx` |
-| Headline | `src/components/hero/Headline.tsx` |
-| Stat stack | `src/components/hero/StatStack.tsx` |
+| Section wrapper (sticky nav stays above) | `src/app/projects/bop/components/hero/HeroSection.tsx` |
+| Hero figure (panel + map, bidirectional hover state) | `src/app/projects/bop/components/hero/HeroFigure.tsx` |
+| Map 1: Mapbox GL JS, custom dark inline style | `src/app/projects/bop/components/hero/HeroMap.tsx` |
+| Hero left panel (Fig.1, top sites, legends) | `src/app/projects/bop/components/hero/FigurePanel.tsx` |
+| Headline | `src/app/projects/bop/components/hero/Headline.tsx` |
+| Stat stack | `src/app/projects/bop/components/hero/StatStack.tsx` |
 
 ### Sections (§2–5) + shared
 | Purpose | Path |
 |---|---|
-| Section shell (eyebrow + max-width + scaffold padding) | `src/components/sections/SectionShell.tsx` |
-| Section view tracker (invisible analytics marker) | `src/components/sections/SectionViewTracker.tsx` |
-| §2 stakes & problem | `src/components/sections/StakesAndProblem.tsx` |
-| §3 methodology container | `src/components/sections/MethodologyMadeVisible.tsx` |
-| §3 top-ranked callout card | `src/components/sections/TopRankedCallout.tsx` |
-| §3 mini-map inside each callout | `src/components/sections/SiteMiniMap.tsx` |
-| §4 container | `src/components/sections/WhatAnalysisMadeVisible.tsx` |
-| §4 finding beat block | `src/components/sections/FindingBeat.tsx` |
-| §4 confidence distribution chart | `src/components/sections/ConfidenceDistributionChart.tsx` |
-| §5 unlocks (3 beats + closing) | `src/components/sections/WhatThisEnables.tsx` |
-| Editorial image frame | `src/components/sections/EditorialImage.tsx` |
-| Pullquote (used in §3 + §5) | `src/components/sections/Pullquote.tsx` |
-| Placeholder block (legacy, unused in v1) | `src/components/sections/PlaceholderBlock.tsx` |
+| Section shell (eyebrow + max-width + scaffold padding) | `src/app/projects/bop/components/sections/SectionShell.tsx` |
+| Section view tracker (invisible analytics marker) | `src/app/projects/bop/components/sections/SectionViewTracker.tsx` |
+| §2 stakes & problem | `src/app/projects/bop/components/sections/StakesAndProblem.tsx` |
+| §3 methodology container | `src/app/projects/bop/components/sections/MethodologyMadeVisible.tsx` |
+| §3 top-ranked callout card | `src/app/projects/bop/components/sections/TopRankedCallout.tsx` |
+| §3 mini-map inside each callout | `src/app/projects/bop/components/sections/SiteMiniMap.tsx` |
+| §4 container | `src/app/projects/bop/components/sections/WhatAnalysisMadeVisible.tsx` |
+| §4 finding beat block | `src/app/projects/bop/components/sections/FindingBeat.tsx` |
+| §4 confidence distribution chart | `src/app/projects/bop/components/sections/ConfidenceDistributionChart.tsx` |
+| §5 unlocks (3 beats + closing) | `src/app/projects/bop/components/sections/WhatThisEnables.tsx` |
+| Editorial image frame | `src/app/projects/bop/components/sections/EditorialImage.tsx` |
+| Pullquote (used in §3 + §5) | `src/app/projects/bop/components/sections/Pullquote.tsx` |
+| Placeholder block (legacy, unused in v1) | `src/app/projects/bop/components/sections/PlaceholderBlock.tsx` |
 
 ### Methodology walkthrough (§3 inner)
 | Purpose | Path |
 |---|---|
-| Walkthrough container (step state, keyboard nav, panels) | `src/components/methodology/MethodologyWalkthrough.tsx` |
-| Map 2 (six step states, narrowing semantics) | `src/components/methodology/WalkthroughMap.tsx` |
-| Spectra panel (stacked SVG curves, newest on top) | `src/components/methodology/SpectraPanel.tsx` |
-| Step copy + visibility flags | `src/components/methodology/steps.tsx` |
-| Right-anchored controls (counter + dots + prev/next) | `src/components/methodology/WalkthroughControls.tsx` |
+| Walkthrough container (step state, keyboard nav, panels) | `src/app/projects/bop/components/methodology/MethodologyWalkthrough.tsx` |
+| Map 2 (six step states, narrowing semantics) | `src/app/projects/bop/components/methodology/WalkthroughMap.tsx` |
+| Spectra panel (stacked SVG curves, newest on top) | `src/app/projects/bop/components/methodology/SpectraPanel.tsx` |
+| Step copy + visibility flags | `src/app/projects/bop/components/methodology/steps.tsx` |
+| Right-anchored controls (counter + dots + prev/next) | `src/app/projects/bop/components/methodology/WalkthroughControls.tsx` |
 
 ### Page chrome
 | Purpose | Path |
 |---|---|
-| Sticky section nav with scroll-spy | `src/components/layout/SectionNav.tsx` |
-| Page-end footer | `src/components/layout/Footer.tsx` |
-| Drawer provider + state | `src/components/chrome/SiteChromeProvider.tsx` |
-| Drawer body | `src/components/chrome/SiteDrawer.tsx` |
-| Drawer edge tab (right-edge affordance) | `src/components/chrome/DrawerEdgeTab.tsx` |
-| Glossary panel + entries | `src/components/chrome/GlossaryPanel.tsx`, `glossary-data.ts` |
-| Press contact panel | `src/components/chrome/PressContactPanel.tsx` |
+| Sticky section nav with scroll-spy | `src/app/projects/bop/components/layout/SectionNav.tsx` |
+| Page-end footer | `src/app/projects/bop/components/layout/Footer.tsx` |
+| Drawer provider + state | `src/app/projects/bop/components/chrome/SiteChromeProvider.tsx` |
+| Drawer body | `src/app/projects/bop/components/chrome/SiteDrawer.tsx` |
+| Drawer edge tab (right-edge affordance) | `src/app/projects/bop/components/chrome/DrawerEdgeTab.tsx` |
+| Glossary panel + entries | `src/app/projects/bop/components/chrome/GlossaryPanel.tsx`, `glossary-data.ts` |
+| Press contact panel | `src/app/projects/bop/components/chrome/PressContactPanel.tsx` |
 
 ### UI primitives
 | Purpose | Path |
 |---|---|
-| Inline glossary term anchor | `src/components/ui/GlossaryTerm.tsx` |
-| Tooltip generic + SiteTooltipContent | `src/components/ui/Tooltip.tsx` |
-| Suitability + top-ranked legends | `src/components/ui/Legend.tsx` |
-| Pulse halo class wrapper | `src/components/ui/PulseHalo.tsx` |
-| Framer-Motion entrance wrapper | `src/components/ui/AnimatedEntrance.tsx` |
+| Inline glossary term anchor | `src/app/projects/bop/components/ui/GlossaryTerm.tsx` |
+| Tooltip generic + SiteTooltipContent | `src/app/projects/bop/components/ui/Tooltip.tsx` |
+| Suitability + top-ranked legends | `src/app/projects/bop/components/ui/Legend.tsx` |
+| Pulse halo class wrapper | `src/app/projects/bop/components/ui/PulseHalo.tsx` |
+| Framer-Motion entrance wrapper | `src/app/projects/bop/components/ui/AnimatedEntrance.tsx` |
 
 ### Hooks + lib
 | Purpose | Path |
 |---|---|
-| Rankings GeoJSON loader | `src/hooks/useRankingsData.ts` |
-| Statistics GeoJSON loader | `src/hooks/useStatisticsData.ts` |
-| Fire callback once when element enters viewport | `src/hooks/useFireOnView.ts` |
-| Selected site state (drawer integration) | `src/hooks/useSelectedSite.ts` |
-| Per-site stats accessor | `src/hooks/useSiteStats.ts` |
-| Typed Vercel Analytics wrapper | `src/lib/track.ts` |
-| Suitability color logic + threshold | `src/lib/colors.ts` |
-| Stat constants, TOP_RANKED_SITES | `src/lib/constants.ts` |
-| GeoJSON helpers, calculateCentroid | `src/lib/data.ts` |
-| Marker radius calc (used by HeroMap) | `src/lib/projection.ts` |
-| Legacy SVG coastline coords (used by CoastlineTest only) | `src/lib/land.ts` |
+| Rankings GeoJSON loader | `src/app/projects/bop/hooks/useRankingsData.ts` |
+| Statistics GeoJSON loader | `src/app/projects/bop/hooks/useStatisticsData.ts` |
+| Fire callback once when element enters viewport | `src/app/projects/bop/hooks/useFireOnView.ts` |
+| Selected site state (drawer integration) | `src/app/projects/bop/hooks/useSelectedSite.ts` |
+| Per-site stats accessor | `src/app/projects/bop/hooks/useSiteStats.ts` |
+| Typed Vercel Analytics wrapper | `src/app/projects/bop/lib/track.ts` |
+| Suitability color logic + threshold | `src/app/projects/bop/lib/colors.ts` |
+| Stat constants, TOP_RANKED_SITES | `src/app/projects/bop/lib/constants.ts` |
+| GeoJSON helpers, calculateCentroid | `src/app/projects/bop/lib/data.ts` |
+| Marker radius calc (used by HeroMap) | `src/app/projects/bop/lib/projection.ts` |
+| Legacy SVG coastline coords (used by CoastlineTest only) | `src/app/projects/bop/lib/land.ts` |
 
 ### Diagnostic / debug
 | Purpose | Path |
 |---|---|
-| Coastline experiment (legacy data, not on the main page) | `src/components/hero/CoastlineTest.tsx`, `src/app/test-map/page.tsx` |
-| Stub site detail route (unused in v1 scope) | `src/app/site/[siteId]/page.tsx` |
+| Coastline experiment (legacy data, not on the main page) | `src/app/projects/bop/components/hero/CoastlineTest.tsx`, `src/app/projects/bop/test-map/page.tsx` |
+| Stub site detail route (unused in v1 scope) | `src/app/projects/bop/site/[siteId]/page.tsx` |
 
 ---
 
 ## Known technical debt
 
 - **Dead-code paths to remove when convenient:**
-  - `src/components/hero/CoastlineTest.tsx` + `src/app/test-map/page.tsx` (debugging artifacts)
-  - `src/lib/land.ts` (legacy SVG coastline data) — can be deleted once CoastlineTest is gone
-  - Most of `src/lib/projection.ts` — only `calculateMarkerRadius` is still used by HeroMap; the rest is SVG-era projection math
-  - `src/app/site/[siteId]/page.tsx` — site detail stub; the new 5-section structure may move per-site detail into §3 callouts instead
+  - `src/app/projects/bop/components/hero/CoastlineTest.tsx` + `src/app/projects/bop/test-map/page.tsx` (debugging artifacts)
+  - `src/app/projects/bop/lib/land.ts` (legacy SVG coastline data) — can be deleted once CoastlineTest is gone
+  - Most of `src/app/projects/bop/lib/projection.ts` — only `calculateMarkerRadius` is still used by HeroMap; the rest is SVG-era projection math
+  - `src/app/projects/bop/site/[siteId]/page.tsx` — site detail stub; the new 5-section structure may move per-site detail into §3 callouts instead
   - Once the above are pruned, `public/data/nyc-boroughs.geojson`, `nj-shoreline.geojson`, `westchester.geojson`, `upstate-ny-ct.geojson` can be deleted (production no longer reads them)
 - `scripts/` — `split-statistics.js`, `generate-framework-primer.js`. Useful if data is regenerated from the master GeoJSONs. Not on the critical path.
 - **No automated tests.** Visual review through Vercel deploys is the QA loop.

@@ -2,6 +2,8 @@
 
 Running log of gotchas. Newest first. The 2026-05-12 map-basemap-rebuild session and the 2026-05-11 Mapbox rebuild session entries are the high-value ones; the older items from the SVG-era hero are kept for reference.
 
+**Path note (2026-07-15):** entries below predate the platform restructure (BOP moved from `src/` root into `src/app/projects/bop/`). File paths in this log were mechanically updated to the new locations so links keep working; narrative references to the old layout (e.g. "the root layout," "globals.css") describe the world as it was at the time.
+
 ---
 
 ## 2026-05-18 — post-launch editorial polish
@@ -12,7 +14,7 @@ Running log of gotchas. Newest first. The 2026-05-12 map-basemap-rebuild session
 
 **Resolution (three coordinated changes):**
 
-1. **Glossary entry with `productName: true`.** New `Natrx Assess` entry in [glossary-data.ts](../src/components/chrome/glossary-data.ts), alphabetically between NAIP imagery and Natural breakwater. The `GlossaryEntry` interface gains an optional `productName?: boolean` flag. `GlossaryPanel` reads the flag and renders the `<dt>` in `font-serif italic font-medium` instead of the default `font-light` — italic preserves the product-name convention from the body copy, medium weight preserves the glossary's heavier-term convention. Default entries are unaffected.
+1. **Glossary entry with `productName: true`.** New `Natrx Assess` entry in [glossary-data.ts](../src/app/projects/bop/components/chrome/glossary-data.ts), alphabetically between NAIP imagery and Natural breakwater. The `GlossaryEntry` interface gains an optional `productName?: boolean` flag. `GlossaryPanel` reads the flag and renders the `<dt>` in `font-serif italic font-medium` instead of the default `font-light` — italic preserves the product-name convention from the body copy, medium weight preserves the glossary's heavier-term convention. Default entries are unaffected.
 
 2. **First-encounter `<GlossaryTerm>` wrap.** The § 3 intro's `<em className="font-serif italic text-white">Natrx Assess</em>` is wrapped in `<GlossaryTerm termId="natrx-assess">`. `GlossaryTerm` uses `color: inherit` on its inline button, so the nested `<em>` keeps its own white color while inheriting the dotted-underline affordance. Other body-text occurrences carry the same styling but no link — the inline glossary affordance reads as an introduction, not a recurring footnote.
 
@@ -51,7 +53,7 @@ Steps 1–3 narrow by biology score. Steps 4–6 layer context on the surviving 
 - Replaced `isFilteredOut` semantics with `computeFlags` returning `_costFlag` / `_coBenefit` per site per step. Flags never affect `_visible`.
 - Two new map layers (`cost-flag-ring` amber, `cobenefit-ring` teal) overlay on bright sites. Same `_visible` filter so faded sites never carry rings.
 
-**File:** [src/components/methodology/WalkthroughMap.tsx](../src/components/methodology/WalkthroughMap.tsx)
+**File:** [src/app/projects/bop/components/methodology/WalkthroughMap.tsx](../src/app/projects/bop/components/methodology/WalkthroughMap.tsx)
 
 ### Priority reveal at step 6 with pulsing halo
 
@@ -73,7 +75,7 @@ Items added at steps 1–3 (biology — salinity, chlorophyll-a, dissolved oxyge
 
 Implementation: `dimension: 'biology' | 'external'` tag on each StackItem, derived from `addedAtStep` (≤3 = biology, ≥4 = external). Threaded through CurvePlot and AnnotationBlock to drive border / line / threshold-label colors. Favorable-zone shading stays teal-aqua at low opacity across all curves (positive habitat range is dimension-agnostic).
 
-**File:** [src/components/methodology/SpectraPanel.tsx](../src/components/methodology/SpectraPanel.tsx)
+**File:** [src/app/projects/bop/components/methodology/SpectraPanel.tsx](../src/app/projects/bop/components/methodology/SpectraPanel.tsx)
 
 ### Legend evolved from card to horizontal strip
 
@@ -83,13 +85,13 @@ Implementation: `dimension: 'biology' | 'external'` tag on each StackItem, deriv
 
 At step 6 the strip grows to include a 5th entry — `Priority project` (haloed symbol) — distinct from `Suitable site` (bright unfilled).
 
-**File:** [src/components/methodology/WalkthroughMapLegend.tsx](../src/components/methodology/WalkthroughMapLegend.tsx)
+**File:** [src/app/projects/bop/components/methodology/WalkthroughMapLegend.tsx](../src/app/projects/bop/components/methodology/WalkthroughMapLegend.tsx)
 
 ### Mobile hamburger nav for SectionNav
 
 The mobile presentation of SectionNav was just a non-interactive counter ("3 / 5") that named the active section but didn't navigate. Replaced with a hamburger button that opens a dropdown menu of all five section links with the current one highlighted, plus Prev/Next-equivalent affordances. Same pattern as the methodology walkthrough's mobile pill+menu — single component, both presentations, breakpoint-toggled visibility. Hamburger icon morphs to X via Framer Motion when open.
 
-**File:** [src/components/layout/SectionNav.tsx](../src/components/layout/SectionNav.tsx)
+**File:** [src/app/projects/bop/components/layout/SectionNav.tsx](../src/app/projects/bop/components/layout/SectionNav.tsx)
 
 ### Custom domain `bop.natrx.report`
 
@@ -168,7 +170,7 @@ If query 2 succeeds but queries 1 and 3 are empty, the issue is registrar delega
 
 **Implementation:** Single `WalkthroughControls` component renders both presentations from the same state. Desktop uses `hidden lg:flex` flat row; mobile uses `flex lg:hidden` pill + Framer Motion AnimatePresence popover. The mobile menu doubles as a table of contents for the walkthrough.
 
-**File:** [src/components/methodology/WalkthroughControls.tsx](../src/components/methodology/WalkthroughControls.tsx), [src/components/methodology/MethodologyWalkthrough.tsx](../src/components/methodology/MethodologyWalkthrough.tsx)
+**File:** [src/app/projects/bop/components/methodology/WalkthroughControls.tsx](../src/app/projects/bop/components/methodology/WalkthroughControls.tsx), [src/app/projects/bop/components/methodology/MethodologyWalkthrough.tsx](../src/app/projects/bop/components/methodology/MethodologyWalkthrough.tsx)
 
 ### Pullquote pattern — count is intentional
 
@@ -192,7 +194,7 @@ A third pullquote slot is reserved in §2 below paragraph 2 (HTML comment placeh
 
 **Context:** Live editorial review surfaced a need for interview quotes inside the page flow — partnership voices doing the kind of work that body copy can't do (institutional confidence, scale of the alternative). Built a single reusable component and placed two instances.
 
-**Component:** [src/components/sections/Pullquote.tsx](../src/components/sections/Pullquote.tsx). Treatment: Fraunces italic body at section-subhead scale, JetBrains Mono uppercase attribution + role separated by a middle dot (`·`), left vertical rule in teal-bright (`border-l-2`), `max-w-[60ch]` centered. Reads as a quoted aside; not a section heading. Props: `children` (quote body), `attribution`, optional `role`, optional `className`.
+**Component:** [src/app/projects/bop/components/sections/Pullquote.tsx](../src/app/projects/bop/components/sections/Pullquote.tsx). Treatment: Fraunces italic body at section-subhead scale, JetBrains Mono uppercase attribution + role separated by a middle dot (`·`), left vertical rule in teal-bright (`border-l-2`), `max-w-[60ch]` centered. Reads as a quoted aside; not a section heading. Props: `children` (quote body), `attribution`, optional `role`, optional `className`.
 
 **Placements:**
 - **§ 3, between intro and walkthrough:** Mike McCann (Director of Science and Research, Billion Oyster Project) on the confidence layer — "What we have now is a ranking and a confidence layer attached to every site. … Knowing where we're confident and where we're not is exactly what we want when we're making these decisions." Names the editorial through-line of the page before the reader steps through how the framework was built.
@@ -254,7 +256,7 @@ Followed by the Lise Montefiore pullquote (hinge), then a rewritten closing para
 
 **Fix:** dropped the affordance entirely. On step 6, the Next button is disabled (mirrors how Previous looks on step 1). Reader scrolls naturally past the walkthrough into the callouts. Removed the unused `continueReading` callback and prop chain through `WalkthroughControls`.
 
-**File:** [src/components/methodology/WalkthroughControls.tsx](../src/components/methodology/WalkthroughControls.tsx), [MethodologyWalkthrough.tsx](../src/components/methodology/MethodologyWalkthrough.tsx)
+**File:** [src/app/projects/bop/components/methodology/WalkthroughControls.tsx](../src/app/projects/bop/components/methodology/WalkthroughControls.tsx), [MethodologyWalkthrough.tsx](../src/app/projects/bop/components/methodology/MethodologyWalkthrough.tsx)
 
 ### Land contrast was too low — land read as water
 
@@ -266,7 +268,7 @@ Followed by the Lise Montefiore pullquote (hinge), then a rewritten closing para
 
 **Diagnosis path:** queryRenderedFeatures confirmed the polygons were rendering at the test points — Mapbox knew it was land, the user couldn't see it. Brightness ramp to a palette-approved token resolved without further iteration.
 
-**File:** [src/components/hero/HeroMap.tsx](../src/components/hero/HeroMap.tsx), [methodology/WalkthroughMap.tsx](../src/components/methodology/WalkthroughMap.tsx), [sections/SiteMiniMap.tsx](../src/components/sections/SiteMiniMap.tsx)
+**File:** [src/app/projects/bop/components/hero/HeroMap.tsx](../src/app/projects/bop/components/hero/HeroMap.tsx), [methodology/WalkthroughMap.tsx](../src/app/projects/bop/components/methodology/WalkthroughMap.tsx), [sections/SiteMiniMap.tsx](../src/app/projects/bop/components/sections/SiteMiniMap.tsx)
 
 ### Hero figure margins asymmetric
 
@@ -276,7 +278,7 @@ Followed by the Lise Montefiore pullquote (hinge), then a rewritten closing para
 
 **Fix:** removed `w-[95vw] max-w-[1480px] mx-auto` from the figure. It now occupies the section content area naturally (1368 px at large viewports), giving symmetric margins.
 
-**File:** [src/components/hero/HeroFigure.tsx](../src/components/hero/HeroFigure.tsx)
+**File:** [src/app/projects/bop/components/hero/HeroFigure.tsx](../src/app/projects/bop/components/hero/HeroFigure.tsx)
 
 ### Coarse upstate polygon clip created visible wedge
 
@@ -373,7 +375,7 @@ Final size: ~55KB. Covers the river from Spuyten Duyvil through the Tappan Zee u
 
 **Goal:** track section reach and top-ranked card visibility without flooding the dashboard with duplicate events per session.
 
-**Pattern:** `useFireOnView` hook ([src/hooks/useFireOnView.ts](../src/hooks/useFireOnView.ts)). Takes a ref + callback. Creates an IntersectionObserver, fires the callback exactly once when the element first crosses the threshold, then disconnects.
+**Pattern:** `useFireOnView` hook ([src/app/projects/bop/hooks/useFireOnView.ts](../src/app/projects/bop/hooks/useFireOnView.ts)). Takes a ref + callback. Creates an IntersectionObserver, fires the callback exactly once when the element first crosses the threshold, then disconnects.
 
 **Key option:** `skipInitial: true` records the initial scroll position and refuses to fire while `window.scrollY === initialScrollY`. This avoids a flood of "section reached" events on first paint for elements that happen to be in the viewport before the user has scrolled.
 
@@ -397,7 +399,7 @@ Final size: ~55KB. Covers the river from Spuyten Duyvil through the Tappan Zee u
 
 **Verification:** spun up the local dev server, ran headless Chromium via Playwright, queried `mapDivRect` via `getBoundingClientRect`. Before fix: height 0. After fix: height 860.
 
-**File:** [src/components/hero/HeroMap.tsx](../src/components/hero/HeroMap.tsx)
+**File:** [src/app/projects/bop/components/hero/HeroMap.tsx](../src/app/projects/bop/components/hero/HeroMap.tsx)
 
 ### Pulse animation clobbers Mapbox marker positioning
 
@@ -407,7 +409,7 @@ Final size: ~55KB. Covers the river from Spuyten Duyvil through the Tappan Zee u
 
 **Fix:** nest. Outer wrapper div holds Mapbox's positioning transform. Inner div with `animate-pulse-halo` class handles the scale. `data-rank` moves to the wrapper since `marker.getElement()` returns the wrapper and the bidirectional hover code reads `el.dataset.rank` from it.
 
-**File:** [src/components/hero/HeroMap.tsx](../src/components/hero/HeroMap.tsx)
+**File:** [src/app/projects/bop/components/hero/HeroMap.tsx](../src/app/projects/bop/components/hero/HeroMap.tsx)
 
 ### Mapbox 3.x default projection can be globe, not mercator
 
@@ -415,7 +417,7 @@ Final size: ~55KB. Covers the river from Spuyten Duyvil through the Tappan Zee u
 
 **Fix:** explicitly pass `projection: 'mercator'` to the `new mapboxgl.Map({...})` constructor. Defensive; harmless if mercator is already the default for the config.
 
-**File:** [src/components/hero/HeroMap.tsx](../src/components/hero/HeroMap.tsx)
+**File:** [src/app/projects/bop/components/hero/HeroMap.tsx](../src/app/projects/bop/components/hero/HeroMap.tsx)
 
 ### NEXT_PUBLIC_* env vars are baked at build time
 
@@ -502,7 +504,7 @@ min-h-[640px] lg:min-h-[720px] lg:h-[min(90vh,860px)]
 ```
 Both the grid container (in HeroFigure) AND the HeroMap inner container need min-h, because `h-full` doesn't always resolve through grid stretch reliably.
 
-**File:** [src/components/hero/HeroFigure.tsx](../src/components/hero/HeroFigure.tsx), [src/components/hero/HeroMap.tsx](../src/components/hero/HeroMap.tsx)
+**File:** [src/app/projects/bop/components/hero/HeroFigure.tsx](../src/app/projects/bop/components/hero/HeroFigure.tsx), [src/app/projects/bop/components/hero/HeroMap.tsx](../src/app/projects/bop/components/hero/HeroMap.tsx)
 
 ### NJ shoreline polygon was too crude (32 points for the whole state)
 
