@@ -17,6 +17,16 @@ as part of the platform build. Related dead code that would go with
 them: `components/hero/CoastlineTest.tsx`, `lib/land.ts`, and most of
 `lib/projection.ts` (only `calculateMarkerRadius` is still used).
 
+## BOP launch-day checklist (2026-07-15)
+
+The BOP gate came off pre-publication (accessMode: 'public', hash
+dropped). Two things to do when the page actually launches:
+
+- Remove `robots: { index: false, follow: false }` from
+  `src/app/projects/bop/layout.tsx` so search engines can index it.
+- Optionally prune `src/app/projects/bop/login/` and re-baseline the
+  harness (its baseline still captures the pre-auth /login page).
+
 ## Minor
 
 - `src/lib/pdf/` is an empty, untracked directory left from earlier

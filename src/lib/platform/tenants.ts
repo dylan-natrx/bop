@@ -33,8 +33,10 @@ export const TENANTS: readonly Tenant[] = [
   {
     slug: 'bop',
     displayName: 'Billion Oyster Project',
-    accessMode: 'gated',
-    passwordHash: '$2b$12$V24wYwDsTVM59gHONRpWq.Z11vFFMmWPVxIrvbc1Xr4fsJ9XDQh6y',
+    // Ungated 2026-07-15 (pre-publication; the URL has not been shared).
+    // The page carries robots noindex until launch — see its layout.tsx.
+    accessMode: 'public',
+    passwordHash: null,
     mediaUrl: 'https://share.natrx.io/billion-oyster-project',
   },
   {

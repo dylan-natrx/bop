@@ -43,6 +43,13 @@ export const metadata: Metadata = {
   // Next.js falls back to http://localhost:3000 and link previews on
   // external scrapers (Slack, FB, X) get a broken image URL.
   metadataBase: new URL('https://bop.natrx.report'),
+  // Pre-publication: the password gate came off 2026-07-15 (the URL has
+  // not been shared), so this keeps search engines out until launch.
+  // REMOVE AT LAUNCH along with this comment.
+  robots: {
+    index: false,
+    follow: false,
+  },
   title: "Restoring New York Harbor's Oyster Reefs | Billion Oyster Project × Natrx",
   description:
     'A site prioritization framework for Billion Oyster Project, developed in partnership with Natrx. 78 candidate sites across 2,604 acres of urban estuary.',
