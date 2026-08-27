@@ -45,8 +45,11 @@ change to what production should look like.
 
 ## Credentials
 
-Defaults to the shared preview credentials. Override with
-`HARNESS_USERNAME` / `HARNESS_PASSWORD` if they ever rotate.
+`HARNESS_USERNAME` and `HARNESS_PASSWORD` are REQUIRED whenever the
+target has an auth gate. There are no fallback credentials baked into
+the harness; if either variable is unset, the harness exits with code 2
+(harness error) before attempting login. Export both in your shell (or
+prefix the command) before running against a gated target.
 
 ## Determinism notes
 

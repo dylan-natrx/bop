@@ -64,8 +64,14 @@ export async function newContext(browser, viewport) {
 
 export async function newAuthedContext(browser, baseUrl, viewport) {
   const context = await newContext(browser, viewport)
-  const username = process.env.HARNESS_USERNAME ?? 'natrx'
-  const password = process.env.HARNESS_PASSWORD ?? 'resili3nc3'
+  const username = process.env.HARNESS_USERNAME
+  const password = process.env.HARNESS_PASSWORD
+  if (!username || !password) {
+    console.error(
+      'HARNESS_USERNAME and HARNESS_PASSWORD must be set — no fallback credentials exist.'
+    )
+    process.exit(2)
+  }
   const res = await context.request.post(new URL('/api/auth/login', baseUrl).href, {
     data: { username, password },
   })

@@ -16,7 +16,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const ROOT = join(__dirname, '..')
 
-const INPUT = join(ROOT, 'BOP_Feb2026_Pipeline_statistics.geojson')
+const INPUT = join(ROOT, 'src/app/projects/bop/data/BOP_Feb2026_Pipeline_statistics.geojson')
 const OUTPUT_DIR = join(ROOT, 'public/data/sites')
 
 interface Feature {
