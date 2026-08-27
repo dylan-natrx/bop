@@ -25,7 +25,7 @@ This repo is no longer just the BOP site. It was converted **in place** into a m
 
 ### BOP is ungated as of 2026-07-15 (pre-publication)
 
-The URL has not been shared, so the password served no one. `bop` is `accessMode: 'public'`, `passwordHash: null` (`1a8b9a0`). The old `natrx` / `resili3nc3` credential is retired. Two guards while unpublished:
+The URL has not been shared, so the password served no one. `bop` is `accessMode: 'public'`, `passwordHash: null` (`1a8b9a0`). The old [credential retired 2026-08-27, rotated per-tenant] credential is retired. Two guards while unpublished:
 
 - **`robots: { index: false, follow: false }`** in `src/app/projects/bop/layout.tsx`. **Remove at launch** (tracked in `NOTES.md`, "BOP launch-day checklist").
 - The login page (`src/app/projects/bop/login/`) is dormant but still renders; posting to it 401s. Prune at launch or keep for re-gating.
@@ -188,7 +188,7 @@ The untracked references live in your local working tree only — `_overview-doc
 Access is governed by the platform gate. See "The natrx.report platform" section near the top of this doc for the full architecture (middleware, tenant registry, HMAC session cookies). The short version:
 
 - A tenant's `accessMode` in `src/lib/platform/tenants.ts` is the single switch: `public` (no gate), `gated` (bcrypt credential required), `draft` (404 for everyone).
-- **BOP is `public` + `noindex` as of 2026-07-15** (pre-publication; the URL has not been shared). The old `natrx` / `resili3nc3` credential and the `AUTH_*` env vars are retired.
+- **BOP is `public` + `noindex` as of 2026-07-15** (pre-publication; the URL has not been shared). The old [credential retired 2026-08-27, rotated per-tenant] credential and the `AUTH_*` env vars are retired.
 - The middleware matcher excludes `_next/static`, `_next/image`, `_vercel`, `favicon.ico`, `/images`, `/site-imagery`, `/data`, `/api/auth`. **Middleware lives in `src/`, not project root** — see ISSUES doc; root location is silently ignored on `src/`-layout projects.
 - **Vercel Deployment Protection must stay OFF** so the platform gate is the only gate. Platform-level Vercel Auth intercepts before middleware runs and would mask gated tenants' branded login pages. Disabled at `vercel.com/dylan-natrx/bop/settings/deployment-protection`.
 
@@ -198,7 +198,7 @@ Access is governed by the platform gate. See "The natrx.report platform" section
 
 - **GitHub:** `dylan-natrx/bop` on `main`. All work goes directly to `main`. **Push under the `dylan-natrx` GitHub account** (`gh auth switch --user dylan-natrx` if pushes start 403-ing — the auth flip is a recurring annoyance; it struck again 2026-07-15).
 - **Vercel project:** `dylan-natrx/bop` (project ID `prj_TnieqvvtmxV8wRM3gAQOvHPP2fqI`). Linked locally via `.vercel/project.json`. Every push to `main` triggers a Production deploy. (The project keeps its historical `bop` name even though it now serves the whole platform; renaming is optional hygiene, not required.)
-- **Domains:** the wildcard `*.natrx.report` plus the apex are attached to the Vercel project via Cloudflare DNS. Live hosts: `bop.natrx.report` (public, noindex), `demo.natrx.report` (gated), `natrx.report` (302 → natrx.io). Per-deploy URLs (`bop-<slug>-dylan-natrx.vercel.app`) also exist.
+- **Domains:** attached to the Vercel project explicitly, one per tenant — there is **no wildcard `*.natrx.report` attach** (verified against the Vercel API 2026-08-27; an earlier version of this line claimed one). Attached: `natrx.report` (apex, 302 → natrx.io), `bop.natrx.report` (public, noindex), `demo.natrx.report` (gated), `nccf.natrx.report` (gated). Adding a tenant therefore takes **four** steps, not two: one project directory, one registry entry, one Cloudflare CNAME, one Vercel domain attach. Per-deploy URLs (`bop-<slug>-dylan-natrx.vercel.app`) also exist.
 - **Env vars on Vercel:** `NEXT_PUBLIC_MAPBOX_TOKEN` (94 chars; anything shorter is paste truncation, see ISSUES doc) and `PLATFORM_SESSION_SECRET` (gated tenants fail closed without it). Both mirrored in `.env.local` (gitignored).
 - **Analytics dashboards:** `vercel.com/dylan-natrx/bop/analytics` (page views + custom events) and `vercel.com/dylan-natrx/bop/speed-insights` (Core Web Vitals). Both are enabled. Analytics + Speed Insights mount in the **root** layout, so every tenant is tracked; separate reports by the **Hostname** filter in the dashboard (`requestHostname` in the Web Analytics API). BOP's five custom events are BOP-only.
 

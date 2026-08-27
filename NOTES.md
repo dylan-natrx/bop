@@ -69,3 +69,48 @@ dropped). Two things to do when the page actually launches:
 - Pre-existing lint warnings (two `<img>` usages in the login page, two
   unused `eslint-disable` directives in the map components) predate the
   restructure and were left as-is.
+
+## Credential rotation, not history scrubbing (2026-08-27)
+
+The shared gate credential that predated the platform restructure was
+exposed: it sat in plaintext in `harness/lib.mjs` in a repo that is
+public on GitHub, so it lives in clonable git history regardless of
+what HEAD says. Treated as burned. What was done about it:
+
+- Every gated tenant now carries its own per-tenant bcrypt hash in
+  `src/lib/platform/tenants.ts` (`demo` rotated, `nccf` minted fresh);
+  the old credential authenticates nowhere.
+- History was NOT rewritten and nothing was force-pushed. Rotation was
+  chosen over scrubbing deliberately: scrubbing public history is
+  theater once a repo has been cloned, rotation actually revokes.
+- The plaintext no longer appears anywhere in the working tree; the two
+  historical quotes in `docs/SESSION_HANDOFF.md` are redacted.
+
+## Harness monitoring gap: six silent weeks (2026-08-27)
+
+When BOP went `public` on 2026-07-15, its `/api/auth/login` began
+rejecting every credential with 401 (a public tenant has no
+`passwordHash`). The harness logged in unconditionally, so
+`node check.mjs` against production failed at login from that date
+until Phase 1 (2026-08-27) taught it to continue unauthenticated on
+401. A monitoring gap, not a code defect: nobody ran the harness in
+the interval, so nothing surfaced it. If the harness goes unused for
+weeks again, run it once against production after any access-mode
+change.
+
+## NCCF data provenance (2026-08-27)
+
+- Source is the public ArcGIS Online webmap item
+  `f0ec44faf40a4f208c35bb099b2dcea3` (portal
+  `indi3f437e80d142.maps.arcgis.com`), 39 operational layers, 93,418
+  transect points. Mirrored to `src/app/projects/nccf/data/layers/` as
+  static GeoJSON by `scripts/fetch-nccf-layers.ts` (deterministic; the
+  38.8 MB raw mirror is gitignored and reproducible on demand).
+  Committed instead: `manifest.json` plus the display derivative
+  `coastline.json` / `sites.json` from
+  `scripts/derive-nccf-display.ts`. The page has NO runtime ArcGIS
+  dependency: no embed, no iframe, no fetch.
+- `docs/nccf/CLAIMS.md` is the authority for every number that reaches
+  the NCCF page. Its figures were independently reproduced from the
+  public layer data on 2026-08-27 (all eight verification checks in
+  packet Amendment 02 matched exactly).
