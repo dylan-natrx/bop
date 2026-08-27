@@ -190,17 +190,17 @@ Access is governed by the platform gate. See "The natrx.report platform" section
 - A tenant's `accessMode` in `src/lib/platform/tenants.ts` is the single switch: `public` (no gate), `gated` (bcrypt credential required), `draft` (404 for everyone).
 - **BOP is `public` + `noindex` as of 2026-07-15** (pre-publication; the URL has not been shared). The old [credential retired 2026-08-27, rotated per-tenant] credential and the `AUTH_*` env vars are retired.
 - The middleware matcher excludes `_next/static`, `_next/image`, `_vercel`, `favicon.ico`, `/images`, `/site-imagery`, `/data`, `/api/auth`. **Middleware lives in `src/`, not project root** — see ISSUES doc; root location is silently ignored on `src/`-layout projects.
-- **Vercel Deployment Protection must stay OFF** so the platform gate is the only gate. Platform-level Vercel Auth intercepts before middleware runs and would mask gated tenants' branded login pages. Disabled at `vercel.com/dylan-natrx/bop/settings/deployment-protection`.
+- **Vercel Deployment Protection must stay OFF** so the platform gate is the only gate. Platform-level Vercel Auth intercepts before middleware runs and would mask gated tenants' branded login pages. Disabled at `vercel.com/dylan-natrx/natrx-report/settings/deployment-protection`.
 
 ---
 
 ## Where things are deployed
 
-- **GitHub:** `dylan-natrx/bop` on `main`. All work goes directly to `main`. **Push under the `dylan-natrx` GitHub account** (`gh auth switch --user dylan-natrx` if pushes start 403-ing — the auth flip is a recurring annoyance; it struck again 2026-07-15).
-- **Vercel project:** `dylan-natrx/bop` (project ID `prj_TnieqvvtmxV8wRM3gAQOvHPP2fqI`). Linked locally via `.vercel/project.json`. Every push to `main` triggers a Production deploy. (The project keeps its historical `bop` name even though it now serves the whole platform; renaming is optional hygiene, not required.)
+- **GitHub:** `dylan-natrx/natrx-report` on `main`. All work goes directly to `main`. **Push under the `dylan-natrx` GitHub account** (`gh auth switch --user dylan-natrx` if pushes start 403-ing — the auth flip is a recurring annoyance; it struck again 2026-07-15).
+- **Vercel project:** `dylan-natrx/natrx-report` (project ID `prj_TnieqvvtmxV8wRM3gAQOvHPP2fqI`). Linked locally via `.vercel/project.json`. Every push to `main` triggers a Production deploy. (Renamed from the historical `bop` name 2026-08-27 to match the platform and the GitHub repo. Existing per-deploy URLs keep the old `bop-<slug>` prefix; deploys after the rename use the new name. If a `vercel.com/dylan-natrx/natrx-report` link 404s, the Vercel-side rename has not been done yet — it is a dashboard action, not in the repo.)
 - **Domains:** attached to the Vercel project explicitly, one per tenant — there is **no wildcard `*.natrx.report` attach** (verified against the Vercel API 2026-08-27; an earlier version of this line claimed one). Attached: `natrx.report` (apex, 302 → natrx.io), `bop.natrx.report` (public, noindex), `demo.natrx.report` (gated), `nccf.natrx.report` (gated). Adding a tenant therefore takes **four** steps, not two: one project directory, one registry entry, one Cloudflare CNAME, one Vercel domain attach. Per-deploy URLs (`bop-<slug>-dylan-natrx.vercel.app`) also exist.
 - **Env vars on Vercel:** `NEXT_PUBLIC_MAPBOX_TOKEN` (94 chars; anything shorter is paste truncation, see ISSUES doc) and `PLATFORM_SESSION_SECRET` (gated tenants fail closed without it). Both mirrored in `.env.local` (gitignored).
-- **Analytics dashboards:** `vercel.com/dylan-natrx/bop/analytics` (page views + custom events) and `vercel.com/dylan-natrx/bop/speed-insights` (Core Web Vitals). Both are enabled. Analytics + Speed Insights mount in the **root** layout, so every tenant is tracked; separate reports by the **Hostname** filter in the dashboard (`requestHostname` in the Web Analytics API). BOP's five custom events are BOP-only.
+- **Analytics dashboards:** `vercel.com/dylan-natrx/natrx-report/analytics` (page views + custom events) and `vercel.com/dylan-natrx/natrx-report/speed-insights` (Core Web Vitals). Both are enabled. Analytics + Speed Insights mount in the **root** layout, so every tenant is tracked; separate reports by the **Hostname** filter in the dashboard (`requestHostname` in the Web Analytics API). BOP's five custom events are BOP-only.
 
 ---
 
@@ -312,7 +312,7 @@ When dev HMR is stuck and `npm run dev` won't load the map cleanly:
 
 The packages and event wiring shipped in commit `b4f8f8b`. Before any data arrives, **you must enable Analytics on the Vercel project once**:
 
-1. Visit `https://vercel.com/dylan-natrx/bop`
+1. Visit `https://vercel.com/dylan-natrx/natrx-report`
 2. Open the **Analytics** tab in the project nav → click **Enable**
 3. Open the **Speed Insights** tab → click **Enable**
 
