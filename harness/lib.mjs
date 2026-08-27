@@ -77,6 +77,11 @@ export async function newAuthedContext(browser, baseUrl, viewport) {
   })
   if (res.status() === 404) {
     log('no auth endpoint at target (gate absent) — continuing unauthenticated')
+  } else if (res.status() === 401) {
+    // A public tenant has no passwordHash, so /api/auth/login rejects every
+    // credential. Continue unauthenticated; if the target is actually gated
+    // (bad credentials), gotoAndSettle's /login landing check fails loudly.
+    log('login rejected (tenant likely public) — continuing unauthenticated')
   } else if (!res.ok()) {
     throw new Error(`Login failed against ${baseUrl}: HTTP ${res.status()} ${await res.text()}`)
   }
