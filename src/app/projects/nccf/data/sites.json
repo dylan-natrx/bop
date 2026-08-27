@@ -1,0 +1,587 @@
+[
+  {
+    "name": "252_cape_lookout_4326",
+    "featureCount": 4973,
+    "landChangeFtPerYear": {
+      "min": -16.23954,
+      "median": -0.966762,
+      "mean": -1.582337
+    },
+    "bbox": [
+      -76.583923,
+      34.609008,
+      -76.441277,
+      34.733899
+    ]
+  },
+  {
+    "name": "253_north_river_4326",
+    "featureCount": 18789,
+    "landChangeFtPerYear": {
+      "min": -19.383561,
+      "median": -0.702605,
+      "mean": -1.141583
+    },
+    "bbox": [
+      -76.722343,
+      34.685395,
+      -76.566539,
+      34.812287
+    ]
+  },
+  {
+    "name": "254_core_sound_4326",
+    "featureCount": 4977,
+    "landChangeFtPerYear": {
+      "min": -16.038279,
+      "median": -1.0096,
+      "mean": -1.458613
+    },
+    "bbox": [
+      -76.482017,
+      34.730845,
+      -76.326663,
+      34.85625
+    ]
+  },
+  {
+    "name": "293_bogue_sound_dredge_spoil_island_4326",
+    "featureCount": 86,
+    "landChangeFtPerYear": {
+      "min": -12.178981,
+      "median": -0.820924,
+      "mean": -1.686222
+    },
+    "bbox": [
+      -77.025484,
+      34.679544,
+      -77.014658,
+      34.684809
+    ]
+  },
+  {
+    "name": "294_swanquarter_4326",
+    "featureCount": 1615,
+    "landChangeFtPerYear": {
+      "min": -13.487939,
+      "median": -0.828888,
+      "mean": -1.4136
+    },
+    "bbox": [
+      -76.383965,
+      35.394605,
+      -76.326319,
+      35.416367
+    ]
+  },
+  {
+    "name": "295_shell_narrows_4326",
+    "featureCount": 3187,
+    "landChangeFtPerYear": {
+      "min": -13.938634,
+      "median": -1.328275,
+      "mean": -2.352369
+    },
+    "bbox": [
+      -76.385195,
+      35.337395,
+      -76.302009,
+      35.395651
+    ]
+  },
+  {
+    "name": "296_juniper_bay_50x50_4326",
+    "featureCount": 4868,
+    "landChangeFtPerYear": {
+      "min": -18.204097,
+      "median": -0.526281,
+      "mean": -1.215908
+    },
+    "bbox": [
+      -76.302926,
+      35.325696,
+      -76.220898,
+      35.392682
+    ]
+  },
+  {
+    "name": "297_west_bluff_bay_50x120_4326",
+    "featureCount": 997,
+    "landChangeFtPerYear": {
+      "min": -40.373422,
+      "median": -1.751235,
+      "mean": -2.847655
+    },
+    "bbox": [
+      -76.220816,
+      35.328876,
+      -76.138047,
+      35.358611
+    ]
+  },
+  {
+    "name": "298_old_hill_bay_4326",
+    "featureCount": 3588,
+    "landChangeFtPerYear": {
+      "min": -17.363398,
+      "median": -1.008496,
+      "mean": -2.115631
+    },
+    "bbox": [
+      -76.093459,
+      35.389101,
+      -76.052029,
+      35.456017
+    ]
+  },
+  {
+    "name": "299_north_bluff_point_4326",
+    "featureCount": 1302,
+    "landChangeFtPerYear": {
+      "min": -13.220938,
+      "median": -1.405215,
+      "mean": -1.909797
+    },
+    "bbox": [
+      -76.138191,
+      35.343124,
+      -76.06254,
+      35.388779
+    ]
+  },
+  {
+    "name": "300_middletown_4326",
+    "featureCount": 2004,
+    "landChangeFtPerYear": {
+      "min": -15.371273,
+      "median": -1.057487,
+      "mean": -1.858468
+    },
+    "bbox": [
+      -76.012463,
+      35.454188,
+      -75.957727,
+      35.520993
+    ]
+  },
+  {
+    "name": "301_long_point_50x50_4326",
+    "featureCount": 1673,
+    "landChangeFtPerYear": {
+      "min": -10.13617,
+      "median": -0.835826,
+      "mean": -1.580898
+    },
+    "bbox": [
+      -76.052806,
+      35.411514,
+      -76.001447,
+      35.454896
+    ]
+  },
+  {
+    "name": "302_hyde_county_airport_4326",
+    "featureCount": 2905,
+    "landChangeFtPerYear": {
+      "min": -12.442809,
+      "median": -0.564925,
+      "mean": -1.12913
+    },
+    "bbox": [
+      -75.988371,
+      35.520601,
+      -75.90402,
+      35.571589
+    ]
+  },
+  {
+    "name": "308_mill_point_4326",
+    "featureCount": 1163,
+    "landChangeFtPerYear": {
+      "min": -15.811183,
+      "median": -0.144005,
+      "mean": -0.453497
+    },
+    "bbox": [
+      -76.398969,
+      34.853701,
+      -76.314292,
+      34.922087
+    ]
+  },
+  {
+    "name": "309_lookout_point_4326",
+    "featureCount": 2824,
+    "landChangeFtPerYear": {
+      "min": -16.77303,
+      "median": -0.883334,
+      "mean": -2.103959
+    },
+    "bbox": [
+      -76.340989,
+      34.92172,
+      -76.272273,
+      34.98929
+    ]
+  },
+  {
+    "name": "310_north_bay_4326",
+    "featureCount": 1948,
+    "landChangeFtPerYear": {
+      "min": -16.333301,
+      "median": -0.761654,
+      "mean": -1.527044
+    },
+    "bbox": [
+      -76.368311,
+      34.989138,
+      -76.304767,
+      35.035521
+    ]
+  },
+  {
+    "name": "311_hog_island_4326",
+    "featureCount": 1909,
+    "landChangeFtPerYear": {
+      "min": -12.565924,
+      "median": -0.406532,
+      "mean": -0.623528
+    },
+    "bbox": [
+      -76.304604,
+      34.975197,
+      -76.244301,
+      35.011742
+    ]
+  },
+  {
+    "name": "312_wanchese_south_4326",
+    "featureCount": 3254,
+    "landChangeFtPerYear": {
+      "min": -19.663308,
+      "median": -0.530474,
+      "mean": -1.032862
+    },
+    "bbox": [
+      -75.672058,
+      35.81059,
+      -75.596522,
+      35.875983
+    ]
+  },
+  {
+    "name": "323_wanchese_north_4326",
+    "featureCount": 649,
+    "landChangeFtPerYear": {
+      "min": -11.140766,
+      "median": -0.454433,
+      "mean": -0.982871
+    },
+    "bbox": [
+      -75.726426,
+      35.882987,
+      -75.670856,
+      35.939745
+    ]
+  },
+  {
+    "name": "324_wanchese_east_4326",
+    "featureCount": 2503,
+    "landChangeFtPerYear": {
+      "min": -10.111886,
+      "median": -0.378699,
+      "mean": -0.491487
+    },
+    "bbox": [
+      -75.672943,
+      35.874504,
+      -75.623967,
+      35.927328
+    ]
+  },
+  {
+    "name": "325_striking_bay",
+    "featureCount": 1060,
+    "landChangeFtPerYear": {
+      "min": -16.39092,
+      "median": -2.37076,
+      "mean": -3.588976
+    },
+    "bbox": [
+      -76.456458,
+      35.347033,
+      -76.382955,
+      35.396782
+    ]
+  },
+  {
+    "name": "326_rose_bay_4326",
+    "featureCount": 2247,
+    "landChangeFtPerYear": {
+      "min": -12.773865,
+      "median": -0.566923,
+      "mean": -0.812595
+    },
+    "bbox": [
+      -76.464373,
+      35.395481,
+      -76.381243,
+      35.463525
+    ]
+  },
+  {
+    "name": "327_west_thorofare_bay",
+    "featureCount": 1214,
+    "landChangeFtPerYear": {
+      "min": -8.688685,
+      "median": -0.917945,
+      "mean": -1.164371
+    },
+    "bbox": [
+      -76.421666,
+      34.921382,
+      -76.339217,
+      34.983183
+    ]
+  },
+  {
+    "name": "328_turnagain_bay",
+    "featureCount": 1389,
+    "landChangeFtPerYear": {
+      "min": -11.39469,
+      "median": -0.796771,
+      "mean": -1.122108
+    },
+    "bbox": [
+      -76.50383,
+      34.944746,
+      -76.421534,
+      35.013368
+    ]
+  },
+  {
+    "name": "329_pine_tree_point_4326",
+    "featureCount": 1944,
+    "landChangeFtPerYear": {
+      "min": -15.06669,
+      "median": -0.734171,
+      "mean": -1.385248
+    },
+    "bbox": [
+      -76.599146,
+      35.118859,
+      -76.53731,
+      35.173596
+    ]
+  },
+  {
+    "name": "330_abel_bay_4326",
+    "featureCount": 2236,
+    "landChangeFtPerYear": {
+      "min": -10.357495,
+      "median": -0.571411,
+      "mean": -0.974562
+    },
+    "bbox": [
+      -76.545041,
+      35.372596,
+      -76.463585,
+      35.436657
+    ]
+  },
+  {
+    "name": "331_rattan_bay_4326",
+    "featureCount": 1413,
+    "landChangeFtPerYear": {
+      "min": -12.228916,
+      "median": -1.376521,
+      "mean": -2.082466
+    },
+    "bbox": [
+      -76.493742,
+      35.012418,
+      -76.423061,
+      35.076021
+    ]
+  },
+  {
+    "name": "332_jones_bay_4326",
+    "featureCount": 1965,
+    "landChangeFtPerYear": {
+      "min": -8.529378,
+      "median": -0.935757,
+      "mean": -1.278151
+    },
+    "bbox": [
+      -76.574139,
+      35.18484,
+      -76.489945,
+      35.252633
+    ]
+  },
+  {
+    "name": "333_mouse_harbor_4326",
+    "featureCount": 5028,
+    "landChangeFtPerYear": {
+      "min": -13.711077,
+      "median": -0.244436,
+      "mean": -0.592334
+    },
+    "bbox": [
+      -76.545918,
+      35.25183,
+      -76.468051,
+      35.319699
+    ]
+  },
+  {
+    "name": "334_piney_island_4326",
+    "featureCount": 764,
+    "landChangeFtPerYear": {
+      "min": -6.616335,
+      "median": -0.608263,
+      "mean": -0.91644
+    },
+    "bbox": [
+      -77.012039,
+      34.671136,
+      -76.969992,
+      34.684262
+    ]
+  },
+  {
+    "name": "335_surf_city",
+    "featureCount": 3480,
+    "landChangeFtPerYear": {
+      "min": -12.585806,
+      "median": -0.32787,
+      "mean": -0.412191
+    },
+    "bbox": [
+      -77.574691,
+      34.417571,
+      -77.491497,
+      34.483185
+    ]
+  },
+  {
+    "name": "336_long_shoal_river_4326",
+    "featureCount": 1933,
+    "landChangeFtPerYear": {
+      "min": -17.511683,
+      "median": -1.263511,
+      "mean": -1.614406
+    },
+    "bbox": [
+      -75.904963,
+      35.569942,
+      -75.822999,
+      35.636976
+    ]
+  },
+  {
+    "name": "337_parched_corn_bay",
+    "featureCount": 657,
+    "landChangeFtPerYear": {
+      "min": -37.777126,
+      "median": -1.89548,
+      "mean": -4.288257
+    },
+    "bbox": [
+      -75.824951,
+      35.571589,
+      -75.734652,
+      35.64227
+    ]
+  },
+  {
+    "name": "338_stumpy_point",
+    "featureCount": 595,
+    "landChangeFtPerYear": {
+      "min": -26.829888,
+      "median": -2.212323,
+      "mean": -4.774901
+    },
+    "bbox": [
+      -75.780171,
+      35.641583,
+      -75.718518,
+      35.708566
+    ]
+  },
+  {
+    "name": "339_navy_shell",
+    "featureCount": 535,
+    "landChangeFtPerYear": {
+      "min": -45.907421,
+      "median": -0.490354,
+      "mean": -7.875625
+    },
+    "bbox": [
+      -75.744124,
+      35.707138,
+      -75.719543,
+      35.775244
+    ]
+  },
+  {
+    "name": "340_mashoes_4326",
+    "featureCount": 254,
+    "landChangeFtPerYear": {
+      "min": -30.047638,
+      "median": -11.607093,
+      "mean": -13.278691
+    },
+    "bbox": [
+      -75.742622,
+      35.77384,
+      -75.72893,
+      35.840908
+    ]
+  },
+  {
+    "name": "341_hoop_pole",
+    "featureCount": 1167,
+    "landChangeFtPerYear": {
+      "min": -15.607726,
+      "median": -0.462536,
+      "mean": -0.961233
+    },
+    "bbox": [
+      -76.769043,
+      34.697752,
+      -76.745379,
+      34.715908
+    ]
+  },
+  {
+    "name": "342_theodore_roosevelt",
+    "featureCount": 310,
+    "landChangeFtPerYear": {
+      "min": -9.417358,
+      "median": -0.398054,
+      "mean": -0.11161
+    },
+    "bbox": [
+      -76.847155,
+      34.693449,
+      -76.821679,
+      34.704578
+    ]
+  },
+  {
+    "name": "380_otter_creek",
+    "featureCount": 13,
+    "landChangeFtPerYear": {
+      "min": -4.921486,
+      "median": -3.705262,
+      "mean": -3.746551
+    },
+    "bbox": [
+      -75.903829,
+      35.565342,
+      -75.903126,
+      35.569399
+    ]
+  }
+]

@@ -61,3 +61,7 @@ _screenshots/
 
 # Working briefs (contain the shared credential in plaintext)
 natrx-report-platform-packet-v2.md
+
+# NCCF raw layer mirror — reproducible via scripts/fetch-nccf-layers.ts; only the
+# display derivative (coastline.json, sites.json) and manifest.json are committed.
+src/app/projects/nccf/data/layers/

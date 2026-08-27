@@ -1,0 +1,681 @@
+{
+  "source": {
+    "webmapItemId": "f0ec44faf40a4f208c35bb099b2dcea3",
+    "portal": "indi3f437e80d142.maps.arcgis.com",
+    "fetchDate": "2026-08-27"
+  },
+  "layerCount": 39,
+  "totalFeatureCount": 93418,
+  "overallBbox": [
+    -77.574691,
+    34.417571,
+    -75.596522,
+    35.939745
+  ],
+  "overallMedianLandChangeFtPerYear": -0.719907,
+  "layers": [
+    {
+      "title": "380_otter_creek",
+      "itemId": "208c046ca778465aaf02e4d333bab58b",
+      "featureCount": 13,
+      "bbox": [
+        -75.903829,
+        35.565342,
+        -75.903126,
+        35.569399
+      ],
+      "landChangeFtPerYear": {
+        "min": -4.921486,
+        "median": -3.705262,
+        "mean": -3.746551
+      },
+      "rSquaredAtLeastHalf": 13
+    },
+    {
+      "title": "342_theodore_roosevelt",
+      "itemId": "00c5b0e839ae4e39973b2ee78e210982",
+      "featureCount": 310,
+      "bbox": [
+        -76.847155,
+        34.693449,
+        -76.821679,
+        34.704578
+      ],
+      "landChangeFtPerYear": {
+        "min": -9.417358,
+        "median": -0.398054,
+        "mean": -0.11161
+      },
+      "rSquaredAtLeastHalf": 125
+    },
+    {
+      "title": "341_hoop_pole",
+      "itemId": "c3c919f54bf3453686bce9ab0ba65cb4",
+      "featureCount": 1167,
+      "bbox": [
+        -76.769043,
+        34.697752,
+        -76.745379,
+        34.715908
+      ],
+      "landChangeFtPerYear": {
+        "min": -15.607726,
+        "median": -0.462536,
+        "mean": -0.961233
+      },
+      "rSquaredAtLeastHalf": 794
+    },
+    {
+      "title": "340_mashoes_4326",
+      "itemId": "a597be5b5c234a138c38cb51f1087aa7",
+      "featureCount": 254,
+      "bbox": [
+        -75.742622,
+        35.77384,
+        -75.72893,
+        35.840908
+      ],
+      "landChangeFtPerYear": {
+        "min": -30.047638,
+        "median": -11.607093,
+        "mean": -13.278691
+      },
+      "rSquaredAtLeastHalf": 246
+    },
+    {
+      "title": "339_navy_shell",
+      "itemId": "6d3283df33b84d6ab76acb0fab808e22",
+      "featureCount": 535,
+      "bbox": [
+        -75.744124,
+        35.707138,
+        -75.719543,
+        35.775244
+      ],
+      "landChangeFtPerYear": {
+        "min": -45.907421,
+        "median": -0.490354,
+        "mean": -7.875625
+      },
+      "rSquaredAtLeastHalf": 501
+    },
+    {
+      "title": "338_stumpy_point",
+      "itemId": "f3dd8edac7f8404c9400132b6393827d",
+      "featureCount": 595,
+      "bbox": [
+        -75.780171,
+        35.641583,
+        -75.718518,
+        35.708566
+      ],
+      "landChangeFtPerYear": {
+        "min": -26.829888,
+        "median": -2.212323,
+        "mean": -4.774901
+      },
+      "rSquaredAtLeastHalf": 455
+    },
+    {
+      "title": "337_parched_corn_bay",
+      "itemId": "79d632b263ac4bd2b32c34d221131dd3",
+      "featureCount": 657,
+      "bbox": [
+        -75.824951,
+        35.571589,
+        -75.734652,
+        35.64227
+      ],
+      "landChangeFtPerYear": {
+        "min": -37.777126,
+        "median": -1.89548,
+        "mean": -4.288257
+      },
+      "rSquaredAtLeastHalf": 438
+    },
+    {
+      "title": "336_long_shoal_river_4326",
+      "itemId": "427ea5bdf9964f3da9f4b3184e456229",
+      "featureCount": 1933,
+      "bbox": [
+        -75.904963,
+        35.569942,
+        -75.822999,
+        35.636976
+      ],
+      "landChangeFtPerYear": {
+        "min": -17.511683,
+        "median": -1.263511,
+        "mean": -1.614406
+      },
+      "rSquaredAtLeastHalf": 1161
+    },
+    {
+      "title": "335_surf_city",
+      "itemId": "2ef0e586599c4ccfaa98251f946b3963",
+      "featureCount": 3480,
+      "bbox": [
+        -77.574691,
+        34.417571,
+        -77.491497,
+        34.483185
+      ],
+      "landChangeFtPerYear": {
+        "min": -12.585806,
+        "median": -0.32787,
+        "mean": -0.412191
+      },
+      "rSquaredAtLeastHalf": 1980
+    },
+    {
+      "title": "334_piney_island_4326",
+      "itemId": "d76657cf5709426797ea8afa565345cc",
+      "featureCount": 764,
+      "bbox": [
+        -77.012039,
+        34.671136,
+        -76.969992,
+        34.684262
+      ],
+      "landChangeFtPerYear": {
+        "min": -6.616335,
+        "median": -0.608263,
+        "mean": -0.91644
+      },
+      "rSquaredAtLeastHalf": 368
+    },
+    {
+      "title": "333_mouse_harbor_4326",
+      "itemId": "ea6093de8f30457d818ba12cfcfa9b22",
+      "featureCount": 5028,
+      "bbox": [
+        -76.545918,
+        35.25183,
+        -76.468051,
+        35.319699
+      ],
+      "landChangeFtPerYear": {
+        "min": -13.711077,
+        "median": -0.244436,
+        "mean": -0.592334
+      },
+      "rSquaredAtLeastHalf": 2155
+    },
+    {
+      "title": "332_jones_bay_4326",
+      "itemId": "03fca528dee94abc905c2816ad5a9ff8",
+      "featureCount": 1965,
+      "bbox": [
+        -76.574139,
+        35.18484,
+        -76.489945,
+        35.252633
+      ],
+      "landChangeFtPerYear": {
+        "min": -8.529378,
+        "median": -0.935757,
+        "mean": -1.278151
+      },
+      "rSquaredAtLeastHalf": 1468
+    },
+    {
+      "title": "331_rattan_bay_4326",
+      "itemId": "35a78f30de87460ebd8b72410af54ed7",
+      "featureCount": 1413,
+      "bbox": [
+        -76.493742,
+        35.012418,
+        -76.423061,
+        35.076021
+      ],
+      "landChangeFtPerYear": {
+        "min": -12.228916,
+        "median": -1.376521,
+        "mean": -2.082466
+      },
+      "rSquaredAtLeastHalf": 1102
+    },
+    {
+      "title": "330_abel_bay_4326",
+      "itemId": "893edca479cc46b49adc0ee388facfd6",
+      "featureCount": 2236,
+      "bbox": [
+        -76.545041,
+        35.372596,
+        -76.463585,
+        35.436657
+      ],
+      "landChangeFtPerYear": {
+        "min": -10.357495,
+        "median": -0.571411,
+        "mean": -0.974562
+      },
+      "rSquaredAtLeastHalf": 1274
+    },
+    {
+      "title": "329_pine_tree_point_4326",
+      "itemId": "7e92e28cbd174117b4e89a488bfd2f46",
+      "featureCount": 1944,
+      "bbox": [
+        -76.599146,
+        35.118859,
+        -76.53731,
+        35.173596
+      ],
+      "landChangeFtPerYear": {
+        "min": -15.06669,
+        "median": -0.734171,
+        "mean": -1.385248
+      },
+      "rSquaredAtLeastHalf": 1019
+    },
+    {
+      "title": "328_turnagain_bay",
+      "itemId": "e97c28bf589e4120b6837bd497626ade",
+      "featureCount": 1389,
+      "bbox": [
+        -76.50383,
+        34.944746,
+        -76.421534,
+        35.013368
+      ],
+      "landChangeFtPerYear": {
+        "min": -11.39469,
+        "median": -0.796771,
+        "mean": -1.122108
+      },
+      "rSquaredAtLeastHalf": 861
+    },
+    {
+      "title": "327_west_thorofare_bay",
+      "itemId": "91a96dc99a764bc89becf4421656d740",
+      "featureCount": 1214,
+      "bbox": [
+        -76.421666,
+        34.921382,
+        -76.339217,
+        34.983183
+      ],
+      "landChangeFtPerYear": {
+        "min": -8.688685,
+        "median": -0.917945,
+        "mean": -1.164371
+      },
+      "rSquaredAtLeastHalf": 969
+    },
+    {
+      "title": "326_rose_bay_4326",
+      "itemId": "b12162452af14f058d6692ce775af00e",
+      "featureCount": 2247,
+      "bbox": [
+        -76.464373,
+        35.395481,
+        -76.381243,
+        35.463525
+      ],
+      "landChangeFtPerYear": {
+        "min": -12.773865,
+        "median": -0.566923,
+        "mean": -0.812595
+      },
+      "rSquaredAtLeastHalf": 1204
+    },
+    {
+      "title": "325_striking_bay",
+      "itemId": "001a5869101448e6a4bbc70abfb6b0f6",
+      "featureCount": 1060,
+      "bbox": [
+        -76.456458,
+        35.347033,
+        -76.382955,
+        35.396782
+      ],
+      "landChangeFtPerYear": {
+        "min": -16.39092,
+        "median": -2.37076,
+        "mean": -3.588976
+      },
+      "rSquaredAtLeastHalf": 926
+    },
+    {
+      "title": "324_wanchese_east_4326",
+      "itemId": "5d39a7a2a37f4fea86ceff3ab16ae72b",
+      "featureCount": 2503,
+      "bbox": [
+        -75.672943,
+        35.874504,
+        -75.623967,
+        35.927328
+      ],
+      "landChangeFtPerYear": {
+        "min": -10.111886,
+        "median": -0.378699,
+        "mean": -0.491487
+      },
+      "rSquaredAtLeastHalf": 764
+    },
+    {
+      "title": "323_wanchese_north_4326",
+      "itemId": "bd36d7c2c31947fcbdbf0c2d73fa4403",
+      "featureCount": 649,
+      "bbox": [
+        -75.726426,
+        35.882987,
+        -75.670856,
+        35.939745
+      ],
+      "landChangeFtPerYear": {
+        "min": -11.140766,
+        "median": -0.454433,
+        "mean": -0.982871
+      },
+      "rSquaredAtLeastHalf": 283
+    },
+    {
+      "title": "312_wanchese_south_4326",
+      "itemId": "219f29a0dc594bcab0f31251cd417373",
+      "featureCount": 3254,
+      "bbox": [
+        -75.672058,
+        35.81059,
+        -75.596522,
+        35.875983
+      ],
+      "landChangeFtPerYear": {
+        "min": -19.663308,
+        "median": -0.530474,
+        "mean": -1.032862
+      },
+      "rSquaredAtLeastHalf": 1896
+    },
+    {
+      "title": "311_hog_island_4326",
+      "itemId": "b3a090e1f5414098ad5580398c11c2cc",
+      "featureCount": 1909,
+      "bbox": [
+        -76.304604,
+        34.975197,
+        -76.244301,
+        35.011742
+      ],
+      "landChangeFtPerYear": {
+        "min": -12.565924,
+        "median": -0.406532,
+        "mean": -0.623528
+      },
+      "rSquaredAtLeastHalf": 921
+    },
+    {
+      "title": "310_north_bay_4326",
+      "itemId": "eb0fc059e0814de8ab604dc84b6e65a2",
+      "featureCount": 1948,
+      "bbox": [
+        -76.368311,
+        34.989138,
+        -76.304767,
+        35.035521
+      ],
+      "landChangeFtPerYear": {
+        "min": -16.333301,
+        "median": -0.761654,
+        "mean": -1.527044
+      },
+      "rSquaredAtLeastHalf": 972
+    },
+    {
+      "title": "309_lookout_point_4326",
+      "itemId": "bb7b09e26973447aabf27c1c2be4a69c",
+      "featureCount": 2824,
+      "bbox": [
+        -76.340989,
+        34.92172,
+        -76.272273,
+        34.98929
+      ],
+      "landChangeFtPerYear": {
+        "min": -16.77303,
+        "median": -0.883334,
+        "mean": -2.103959
+      },
+      "rSquaredAtLeastHalf": 1383
+    },
+    {
+      "title": "308_mill_point_4326",
+      "itemId": "fc382c3a26f048af87e25aa0a429d8e5",
+      "featureCount": 1163,
+      "bbox": [
+        -76.398969,
+        34.853701,
+        -76.314292,
+        34.922087
+      ],
+      "landChangeFtPerYear": {
+        "min": -15.811183,
+        "median": -0.144005,
+        "mean": -0.453497
+      },
+      "rSquaredAtLeastHalf": 610
+    },
+    {
+      "title": "302_hyde_county_airport_4326",
+      "itemId": "517c0a42d29d42f0b626eab869ea9671",
+      "featureCount": 2905,
+      "bbox": [
+        -75.988371,
+        35.520601,
+        -75.90402,
+        35.571589
+      ],
+      "landChangeFtPerYear": {
+        "min": -12.442809,
+        "median": -0.564925,
+        "mean": -1.12913
+      },
+      "rSquaredAtLeastHalf": 691
+    },
+    {
+      "title": "301_long_point_50x50_4326",
+      "itemId": "565a7367a88f41f4a287c7b512588434",
+      "featureCount": 1673,
+      "bbox": [
+        -76.052806,
+        35.411514,
+        -76.001447,
+        35.454896
+      ],
+      "landChangeFtPerYear": {
+        "min": -10.13617,
+        "median": -0.835826,
+        "mean": -1.580898
+      },
+      "rSquaredAtLeastHalf": 672
+    },
+    {
+      "title": "300_middletown_4326",
+      "itemId": "c0311172f47f4771a73cd6968c0496d0",
+      "featureCount": 2004,
+      "bbox": [
+        -76.012463,
+        35.454188,
+        -75.957727,
+        35.520993
+      ],
+      "landChangeFtPerYear": {
+        "min": -15.371273,
+        "median": -1.057487,
+        "mean": -1.858468
+      },
+      "rSquaredAtLeastHalf": 1228
+    },
+    {
+      "title": "299_north_bluff_point_4326",
+      "itemId": "28daf5c7082b4b23b72b62b2086a44cd",
+      "featureCount": 1302,
+      "bbox": [
+        -76.138191,
+        35.343124,
+        -76.06254,
+        35.388779
+      ],
+      "landChangeFtPerYear": {
+        "min": -13.220938,
+        "median": -1.405215,
+        "mean": -1.909797
+      },
+      "rSquaredAtLeastHalf": 476
+    },
+    {
+      "title": "298_old_hill_bay_4326",
+      "itemId": "e9fbd4865853421986e0b2943226ce6e",
+      "featureCount": 3588,
+      "bbox": [
+        -76.093459,
+        35.389101,
+        -76.052029,
+        35.456017
+      ],
+      "landChangeFtPerYear": {
+        "min": -17.363398,
+        "median": -1.008496,
+        "mean": -2.115631
+      },
+      "rSquaredAtLeastHalf": 1701
+    },
+    {
+      "title": "297_west_bluff_bay_50x120_4326",
+      "itemId": "74b927bfcb4f4ecc9a8cae5e65a0719a",
+      "featureCount": 997,
+      "bbox": [
+        -76.220816,
+        35.328876,
+        -76.138047,
+        35.358611
+      ],
+      "landChangeFtPerYear": {
+        "min": -40.373422,
+        "median": -1.751235,
+        "mean": -2.847655
+      },
+      "rSquaredAtLeastHalf": 506
+    },
+    {
+      "title": "296_juniper_bay_50x50_4326",
+      "itemId": "bfe4d1c523014ed49d3a1670add6b73d",
+      "featureCount": 4868,
+      "bbox": [
+        -76.302926,
+        35.325696,
+        -76.220898,
+        35.392682
+      ],
+      "landChangeFtPerYear": {
+        "min": -18.204097,
+        "median": -0.526281,
+        "mean": -1.215908
+      },
+      "rSquaredAtLeastHalf": 2508
+    },
+    {
+      "title": "295_shell_narrows_4326",
+      "itemId": "17d9b32684c34e93bb051babee2516eb",
+      "featureCount": 3187,
+      "bbox": [
+        -76.385195,
+        35.337395,
+        -76.302009,
+        35.395651
+      ],
+      "landChangeFtPerYear": {
+        "min": -13.938634,
+        "median": -1.328275,
+        "mean": -2.352369
+      },
+      "rSquaredAtLeastHalf": 2277
+    },
+    {
+      "title": "294_swanquarter_4326",
+      "itemId": "18b3df8729344fb5b28e2f9630c9cae4",
+      "featureCount": 1615,
+      "bbox": [
+        -76.383965,
+        35.394605,
+        -76.326319,
+        35.416367
+      ],
+      "landChangeFtPerYear": {
+        "min": -13.487939,
+        "median": -0.828888,
+        "mean": -1.4136
+      },
+      "rSquaredAtLeastHalf": 1087
+    },
+    {
+      "title": "293_bogue_sound_dredge_spoil_island_4326",
+      "itemId": "93dde1b534714a7fac29f4d232620359",
+      "featureCount": 86,
+      "bbox": [
+        -77.025484,
+        34.679544,
+        -77.014658,
+        34.684809
+      ],
+      "landChangeFtPerYear": {
+        "min": -12.178981,
+        "median": -0.820924,
+        "mean": -1.686222
+      },
+      "rSquaredAtLeastHalf": 27
+    },
+    {
+      "title": "254_core_sound_4326",
+      "itemId": "736d796eedac4d659133dd0267915fbd",
+      "featureCount": 4977,
+      "bbox": [
+        -76.482017,
+        34.730845,
+        -76.326663,
+        34.85625
+      ],
+      "landChangeFtPerYear": {
+        "min": -16.038279,
+        "median": -1.0096,
+        "mean": -1.458613
+      },
+      "rSquaredAtLeastHalf": 3214
+    },
+    {
+      "title": "253_north_river_4326",
+      "itemId": "908872ffe2d1428794d75bd84c610059",
+      "featureCount": 18789,
+      "bbox": [
+        -76.722343,
+        34.685395,
+        -76.566539,
+        34.812287
+      ],
+      "landChangeFtPerYear": {
+        "min": -19.383561,
+        "median": -0.702605,
+        "mean": -1.141583
+      },
+      "rSquaredAtLeastHalf": 6413
+    },
+    {
+      "title": "252_cape_lookout_4326",
+      "itemId": "cdd8df1e65c540acbb7fc946758015a7",
+      "featureCount": 4973,
+      "bbox": [
+        -76.583923,
+        34.609008,
+        -76.441277,
+        34.733899
+      ],
+      "landChangeFtPerYear": {
+        "min": -16.23954,
+        "median": -0.966762,
+        "mean": -1.582337
+      },
+      "rSquaredAtLeastHalf": 2330
+    }
+  ]
+}
