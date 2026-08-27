@@ -43,7 +43,15 @@ export const TENANTS: readonly Tenant[] = [
     slug: 'demo',
     displayName: 'Platform Demo',
     accessMode: 'gated',
-    passwordHash: '$2b$12$ZCu9IjE.RGAS0Fo5Q2Qn6u1848vYHnLMZuiYR0pp8XYg8o091DZdi',
+    passwordHash: '$2b$12$V7KLoLKRj.ebpwBXEmVI4eYte9A/oljRS9ghvdZbF7R4zrAMVy0XO',
+    mediaUrl: null,
+  },
+  {
+    // Per-tenant credential hash — not shared with demo or any other tenant.
+    slug: 'nccf',
+    displayName: 'North Carolina Coastal Federation',
+    accessMode: 'gated',
+    passwordHash: '$2b$12$UjW3NFrRES0ADe15cWKCA.1d3PZpbiMyWa.M5wFvB3nymqMjk14OG',
     mediaUrl: null,
   },
 ]
