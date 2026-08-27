@@ -1,75 +1,667 @@
 /*
- * NCCF tenant stylesheet. Loaded only from src/app/projects/nccf/layout.tsx,
- * so it never touches any other project's routes. Styling body directly here
- * is intentional and safe for the same reason.
+ * NCCF tenant stylesheet — ported from
+ * docs/nccf/reference/vanishing-edge-reference.html (the design of record).
+ * Loaded only from src/app/projects/nccf/layout.tsx, so it never touches any
+ * other project's routes; styling html/body directly here is intentional and
+ * safe for the same reason.
  *
- * Scaffold-minimal: neutral paper and ink, no design work yet.
+ * Two inks only: stock #F3F1F4, ink 1 #121D54, ink 2 #3DA993. Every other
+ * tone is overlap, opacity, or mix-blend-mode — no third colour, no grey,
+ * no gradient of new hues.
  */
 
-:root {
-  --nccf-paper: #f8f7f4;
-  --nccf-ink: #16150f;
-  --nccf-ink-soft: #5f5b52;
-  --nccf-rule: #16150f;
-  --nccf-rule-light: rgba(22, 21, 15, 0.18);
+/* ---------- tokens ---------- */
+
+html {
+  scroll-behavior: smooth;
+  background: #F3F1F4;
 }
 
 body {
-  background: var(--nccf-paper);
-  color: var(--nccf-ink);
+  margin: 0;
+  background: #F3F1F4;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* The font slots are declared on .nccf-root — the element carrying the
-   next/font variable classes — NOT on :root: custom properties substitute
-   their var() references eagerly where declared, and --font-space-grotesk
-   does not exist at :root, so a :root declaration would compute to
-   guaranteed-invalid and drop the whole page to UA fallback fonts.
-   Text typography lives here rather than on body for the same reason. */
+/* The font slots and every design token are declared on .nccf-root — the
+   element carrying the next/font variable classes — NOT on :root: custom
+   properties substitute their var() references eagerly where declared, and
+   --font-darker-grotesque does not exist at :root, so a :root declaration
+   would compute to guaranteed-invalid and drop the whole page to UA fallback
+   fonts. Text typography lives here rather than on body for the same reason. */
 .nccf-root {
-  --nccf-display: var(--font-space-grotesk), sans-serif;
-  --nccf-body: var(--font-plex-serif), serif;
+  --paper: #F3F1F4;
+  --ink: #121D54;
+  --tint: #3DA993;
+  --ink-70: rgba(18, 29, 84, 0.7);
+  --ink-45: rgba(18, 29, 84, 0.45);
+  --ink-22: rgba(18, 29, 84, 0.22);
+  --ink-10: rgba(18, 29, 84, 0.1);
+  --gut: clamp(24px, 5vw, 80px);
+  --rail: 236px;
+  --nccf-display: var(--font-darker-grotesque), sans-serif;
+  --nccf-body: var(--font-familjen), system-ui, sans-serif;
+  --nccf-mono: var(--font-plex-mono), ui-monospace, monospace;
   min-height: 100vh;
+  color: var(--ink);
   font-family: var(--nccf-body);
+  font-weight: 400;
   font-size: 17px;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
-/* ---------- Holding page ---------- */
-
-.nccf-page {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 72px 24px 48px;
+.nccf-root *,
+.nccf-root *::before,
+.nccf-root *::after {
+  box-sizing: border-box;
 }
 
-.nccf-kicker {
-  font-family: var(--nccf-display);
-  font-weight: 500;
-  font-size: 13px;
-  letter-spacing: 0.14em;
+.mono {
+  font-family: var(--nccf-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--nccf-ink-soft);
-  margin-bottom: 16px;
+  font-weight: 500;
 }
 
-.nccf-title {
+/* ---------- grain ---------- */
+
+#tex {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0.04;
+  background-size: 170px 170px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.05' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='170' height='170' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- chrome ---------- */
+
+.mast {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 46;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px var(--gut);
+  background: linear-gradient(var(--paper) 62%, rgba(243, 241, 244, 0));
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  mix-blend-mode: multiply;
+}
+
+#glossBtn {
+  background: none;
+  border: 0;
+  border-bottom: 1.5px solid var(--ink-22);
+  color: var(--ink);
+  font-family: var(--nccf-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 5px 0;
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+#glossBtn:hover {
+  color: var(--tint);
+  border-color: var(--tint);
+}
+
+/* ---------- rail ---------- */
+
+#rail {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--rail);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: var(--gut);
+  mix-blend-mode: multiply;
+}
+
+#rail ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 2px solid var(--ink-10);
+}
+
+#rail li {
+  position: relative;
+}
+
+#rail a {
+  display: block;
+  text-decoration: none;
+  color: var(--ink-22);
+  padding: 9px 0 9px 16px;
+  font-family: var(--nccf-mono);
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  transition: color 0.35s;
+}
+
+#rail a::before {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--tint);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.4s;
+}
+
+#rail a.on {
+  color: var(--ink);
+}
+
+#rail a.on::before {
+  transform: scaleY(1);
+}
+
+#rail .n {
+  color: var(--ink-22);
+  margin-right: 9px;
+}
+
+#rail a.on .n {
+  color: var(--tint);
+}
+
+#railBtn {
+  display: none;
+}
+
+/* ---------- sections ---------- */
+
+.sheet {
+  padding: 0 var(--gut) 0 calc(var(--rail) + var(--gut));
+}
+
+.col {
+  max-width: 620px;
+}
+
+.nccf-root section {
+  position: relative;
+  padding: 15vh 0;
+}
+
+.rv {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.9s cubic-bezier(0.22, 0.7, 0.3, 1),
+    transform 0.9s cubic-bezier(0.22, 0.7, 0.3, 1);
+}
+
+.rv.in {
+  opacity: 1;
+  transform: none;
+}
+
+.d1 { transition-delay: 0.08s; }
+.d2 { transition-delay: 0.16s; }
+.d3 { transition-delay: 0.24s; }
+.d4 { transition-delay: 0.32s; }
+
+#b1 {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 0;
+}
+
+#heroArt {
+  position: absolute;
+  right: -6vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 62vw;
+  max-width: 1050px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.9;
+}
+
+#heroArt svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+#b1 .sheet {
+  position: relative;
+  z-index: 1;
+}
+
+.byline {
+  margin-top: 32px;
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  color: var(--ink-45);
+}
+
+/* ---------- typography ---------- */
+
+.nccf-root h1,
+.nccf-root h2 {
+  font-family: var(--nccf-display);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  margin: 0;
+  mix-blend-mode: multiply;
+  filter: url(#tb);
+}
+
+.nccf-root h1 {
+  font-size: clamp(46px, 7.6vw, 105px);
+  line-height: 0.8;
+}
+
+.nccf-root h2 {
+  font-size: clamp(34px, 4.6vw, 62px);
+  line-height: 0.86;
+  margin: 0 0 28px;
+  max-width: 17ch;
+}
+
+.kick {
+  color: var(--tint);
+  margin-bottom: 24px;
+  mix-blend-mode: multiply;
+}
+
+.nccf-root p {
+  margin: 0 0 20px;
+  max-width: 58ch;
+  line-height: 1.4;
+}
+
+.deck {
+  font-size: 19px;
+  line-height: 1.4;
+  max-width: 52ch;
+}
+
+.nccf-root em {
+  font-style: normal;
+  color: var(--tint);
+}
+
+.nccf-root strong {
+  font-weight: 600;
+}
+
+/* ---------- figures ---------- */
+
+.figure {
+  margin: 52px 0 14px;
+}
+
+.figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.pl {
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.pl.on {
+  opacity: 1;
+}
+
+.cap {
+  margin-top: 16px;
+  color: var(--ink-45);
+  max-width: 50ch;
+  font-size: 10.5px;
+  line-height: 1.85;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 46px 0 0;
+  border-top: 2px solid var(--ink);
+}
+
+.stats div {
+  padding: 20px 22px 20px 0;
+  border-right: 1px solid var(--ink-10);
+}
+
+.stats div:last-child {
+  border-right: 0;
+}
+
+.stats .v {
   font-family: var(--nccf-display);
   font-weight: 700;
-  font-size: clamp(32px, 6vw, 48px);
-  line-height: 1.05;
+  font-size: clamp(38px, 4.6vw, 58px);
+  line-height: 0.84;
+  letter-spacing: -0.03em;
+}
+
+.stats .v.t {
+  color: var(--tint);
+}
+
+.stats .k {
+  color: var(--ink-45);
+  margin-top: 12px;
+  line-height: 1.7;
+}
+
+.bignum {
+  font-family: var(--nccf-display);
+  font-weight: 800;
+  font-size: clamp(140px, 26vw, 400px);
+  line-height: 0.72;
+  letter-spacing: -0.05em;
+  color: var(--tint);
+  margin: 14px 0 0;
+  mix-blend-mode: multiply;
+}
+
+.bignum small {
+  font-size: 0.3em;
   letter-spacing: -0.02em;
-  margin: 0 0 20px;
 }
 
-.nccf-note {
-  font-size: 18px;
-  color: var(--nccf-ink-soft);
-  max-width: 56ch;
+.dec {
+  display: flex;
+  align-items: flex-end;
+  gap: 7px;
+  height: 150px;
+  margin: 36px 0 0;
+  mix-blend-mode: multiply;
+}
+
+.dec i {
+  flex: 1;
+  background: var(--ink);
+  opacity: 0.88;
+  transform-origin: bottom;
+  transform: scaleY(0);
+  transition: transform 0.95s cubic-bezier(0.2, 0.75, 0.3, 1);
+}
+
+.dec i:first-child {
+  background: var(--tint);
+  opacity: 1;
+}
+
+.dec.in i {
+  transform: scaleY(1);
+}
+
+.dec i:nth-child(n + 2) {
+  transition-delay: calc(0.055s * var(--i));
+}
+
+.decax {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 11px;
+  color: var(--ink-45);
+}
+
+.ladder {
+  margin-top: 32px;
+  border-top: 2px solid var(--ink);
+}
+
+.lrow {
+  display: grid;
+  grid-template-columns: 200px 1fr 70px;
+  gap: 20px;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--ink-10);
+}
+
+.lrow .nm {
+  font-family: var(--nccf-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.lrow .tk {
+  position: relative;
+  height: 11px;
+  background: var(--ink-10);
+}
+
+.lrow .tk b {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: var(--tint);
+  transition: width 1s cubic-bezier(0.2, 0.75, 0.3, 1);
+}
+
+.ladder.in .lrow .tk b {
+  width: var(--w);
+}
+
+.lrow .val {
+  font-family: var(--nccf-mono);
+  font-size: 11px;
+  text-align: right;
+}
+
+/* The reference's other off-palette literal here (a pale grey) is ink 1 at ~5.5%
+   over stock; derived from the ink instead — flagged in the STOP report. */
+.photo {
+  position: relative;
+  margin: 52px 0 14px;
+  aspect-ratio: 16 / 9;
+  background: rgba(18, 29, 84, 0.055);
+  display: flex;
+  align-items: flex-end;
+  padding: 22px;
+  border: 1px solid var(--ink-22);
+}
+
+.photo .lbl {
+  color: var(--ink-45);
+  max-width: 42ch;
+  line-height: 1.9;
+}
+
+/* ---------- pull quote ---------- */
+
+.pull {
+  margin: 0 calc(-1 * var(--gut));
+  padding: 15vh var(--gut) 15vh calc(var(--rail) + var(--gut));
+  background: var(--ink);
+  color: var(--paper);
+  position: relative;
+  overflow: hidden;
+}
+
+.pull::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='q'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.05' numOctaves='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23q)'/%3E%3C/svg%3E");
+}
+
+.pull blockquote {
   margin: 0;
+  font-family: var(--nccf-display);
+  font-weight: 600;
+  font-size: clamp(34px, 5.6vw, 78px);
+  line-height: 0.9;
+  letter-spacing: -0.028em;
+  max-width: 18ch;
 }
 
-/* ---------- Login page ---------- */
+/* The reference's one off-palette literal here (a lifted teal): ink 2 raised toward
+   stock for legibility on the ink 1 ground. Derived here from the two
+   allowed colours instead of introducing a third literal — flagged in the
+   Phase 6 STOP report. */
+.pull blockquote em {
+  color: color-mix(in srgb, var(--tint) 60%, var(--paper));
+}
+
+.pull .attr {
+  margin-top: 34px;
+  color: rgba(243, 241, 244, 0.6);
+}
+
+/* ---------- glossary ---------- */
+
+#scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 29, 84, 0.42);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+  z-index: 48;
+}
+
+#scrim.on {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#gloss {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(450px, 93vw);
+  z-index: 50;
+  background: var(--paper);
+  box-shadow: -1px 0 0 var(--ink);
+  transform: translateX(101%);
+  transition: transform 0.5s cubic-bezier(0.3, 0.85, 0.25, 1);
+  overflow-y: auto;
+  padding: 26px 34px 70px;
+}
+
+#gloss.on {
+  transform: none;
+}
+
+#gloss h3 {
+  font-family: var(--nccf-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--tint);
+  margin: 38px 0 16px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--ink-10);
+  font-weight: 500;
+}
+
+#gloss h3:first-of-type {
+  margin-top: 28px;
+}
+
+#gloss dt {
+  font-family: var(--nccf-display);
+  font-weight: 700;
+  font-size: 24px;
+  margin: 20px 0 2px;
+  letter-spacing: -0.02em;
+}
+
+#gloss dd {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-70);
+}
+
+#gloss .who {
+  margin: 0 0 15px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+#gloss .who b {
+  font-weight: 600;
+  display: block;
+}
+
+#gloss .who span {
+  color: var(--ink-45);
+  font-family: var(--nccf-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+#glossClose {
+  position: absolute;
+  top: 22px;
+  right: 30px;
+  background: none;
+  border: 0;
+  color: var(--ink);
+  font-family: var(--nccf-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* ---------- footer ---------- */
+
+.nccf-root footer {
+  padding: 13vh 0 16vh;
+  border-top: 2px solid var(--ink);
+  margin-top: 8vh;
+}
+
+.cred {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 26px;
+}
+
+.cred .k {
+  color: var(--ink-45);
+  margin-bottom: 9px;
+}
+
+/* ---------- login (not in the reference; scaffold page re-inked to the
+   two-ink palette so the gate keeps its own styling) ---------- */
 
 .nccf-login-wrap {
   min-height: 100vh;
@@ -82,17 +674,27 @@ body {
 .nccf-login-card {
   width: 100%;
   max-width: 400px;
-  border: 3px solid var(--nccf-rule);
-  background: var(--nccf-paper);
+  border: 3px solid var(--ink);
+  background: var(--paper);
   padding: 36px 32px 28px;
+}
+
+.nccf-kicker {
+  font-family: var(--nccf-mono);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--tint);
+  margin-bottom: 16px;
 }
 
 .nccf-login-title {
   font-family: var(--nccf-display);
   font-weight: 700;
-  font-size: 26px;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  font-size: 30px;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
   margin: 0 0 24px;
 }
 
@@ -104,10 +706,10 @@ body {
 
 .nccf-field label {
   display: block;
-  font-family: var(--nccf-display);
+  font-family: var(--nccf-mono);
   font-weight: 500;
-  font-size: 12px;
-  letter-spacing: 0.14em;
+  font-size: 10px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   margin-bottom: 6px;
 }
@@ -116,54 +718,171 @@ body {
   width: 100%;
   height: 46px;
   padding: 0 12px;
-  border: 2px solid var(--nccf-rule);
+  border: 2px solid var(--ink);
   border-radius: 0;
-  background: #fff;
-  color: var(--nccf-ink);
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--nccf-body);
   font-size: 16px;
 }
 
 .nccf-field input:focus {
   outline: none;
-  border-color: var(--nccf-ink-soft);
+  border-color: var(--tint);
 }
 
 .nccf-error {
-  font-family: var(--nccf-display);
+  font-family: var(--nccf-mono);
   font-weight: 500;
-  font-size: 14px;
-  color: #a3341f;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--tint);
 }
 
 .nccf-submit {
   height: 48px;
   border: none;
   border-radius: 0;
-  background: var(--nccf-ink);
-  color: var(--nccf-paper);
-  font-family: var(--nccf-display);
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 0.14em;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--nccf-mono);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   cursor: pointer;
 }
 
 .nccf-submit:hover:not(:disabled) {
-  background: var(--nccf-ink-soft);
+  background: var(--tint);
 }
 
 .nccf-submit:disabled {
-  background: var(--nccf-rule-light);
-  color: var(--nccf-ink-soft);
+  background: var(--ink-22);
+  color: var(--ink-45);
   cursor: not-allowed;
 }
 
 .nccf-login-note {
   margin: 20px 0 0;
   padding-top: 16px;
-  border-top: 1px solid var(--nccf-rule-light);
+  border-top: 1px solid var(--ink-10);
   font-size: 14px;
-  color: var(--nccf-ink-soft);
+  color: var(--ink-45);
+}
+
+/* ---------- media queries ---------- */
+
+@media (max-width: 1080px) {
+  #rail {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    padding: 0;
+    background: var(--paper);
+    border-top: 1.5px solid var(--ink-10);
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.3, 0.85, 0.25, 1);
+  }
+
+  #rail.open {
+    transform: none;
+  }
+
+  #rail ol {
+    border-left: 0;
+    padding: 12px var(--gut) 20px;
+  }
+
+  #railBtn {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 41;
+    background: var(--ink);
+    color: var(--paper);
+    border: 0;
+    padding: 13px var(--gut);
+    text-align: left;
+    font-family: var(--nccf-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  #railBtn.hide {
+    display: none;
+  }
+
+  .sheet {
+    padding: 0 var(--gut);
+  }
+
+  .pull {
+    padding-left: var(--gut);
+  }
+}
+
+@media (max-width: 760px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cred {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .lrow {
+    grid-template-columns: 1fr 62px;
+  }
+
+  .lrow .nm {
+    grid-column: 1 / -1;
+  }
+}
+
+/* The reference has no reduced-motion block; this one is written per the
+   packet: no reveal transforms, no plate stagger, no bar/ladder sweep, no
+   smooth scroll. Content is simply present. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .rv {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .pl {
+    opacity: 1;
+    transition: none;
+  }
+
+  .dec i {
+    transform: scaleY(1);
+    transition: none;
+  }
+
+  .ladder .lrow .tk b {
+    width: var(--w);
+    transition: none;
+  }
+
+  #rail a::before,
+  #rail,
+  #gloss,
+  #scrim {
+    transition: none;
+  }
 }

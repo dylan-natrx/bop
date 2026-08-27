@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { IBM_Plex_Serif, Space_Grotesk } from 'next/font/google'
+import { Darker_Grotesque, Familjen_Grotesk, IBM_Plex_Mono } from 'next/font/google'
 import './styles/nccf.css'
 
 /**
@@ -8,25 +8,36 @@ import './styles/nccf.css'
  * layout above this renders the html/body shell; this layout only wraps
  * children in a div carrying the font variables. Body-level styling lives
  * in nccf.css, which only ever loads on nccf routes.
+ *
+ * Typefaces are self-hosted through next/font — no request to
+ * fonts.googleapis.com leaves the page (the reference build's <link> was a
+ * standalone-file convenience and is deliberately not ported).
  */
 
-const spaceGrotesk = Space_Grotesk({
+const darkerGrotesque = Darker_Grotesque({
   subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  variable: '--font-space-grotesk',
+  weight: ['500', '600', '700', '800', '900'],
+  variable: '--font-darker-grotesque',
   display: 'swap',
 })
 
-const plexSerif = IBM_Plex_Serif({
+const familjenGrotesk = Familjen_Grotesk({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-familjen',
+  display: 'swap',
+})
+
+const plexMono = IBM_Plex_Mono({
   subsets: ['latin'],
   weight: ['400', '500'],
-  style: ['normal', 'italic'],
-  variable: '--font-plex-serif',
+  variable: '--font-plex-mono',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'North Carolina Coastal Federation',
+  title: 'The Vanishing Edge',
   description:
     'A gated project page for the North Carolina Coastal Federation on the natrx.report platform.',
   robots: {
@@ -41,7 +52,9 @@ export default function NccfLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className={`${spaceGrotesk.variable} ${plexSerif.variable} nccf-root`}>
+    <div
+      className={`${darkerGrotesque.variable} ${familjenGrotesk.variable} ${plexMono.variable} nccf-root`}
+    >
       {children}
     </div>
   )
