@@ -21,7 +21,7 @@ Numbers that cannot be sourced do not get published, however good they sound.
 
 | Claim | Value | Status | Notes |
 |---|---|---|---|
-| Transects analyzed | 93,004 | CONFIRMED | Figure 1 |
+| Transects analyzed | 93,004 | CONFIRMED | Figure 1. The public webmap carries 93,418 points across 39 layers; the ~400 difference is filtering. |
 | Median shoreline change | -0.72 ft/yr | CONFIRMED | Erosion |
 | Transects retreating faster than 1 ft/yr | 40.7% | CONFIRMED | |
 | Transects retreating faster than 2 ft/yr | 23.5% | CONFIRMED | |
@@ -33,8 +33,8 @@ Numbers that cannot be sourced do not get published, however good they sound.
 | Temporal data points | 5 (2012, 2014, 2016, 2019, 2022) | CONFIRMED | Nick 07-22. Intended lower bound ~2010, in practice 2012. |
 | Worst county: Dare | qualitative, "by far" | CONFIRMED | Nick 07-22: "Dare County. Dare County by far." Quotable. A peak rate from the final dataset is still wanted to attach. |
 | Hyde County highly erosive | qualitative | CONFIRMED | Nick 07-22: Hyde "was bad," Dare "very bad." Jacob 08-17 independently: "pretty much the whole shoreline of Hyde County has disappeared at a pretty alarming rate." Quotable as severity, not as a number. |
-| Erosion up to 50 ft/yr | 50 ft/yr | **BLOCKED for NCCF** | Origin traced. The 50 comes from Stop-Loss, not NCCF: Table 1 assumes 50 ft/yr for reef unit economics, Figure 1 cites prior Natrx projects at 15–150 ft/yr. Those are Gulf and high-energy reef-construction sites. NCCF estuarine marsh tops out near -15 ft/yr. Nick did not repeat it for NCCF in July. **Jacob is not a second source:** Dylan introduced the number in the 08-17 interview and Jacob reacted to it ("I am probably desensitized to like fifty feet"). That is an echo, not corroboration. **Do not use on the NCCF page.** |
-
+| **Peak measured erosion** | **-45.91 ft/yr, Navy Shell** | **CONFIRMED** | Recomputed 2026-08-27 from the public ArcGIS webmap GeoJSON (39 layers, item f0ec44fa). r² = 0.98. Five transects past -42 ft/yr, all r² above 0.94, all at Navy Shell. Confirm the county before print. |
+| Erosion up to 50 ft/yr | 50 ft/yr | **DO NOT USE the round 50** | Superseded. An earlier entry here claimed NCCF marsh tops out near -15 ft/yr. **That was wrong.** The real peak is -45.91. The 50 still traces to Stop-Loss (Gulf reef sites) rather than to this dataset, so do not publish 50. Publish the measured figure instead: erosion reaching roughly 46 feet per year at the worst transects. |
 ---
 
 ## Correlation findings
