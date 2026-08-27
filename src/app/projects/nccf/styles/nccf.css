@@ -677,6 +677,7 @@ body {
   border: 3px solid var(--ink);
   background: var(--paper);
   padding: 36px 32px 28px;
+  overflow: hidden;
 }
 
 .nccf-kicker {
@@ -692,10 +693,13 @@ body {
 .nccf-login-title {
   font-family: var(--nccf-display);
   font-weight: 700;
-  font-size: 30px;
-  line-height: 0.95;
+  font-size: clamp(20px, 4.4vw, 30px);
+  line-height: 1.06;
   letter-spacing: -0.02em;
   margin: 0 0 24px;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  max-width: 100%;
 }
 
 .nccf-login-form {
