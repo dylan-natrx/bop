@@ -114,3 +114,11 @@ change.
   the NCCF page. Its figures were independently reproduced from the
   public layer data on 2026-08-27 (all eight verification checks in
   packet Amendment 02 matched exactly).
+
+## NCCF pre-send to-do (2026-08-27)
+
+- Complete Open Graph / sharing overhaul for the NCCF page: og:title,
+  og:description, og:image, twitter card. The draft 2 document served at
+  the tenant root currently carries none.
+- The page title needs to be written. "The Vanishing Edge" is the working
+  document title, not an approved one.
