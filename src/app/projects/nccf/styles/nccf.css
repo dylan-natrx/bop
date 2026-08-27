@@ -690,7 +690,10 @@ body {
   margin-bottom: 16px;
 }
 
-.nccf-login-title {
+/* Doubly-qualified so this outranks the .nccf-root h1 display-scale rule —
+   the login title is an h1 but takes the card scale, not the article's. */
+.nccf-root .nccf-login-title,
+.nccf-root h1.nccf-login-title {
   font-family: var(--nccf-display);
   font-weight: 700;
   font-size: clamp(20px, 4.4vw, 30px);
@@ -700,6 +703,7 @@ body {
   overflow-wrap: anywhere;
   hyphens: auto;
   max-width: 100%;
+  filter: none;
 }
 
 .nccf-login-form {
