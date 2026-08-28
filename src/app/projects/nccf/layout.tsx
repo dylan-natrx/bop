@@ -37,7 +37,7 @@ const plexMono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'The Vanishing Edge',
+  title: 'Measuring Shoreline Erosion in Eastern North Carolina',
   description:
     'A gated project page for the North Carolina Coastal Federation on the natrx.report platform.',
   robots: {

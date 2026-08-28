@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
  */
 
 const BEATS: [string, string][] = [
-  ['01', 'The vanishing edge'],
+  ['01', 'The question'],
   ['02', 'The problem'],
   ['03', 'The finding'],
   ['04', 'The method'],
