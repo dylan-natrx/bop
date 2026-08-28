@@ -187,9 +187,14 @@ colour per the 6b decision; share metadata (description, og:*, twitter:card)
 added to the served wrapper with og:title mirroring the page title.
 
 Held, per instruction: the lab control states (Task 5 — inside the
-interactive, which is mid-redesign) and the beat-5 rail label (editorial).
-Proposed for the label: "The method". Task 8 (get .git out of Insync's sync
+interactive, which is mid-redesign). Task 8 (get .git out of Insync's sync
 scope) is proposed only — options in the PR; Dylan executes.
+
+Amended after the beat swap: the rail-label dependency dissolved ("04 The
+method" does not wrap), so 6a closed fully — the gutter experiment was
+removed (it caused two other labels to wrap; measured clearances are 78px
+to content and 24px to the map label without it), and inactive rail
+numbers moved to ink-70 (2.78:1 at ink-45 failed AA; verifier finding).
 
 Still open, unchanged: og:image (needs the pass-2 render at 1200x630),
 the interactive rebuild, beat order, title, headline, Montefiore gate,
