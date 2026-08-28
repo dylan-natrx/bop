@@ -28,9 +28,30 @@ const fragment = readFileSync(
   'utf-8',
 )
 
+// Share metadata lives in the wrapper, not the reference file. og:title
+// mirrors the fragment's own <title> so a future title decision propagates
+// without touching this handler. og:image is deferred until the pass-2
+// render exists (STATUS.md open item); no robots directive — access mode
+// is an open decision.
+const pageTitle =
+  fragment.match(/<title>(.*?)<\/title>/)?.[1] ?? 'nccf.natrx.report'
+const description =
+  'Ten years of shoreline change, measured along 2,900 miles of eastern ' +
+  'North Carolina’s coast. Nearly half of the land lost came from one ' +
+  'tenth of the shoreline.'
+
+const meta =
+  `<meta name="description" content="${description}">` +
+  `<meta property="og:title" content="${pageTitle}">` +
+  `<meta property="og:description" content="${description}">` +
+  '<meta property="og:type" content="article">' +
+  '<meta property="og:site_name" content="natrx.report">' +
+  '<meta name="twitter:card" content="summary_large_image">'
+
 const html =
   '<!doctype html><html lang="en"><head><meta charset="utf-8">' +
   '<meta name="viewport" content="width=device-width,initial-scale=1">' +
+  meta +
   fragment +
   '</body></html>'
 

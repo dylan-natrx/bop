@@ -144,7 +144,7 @@ The page is served as a real document, the responsive pass is in, and production
 ### Open, and this is where we stopped
 
 1. **The interactive's step 3.** It currently returns to the step-1 camera, so the reader goes out, in, and back, and the payoff reads as an absence rather than a finding. Agreed it needs rebuilding. See the section below.
-2. **The beat order.** Whether beats 4 and 5 swap, method before finding. Strong arguments for: Beat 3 ends on "on what evidence" and should hand to the method; the locked spine runs measure-then-find; the interactive now ends pointing forward; and it fixes the wrapping rail label. Against: the concentration number moves from beat 4 to beat 5, mitigated by the hero deck already carrying it. **Depends on how the interactive ends.**
+2. ~~The beat order.~~ **Done. See below.**
 3. **The page title.** Still a placeholder. The steer is that the story is the approach and the title should answer "why is this news," not "the coast is eroding."
 4. **The headline.** Parked. Needs a working session.
 5. **Rail label for beat 5** if the collisions get fixed. Editorial, so it needs Dylan.
@@ -167,6 +167,89 @@ The page is served as a real document, the responsive pass is in, and production
 
 **Two conditions on that, and they are not negotiable.** The marsh band must be visibly schematic and unlike the data views, and the caption must say it demonstrates how the comparison works rather than what it found. Illustrating an operation is legitimate; displaying an invented result is not.
 
+**Held pending the proto-story review.** Dylan's call 2026-08-28: the data ask goes to Nick with the proto-story rather than as a separate request, so the interactive's third step is parked until then. Deliberately parked, not stalled. **The beat swap was decoupled and executed, see below; the dependency runs the other way now, and the interactive must end on something about the method.**
+
 **The ending depends on one thing.** If Nick can supply the 1,354 hexagon centroids with their wetland-change values, step 3 becomes the real agreement between the two passes, which would also let the page *show* the under-four-percent honesty instead of asserting it. If he cannot, step 3 becomes the concentration curve, which is a finding we own outright but which argues against swapping beats 4 and 5, since the interactive would then be about the finding rather than the method.
 
 **Step 2 is good and stays.**
+
+---
+
+## Amendment 06 applied (2026-08-28, Claude Code)
+
+Closed: masthead is the NCCF × Natrx lockup; readable small text (captions,
+figure legends, byline) moved to ink-70; inactive rail links to ink-70 with
+numbers at ink-45; glosslink text in full ink with the tint underline kept;
+glossary tabs regained a visible focus ring; town labels paint above the
+measured points (Beaufort legible); coast band's NORTH CAROLINA label moved
+clear of the rail; rail gutter added; the phone Contents sheet takes the ink
+colour per the 6b decision; share metadata (description, og:*, twitter:card)
+added to the served wrapper with og:title mirroring the page title.
+
+Held, per instruction: the lab control states (Task 5 — inside the
+interactive, which is mid-redesign). Task 8 (get .git out of Insync's sync
+scope) is proposed only — options in the PR; Dylan executes.
+
+Amended after the beat swap: the rail-label dependency dissolved ("04 The
+method" does not wrap), so 6a closed fully — the gutter experiment was
+removed (it caused two other labels to wrap; measured clearances are 78px
+to content and 24px to the map label without it), and inactive rail
+numbers moved to ink-70 (2.78:1 at ink-45 failed AA; verifier finding).
+
+Still open, unchanged: og:image (needs the pass-2 render at 1200x630),
+the interactive rebuild, beat order, title, headline, Montefiore gate,
+launch date.
+
+---
+
+## Beats 4 and 5 swapped, 2026-08-28
+
+**The method beat now comes before the finding beat.** `b4` is the method, `b5` is the finding.
+
+**Why, on story grounds alone.** Beat 3 ends on "which stretches to protect, in what order, and on what
+evidence." The next beat should be the evidence. It was the conclusion. The tell was that the finding
+beat had to stop and explain transects before its number could mean anything, which is method
+exposition smuggled into the wrong beat. The locked spine also runs measure-then-find, and the page
+was running it backwards.
+
+**An earlier note in this file made the swap depend on how the interactive ends. That was backwards
+and is withdrawn.** The order is wrong independently. Deciding the swap constrains the interactive,
+not the reverse.
+
+**The consequence, and it is binding.** The interactive now sits in a beat about method, so **step 3
+must end on something about the method.** The concentration-curve fallback is therefore off the
+table: it would put the finding inside the method beat. If Nick cannot supply the hexagon values,
+step 3 needs a different method-serving idea, or the interactive drops to two steps.
+
+### What changed in the file
+
+- The two `<section>` blocks and their ids swapped. The method beat is `b4`, the finding is `b5`.
+- Rail labels: **04 The method**, **05 The finding**. The method beat's kicker changed from
+  "How it was measured" to "The method". **This also fixes the wrapping rail label**, which was the
+  original reason Amendment 06 task 6a needed an editorial decision. **6a no longer needs a new
+  string from Dylan.**
+- Section headlines unchanged: "More coast than anyone could look at" and "The loss is not spread
+  evenly".
+
+### Copy, two edits only
+
+**The transect explanation moved into the method beat**, folded into the second-pass sentence:
+Natrx set about 93,000 fixed points along those 2,900 miles, each on land with a line running out to
+the water's edge, measured five times across the decade to give a rate.
+
+**The finding beat now opens on the number:** "Half of those 93,000 spots are pulling back faster
+than eight and a half inches per year. Four in ten are losing more than a foot." Then the ranking
+sentence. Same words as before minus the explanation that moved, with "93,000" carried forward so
+the reference survives.
+
+Nothing else moved. Supergraphic, the Dare paragraph, the scale bars, the 90/10 paragraph and the
+rest of the method beat are untouched.
+
+### Verified at 1440
+
+Section order and ids correct, interactive in `b4`, supergraphic in `b5`, rail labels and hrefs
+correct, scroll-spy tracks every beat, zero page errors.
+
+**One testing note for whoever checks this next:** the page sets `html{scroll-behavior:smooth}`, so
+a scripted `scrollTo` followed by a short wait reads the rail mid-animation and looks stuck. Disable
+smooth scrolling in the harness before asserting on scroll-spy state.
