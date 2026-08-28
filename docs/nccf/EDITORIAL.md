@@ -272,3 +272,7 @@ a sourced reference point rather than from Nick. See `CLAIMS.md`.
 **The page title answers why this is news, not what happened.** The story is that a coastline nobody
 could measure at scale was measured. Not that the coast is eroding, and not that a measurement was
 taken. Still unresolved.
+
+**The method precedes the finding.** Beat 4 is the method, beat 5 is the finding. Beat 3 ends on "on
+what evidence" and the evidence is the method; the spine runs measure-then-find. The interactive
+lives in the method beat and must end on something about the method.

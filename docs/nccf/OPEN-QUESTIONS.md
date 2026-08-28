@@ -159,6 +159,10 @@ no longer blocks on it.
 
 **Closed: access mode at launch.** No password once launched.
 
-**Opened: the pass-1 change analysis output.** Needed to finish the interactive's third step in the version that is about the method rather than the finding. **Owner: Nick.** The ask is the 1,354 hexagon centroids with their wetland-change values, the ones that went into the correlation. Coarse is fine. If it cannot be produced, the fallback is the concentration curve from `nccf-figdata.json`, which also settles the beat-order question against swapping.
+**Opened: the pass-1 change analysis output.** Needed to finish the interactive's third step in the version that is about the method rather than the finding. **Owner: Nick. Not sent as a standalone ask.** Dylan's call 2026-08-28: it goes to Nick together with the proto-story review, along with the image-quality artifact and the peak-figure reconciliation, rather than as separate requests.
+
+The ask, when it goes: the 1,354 hexagon centroids with their wetland-change values, the ones that went into the correlation. Coarse is fine.
+
+**This blocks two things until Nick answers:** the interactive's third step, and the beat 4/5 swap, since the swap depends on what the interactive ends on. Both are parked deliberately, not stalled. The fallback if Nick cannot produce it is the concentration curve from `nccf-figdata.json`, which also settles the beat-order question against swapping.
 
 **Opened: `og:image`.** Agreed it is the interactive at pass 2, rendered at 1200x630. Nobody has built it.
