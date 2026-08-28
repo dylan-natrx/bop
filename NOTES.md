@@ -122,3 +122,20 @@ change.
   the tenant root currently carries none.
 - The page title needs to be written. "The Vanishing Edge" is the working
   document title, not an approved one.
+
+## NCCF: session 4 commit contents and the lost camera fix (2026-08-28)
+
+- Commit `e9ef0f8`, titled "copy session", actually carries the FULL
+  session 4 editorial work: copy edits across beats 1-6 AND the Beat 5
+  interactive rebuild (the #ncScreen coverage wash, #ncClipLand /
+  #ncScreenFade / #ncScreenMask defs, new step notes and labels,
+  #ncFast retired from the lab but left in markup). It was committed
+  mid-responsive-pass before the rebuild was recognized as such. Not
+  retitled: the branch was already pushed and history rewrites are
+  banned. This note and the PR #1 body are the correction of record.
+- One session-4 edit was lost in transit: the box() camera fix (step 3
+  pulls back to the full coast instead of zooming to a county). It was
+  made after e9ef0f8's save and before the index.lock rebuild, so the
+  rebuild restored the older zoom form. Reapplied 2026-08-28 with
+  Dylan's confirmed replacement; ZOOM/ZOOM_N constants deleted. Phone
+  step 3 falls back to FULL_N, so the narrow crops needed no rework.
