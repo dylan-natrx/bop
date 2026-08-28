@@ -2,8 +2,8 @@
 
 Public-facing project page for the Natrx engagement with the North Carolina Coastal Federation. Second project on the `natrx.report` platform, after Billion Oyster Project.
 
-**Status:** Pre-production. Data is in. Editorial is locked. Nothing has been designed.
-**Home:** `nccf.natrx.report`, not yet provisioned.
+**Status:** Draft 2 built and revised through a 2026-08-28 editorial and design pass. See `STATUS.md` first.
+**Home:** `nccf.natrx.report`, live behind the gate. **The deployed site is behind the reference file.**
 **Target:** publication follows NCCF's own data release, expected fall 2026. No date yet.
 
 ---
@@ -12,12 +12,13 @@ Public-facing project page for the Natrx engagement with the North Carolina Coas
 
 | File | What it holds |
 |---|---|
-| `EDITORIAL.md` | The spine, the lead, the carbon decision, register and rules. **Locked 2026-08-27.** |
+| `STATUS.md` | **Read first.** Where the page actually is, what changed after the lock, and what is stale. |
+| `EDITORIAL.md` | The spine, the lead, the carbon decision, register and rules. Locked 2026-08-27, **amended during the draft 2 session, see `STATUS.md`.** |
 | `CLAIMS.md` | Every number, its source, and whether it can be published. **Read before writing any copy.** |
 | `OPEN-QUESTIONS.md` | What blocks the build. Owners and status. |
 | `DESIGN-DIRECTION.md` | How this page differs structurally from BOP, and why. |
 
-Read `EDITORIAL.md` and `CLAIMS.md` first. Everything else depends on what can actually be asserted.
+Read `STATUS.md`, then `EDITORIAL.md` and `CLAIMS.md`. Everything else depends on what can actually be asserted.
 
 ## Where these came from
 
@@ -34,7 +35,7 @@ The July originals are superseded, not deleted. Where they disagree with these, 
 
 ## The short version
 
-A coast that everyone knew was eroding had never been measured whole. When it was, the loss turned out to be concentrated: the fastest 10% of eroding locations account for 43.5% of all land lost. The lead is economic. Better erosion data lets living shorelines be sized to the conditions actually measured at a site, rather than built to whatever the permit allows, which is less tonnage and less public money for the same protection. That framing comes from the client, on record.
+A coast that everyone knew was eroding had never been measured whole. When it was, the loss turned out to be concentrated: the fastest 10% of eroding locations account for 43.44% of all land lost. The lead is economic. Better erosion data lets living shorelines be sized to the conditions actually measured at a site, rather than built to whatever the permit allows, which is less tonnage and less public money for the same protection. That framing comes from the client, on record.
 
 Carbon appears once, as the reason the grant exists, plus the program's 600-acre protection target. Natrx measured no carbon. No tonnage figures, no Verra, no global percentages. See `EDITORIAL.md`.
 
@@ -44,9 +45,10 @@ Carbon appears once, as the reason the grant exists, plus the program's 600-acre
 
 ## Current blockers
 
-Four that matter, all in `OPEN-QUESTIONS.md`:
-
-1. **The shared credential is burned.** The repo is public and the retired shared credential is in its history. NCCF needs a fresh hash, and demo's needs rotating.
-2. **Whether the Lise Montefiore review gate still applies.** If it does, it has the longest lead time left.
-3. **The imagery.** Three concept beats depend on temporal frames and ambiguous NAIP tiles that nobody has yet. Gating production task.
+1. **Mobile.** The served file is a fragment with no viewport meta, so no breakpoint fires and a phone lays the page out at ~1000px. Structural fix first, then a real responsive pass. See `STATUS.md`.
+2. **The shared credential is burned.** The repo is public and the retired shared credential is in its history. NCCF needs a fresh hash, and demo's needs rotating.
+3. **Whether the Lise Montefiore review gate still applies.** If it does, it has the longest lead time left.
 4. **The publication date.** No page ships promising a dataset that is not public.
+5. **The headline and the page title.** Both reopened, both parked.
+
+The imagery blocker from the July concept is closed: the built page uses real photography and a data-driven interactive.

@@ -154,3 +154,99 @@ New York Times feature voice. Concrete nouns and verbs. Comfortable with a long 
 Write for the first. The second reads it anyway. A page written for procurement does not get covered, and a page that gets covered gets read by procurement.
 
 Jacob's own audience note, which the page should honor: the "football fields lost" framing is exhausted. He asked for fresh numbers tied to insurance and tourism, and for coverage that arrives before the next storm rather than after it.
+
+---
+
+## Amendments, 2026-08-27 draft 2 session
+
+The lock above still governs the spine, the carbon decision, the correlation language and
+the claims discipline. The following were changed by Dylan during the design session and
+supersede the text above where they conflict. Full context in `STATUS.md`.
+
+- **The headline.** Now *Everyone knows North Carolina's coast is eroding. But how much?
+  And where?* The previous headline is retired.
+- **Natrx is the enabling partner and the page says so.** The work, the method, the
+  judgment and the people are in. Market position and leadership claims stay out.
+- **Machine learning is named and explained**, in plain terms, including where a person
+  overrules it.
+- **Seven beats.** A new beat establishes that erosion has a fix, that the fix costs
+  money, and that somebody has to choose, before the concentration finding lands.
+- **Erosion mitigation is described broadly**, breakwaters and living shorelines, with
+  Natrx present as a builder rather than as the only answer.
+- **Plain language is a hard rule.** No term a general reader would have to look up
+  survives its own sentence. No place name a reader outside the state would need to look
+  up goes unanchored.
+- **The wide screen did not select the 39 survey areas.** They were scoped with the
+  Federation. The comparison between the two passes is what makes the screen useful for
+  aiming the next survey. Any copy implying otherwise is a factual error.
+
+---
+
+## Amendments, 2026-08-28 editorial session
+
+The lock and the draft 2 amendments above still govern. These are Dylan's decisions from the
+editorial review of the built page, and they supersede where they conflict. Numbers behind them
+are in `CLAIMS.md`.
+
+**The cost framing is restored.** Cost may be stated as a share of the program it guides: about
+one percent of the NCCF award went to deciding where the other ninety-nine percent goes, which
+leaves more of the grant for construction. The earlier retirement of this framing was a register
+error. Nick proposed the framing himself; his apples-to-oranges caveat was about a different
+claim. What was wrong was the number, and the number is now known.
+
+**The engineering-firm price stays off the page.** The ~$65,000-for-three-or-four-sites
+comparator is Nick's estimate of a third party's pricing, not sourced to that firm, and printing
+a competitor's price puts an antagonist in a story that does not need one. Cut. The percentage
+carries the point without a foil.
+
+**Resolution is explained by what it lets you see, not by what a pixel is.** No pixel arithmetic,
+no invented units of measure. The page states the movement it needed to catch and states that
+free satellite imagery cannot see it. "Strides" is retired, and "at one meter resolution" comes
+out of the opening deck, where it lands five beats before the page earns it.
+
+**The page says why the work runs in two passes.** The reason is cost, and it is currently
+written only inside the interactive, where most readers will never see it. The prose carries it.
+The supporting fact is the geometry: 2,900 miles of shoreline inside about 800 square miles is
+why the granular pass is expensive, and why a cheap wide pass has to exist to aim it.
+
+**One word for the method, everywhere.** The build currently says "passes" in the prose, "stages"
+in the interactive headnote, "Stage one" in the step notes, and "Phase I" in this document. The
+published word is **pass**. Phase I and Phase II remain the internal and contractual terms.
+
+**Interactive step labels name the method, not an action.** "Look from satellites" implies live
+observation and is not true. The labels are *Pass 1 · Satellite imagery*, *Pass 2 · Aerial
+photography*, *The result · Where it's worst*.
+
+**The interactive opens on the real scale.** North Carolina has more than 12,000 miles of
+estuarine shoreline, sourced to NC DEQ. This project measured about 2,900 of them. Both figures
+are stated; no computed percentage, because the two counts come from different methods. The
+current line, which frames 2,900 as the state's shoreline, is a factual error.
+
+**Beat 3 carries no cost figure.** No construction cost is sourced anywhere. The beat gets its
+weight from the physical fact of marine construction rather than from a number.
+
+**43.44%** is the published concentration figure.
+
+**Beat 5 gets actors.** The passive run in the method beat is the concentrated form of the voice
+problem. The software sorts, analysts flag, trained people overrule. Nobody's work is described
+as having happened by itself.
+
+**Open, carried forward.** The headline is still not right and is parked. The setup-and-payoff
+pair in Beats 2 and 5 stays, with the repeated phrase varied so the callback reads as a callback.
+
+**The page title is descriptive, never copywritten.** "The Vanishing Edge" is retired from the
+`<title>`, from `layout.tsx` metadata and from the chapter rail's first entry. The replacement in
+the file is a placeholder. **The story this page tells is the approach, that a coast nobody could
+measure whole was measured by trying something new. The title works from that, not from the
+concentration finding and not from the fact of erosion.**
+
+**Interactive step labels name the method, not an action.** "Look from satellites" implied live
+observation. The labels are *Pass 1 · Satellite imagery*, *Pass 2 · Aerial photography*,
+*The result · Where it's worst*.
+
+**The measured coast draws itself.** The coast band's trace reveals north to south as the figure
+enters view, rather than fading in as one block. The reader watches the measurement happen.
+
+**Numbers are stated plainly before they are referred to.** Beat 4 says the 90/10 split in words
+before calling it useful. A pointer like "that imbalance" assumes the reader assembled the finding
+from a graphic.

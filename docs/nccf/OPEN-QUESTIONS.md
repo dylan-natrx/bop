@@ -34,6 +34,10 @@ Separately, and settled: she is a Natrx collaborator, not an outside referee. If
 
 ## 3. Confirm the 4,000 sq mi change-analysis footprint
 
+**Downgraded 2026-08-28.** The page does not use the figure and does not need it. This blocks other
+materials, not this page. Off Nick's critical path.
+
+
 **Owner:** Nick (single focused question), Dylan (sweep)
 **Blocks:** any headline use of the study's size
 
@@ -129,3 +133,20 @@ Related, and not NCCF's problem but do not lose it: BOP is `public` with `noinde
 **Ranked top-ten list.** Do not build. Concentration finding carries the point. Dare can be named as worst.
 
 **Concentration robustness.** 43.5% from ~76k eroding transect points, equally weighted. At r² ≥ 0.5 the top decile still gives ~39%. Safe to headline.
+
+---
+
+## Closed 2026-08-28
+
+**The EPA grant and NCCF's share.** $421,238,074 to the Atlantic Conservation Coalition, ~$30M to
+NCCF over five years, 595 acres. The award's 595 acres is the SOW's 600. Same program, established
+from public documents. Nick does not need to confirm it.
+
+**North Carolina's total estuarine shoreline.** More than 12,000 miles, sourced to NC DEQ,
+Division of Coastal Management. Resolves the PENDING on the Natrx one-pager's figure.
+
+**The cost framing.** Percent-of-program-spend was retired in `CLAIMS.md` on a mis-attribution.
+Nick proposed the framing himself. Live again, at about one percent, against the $30M award.
+
+**Navy Shell's county** is still owed by Nick, but the page has been decoupled from the answer and
+no longer blocks on it.
