@@ -250,3 +250,25 @@ enters view, rather than fading in as one block. The reader watches the measurem
 **Numbers are stated plainly before they are referred to.** Beat 4 says the 90/10 split in words
 before calling it useful. A pointer like "that imbalance" assumes the reader assembled the finding
 from a graphic.
+
+---
+
+## Amendments, 2026-08-28 evening
+
+**All quotes and apostrophes on this page are curly.** Straight marks are a defect, including in
+anything added later.
+
+**The headline breaks before the ink-2 question, with no added leading.** The colour change carries
+the separation. Do not add space between the two sentences.
+
+**Illustration versus result.** The page may illustrate how a method works using schematic geometry,
+clearly marked as a demonstration. The page may never display an invented result, or any graphic a
+reader could mistake for measured output. This is the rule that voided Phase 7 and it governs the
+interactive's rebuild.
+
+**Dare County can be named as the location of the peak retreat.** Resolved from repo layer data plus
+a sourced reference point rather than from Nick. See `CLAIMS.md`.
+
+**The page title answers why this is news, not what happened.** The story is that a coastline nobody
+could measure at scale was measured. Not that the coast is eroding, and not that a measurement was
+taken. Still unresolved.

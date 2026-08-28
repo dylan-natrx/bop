@@ -176,13 +176,33 @@ Avoid the word "cheap" in copy. It undersells the work.
 
 ---
 
+## Navy Shell, resolved from the data 2026-08-28
+
+Determined from `src/app/projects/nccf/data/layers/339_navy_shell.geojson` in this repo, not from Nick.
+
+| Finding | Value |
+|---|---|
+| Navy Shell centroid | **35.7411 N, 75.7332 W** |
+| Worst transect in that layer | **-45.60 ft/yr, r² = 0.944** |
+| Rank in the full dataset | **The six worst transects across all 39 layers are all Navy Shell** |
+| Nearest sourced reference point | Stumpy Point, 35.6983 N, 75.7408 W, **Dare County** ([Wikipedia](https://en.wikipedia.org/wiki/Stumpy_Point,_North_Carolina)) |
+| Mashoes, north on the same shore | 35.81 N, Dare County mainland |
+
+**Navy Shell sits about three miles due north of Stumpy Point on the same shore, between it and Mashoes. It is in Dare County.**
+
+**Status: geographic inference from repo data plus a sourced reference point. Not Nick's confirmation.** Strong enough to restore "on the mainland shore of Dare County" to Beat 4 and the chart label if Dylan wants it. Nick's confirmation is still worth having and is no longer blocking.
+
+**Discrepancy to log:** this register carries the peak as **-45.91**, recomputed from the public ArcGIS webmap. The repo's derived layer gives **-45.60**. The page says "about 46 feet", which survives either figure. Reconcile before print.
+
+---
+
 ## On-page audit, 2026-08-28
 
 Every claim found live in `reference/vanishing-edge-draft2.html` that had no entry in this register.
 
 | On the page | Where | Status | Disposition |
 |---|---|---|---|
-| The peak retreat attributed to Dare County | Beat 4 body, bar label, interactive note 4 | **RESOLVED 2026-08-28. Decoupled.** | The peak of -45.91 ft/yr is at **Navy Shell**, county unconfirmed. All three places now name the rate and not the county: "At the worst single spot measured", "The worst spot measured", "the worst spot measured anywhere on this coast". Dare as worst county overall and Hyde second are confirmed and remain on the page. Navy Shell's county is still the only open question for Nick, but **the page no longer depends on the answer.** |
+| The peak retreat attributed to Dare County | Beat 4 body, bar label, interactive note 4 | **RESOLVED 2026-08-28. County now sourced; copy still decoupled.** | The peak of -45.91 ft/yr is at **Navy Shell**, county unconfirmed. All three places now name the rate and not the county: "At the worst single spot measured", "The worst spot measured", "the worst spot measured anywhere on this coast". Dare as worst county overall and Hyde second are confirmed and remain on the page. Navy Shell's county is still the only open question for Nick, but **the page no longer depends on the answer.** |
 | "In 2024 the EPA awarded $421 million... the Coastal Federation's share is roughly $30 million over five years" | Beat 7 | **CLEARED 2026-08-28** | Both figures now sourced. See "The grant behind the work" above. Accurate as written. |
 | "A single project runs well into six figures..." | Beat 3 | **CUT 2026-08-28, applied** | Unsourced. No construction cost exists anywhere in this register. Dylan's call: the beat carries its weight from the physical reality of marine construction, not from a figure we would have to defend. Sentence struck rather than sourced. |
 | "North Carolina has about 2,900 miles of shoreline..." | Interactive, note 0 | **FIXED 2026-08-28** | Was a factual error: 2,900 is the measured footprint, not the state total. Now states both, the state's 12,000+ and this project's 2,900. |

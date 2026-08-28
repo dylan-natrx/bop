@@ -117,3 +117,56 @@ Note that `route.ts`'s own docblock asserts the file "is a complete standalone H
 - Photo prints and their halftone shadows at small sizes.
 - Tap targets. `.labside button` is roughly 32px tall against a 44px floor.
 - Whether the chapter rail earns its place on a phone at all.
+
+---
+
+## Session 5, 2026-08-28 evening
+
+Amendment 05 Phases 1 and 2 are merged and live (`636c8cb`), including the camera fix (`f671b00`).
+The page is served as a real document, the responsive pass is in, and production is verified.
+
+### Applied to the reference file this session
+
+- **Headline breaks before the ink-2 question.** `<br>` before the `<em>`. **No extra leading**, deliberately: the colour change carries the separation.
+- **Hero rhythm tightened.** `#b1` bottom padding 11vh to 5vh, new `#b2{padding-top:4vh}`, coast band bottom margin 12vh to 7vh. Deck-to-band gap measured at 130px, down from about 234px.
+- **Curly apostrophes throughout.** 16 straight apostrophes converted in the prose. The interactive's step notes are JS single-quoted strings and contained none. **All quotes and apostrophes on this page are curly from here on.**
+
+### Decisions taken
+
+- **The phone Contents bar stays.** It was built for phones deliberately. **The open sheet takes the ink colour**, not paper, which also resolves its contrast problem: reversed type on ink clears AA, where the current pale-ink-on-paper links sit at 1.57:1.
+- **The desktop rail stays**, and the collisions get designed around rather than architected away. A fly-out bug was considered and rejected: it trades away the always-visible progress indicator, which is the thing providing the depth.
+- **Masthead becomes `NCCF × Natrx`**, multiplication sign, matching the BOP lockup.
+- **Supergraphic is locked** at the full-bleed numeral with the overprinted sentence.
+- **The cost percentage stays on the page.** Dylan's call, made knowing it reconstructs the contract value against the public $30M award.
+- **Beat 3 carries no cost figure.** Reviewed and left as is.
+- **No password at launch.**
+
+### Open, and this is where we stopped
+
+1. **The interactive's step 3.** It currently returns to the step-1 camera, so the reader goes out, in, and back, and the payoff reads as an absence rather than a finding. Agreed it needs rebuilding. See the section below.
+2. **The beat order.** Whether beats 4 and 5 swap, method before finding. Strong arguments for: Beat 3 ends on "on what evidence" and should hand to the method; the locked spine runs measure-then-find; the interactive now ends pointing forward; and it fixes the wrapping rail label. Against: the concentration number moves from beat 4 to beat 5, mitigated by the hero deck already carrying it. **Depends on how the interactive ends.**
+3. **The page title.** Still a placeholder. The steer is that the story is the approach and the title should answer "why is this news," not "the coast is eroding."
+4. **The headline.** Parked. Needs a working session.
+5. **Rail label for beat 5** if the collisions get fixed. Editorial, so it needs Dylan.
+6. **`og:image`.** Decided it should be the interactive, green survey boxes on the wash with the measured points, rendered at 1200x630. Not built.
+7. **The Lise Montefiore review gate.** Still unresolved, still the longest lead time left.
+8. **Launch date.** Dylan's. Note the page currently promises the Federation's data goes public "this fall"; if that slips past launch the promise is live on a public page.
+9. **Repo out of Insync's sync scope.** Three git incidents today, one costing a working file. Scheduled.
+
+---
+
+## The interactive, where it stands
+
+**The problem.** Step 1 is the full coast, step 3 returns to the full coast. Out, in, back. The only difference at the third stop is faint boxes and a stronger wash, so it reads as a round trip rather than a payoff. It also breaks the original rule that each step changes scale.
+
+**What the data allows.** Searched the repo and the project folder: **the pass-1 change analysis output does not exist in any form.** No hexagons, no change raster, no wetland-change values. It cannot be drawn from what we hold, and a fabricated version is what voided Phase 7.
+
+**What we do own:** 5,004 coastline points with rates, the 39 areas with a worst rate and transect count each, and **`deciles` in `nccf-figdata.json`, the ten-decile concentration curve (43.44, 19.04, and falling). Real, ours, and never drawn.** The bar chart was cut as redundant with the supergraphic, but that judgment predates the interactive's rebuild.
+
+**The direction, agreed 2026-08-28.** Step 1 becomes a conceptual demonstration of the comparison rather than a coverage wash: push into one real stretch of coastline, show marsh at the first date, the same stretch at the second, and the difference, then pull out and sweep the region.
+
+**Two conditions on that, and they are not negotiable.** The marsh band must be visibly schematic and unlike the data views, and the caption must say it demonstrates how the comparison works rather than what it found. Illustrating an operation is legitimate; displaying an invented result is not.
+
+**The ending depends on one thing.** If Nick can supply the 1,354 hexagon centroids with their wetland-change values, step 3 becomes the real agreement between the two passes, which would also let the page *show* the under-four-percent honesty instead of asserting it. If he cannot, step 3 becomes the concentration curve, which is a finding we own outright but which argues against swapping beats 4 and 5, since the interactive would then be about the finding rather than the method.
+
+**Step 2 is good and stays.**

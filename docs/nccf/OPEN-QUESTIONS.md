@@ -150,3 +150,15 @@ Nick proposed the framing himself. Live again, at about one percent, against the
 
 **Navy Shell's county** is still owed by Nick, but the page has been decoupled from the answer and
 no longer blocks on it.
+
+---
+
+## Closed and opened, 2026-08-28 evening
+
+**Closed: Navy Shell's county.** Resolved to Dare from the repo layer data plus a sourced reference point. See `CLAIMS.md`. Nick's confirmation is still welcome and no longer blocks anything.
+
+**Closed: access mode at launch.** No password once launched.
+
+**Opened: the pass-1 change analysis output.** Needed to finish the interactive's third step in the version that is about the method rather than the finding. **Owner: Nick.** The ask is the 1,354 hexagon centroids with their wetland-change values, the ones that went into the correlation. Coarse is fine. If it cannot be produced, the fallback is the concentration curve from `nccf-figdata.json`, which also settles the beat-order question against swapping.
+
+**Opened: `og:image`.** Agreed it is the interactive at pass 2, rendered at 1200x630. Nobody has built it.
