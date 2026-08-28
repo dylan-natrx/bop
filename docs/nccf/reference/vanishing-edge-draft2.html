@@ -1056,11 +1056,11 @@ secs.forEach(s=>spy.observe(s));
    'The second pass is slow and exact, so it only runs where it is worth paying for. Natrx and the Coastal Federation chose 39 areas together, around Pamlico and Core Sounds. The satellites did not pick them. In each area, five sets of aerial photographs spanning 2012 to 2022, measured at one meter. About 93,000 spots, one at a time. Note how small those 39 areas are against everything the first pass covered.',
    'Where both passes ran, they broadly agree about where the trouble is. That agreement is the finding. Everything still tinted here was screened by the cheap pass and never measured precisely, and that is the normal condition of a coastline. A wide pass that agrees with an expensive one is how you decide where to send the expensive one next.'];
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const svg=$('ncSvg'), FULL=[0,0,1000,640], MID=[435.0, 185.4, 351.1, 224.7], ZOOM=[665.2, 160.2, 93.7, 60.0];
+  const svg=$('ncSvg'), FULL=[0,0,1000,640], MID=[435.0, 185.4, 351.1, 224.7];
   // Portrait crops for the stacked layout: same centers, taller frames.
   const NARROW=matchMedia('(max-width:640px)');
-  const FULL_N=[430,40,560,600], MID_N=[480.5,135.3,260,325], ZOOM_N=[679.1,149.2,66,82];
-  const box=n=>NARROW.matches?(n===3?ZOOM_N:(n===2?MID_N:FULL_N)):(n===3?ZOOM:(n===2?MID:FULL));
+  const FULL_N=[430,40,560,600], MID_N=[480.5,135.3,260,325];
+  const box=n=>NARROW.matches?(n===2?MID_N:FULL_N):(n===2?MID:FULL);
   let step=0, raf=0;
   function vb(to,ms){
     const from=svg.getAttribute('viewBox').split(' ').map(Number);
