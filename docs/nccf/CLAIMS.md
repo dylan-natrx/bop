@@ -309,3 +309,31 @@ The one-pager is written largely in future tense ("is mapping," "will have") und
 | Coverage expanded from 25 planned subprojects to 39 | CONFIRMED |
 | "The wide screen did not select the 39 survey areas" | **WITHDRAWN.** An overstatement written from interview fragments and never checked against the contract. It was enforced for three sessions. |
 | That the wide pass predicts erosion rates | **STILL BLOCKED.** Unchanged by the above. r² = 0.038 governs, and the page states it. |
+
+
+---
+
+## County loss, computed 2026-09-02
+
+Computed in this repo from all 39 layers, 93,418 transects. Loss per transect is
+`rect_width × land_change_ft_per_year` where the rate is negative. County assignment is
+geographic inference from layer centroids, not a boundary-file join.
+
+| County | Loss sq ft/yr | Share | Mean rate | Median rate | Past 5 ft/yr | Loss per surveyed mile |
+|---|---|---|---|---|---|---|
+| Hyde | 4,782,539 | 39.0% | −1.67 | −0.85 | 9.4% | 8,450 |
+| Carteret | 3,769,808 | 30.7% | −1.28 | −0.78 | 8.9% | 7,699 |
+| Dare | 2,624,949 | 21.4% | −2.08 | −0.68 | 10.5% | 11,960 |
+| Pamlico | 895,606 | 7.3% | −0.92 | −0.53 | 2.5% | 4,550 |
+| Pender/Onslow | 201,614 | 1.6% | −0.41 | −0.33 | 0.5% | 2,557 |
+
+| Claim | Status |
+|---|---|
+| Dare erodes fastest: worst mean rate, largest share of transects past 5 ft/yr, most loss per surveyed mile, and the peak transect | **CONFIRMED from the data.** Consistent with Nick’s “Dare County by far.” |
+| Hyde is second on intensity | **CONFIRMED.** Second on mean rate and on share past 5 ft/yr. |
+| Dare loses the most land in total | **FALSE as computed.** Dare is third on total loss, behind Hyde and Carteret. |
+| Any ranking of counties by total loss | **NOT FOR PUBLICATION.** These totals rank where Natrx surveyed, not where North Carolina erodes. Carteret has 490 surveyed miles against Dare’s 220. A county-total ranking derived from a chosen survey footprint is not a statement about counties. |
+
+**Live collision.** Beat 5 says Dare “is the hardest hit overall.” The word *overall* reads as
+a total, and the pass-2 map beside it encodes total land lost. Fix proposed and awaiting
+Dylan: cut *overall*, say *eroding fastest*. See `STATUS.md`, session 7.

@@ -401,3 +401,120 @@ on a phone.
 11. **`INTERVIEW-JACOB-2026-08-17.md` still says the dataset tops out near -15 ft/yr.** `CLAIMS.md`
     says -45.91. Two files in the repo contradict each other.
 12. **Insync and `.git`.** Still scheduled, still not done.
+
+---
+
+## Session 7, 2026-09-02
+
+### The Beaufort question is answered, and it is a real collision
+
+Computed total land loss per county from all 93,418 transects, as `rect_width ×
+land_change_ft_per_year` summed over eroding transects. Surveyed shoreline only.
+
+| County | Sites | Transects | Miles surveyed | Loss sq ft/yr | Share |
+|---|---|---|---|---|---|
+| Hyde | 13 | 27,695 | 566 | 4,782,539 | 39.0% |
+| Carteret | 14 | 42,926 | 490 | 3,769,808 | 30.7% |
+| Dare | 8 | 10,380 | 220 | 2,624,949 | 21.4% |
+| Pamlico | 3 | 8,937 | 197 | 895,606 | 7.3% |
+| Pender/Onslow | 1 | 3,480 | 79 | 201,614 | 1.6% |
+
+The 780 drawn stretches were reprojected back to lat/lon off the town markers (fit is
+sub-pixel, so the map geometry is sound). Of the 101 marks in the two darkest bands:
+**Carteret 52, Hyde 33, Dare 14.** Carteret holds 365 of the 780 marks.
+
+**Dylan’s eye was right and the convoluted-shoreline hypothesis is wrong.** The Beaufort
+cluster reads heaviest because it is heaviest, on the quantity the map encodes.
+
+**Neither side is wrong. They encode different quantities.** Dare leads every intensity
+measure: mean rate −2.08 ft/yr against Hyde’s −1.67 and Carteret’s −1.28, 10.5% of its
+transects past 5 ft/yr against 9.4% and 8.9%, 11,960 sq ft lost per surveyed mile against
+8,450 and 7,699, and the peak at −45.9. Hyde is second on those, so “Hyde close behind”
+survives.
+
+**The collision is one word.** Beat 5 says Dare “is the hardest hit overall,” a few hundred
+pixels below a map whose marks mean total land lost, on which Dare is third. Proposed fix,
+**not yet applied, Dylan’s call**: cut “overall,” name the metric. “Dare County, which takes
+in much of the Outer Banks, is eroding fastest.”
+
+**The larger risk, and it is not fixed by the copy edit.** County totals here rank the survey
+allocation, not the counties. Carteret got 490 surveyed miles, Dare 220. Any reporter who
+repeats this computation gets a different county ranking out of the page’s own data.
+
+**County assignment is geographic inference** from layer centroids against known place names,
+not a boundary-file join. Mouse Harbor, Rattan Bay and Long Shoal River sit near county lines
+and could move. None of them changes the ranking.
+
+### The interactive was rebuilt as three stops
+
+Checked against the source calls first, not the synthesis. Nick, 2026-07-22: “It’s basically
+telling you there are levels of focus. It’s blurry at the top... You’re starting at the top
+and working your way down in a very logical methodological way.” Jacob, 2026-08-17: “I could
+throw a dart at the map and find a place that needs a project,” and “now we have the
+shorelines prioritized, so that’s step one done.”
+
+The thing to demonstrate is the narrowing, not the concentration statistic. **Dylan’s call:
+three stops, no fourth.** A physical-inspection stop was considered and cut, because we do not
+know where field visits will happen and the page would be asserting it.
+
+- **01 Before.** The whole coast, undifferentiated. 12,000+ miles.
+- **02 Satellite.** A focus scrim narrows to the search region, and a coarse cell grid renders
+  the grain the wide pass works at. **The cells are uniform coverage, not results.** The pass-1
+  change-analysis output still does not exist in any form and nothing on this map claims to be
+  it. The note carries both halves of the 09-02 SOW correction: the screen showed where marsh
+  became open water, and the Federation’s own priorities set which stretches got measured.
+- **03 Aerial.** Cells drop out, the measured stretches paint in at full resolution. Blurry to
+  sharp, which is Nick’s metaphor rendered literally. This also revives the “zoom, blurry to
+  sharp” concept beat that `DESIGN-DIRECTION.md` has carried as blocked on imagery since July.
+  It was only ever blocked as a photographic effect.
+
+**43.44% is no longer asserted inside the interactive.** It lives in Beat 5 with its own
+caption. The interactive’s job is the method.
+
+### Data changes in the map
+
+Regenerated `#ncPts` from the 39 layers on the same 2.6-unit grid and the same
+cumulative-loss quartile banding. **778 stretches drawn, 66 net-gaining stretches dropped.**
+The copy said every mark was losing and 84 were not; that is now true by construction and the
+caption says eroding stretches only. Band counts 28 / 76 / 153 / 521 against the previous
+33 / 68 / 136 / 502, so the published concentration check survives the regeneration.
+
+**The palest band was darkened.** Ramp is now #EFC2B2, #E79B80, #DA6A45, alert.
+
+### UI, desktop and mobile
+
+- **The wizard is gone.** No disabled buttons, no “Start over.” A three-segment stepper
+  overlays the bottom of the map, 52px desktop and 56px mobile, both clear of the 44px floor.
+- **Controls sit on the map**, per Dylan. The left control rail and the `.labside` column are
+  retired. `.labrow` is the positioning context; `.labstage`, the legend and the note are its
+  children.
+- **The note is a card over the map on desktop** at min(38ch, 37%), and drops below the map on
+  mobile, where an opaque card was eating two thirds of the frame.
+- **Mobile map is portrait**, `aspect-ratio:3/4`, replacing the 16/10 landscape fallback.
+- **Legend added.** Four swatches, “land lost / more.” Bottom-right on desktop, above the note
+  on mobile. There was none before.
+- **Swipe advances the stop** on the stage; arrow keys work on the stepper.
+- Cameras re-derived: `MID` is now [382, 120, 566, 356], which fits the whole measured region
+  including the Carteret cluster clear of the stepper. `MID_N` [520, 140, 236, 315] and
+  `FULL_N` [335, 25, 430, 573] are portrait crops **verified visually at 390**, which
+  `MID_N` never was.
+
+Rendered and checked at 390 and 1440 in Chromium, all three stops, zero page errors.
+
+### Open
+
+1. **Beat 5’s “hardest hit overall.”** Dylan’s call, above. Not applied.
+2. **The headline.** Dylan’s steer, 2026-09-02: end-goal oriented, in the zone of “before we
+   can do anything about the eroding coast we have to know where to act first.” Frames the work
+   as responsible rather than merely novel, and it clears the EDITORIAL problem that any
+   “but where?” construction implies nobody knew. Not written.
+3. **Not deployed.** The rebuild is in the working tree only.
+4. **Dead CSS.** The `.labside` and `.labctl` rules are still in the stylesheet and no longer
+   match anything. Left in place deliberately this session; sweep them before launch.
+5. Unchanged and still open: page title, `og:image`, Nick’s bundle, Montefiore gate, launch
+   date, Federation ghost forest permission, the −45.91 / −45.60 reconciliation, the
+   `INTERVIEW-JACOB-2026-08-17.md` −15 ft/yr contradiction, Insync and `.git`.
+
+**Correction to session 6’s note.** That session recorded its work as uncommitted with `main`
+at `a3ccedd`. It is committed and pushed: `main` and `origin/main` are both at `eb8881d`,
+working tree otherwise clean. Whether Vercel has served it is unverified.
