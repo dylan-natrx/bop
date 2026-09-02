@@ -44,6 +44,9 @@ export const metadata: Metadata = {
     index: false,
     follow: false,
   },
+  icons: {
+    icon: '/images/favicon.png',
+  },
 }
 
 export default function NccfLayout({

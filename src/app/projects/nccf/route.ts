@@ -41,6 +41,7 @@ const description =
   'tenth of the shoreline.'
 
 const meta =
+  '<link rel="icon" href="/images/favicon.png">' +
   `<meta name="description" content="${description}">` +
   `<meta property="og:title" content="${pageTitle}">` +
   `<meta property="og:description" content="${description}">` +

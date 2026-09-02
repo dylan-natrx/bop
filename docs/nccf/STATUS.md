@@ -554,3 +554,81 @@ own priorities helped set which stretches were measured. The 09-02 SOW correctio
 both halves wherever the page describes the screening-to-survey sequence, and the Beat 4 prose
 does not carry it.
 
+---
+
+## Where the interactive landed, 2026-09-02, end of session 7
+
+**Three stops, each one narrower than the last.**
+
+**01 Before.** The whole coast, undifferentiated. The frame is `FULL = [152,20,848,533]`, which
+sits inside the land path's bbox (x 108-758, y -90-708) so the state's own western and southern
+borders fall outside the picture. Without that the landmass appeared to stop before the box did.
+
+**02 Satellite.** A radial focus scrim narrows to the search region, and coarse 13-unit cells
+show the grain the wide pass works at. **The cells sit only where the coastline path runs**,
+placed from the `#ncLand` geometry, not from any result. An earlier version clipped them to
+land, which put squares inland over farmland the wide pass never looked at.
+
+**03 Aerial.** The measured shoreline itself, drawn as a line.
+
+### The two errors that cost the most, both mine
+
+**Pass 2 was drawn as 778 dots on a grid.** The aerial pass measured a continuous line, 93,017
+transects with geometry, ordered by `id`, a median of 112 feet apart. Dots said "they sampled
+778 places," which is the opposite of the method the beat is about. It also made "everything
+looks worst" unfixable: a dot has no length, so a mark covering half a mile and one covering
+six miles read identically, and the only magnitude left to encode was area, which forced acres.
+Three rounds of colour and scale tuning were spent on a symptom of the wrong mark type.
+
+**The top band had no identity.** 5-10 ft/yr was `#E2743E` and over-10 was `#EB5C31`. Near
+enough the same orange that Dylan asked whether anything cleared 10. It was all there and
+invisible. A heavier line was also the wrong instrument for a question about places.
+
+### How pass 2 is drawn now
+
+Per layer, transects sorted by `id`, resampled to a vertex every 0.75 units, broken where
+consecutive transects are more than 3 units apart, consecutive same-band vertices merged into
+polylines. Coloured by retreat rate at thresholds already in `CLAIMS.md`: under 1, 1-2, 2-5,
+5-10, over 10 ft/yr. **Length is drawn to scale**, so the eye integrates total loss on its own
+and the legend can use feet per year, which is the unit a reader has a feel for.
+
+**The over-10 shoreline clusters into 17 zone markers**, a ringed disc sized by the shoreline
+each holds, painted above the ramp. That is the decision-support read: 17 places, about 17
+miles, out of 2,900. The four lower bands were lightened to give the rings room.
+
+### Interactive UI
+
+Wizard controls retired. A three-segment stepper overlays the bottom of the map at every width,
+52px desktop and 56px phone. The note is a card over the map on desktop at min(38ch, 37%) and
+drops below the map on the phone, where an opaque card was eating two thirds of the frame. Map
+is square on the phone. Legend sits bottom right on the map at every width. Swipe advances the
+stop; arrow keys work on the stepper. Captions under the interactive removed at Dylan's
+instruction.
+
+### Copy
+
+All three step notes are Dylan's, applied as written, with one clause changed and flagged: his
+"The orange indicates the biggest loss" became "the orange is where the shore is retreating
+fastest," because the encoding is speed rather than amount.
+
+### Open
+
+1. **Beat 5's "hardest hit overall."** Unresolved since the Beaufort finding. Dylan's call.
+2. **The Federation-priorities caveat has no home.** Removing the captions took out the only
+   place saying the Federation's own priorities helped set which stretches were measured. The
+   09-02 SOW correction requires both halves wherever the page describes the sequence, and the
+   Beat 4 prose does not carry it.
+3. **The zone count is a property of our rendering.** `CLAIMS.md` carries it as PENDING with the
+   method note. The miles and the 1.96% are the defensible forms.
+4. **Dead CSS.** `.labside`, `.labctl` and the retired `#ncPts` band rules no longer match
+   anything. Sweep before launch.
+5. **Not deployed.** Everything from sessions 6 and 7 is committed to `main` but the live site
+   has not been rebuilt.
+6. Unchanged: page title, headline, `og:image`, Nick's bundle, Montefiore gate, launch date,
+   ghost forest permission, the -45.91 / -45.60 reconciliation, the Jacob interview's -15 ft/yr
+   contradiction, Insync and `.git`.
+
+**Note on `.git`.** Git cannot delete its own lock files in this folder, so every write leaves a
+stale `index.lock` or `HEAD.lock`. Worked around by moving them aside before each operation;
+several `.git/.stale-*` files are now sitting there and need deleting by hand.
+
