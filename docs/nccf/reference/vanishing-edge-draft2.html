@@ -944,14 +944,16 @@ footer{margin-bottom:0}
     <div class="col" style="margin-top:8vh">
     <p class="rv ">What the first pass gives you is a ranking. It says which stretches are worth the expensive look, which is the difference between working from whatever somebody happened to observe recently and seeing the whole picture, including the parts nobody has ever visited. It is not a substitute for the measurement: lined up against the precise work, it accounts for less than four percent of why one shoreline retreats faster than another. Narrowing the search is the job, and it does that.</p>
   </div>
+    <div class="col">
+    <p class="rv ">Resolution is the other reason this works. The aerial photographs were measured at one meter, so a single pixel covers about a square yard of ground. The Coastal Federation needed to catch places losing as little as two feet a year. Over a decade that is about twenty feet. In the publicly available satellite imagery, twenty feet is smaller than a single pixel, so the change never appears at all.</p>
+  </div>
     <div class="closing tight rv">
       <blockquote>The methodology is public. The photographs are free. The hard part is running the same
         process <em>39 times</em> without it drifting.</blockquote>
       <div class="attr mono">Nick Brady &middot; Chief Technology Officer, Natrx</div>
     </div>
     <div class="col">
-    <p class="rv ">Resolution is the other reason this works. The aerial photographs were measured at one meter, so a single pixel covers about a square yard of ground. The Coastal Federation needed to catch places losing as little as two feet a year. Over a decade that is about twenty feet. In the publicly available satellite imagery, twenty feet is smaller than a single pixel, so the change never appears at all.</p>
-    <p class="rv ">Nick Brady, Natrx’s chief technology officer, is matter of fact about which part of this was hard, and it is not the modelling. It is having people who can look at an ambiguous photograph of a tidal flat and say whether they are looking at marsh or water.</p>
+        <p class="rv ">Nick Brady, Natrx’s chief technology officer, is matter of fact about which part of this was hard, and it is not the modelling. It is having people who can look at an ambiguous photograph of a tidal flat and say whether they are looking at marsh or water.</p>
     <p class="rv ">Brady estimates that doing this the traditional way would have cost into the millions of dollars, and that even then it would not have been able to cover this much coast. A crew measuring a shoreline on foot can get through the shoreline of about one town. This project covered 2,900 miles. The Natrx analysis came to about one percent of the grant, leaving the rest for the restoration work itself.</p>
   </div>
   </div>
@@ -1014,7 +1016,7 @@ footer{margin-bottom:0}
 <section id="b7">
   <div class="sheet"><div class="col">
     <div class="mono kick rv">What happens now</div>
-    <h2 class="rv d1">Six hundred acres, and a permit application</h2>
+    <h2 class="rv d1">Six hundred acres, and a place to start</h2>
     <p class="rv d2">The Coastal Federation is taking the ranked shoreline into early permitting conversations with state and federal agencies. Boyd expects permit applications within about six months and construction inside two years. The program aims to protect up to 600 acres of marsh across eight large restoration projects.</p>
     <p class="rv d3">The funding behind all of this was awarded for exactly those acres. In 2024 the Environmental Protection Agency awarded $421 million to the Atlantic Conservation Coalition, a partnership of North Carolina, South Carolina, Virginia, Maryland and The Nature Conservancy, and the Coastal Federation’s share is roughly $30 million over five years. The purpose of that grant is keeping carbon in the ground. Marsh soil holds it, and marsh that erodes into open water lets it go.</p>
     <p class="rv d4">Interest is not confined to North Carolina. The Federation leads this state’s part of the South Atlantic Salt Marsh Initiative, a four-state effort formed in 2021 that now brings together more than 400 partners across North Carolina, South Carolina, Georgia and Florida. Those four states hold about a million acres of salt marsh between them, and the Federation led the development of North Carolina’s plan for protecting its share. Boyd expects the results to travel. The method needs marsh, since it reads the line of grass as the shoreline, and most of the unhardened shoreline in the Southeast is exactly that.</p>
@@ -1184,7 +1186,7 @@ const reveal=(e,obs)=>{
   const el=e.target, now=performance.now();
   const own=(parseFloat(getComputedStyle(el).transitionDelay)||0)*1000;
   if(now-lastAt>700){lastAt=now;lastWait=0;}
-  const wait=Math.max(own,lastAt+lastWait+45-now);
+  const wait=Math.max(own,lastAt+lastWait+90-now);
   el.style.transitionDelay=(wait/1000).toFixed(3)+'s';
   lastAt=now; lastWait=wait;
   el.classList.add('in');
