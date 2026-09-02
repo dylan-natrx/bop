@@ -757,8 +757,8 @@ footer{margin-bottom:0}
    <feMorphology in="SourceGraphic" operator="dilate" radius="0.3" result="m"/>
    <feGaussianBlur in="m" stdDeviation="0.55"/></filter>
  <filter id="tbDot" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
-   <feMorphology operator="dilate" radius="0.09" in="SourceGraphic" result="d"/>
-   <feGaussianBlur in="d" stdDeviation="0.20" result="b"/>
+   <feMorphology operator="dilate" radius="0.20" in="SourceGraphic" result="d"/>
+   <feGaussianBlur in="d" stdDeviation="0.42" result="b"/>
    <feComponentTransfer in="b" result="w"><feFuncA type="linear" slope="1.45"/></feComponentTransfer>
    <feComposite in="SourceGraphic" in2="w" operator="over"/></filter>
  <filter id="tbRule" x="-150%" y="-150%" width="400%" height="400%" color-interpolation-filters="sRGB">
@@ -978,7 +978,7 @@ footer{margin-bottom:0}
   </div>
     <div class="scale rv">
  <div class="srow"><div class="slab mono">A typical eroding<br>spot on this coast</div>
-  <div class="bar" style="--w:1.29%"><svg class="barsvg" aria-hidden="true"><defs><pattern id="hsbar" width="4.6" height="4.6" patternUnits="userSpaceOnUse" patternTransform="rotate(14.0362)"><circle cx="2.3" cy="2.3" r="1.97" fill="#fff"/></pattern><mask id="mskbar"><rect width="100%" height="100%" fill="url(#hsbar)"/></mask></defs><g filter="url(#tbDot)"><rect class="bfill" y="0" height="100%" mask="url(#mskbar)"/></g></svg><div class="num">0.7 ft</div></div></div>
+  <div class="bar" style="--w:1.29%"><svg class="barsvg" aria-hidden="true"><defs><pattern id="hsbar" width="7.5" height="7.5" patternUnits="userSpaceOnUse" patternTransform="rotate(14.0362)"><circle cx="3.75" cy="3.75" r="2.85" fill="#fff"/></pattern><mask id="mskbar"><rect width="100%" height="100%" fill="url(#hsbar)"/></mask></defs><g filter="url(#tbDot)"><rect class="bfill" y="0" height="100%" mask="url(#mskbar)"/></g></svg><div class="num">0.7 ft</div></div></div>
  <div class="srow hot"><div class="slab mono">The worst spot<br>measured</div>
   <div class="bar" style="--w:82%"><svg class="barsvg" aria-hidden="true"><g filter="url(#tbDot)"><rect class="bfill" y="0" height="100%" mask="url(#mskbar)"/></g></svg><div class="num">45.9 ft</div></div></div>
 </div>
