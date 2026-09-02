@@ -931,7 +931,6 @@ footer{margin-bottom:0}
 
     <div class="col" style="margin-top:8vh">
     <p class="rv ">What the first pass gives you is a ranking. It says which stretches are worth the expensive look, which is the difference between working from whatever somebody happened to observe recently and seeing the whole picture, including the parts nobody has ever visited. It is not a substitute for the measurement: lined up against the precise work, it accounts for less than four percent of why one shoreline retreats faster than another. Narrowing the search is the job, and it does that.</p>
-    <p class="rv ">Where the imagery was poor, and sometimes it was, since a photograph taken at high tide does not show the same edge as one taken at low tide, analysts flagged those areas and carried them forward with lower confidence. They are also the areas where the two passes agree least, which is what you would expect.</p>
   </div>
     <div class="closing tight rv">
       <blockquote>The methodology is public. The photographs are free. The hard part is running the same
@@ -1135,6 +1134,7 @@ footer{margin-bottom:0}
         <dt>Breakwater</dt><dd>A structure set out in the shallows to break waves before they reach the shore.</dd>
         <dt>Erosion rate</dt><dd>How far a shoreline pulls back in a year, in feet. One foot a year means ten feet of land gone in a decade.</dd>
         <dt>One meter resolution</dt><dd>Fine enough to see a shoreline move twenty feet across a decade. Freely available satellite imagery is not.</dd>
+        <dt>Tide, and why it matters</dt><dd>A photograph taken at high tide does not show the same edge as one taken at low tide. Where the imagery was poor, and sometimes it was, analysts flagged those areas and carried them forward with lower confidence. Those are also the areas where the two passes agree least, which is what you would expect.</dd>
       </dl>
     </div>
     <div class="gpane" id="gp-press" role="tabpanel" aria-labelledby="gt-press" hidden>
@@ -1159,8 +1159,14 @@ const links=[...document.querySelectorAll('#rail a')], secs=[...document.querySe
 const reveal=(e,obs)=>{e.target.classList.add('in');
   e.target.querySelectorAll?.('.pl').forEach(l=>setTimeout(()=>l.classList.add('on'),380*(+l.dataset.d)));
   obs.unobserve(e.target);};
+// Graphics used an area threshold, which is not document-ordered: a short
+// figure reaches 18% of its own height in fewer scrolled pixels than a tall
+// one above it and fires first. Same defect the text reveals were fixed for
+// on 2026-09-01. Both now trigger on the top edge crossing a fixed line, so
+// stacked blocks always reveal in document order. The deeper rootMargin
+// keeps graphics from animating while still half off screen.
 const io=new IntersectionObserver(function(es){for(const e of es){if(!e.isIntersecting)continue;reveal(e,this);}},
-  {threshold:.18,rootMargin:'0px 0px -6% 0px'});
+  {threshold:0,rootMargin:'0px 0px -26% 0px'});
 document.querySelectorAll('.decwrap,.scale,.coastband').forEach(n=>io.observe(n));
 const ioText=new IntersectionObserver(function(es){for(const e of es){if(!e.isIntersecting)continue;reveal(e,this);}},
   {threshold:0,rootMargin:'0px 0px -14% 0px'});
