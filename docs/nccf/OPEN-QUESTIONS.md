@@ -166,3 +166,42 @@ The ask, when it goes: the 1,354 hexagon centroids with their wetland-change val
 **This blocks two things until Nick answers:** the interactive's third step, and the beat 4/5 swap, since the swap depends on what the interactive ends on. Both are parked deliberately, not stalled. The fallback if Nick cannot produce it is the concentration curve from `nccf-figdata.json`, which also settles the beat-order question against swapping.
 
 **Opened: `og:image`.** Agreed it is the interactive at pass 2, rendered at 1200x630. Nobody has built it.
+
+---
+
+## Closed by Jacob's written answers, 2026-09-01
+
+**Closed: Jacob's name and title for print.** Jacob Boyd, Salt Marsh Program Director. The page is already correct.
+
+**Closed: the coalition name.** Atlantic Conservation Coalition. The SOW's "Atlantic Coast Coalition" is an error.
+
+**Closed: the grant.** $421M CPRG, $30M to NCCF, funding eight large-scale restoration projects. Now client-sourced rather than sourced to a news article.
+
+**Closed: the carbon citation, in the sense that it arrived.** It is a different claim from the one asked for: NOAA on marshes sequestering at ~10x the rate of tropical forests, not a per-acre rate. Sourced, and still excluded under the locked carbon decision. The per-acre figure was never supplied and stays blocked.
+
+**Closed: dataset licensing.** None.
+
+**Updated: the publication date.** Mapping tool hoped for November. Frame as hope, not as a date. "This fall" on the page survives.
+
+**Still open with Jacob: permission to use Federation ghost forest photographs.** Asked, not answered.
+
+**New: third-party imagery rights.** See `STATUS.md`. NASA Earth Observatory Landsat imagery is usable with credit. Carolina Public Press photographs are not covered by any republication licence we have found and need the rights holder's permission, which a credit line does not constitute.
+
+---
+
+## Opened 2026-09-02
+
+**Does the pass-2 map agree with `CLAIMS.md` on which county is worst?**
+**Owner:** us, not Nick. **Blocks:** trusting the map, and possibly a sentence of Beat 5.
+
+On the rebuilt map the Beaufort and Oriental cluster at the bottom of the frame reads heaviest.
+`CLAIMS.md` holds "worst county: Dare, by far" as CONFIRMED and quotable, and Beat 5 says so. The
+test is total loss per named region against the map's visual weight. If the map is right, the copy
+has a problem. If the copy is right, the map does. **Neither may ship until this is run.**
+
+**84 stretches are gaining ground.** The interactive's copy says every mark is drawn by how much land
+it is losing. Decide whether to say so or drop them.
+
+**Federation ghost forest photographs.** Asked of Jacob, not answered. Carolina Public Press
+photographs remain unusable without the rights holder's permission; a credit line is not a licence.
+NASA Earth Observatory Landsat imagery is cleared with credit and is in the page.

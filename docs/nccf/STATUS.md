@@ -253,3 +253,151 @@ correct, scroll-spy tracks every beat, zero page errors.
 **One testing note for whoever checks this next:** the page sets `html{scroll-behavior:smooth}`, so
 a scripted `scrollTo` followed by a short wait reads the rail mid-animation and looks stuck. Disable
 smooth scrolling in the harness before asserting on scroll-spy state.
+
+---
+
+## Correction, 2026-09-02: the screening-to-survey sequence
+
+**An earlier rule in this file said "the wide screen did not select the 39 survey areas." That
+overstates the case and is withdrawn.** It was built from interview fragments and was never checked
+against the contract. The SOW says the opposite of what we were enforcing.
+
+**Phase II, Wetlands Assessment & Change Analysis:**
+
+> "Natrx will conduct a natural asset inventory of NC's flooded vegetation and a change analysis
+> within the region outlined in Figure 1 **to best understand where further analysis is warranted.**
+> The change analysis will highlight wetland loss hotspots, and **identify areas addressable for the
+> Phase III erosion and carbon analysis.**"
+
+**Phase III, Erosion & Carbon Analysis:**
+
+> "**Once addressable areas are identified during Phase II**, Natrx will conduct spatial analysis to
+> model carbon distribution in combination with erosion rates for those areas in order to prioritize
+> opportunity sites."
+
+So the wide pass came first and its contracted job was to identify the areas the granular pass would
+measure. Nick's own framing matches: *"you can be more intelligent about where you exercise your
+shoreline change analysis budget"* (2026-07-22, 13:06).
+
+**What is true, and what the page may say.** The change analysis identified the addressable areas.
+The final site list was settled with the Federation, per the SOW's Phase IV: *"The final selection of
+shoreline segments will be determined in coordination with NCCF."* And coverage then expanded far
+beyond the plan, 25 subprojects becoming 39, to the point where Nick jokes the screening phase was
+almost redundant.
+
+**Publishable:** the first pass pointed to the areas worth measuring, and the final list was settled
+with the Coastal Federation. Both halves, together.
+
+**Not publishable:** that the screen alone picked the sites, with no client role. And still not
+publishable, unchanged: any claim that the wide pass *predicts* erosion. The r² of 0.038 governs that
+separately and is untouched by this correction.
+
+**Cost of the error.** This rule was enforced through three editorial sessions and shaped the
+interactive twice. Check the contract before writing a rule from an interview.
+
+---
+
+## Session 6, 2026-09-01 / 09-02
+
+**Everything below is in the working tree and uncommitted. `main` is still at `a3ccedd`. The live
+site is the 2026-08-28 build and shows none of it.**
+
+### What went into the page
+
+**Beat 2 gained a before/after slider.** NASA Earth Observatory Landsat scenes of the mainland side
+of Dare County, 1 October 2005 and 13 October 2024, centred on Manns Harbor. Unlabelled `_lrg`
+source images, so the wipe cannot slice a burned-in caption; the dates and the Manns Harbor pin are
+DOM elements over the frame. Credit line sits over the image. NASA imagery is usable with credit
+(see `OPEN-QUESTIONS.md`). Figure is capped at 620px and measured flush to the text column at 1280,
+1440 and 1512, in both quirks and standards mode.
+
+**Dylan reported the slider reading wider than the content rail and it could not be reproduced.**
+Measured 620/620/same-left at three widths. His call: not browser zoom, something else, move on.
+Left unresolved and noted here so the next person does not re-measure it from scratch.
+
+**Beat 7 copy drafted and in.** Grant, South Atlantic Salt Marsh Initiative, Boyd on Florence, the
+datasets going public this fall.
+
+**The interactive was rebuilt as two passes with three notes.** Pass 1 is the satellite screen with
+the search corridor drawn on the coast; pass 2 zooms to the measured stretch and paints the
+measured shoreline. Copy rewritten in plain sentences, no fragments.
+
+**How the pass-2 map is drawn now, and why.** 5,004 measured points aggregate into 780 short
+stretches on a 2.6-unit grid. Each stretch is scored by **how much land it is losing in total**, not
+by its median rate, and banded by contribution quartile. Radii run 0.9 to 3.8. Palest painted
+first, so the worst marks sit on top.
+
+The check that validates it:
+
+| Share of stretches | Share of all loss |
+|---|---|
+| top 4.2% | 25% |
+| top 12.9% | 50% |
+| top 30.4% | 75% |
+| **worst-losing 10%** | **43.2%** |
+
+That 43.2% lands on the page's published 43.44%, derived independently at a different unit of
+aggregation. The finding survives the change of aggregation, which is the strongest thing we can
+say about it.
+
+### Bugs found and fixed this session
+
+- **`mix-blend-mode: multiply` on the points group.** Multiply darkens every overlap, so two pale
+  marks rendered darker than one severe one and the colour scale collapsed. Removed. This is what
+  Dylan was seeing when he said the map showed no variation.
+- **Colouring by median rate showed nothing.** Median answers how fast a stretch typically moves and
+  deliberately discards the tail, which is where the whole finding lives. Under median, the darkest
+  band held 12.4% of loss. Under sum of loss it holds 43.2%.
+- **Z-order inverted.** Stretches were written worst-first, so SVG painted the darkest first and
+  every pale mark covered them. Sorted palest-first.
+- **`<use href="#ncLand">` for the corridor was invisible.** ID-specificity fill and stroke on
+  `#ncLand` beat the `.corr` class inside the use shadow tree. Replaced with a real `<path>` and the
+  duplicated `d`, which costs 80KB.
+- **Reveals fired out of document order** (Dylan, on beat 7). The single observer used
+  `threshold:.18`, so a short paragraph reaches 18% of its own height in fewer scrolled pixels than
+  a tall one above it and can beat it in. Text reveals now use a second observer at `threshold:0`
+  with `rootMargin:'0px 0px -14% 0px'`, which triggers on the top edge crossing a fixed line and is
+  strictly document-ordered for stacked blocks. Graphics keep the area threshold, since the
+  coast-band draw and the scale bars want to be properly in view before they animate.
+
+### Open on the interactive, and this is where we stopped
+
+**Dylan's question, unanswered:** on the pass-2 map the cluster at the bottom of the frame, around
+Beaufort and Oriental, reads as the heaviest. The page says Dare is worst by far with Hyde second.
+Either the map misleads or the copy does, and nobody has checked which. The likely innocent
+explanation is that convoluted shoreline packs more stretches into less screen, so a busy area reads
+heavy without carrying the most loss. **That is a hypothesis, not an answer.** The test is total
+loss per named region, computed and compared against `CLAIMS.md`. **This is a `CLAIMS.md` collision
+until someone runs it.**
+
+**Other open items on the interactive:** 84 stretches are gaining ground while the copy says every
+mark is losing. The palest band washes out against the white land fill. Whether to label Manns
+Harbor on the pass-2 map, which collides with Manteo at about 16px.
+
+**Dylan's call, 2026-09-02: stop.** The interactive is not close enough to justify more of this
+session. It picks up in a fresh thread.
+
+### Mobile
+
+**Not started, deliberately.** Dylan's call: the phone pass is not worth doing until the interactive
+is right. The rebuilt interactive has never been seen at 390px. `MID_N` was re-derived arithmetically
+and never verified visually. The corridor, the new point set and the longer notes are all unchecked
+on a phone.
+
+### What is left, in the order it blocks things
+
+1. **Answer the Beaufort question with the data.** Blocks trusting the pass-2 map, and possibly
+   blocks a line of Beat 5 copy.
+2. **Finish the interactive.** Pass 2's read, the gaining stretches, the palest band, labels.
+3. **Commit and deploy.** Five modified files. Nothing from two sessions is live.
+4. **Phone pass**, after 1 and 2.
+5. **Page title.** Still a placeholder. The steer: why this is news, and the news is the approach.
+6. **Headline.** Parked, needs a working session.
+7. **`og:image`.** The interactive at pass 2, 1200x630. Not built.
+8. **Nick's bundle**, going with the proto-story: hexagon change-analysis values, the image-quality
+   artifact, the -45.91 versus -45.60 reconciliation, Navy Shell's county for completeness.
+9. **Lise Montefiore review gate.** Open since July. Longest lead time to launch.
+10. **Federation ghost forest photo permission**, with Jacob. Asked, not answered.
+11. **`INTERVIEW-JACOB-2026-08-17.md` still says the dataset tops out near -15 ft/yr.** `CLAIMS.md`
+    says -45.91. Two files in the repo contradict each other.
+12. **Insync and `.git`.** Still scheduled, still not done.

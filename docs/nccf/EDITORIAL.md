@@ -276,3 +276,107 @@ taken. Still unresolved.
 **The method precedes the finding.** Beat 4 is the method, beat 5 is the finding. Beat 3 ends on "on
 what evidence" and the evidence is the method; the spine runs measure-then-find. The interactive
 lives in the method beat and must end on something about the method.
+
+---
+
+## Amendment, 2026-09-01
+
+**Beat 7 names the South Atlantic Salt Marsh Initiative and the Federation's role in it.** The claim
+that this work travels beyond North Carolina was previously asserted and is now evidenced: a four-state
+initiative, more than 400 partners, about a million acres of salt marsh, and the Federation leading
+North Carolina's implementation team. This is client credit and it is cleared.
+
+**The ceiling on that claim is interest, not adoption.** Nobody in the other three states has committed
+to running this method. "Boyd expects the results to travel" is as far as the page goes.
+
+**The carbon citation arrived and changes nothing.** NOAA on marshes sequestering at roughly ten times
+the rate of tropical forests is real and sourced. It stays off the page, because carbon appears once as
+the reason the grant exists, and a comparative sequestration claim makes that paragraph an argument.
+
+**Third-party imagery follows the same discipline as claims.** A credit line is attribution, not a
+licence. Public-domain imagery may be used with credit; anything else needs the rights holder's
+permission on the record before it goes on the page.
+
+---
+
+## Correction, 2026-09-02: the screening-to-survey sequence
+
+**An earlier rule in this file said "the wide screen did not select the 39 survey areas." That
+overstates the case and is withdrawn.** It was built from interview fragments and was never checked
+against the contract. The SOW says the opposite of what we were enforcing.
+
+**Phase II, Wetlands Assessment & Change Analysis:**
+
+> "Natrx will conduct a natural asset inventory of NC's flooded vegetation and a change analysis
+> within the region outlined in Figure 1 **to best understand where further analysis is warranted.**
+> The change analysis will highlight wetland loss hotspots, and **identify areas addressable for the
+> Phase III erosion and carbon analysis.**"
+
+**Phase III, Erosion & Carbon Analysis:**
+
+> "**Once addressable areas are identified during Phase II**, Natrx will conduct spatial analysis to
+> model carbon distribution in combination with erosion rates for those areas in order to prioritize
+> opportunity sites."
+
+So the wide pass came first and its contracted job was to identify the areas the granular pass would
+measure. Nick's own framing matches: *"you can be more intelligent about where you exercise your
+shoreline change analysis budget"* (2026-07-22, 13:06).
+
+**What is true, and what the page may say.** The change analysis identified the addressable areas.
+The final site list was settled with the Federation, per the SOW's Phase IV: *"The final selection of
+shoreline segments will be determined in coordination with NCCF."* And coverage then expanded far
+beyond the plan, 25 subprojects becoming 39, to the point where Nick jokes the screening phase was
+almost redundant.
+
+**Publishable:** the first pass pointed to the areas worth measuring, and the final list was settled
+with the Coastal Federation. Both halves, together.
+
+**Not publishable:** that the screen alone picked the sites, with no client role. And still not
+publishable, unchanged: any claim that the wide pass *predicts* erosion. The r² of 0.038 governs that
+separately and is untouched by this correction.
+
+**Cost of the error.** This rule was enforced through three editorial sessions and shaped the
+interactive twice. Check the contract before writing a rule from an interview.
+
+---
+
+## Session 6 copy, 2026-09-01 / 09-02
+
+**Beat 2, the slider caption.** "The same shore on the mainland side of Dare County, nineteen years
+apart." Dates carried as DOM labels, 1 October 2005 and 13 October 2024, so the wipe cannot cut
+through them. "The pale band is ghost forest" was cut on Dylan's instruction: it described something
+the reader cannot reliably pick out at that scale.
+
+**Beat 7 drafted.** Four paragraphs: the grant and what it is for, the South Atlantic Salt Marsh
+Initiative and why the method travels, Boyd on Florence changing the conversation, and the datasets
+going public this fall. The fall promise is live copy on a public page, so if publication slips the
+sentence has to move with it.
+
+**"Natrx took aerial photographs" was wrong and is out.** It contradicts the page's own line that
+the imagery is freely available from a federal survey, and it turns public imagery into proprietary
+fieldwork. The line reads: **Natrx measured the edge of the marsh in aerial photographs from five
+different years between 2012 and 2022.**
+
+**The interactive's notes were rewritten in plain sentences.** No fragments, no clipped
+constructions. The rule from this session, stated by Dylan and binding from here: complete, clear
+thoughts, plainly stated. Curly quotes and apostrophes everywhere, including inside JS strings.
+
+**The three notes, as they stand:**
+
+1. This is what anyone had before. A coastline on a map, and whatever people had seen in person.
+   Much of this shore cannot be reached on foot.
+2. Satellite pictures of every stretch of marsh on this coast. The green band is the search area.
+   Subtract one year from another and you can see where marsh became open water. It shows you where
+   to do the more precise analysis. It cannot tell you how fast the shoreline is moving.
+3. Now the measuring. The first pass pointed to the areas worth a closer look. Natrx measured the
+   edge of the marsh in aerial photographs from five different years between 2012 and 2022. That
+   came to about 93,000 measurements. Each orange mark is a short stretch of shore, drawn by how
+   much land that stretch is losing. The darkest tenth of them account for almost half of everything
+   lost.
+
+**Note 3 carries a copy risk.** It says each mark is drawn by how much land that stretch is losing.
+84 of the 780 stretches are gaining ground. Either the copy acknowledges them or they come off the
+map. Unresolved.
+
+**The colour is the Natrx mark's own orange**, `--alert:#EB5C31`, already on the page in the footer
+logo. Dylan's instruction: make them orange in a register that agrees with what we have.

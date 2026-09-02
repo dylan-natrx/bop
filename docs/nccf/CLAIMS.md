@@ -176,6 +176,66 @@ Avoid the word "cheap" in copy. It undersells the work.
 
 ---
 
+## Jacob Boyd follow-up answers, 2026-09-01
+
+Source: `Natrx Story Facts.docx`, Jacob's written answers to our open questions. **Client-sourced, which
+supersedes the news-article sourcing on the grant.**
+
+| Claim | Value | Status | Notes |
+|---|---|---|---|
+| Jacob's name and title for print | **Jacob Boyd, Salt Marsh Program Director** | **CONFIRMED. Closes the print-attribution item.** | The page already renders it this way, with the Federation appended. No change needed. |
+| Coalition name | **Atlantic Conservation Coalition** | **CONFIRMED** | The SOW's "Atlantic Coast Coalition" is an error. Do not use it. |
+| Coalition membership | NC, SC, VA, MD **and The Nature Conservancy** | **CONFIRMED** | Our copy says "a four-state conservation coalition," which is accurate but omits TNC. Naming the coalition is now available. |
+| EPA award | $421M Climate Pollution Reduction Grant | **CONFIRMED, client-sourced** | Was sourced to Outer Banks Voice; now confirmed by NCCF. |
+| NCCF's share | ~$30M | **CONFIRMED, client-sourced** | |
+| **What the $30M funds** | **eight large-scale coastal restoration projects** | **CONFIRMED, new** | Jacob: NCCF leads "the coastal habitat enhancement initiative in North Carolina implementing eight large scale coastal restoration projects." Concrete and cleared. |
+| Scope of those projects | salt marsh, seagrass beds, and marsh migration corridors | CONFIRMED | Broader than our page's "600 acres of marsh." The 600-acre target stands; do not imply marsh is the only habitat. |
+| Publication timing | mapping tool **hoped for November** | CONFIRMED as intent | Jacob: "hope to have it ready by November." **Frame as hope, never as a date.** The page's "this fall" survives. |
+| Dataset licensing | **none** | CONFIRMED | "There shouldn't be any licensing terms." |
+| RCCP | **North Carolina Resilient Coastal Communities Program** | CONFIRMED | Our interview notes render it "RCPP," which is wrong. Not on the page. |
+
+### The South Atlantic Salt Marsh Initiative
+
+All of the following is from Jacob's written answer and traces to SASMI's own published plan.
+
+| Claim | Status |
+|---|---|
+| SASMI formed 2021 under The Pew Charitable Trusts and SERPPAS | CONFIRMED |
+| More than 400 partners across federal, state and local agencies, academia, NGOs and coastal communities | CONFIRMED |
+| Covers North Carolina, South Carolina, Georgia and Florida | CONFIRMED |
+| **About a million acres of salt marsh across those four states** | **CONFIRMED. The scale number Beat 7 was missing.** |
+| **The Federation leads North Carolina's State Implementation Team**, which functions as the Salt Marsh Steering Committee | **CONFIRMED. Client credit, cleared.** |
+| The Federation led development of the NC Salt Marsh Action Plan, released May 2024 | CONFIRMED |
+
+**Handling note.** Jacob's text is lifted from the SASMI and NC SMAP plan documents. **Rewrite into the
+page's voice; do not quote it and do not attribute the plan's prose to Jacob.**
+
+**Do not claim the method will be replicated in the other three states.** Jacob said there is interest,
+not that anyone has committed. "Boyd expects the results to travel" is the ceiling.
+
+### Carbon: the citation arrived, and it is a different claim
+
+Jacob owed a per-acre NOAA sequestration rate. What he sent is **NOAA stating that mangroves and salt
+marshes sequester carbon at a rate roughly ten times greater than tropical forests**, citing an
+*Ecological Society of America* paper, plus a Duke summary.
+
+| Claim | Status |
+|---|---|
+| Marshes and mangroves sequester ~10x the rate of tropical forests (NOAA) | **CONFIRMED and sourced, but EXCLUDED by the locked carbon decision.** |
+| The per-acre "highest sequestering habitat in the world" figure | **Never supplied. Remains BLOCKED. Do not use.** |
+| A source for the ~5% global emissions figure | **Not supplied.** Already excluded; Temmink remains our source if ever needed. |
+
+**Why it stays off.** Carbon appears once, as the reason the grant exists. A comparative sequestration
+claim turns that paragraph into an argument, which `EDITORIAL.md` forbids. Logged as sourced so nobody
+reopens it looking for a citation that now exists.
+
+### Still owed by Jacob
+
+- **Permission for Federation ghost forest photographs.** Asked, not answered.
+- **A named ghost forest location.** He sent two articles rather than a place. Resolved independently: the NASA Earth Observatory piece names the **Albemarle-Pamlico Peninsula**, the **Alligator River National Wildlife Refuge**, and the marshes and ghost forests around **Manns Harbor**, imaged 2005-10-01 (Landsat 5) and 2024-10-13 (Landsat 9). Manns Harbor is Dare County mainland, roughly fifteen miles north of Navy Shell on the same shore.
+
+---
+
 ## Navy Shell, resolved from the data 2026-08-28
 
 Determined from `src/app/projects/nccf/data/layers/339_navy_shell.geojson` in this repo, not from Nick.
@@ -237,3 +297,15 @@ A Natrx OS project page for this engagement, "NC Coastal Federation Coastal Wetl
 | Contact: Drew Keeley, Solutions Specialist | Note: that page routes to sales. This one routes to press. |
 
 The one-pager is written largely in future tense ("is mapping," "will have") under a headline that says the analysis is complete. Our page is past tense for completed work, so the two will read differently by design.
+
+---
+
+## Sequence correction, 2026-09-02
+
+| Claim | Status |
+|---|---|
+| The change analysis (wide pass) identified the areas addressable for the granular pass | **CONFIRMED. SOW Phases II and III, quoted in `STATUS.md`.** |
+| The final selection of shoreline segments was determined in coordination with NCCF | **CONFIRMED. SOW Phase IV.** |
+| Coverage expanded from 25 planned subprojects to 39 | CONFIRMED |
+| "The wide screen did not select the 39 survey areas" | **WITHDRAWN.** An overstatement written from interview fragments and never checked against the contract. It was enforced for three sessions. |
+| That the wide pass predicts erosion rates | **STILL BLOCKED.** Unchanged by the above. r² = 0.038 governs, and the page states it. |
