@@ -337,3 +337,31 @@ geographic inference from layer centroids, not a boundary-file join.
 **Live collision.** Beat 5 says Dare “is the hardest hit overall.” The word *overall* reads as
 a total, and the pass-2 map beside it encodes total land lost. Fix proposed and awaiting
 Dylan: cut *overall*, say *eroding fastest*. See `STATUS.md`, session 7.
+
+---
+
+## The interactive's top band, computed 2026-09-02
+
+Derived in this repo from the 39 layers. Rate thresholds are the ones already published in
+this register (1, 2, 5 ft/yr); the 10 ft/yr cut is new and exists to separate the extreme
+from the merely fast, because "over 5" otherwise holds everything from 5 to 46.
+
+| Faster than | Transects | Share |
+|---|---|---|
+| 1 ft/yr | 38,006 | 40.68% |
+| 2 ft/yr | 21,942 | 23.49% |
+| 5 ft/yr | 7,724 | 8.27% |
+| 10 ft/yr | 1,835 | 1.96% |
+| 15 ft/yr | 423 | 0.45% |
+
+**On the page, in the interactive's legend:** *25 stretches are losing more than 10 feet a
+year. About 17 miles of shore.*
+
+| Claim | Status |
+|---|---|
+| 25 stretches / about 17 miles past 10 ft/yr | **PENDING.** Ours, reproducible, but it is a property of our own rendering, not of the dataset. It counts merged polylines after resampling the measured line to a vertex every 0.75 map units and banding each run by its median rate. A different resampling gives a different count. Publishable only with that method note, or state the miles alone. |
+| 1.96% of transects past 10 ft/yr | **CONFIRMED**, computed directly from the layers, no resampling involved. Prefer this form if the stretch count is challenged. |
+
+**Not a leaderboard.** The map bands by threshold and names no places, which keeps it inside
+Nick's 07-22 instruction not to build a ranked top-ten list.
+
