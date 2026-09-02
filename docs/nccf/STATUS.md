@@ -518,3 +518,39 @@ Rendered and checked at 390 and 1440 in Chromium, all three stops, zero page err
 **Correction to session 6’s note.** That session recorded its work as uncommitted with `main`
 at `a3ccedd`. It is committed and pushed: `main` and `origin/main` are both at `eb8881d`,
 working tree otherwise clean. Whether Vercel has served it is unverified.
+
+---
+
+## Pass 2 is a line, not dots, 2026-09-02
+
+**The root error, found on Dylan's review.** The aerial pass measured a continuous shoreline:
+93,017 transects with geometry, ordered by `id`, spaced a median of 112 feet apart. It was
+drawn as 778 dots on a 2.6-unit grid. That reads as "they sampled 778 places," which is the
+opposite of what happened and the opposite of the method the beat is about.
+
+It also caused the "everything looks worst" complaint, twice. A dot has no length, so a mark
+covering half a mile and a mark covering six miles looked identical, and the only way to
+encode magnitude was area, which forced acres, which is a unit the reader has no feel for.
+
+**Now drawn as the measured line.** Per layer, transects sorted by `id`, resampled to a
+vertex every 0.75 units, broken where consecutive transects are more than 3 units apart,
+consecutive same-band vertices merged into polylines. 1,817 polylines in four paths, 79KB.
+
+**Colour is the retreat rate**, and the thresholds are `CLAIMS.md` figures already published
+on the page: under 1 ft/yr, 1 to 2, 2 to 5, over 5. Which means 40.7%, 23.5% and 8.3% of
+transects fall past those marks, all CONFIRMED. Length is now drawn to scale, so the eye adds
+up total loss on its own and the encoding can be the intuitive unit.
+
+**This retires the acres legend** discussed earlier the same day, and the per-stretch acre
+bands never shipped. It also retires "eroding stretches only": accreting shore is drawn in the
+under-1 band rather than gapped, which is truer to a continuous survey.
+
+**Copy collision, flagged not resolved.** Dylan's line for the note was "The orange indicates
+the biggest loss." The encoding is now speed, not amount, so it reads as "The orange is where
+the shore is retreating fastest." His words, one clause changed to match what the map does.
+
+**Still homeless.** Removing the captions took out the only statement that the Federation's
+own priorities helped set which stretches were measured. The 09-02 SOW correction requires
+both halves wherever the page describes the screening-to-survey sequence, and the Beat 4 prose
+does not carry it.
+
