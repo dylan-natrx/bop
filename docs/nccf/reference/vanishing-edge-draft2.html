@@ -887,7 +887,7 @@ footer{margin-bottom:0}
     <div class="mono kick rv">The method</div>
     <h2 class="rv d1">More coast than anyone could look at</h2>
     <p class="rv d2">Measuring 2,900 miles of shoreline across ten years of photographs, finely enough to catch a marsh edge moving two feet in a year, is not work a person can do with a magnifier and a light table. There is simply too much of it. And the field check that would normally back it up is not available either, because much of this coast cannot be reached on foot.</p>
-    <p class="rv d3">Sorting an enormous number of images the same way every time is exactly what machine learning is good at. Natrx built its analysis system, <button type='button' class='glosslink' data-term='natrx-assess'><em>Natrx Assess</em></button>, around that, and trained it on established coastal science, so what the models are taught to recognize as a retreating marsh edge comes from established science and human expertise.</p>
+    <p class="rv d3">Natrx built its analysis system, <button type='button' class='glosslink' data-term='natrx-assess'><em>Natrx Assess</em></button>, around that, and trained it on established coastal science, so what the models are taught to recognize as a retreating marsh edge comes from established science and human expertise.</p>
     <p class="rv d4">The work runs in two passes, and the reason is that the coast is not a simple line. It’s a maze of creeks, bays and marsh islands. Measuring all of that precisely is slow and expensive, so the first pass is wide and quick, and the second is run only where more precision warrants the additional cost. The model looks at every pixel in a satellite image and decides one thing about it: marsh, or not marsh. Do that for 2016, do it again for 2022, subtract one from the other, and what is left is everywhere the marsh went away. It covers everything fast. It does not tell you how fast any one place is moving.</p>
     <p class="rv ">The second is narrow and exact. Natrx set about 93,000 fixed points along those 2,900 miles, each one on land with a line running from it out to the water’s edge. In five sets of aerial photographs spanning 2012 to 2022, the models trace that line to the edge of the marsh grass. Measure the same line five times across a decade and the shoreline’s movement at that spot becomes a rate, in feet per year.</p>
   </div>
@@ -1184,13 +1184,13 @@ document.querySelectorAll('.rv').forEach(n=>ioText.observe(n));
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduce){pts.forEach(c=>c.style.opacity=1); return;}
   const ys=pts.map(c=>+c.getAttribute('cy')), y0=Math.min(...ys), y1=Math.max(...ys), span=(y1-y0)||1;
-  const DUR=1250;
-  const draw=()=>pts.forEach(c=>{
+  const DUR=1900;
+  let drawn=false;
+  const draw=()=>{if(drawn)return; drawn=true; pts.forEach(c=>{
     const k=(+c.getAttribute('cy')-y0)/span;
-    c.style.transitionDelay=(k*DUR).toFixed(0)+'ms'; c.style.opacity=1;});
-  if(band.classList.contains('in')) draw();
-  else new MutationObserver((m,o)=>{if(band.classList.contains('in')){o.disconnect();draw();}})
-    .observe(band,{attributes:true,attributeFilter:['class']});
+    c.style.transitionDelay=(k*DUR).toFixed(0)+'ms'; c.style.opacity=1;});};
+  new IntersectionObserver((es,o)=>{for(const e of es){if(!e.isIntersecting)continue;o.disconnect();draw();}},
+    {rootMargin:'-34% 0px -34% 0px'}).observe(band);
 })();
 const spy=new IntersectionObserver(es=>{for(const e of es){if(!e.isIntersecting)continue;
   const i=secs.indexOf(e.target); links.forEach((a,j)=>a.classList.toggle('on',j===i));}},
