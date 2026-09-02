@@ -632,3 +632,48 @@ fastest," because the encoding is speed rather than amount.
 stale `index.lock` or `HEAD.lock`. Worked around by moving them aside before each operation;
 several `.git/.stale-*` files are now sitting there and need deleting by hand.
 
+---
+
+## Mobile pass and a cleanup that was reverted, 2026-09-02
+
+### Mobile, verified at 360, 390 and 430
+
+Measured, not eyeballed. No horizontal overflow at any width, document width equals viewport.
+
+- **The before/after wipe blocked scrolling.** `.ba` carried `touch-action:none`, so a thumb
+  landing anywhere on that figure could not scroll the page past it. Now `pan-y`: the page
+  scrolls, a horizontal drag still works the wipe.
+- **Only sub-44px target on the page was the glossary button** at 42px. Now 44.
+- **The interactive's legend covered the Beaufort and Oriental zones** on the phone crop, and
+  stood 96px tall over a 342px map. Moved to the top left, the emptiest quarter of `MID_N`,
+  and slimmed to 84px.
+- Checked and already correct: footer clears the fixed Contents bar by 76px, type floors
+  (h1 38, h2 27, deck 19, body 17), the supergraphic fits its column by container query with
+  the percent sign 5px inside the edge, the overprint sits below the numeral rather than over
+  it, and the three interactive stops all read at 390.
+
+### The dead CSS is real, and removing it needs its own pass
+
+An automated prune was written, run, and **reverted**. It removed 126 rules and 10KB, and it
+silently dropped `footer .fbar{padding-bottom:calc(24px + 52px)}` from taking effect, which cost
+52px of clearance under the phone Contents bar. Cause not fully established. Not worth 0.1% of
+the file.
+
+**Verified dead**, by scanning every CSS selector against markup and script, with base64 and SVG
+path data excluded so short tokens do not false-positive:
+
+`.bignum .byline .callout .cred .dec .decax .decbar .decfoot .decrow .e1 .e2 .e3 .e4 .figlegend
+.herolab .hide .labbar .labctl .labctl-in .labctl-lab .labside .ladder .lbl .lrow .nm .photo
+.reset .sgkey .sgsplit .stats .take .tk .txt .val` and `#heroArt #ncPts`
+
+About 154 CSS lines. `.labside`, `.labctl*` and `.labbar` are mine, orphaned by the interactive
+rebuild this session; the rest predate it.
+
+**Why it was not removed by hand either.** The dead rules interleave with live ones at one and
+two line gaps, so range deletion takes working CSS with it. This wants the harness: baseline
+NCCF at 360/390/768/1440, prune, diff. `harness/check.mjs` does exactly that but is currently
+BOP-specific.
+
+**Do not remove `#ncFast`.** The empty group is still in the markup, and `.decbar i` shares a
+rule with the live `.scale .bfill`.
+

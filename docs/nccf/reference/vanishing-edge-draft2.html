@@ -580,7 +580,7 @@ footer{margin-bottom:0}
   font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--ink)}
 .badates span{color:var(--ink-70);opacity:.55}
-.ba{position:relative;user-select:none;touch-action:none;cursor:ew-resize;overflow:hidden;
+.ba{position:relative;user-select:none;touch-action:pan-y;cursor:ew-resize;overflow:hidden;
   border:1px solid var(--ink-22)}
 .ba>img{display:block;width:100%;height:auto}
 .ba .before{position:absolute;inset:0;overflow:hidden;width:70%}
@@ -685,7 +685,7 @@ footer{margin-bottom:0}
   .labside .labnote{padding:16px 16px 18px;overflow:visible;flex:none}
   .labside .labnote p{font-size:14px;line-height:1.45}
   /* tap targets for the fixed chrome and inline glossary links */
-  #glossBtn{padding:15px 0;margin:-3px 0}
+  #glossBtn{padding:16px 0;margin:-4px 0;min-height:44px}
   .gtabs button{padding:14px 0 16px;margin:-2px 0 0}
   .labside button.reset{min-height:44px;padding:8px 0}
   #rail a{padding-top:15px;padding-bottom:15px}
@@ -1100,11 +1100,12 @@ footer{margin-bottom:0}
   .labnote p{font-size:14.5px;line-height:1.5}
   .labnote-k{margin:0 0 5px}
   .labstep button{padding:0 12px;min-height:56px;font-size:13px;gap:7px}
-  .labkey{right:9px;bottom:64px;padding:7px 9px 8px}
-  .labkey .ktitle{font-size:8px;margin-bottom:4px}
+  .labkey{left:8px;right:auto;top:8px;bottom:auto;padding:6px 8px 7px;max-width:calc(100% - 16px)}
+  .labkey .ktitle{font-size:8px;margin-bottom:3px}
   .labkey .kramp{gap:4px}
   .labkey .kt{font-size:8px}
-  .labkey .kzone{font-size:11px;max-width:26ch}
+  .labkey .kzone{font-size:10.5px;line-height:1.3;margin-top:5px;max-width:24ch;padding-left:15px}
+  .labkey .zdot{width:11px;height:11px;top:1px}
 }
 @media(max-width:400px){
   .labstep button{flex-direction:column;align-items:flex-start;justify-content:center;
