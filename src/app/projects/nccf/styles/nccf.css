@@ -312,6 +312,12 @@ body {
   color: var(--tint);
 }
 
+/* --tint on paper is 2.56:1. Display type clears the 3:1 large-text floor only
+   below this; body-size em does not clear 4.5:1 at all. See STATUS. */
+.nccf-root h1 em {
+  color: #2E8371;
+}
+
 .nccf-root strong {
   font-weight: 600;
 }
