@@ -334,9 +334,14 @@ geographic inference from layer centroids, not a boundary-file join.
 | Dare loses the most land in total | **FALSE as computed.** Dare is third on total loss, behind Hyde and Carteret. |
 | Any ranking of counties by total loss | **NOT FOR PUBLICATION.** These totals rank where Natrx surveyed, not where North Carolina erodes. Carteret has 490 surveyed miles against Dare’s 220. A county-total ranking derived from a chosen survey footprint is not a statement about counties. |
 
-**Live collision.** Beat 5 says Dare “is the hardest hit overall.” The word *overall* reads as
-a total, and the pass-2 map beside it encodes total land lost. Fix proposed and awaiting
-Dylan: cut *overall*, say *eroding fastest*. See `STATUS.md`, session 7.
+**Collision closed 2026-09-02.** Beat 5 said Dare “is the hardest hit overall.” *Overall* read as
+a total, and Dare is third on total loss. The page now says Dare **is eroding fastest**, which every
+intensity measure supports and which the rebuilt map agrees with: the four highest shares of
+shoreline past 10 ft/yr in the dataset are Mashoes (76.8%), Navy Shell (42.4%), Stumpy Point (34.3%)
+and Parched Corn Bay (26.9%), all Dare, and all carry the largest zone markers on the interactive.
+
+**Still not publishable:** any ranking of counties by total land lost. Those totals rank the survey
+allocation, not the counties. Carteret has 490 surveyed miles against Dare's 220.
 
 ---
 
