@@ -915,18 +915,17 @@ footer{margin-bottom:0}
         <button type="button" data-step="1" aria-current="false"><span class="sn mono">02</span><span class="st">Satellite</span></button>
         <button type="button" data-step="2" aria-current="false"><span class="sn mono">03</span><span class="st">Aerial</span></button>
       </nav>
-    </div>
       <div class="labkey" id="labKey" aria-hidden="true">
         <span class="kt mono">Land lost</span>
         <span class="ks e1"></span><span class="ks e2"></span><span class="ks e3"></span><span class="ks e4"></span>
         <span class="kt mono">More</span>
       </div>
+    </div>
       <div class="labnote" id="labNote" aria-live="polite">
         <p class="labnote-k mono" id="labStepName">Before</p>
         <p id="labNoteBody">A coastline on a map, and whatever anyone had seen in person.</p>
       </div>
   </div>
-  <div class="cap mono">Pass 1’s results, and the Federation’s own priorities, set what pass 2 measured. Eroding stretches only.</div>
 </div>
 
     <div class="col" style="margin-top:8vh">
@@ -1027,7 +1026,8 @@ footer{margin-bottom:0}
 .labnote{position:absolute;left:0;top:0;width:min(38ch,37%);right:auto;
   background:var(--ink);color:var(--paper);padding:18px 20px 20px;z-index:4;
   border:0;margin:0;max-width:none;min-height:0}
-.labnote-k{margin:0 0 8px;color:var(--tint);font-size:9.5px;letter-spacing:.2em}
+.labnote-k{margin:0 0 7px;color:var(--tint);font-size:11px;letter-spacing:.14em;font-weight:700;
+  text-transform:uppercase}
 .labnote p{margin:0;font-size:14.5px;line-height:1.52;max-width:none;
   color:rgba(250,250,250,.92);font-family:'Familjen Grotesk',system-ui,sans-serif;
   text-transform:none;letter-spacing:0}
@@ -1074,9 +1074,8 @@ footer{margin-bottom:0}
   .labnote p{font-size:14.5px;line-height:1.5}
   .labnote-k{margin:0 0 5px}
   .labstep button{padding:0 12px;min-height:56px;font-size:13px;gap:7px}
-  .labkey{position:static;padding:12px 18px 0;background:none;justify-content:flex-start;
-    height:0;overflow:hidden;transition:opacity .4s ease}
-  .lab.s2 .labkey{height:auto;overflow:visible;padding:14px 18px 0}
+  .labkey{right:9px;bottom:64px;gap:4px;padding:6px 8px}
+  .labkey .kt{font-size:8px;letter-spacing:.1em}
 }
 @media(max-width:400px){
   .labstep button{flex-direction:column;align-items:flex-start;justify-content:center;
@@ -1187,11 +1186,11 @@ secs.forEach(s=>spy.observe(s));
   const btns=[...lab.querySelectorAll('.labstep button[data-step]')];
   const NAMES=['Before','Pass 1 \u00b7 Satellite imagery','Pass 2 \u00b7 Aerial photography'];
   const NOTES=[
-   'A coastline on a map, and whatever anyone had seen in person. More than 12,000 miles of it, much of which cannot be reached on foot.',
-   'The cheap pass. Satellite pictures of the same marsh in two different years show where it turned into open water, at the coarse grain drawn here. It cannot say how fast the shore is moving, only where the close look is worth paying for.',
-   'The expensive pass. Aerial photographs at one meter, five years between 2012 and 2022, about 93,000 measured points along the same coast. Most of it is barely moving. The colour is where the land is actually going.'];
+   'The coastline, before analysis. More than 12,000 miles of it, much of which cannot be reached on foot.',
+   'Satellite pictures of the same marsh in two different years show where it turned into open water, only. It doesn\u2019t say how fast the shore is moving, only where a closer look is worthwhile.',
+   'Aerial photographs from between 2012 and 2022 analyzed at one meter resolution produced about 93,000 measured points along the same coast. A lot of it is barely moving. The orange indicates the biggest loss.'];
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const svg=$('ncSvg'), FULL=[0,0,1000,640], MID=[382.0,120.0,566.0,356.0];
+  const svg=$('ncSvg'), FULL=[152,20,848,533], MID=[382.0,120.0,566.0,356.0];
   const NARROW=matchMedia('(max-width:900px)');
   const FULL_N=[272,48,520,520], MID_N=[460,145,320,320];
   const box=n=>NARROW.matches?(n===2?MID_N:FULL_N):(n===2?MID:FULL);
